@@ -70,6 +70,8 @@ namespace ParameterManager
 
     public enum eToigunGoGo         { PM = 0, CalToi};
 
+    public enum PM317               { Time = 0 };
+
     public static class DIO_DEF
     {
         public const int NONE = -1;
