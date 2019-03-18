@@ -1,0 +1,18 @@
+C:\Users\Administrator\Desktop\CIPOSLeadInspection\KPVisionInspectionFramework\LightManager\bin\Release\LightManager.dll
+C:\Users\Administrator\Desktop\CIPOSLeadInspection\KPVisionInspectionFramework\LightManager\bin\Release\LightManager.pdb
+C:\Users\Administrator\Desktop\CIPOSLeadInspection\KPVisionInspectionFramework\LightManager\obj\Release\LightManager.LightWindow.resources
+C:\Users\Administrator\Desktop\CIPOSLeadInspection\KPVisionInspectionFramework\LightManager\obj\Release\LightManager.Properties.Resources.resources
+C:\Users\Administrator\Desktop\CIPOSLeadInspection\KPVisionInspectionFramework\LightManager\obj\Release\LightManager.csproj.GenerateResource.Cache
+C:\Users\Administrator\Desktop\CIPOSLeadInspection\KPVisionInspectionFramework\LightManager\obj\Release\LightManager.dll
+C:\Users\Administrator\Desktop\CIPOSLeadInspection\KPVisionInspectionFramework\LightManager\obj\Release\LightManager.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\LightManager\bin\Release\LightManager.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\LightManager\bin\Release\LightManager.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\LightManager\bin\Release\LogMessageManager.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\LightManager\bin\Release\log4net.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\LightManager\bin\Release\LogMessageManager.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\LightManager\obj\Release\LightManager.csprojResolveAssemblyReference.cache
+C:\Zoom\Source management\Project\CIPOSLeadInspection\LightManager\obj\Release\LightManager.LightWindow.resources
+C:\Zoom\Source management\Project\CIPOSLeadInspection\LightManager\obj\Release\LightManager.Properties.Resources.resources
+C:\Zoom\Source management\Project\CIPOSLeadInspection\LightManager\obj\Release\LightManager.csproj.GenerateResource.Cache
+C:\Zoom\Source management\Project\CIPOSLeadInspection\LightManager\obj\Release\LightManager.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\LightManager\obj\Release\LightManager.pdb

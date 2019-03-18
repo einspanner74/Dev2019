@@ -1,0 +1,40 @@
+D:\Program SW\CIPOS Lead Inspection2\DIOControlManager\DIOControlManager\bin\Release\DIOControlManager.exe
+D:\Program SW\CIPOS Lead Inspection2\DIOControlManager\DIOControlManager\bin\Release\DIOControlManager.pdb
+D:\Program SW\CIPOS Lead Inspection2\DIOControlManager\DIOControlManager\obj\Release\DIOControlManager.csprojResolveAssemblyReference.cache
+D:\Program SW\CIPOS Lead Inspection2\DIOControlManager\DIOControlManager\obj\Release\DIOControlManager.Properties.Resources.resources
+D:\Program SW\CIPOS Lead Inspection2\DIOControlManager\DIOControlManager\obj\Release\DIOControlManager.csproj.GenerateResource.Cache
+D:\Program SW\CIPOS Lead Inspection2\DIOControlManager\DIOControlManager\obj\Release\DIOControlManager.exe
+D:\Program SW\CIPOS Lead Inspection2\DIOControlManager\DIOControlManager\obj\Release\DIOControlManager.pdb
+D:\Program SW\CIPOS Lead Inspection3\DIOControlManager\DIOControlManager\bin\Release\DIOControlManager.exe
+D:\Program SW\CIPOS Lead Inspection3\DIOControlManager\DIOControlManager\bin\Release\DIOControlManager.pdb
+D:\Program SW\CIPOS Lead Inspection3\DIOControlManager\DIOControlManager\obj\Release\DIOControlManager.csprojResolveAssemblyReference.cache
+D:\Program SW\CIPOS Lead Inspection3\DIOControlManager\DIOControlManager\obj\Release\DIOControlManager.Properties.Resources.resources
+D:\Program SW\CIPOS Lead Inspection3\DIOControlManager\DIOControlManager\obj\Release\DIOControlManager.csproj.GenerateResource.Cache
+D:\Program SW\CIPOS Lead Inspection3\DIOControlManager\DIOControlManager\obj\Release\DIOControlManager.exe
+D:\Program SW\CIPOS Lead Inspection3\DIOControlManager\DIOControlManager\obj\Release\DIOControlManager.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Release\DIOControlManager.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Release\DIOControlManager.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Release\CPressingButton.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Release\CustomControl.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Release\CustonMsgBoxManager.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Release\LogMessageManager.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Release\ParameterManager.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Release\log4net.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Release\Cognex.VisionPro.PMAlign.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Release\Cognex.VisionPro.Core.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Release\Cognex.VisionPro.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Release\Cognex.VisionPro.Interop.Core.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Release\stdole.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Release\CustomControl.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Release\LogMessageManager.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Release\ParameterManager.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Release\Cognex.VisionPro.PMAlign.xml
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Release\Cognex.VisionPro.Core.xml
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Release\Cognex.VisionPro.xml
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\obj\Release\DIOControlManager.csprojResolveAssemblyReference.cache
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\obj\Release\DIOControlManager.DIOControlWindow.resources
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\obj\Release\DIOControlManager.DIONamingWindow.resources
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\obj\Release\DIOControlManager.Properties.Resources.resources
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\obj\Release\DIOControlManager.csproj.GenerateResource.Cache
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\obj\Release\DIOControlManager.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\obj\Release\DIOControlManager.pdb

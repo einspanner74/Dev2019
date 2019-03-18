@@ -1,0 +1,18 @@
+C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetServerManager\bin\Debug\EthernetServerManager.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetServerManager\bin\Debug\EthernetServerManager.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetServerManager\bin\Debug\CustonMsgBoxManager.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetServerManager\obj\Debug\EthernetServerManager.csprojResolveAssemblyReference.cache
+C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetServerManager\obj\Debug\EthernetServerManager.EthernetWindow.resources
+C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetServerManager\obj\Debug\EthernetServerManager.Properties.Resources.resources
+C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetServerManager\obj\Debug\EthernetServerManager.csproj.GenerateResource.Cache
+C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetServerManager\obj\Debug\EthernetServerManager.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetServerManager\obj\Debug\EthernetServerManager.pdb
+D:\VisionProgram\TrimFormInspection\EthernetServerManager\bin\Debug\EthernetServerManager.dll
+D:\VisionProgram\TrimFormInspection\EthernetServerManager\bin\Debug\EthernetServerManager.pdb
+D:\VisionProgram\TrimFormInspection\EthernetServerManager\bin\Debug\CustonMsgBoxManager.dll
+D:\VisionProgram\TrimFormInspection\EthernetServerManager\obj\Debug\EthernetServerManager.csprojResolveAssemblyReference.cache
+D:\VisionProgram\TrimFormInspection\EthernetServerManager\obj\Debug\EthernetServerManager.EthernetWindow.resources
+D:\VisionProgram\TrimFormInspection\EthernetServerManager\obj\Debug\EthernetServerManager.Properties.Resources.resources
+D:\VisionProgram\TrimFormInspection\EthernetServerManager\obj\Debug\EthernetServerManager.csproj.GenerateResource.Cache
+D:\VisionProgram\TrimFormInspection\EthernetServerManager\obj\Debug\EthernetServerManager.dll
+D:\VisionProgram\TrimFormInspection\EthernetServerManager\obj\Debug\EthernetServerManager.pdb

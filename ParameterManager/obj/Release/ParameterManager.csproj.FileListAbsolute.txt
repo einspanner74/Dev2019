@@ -1,0 +1,20 @@
+C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\ParameterManager\bin\Release\ParameterManager.dll
+C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\ParameterManager\bin\Release\ParameterManager.pdb
+C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\ParameterManager\obj\Release\ParameterManager.dll
+C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\ParameterManager\obj\Release\ParameterManager.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\ParameterManager\bin\Release\ParameterManager.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\ParameterManager\bin\Release\ParameterManager.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\ParameterManager\bin\Release\Cognex.VisionPro.Core.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\ParameterManager\bin\Release\Cognex.VisionPro.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\ParameterManager\bin\Release\Cognex.VisionPro.PMAlign.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\ParameterManager\bin\Release\LogMessageManager.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\ParameterManager\bin\Release\log4net.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\ParameterManager\bin\Release\Cognex.VisionPro.Interop.Core.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\ParameterManager\bin\Release\stdole.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\ParameterManager\bin\Release\LogMessageManager.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\ParameterManager\bin\Release\Cognex.VisionPro.xml
+C:\Zoom\Source management\Project\CIPOSLeadInspection\ParameterManager\bin\Release\Cognex.VisionPro.Core.xml
+C:\Zoom\Source management\Project\CIPOSLeadInspection\ParameterManager\bin\Release\Cognex.VisionPro.PMAlign.xml
+C:\Zoom\Source management\Project\CIPOSLeadInspection\ParameterManager\obj\Release\ParameterManager.csprojResolveAssemblyReference.cache
+C:\Zoom\Source management\Project\CIPOSLeadInspection\ParameterManager\obj\Release\ParameterManager.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\ParameterManager\obj\Release\ParameterManager.pdb

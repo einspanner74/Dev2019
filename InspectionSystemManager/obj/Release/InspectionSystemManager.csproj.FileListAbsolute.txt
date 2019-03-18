@@ -1,0 +1,163 @@
+C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\InspectionSystemManager\bin\Release\InspectionSystemManager.dll
+C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\InspectionSystemManager\bin\Release\InspectionSystemManager.pdb
+C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.Controls.dll
+C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.Core.dll
+C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.Display.Controls.dll
+C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.dll
+C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.ImageFile.Controls.dll
+C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.ImageFile.dll
+C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\InspectionSystemManager\bin\Release\CustomControl.dll
+C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\InspectionSystemManager\bin\Release\KPDisplay.dll
+C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\InspectionSystemManager\bin\Release\ParameterManager.dll
+C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro3D.Core.dll
+C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.CorePlus.dll
+C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.ImageProcessing.dll
+C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\InspectionSystemManager\bin\Release\KPDisplay.pdb
+C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\InspectionSystemManager\bin\Release\ParameterManager.pdb
+C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.xml
+C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.Core.xml
+C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.Display.Controls.xml
+C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.ImageFile.xml
+C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\InspectionSystemManager\bin\Release\CustomControl.pdb
+C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro3D.Core.xml
+C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.CorePlus.xml
+C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.ImageProcessing.xml
+C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\InspectionSystemManager\obj\Release\InspectionSystemManager.csprojResolveAssemblyReference.cache
+C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\InspectionSystemManager\obj\Release\InspectionSystemManager.InspectionWindow.resources
+C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\InspectionSystemManager\obj\Release\InspectionSystemManager.Properties.Resources.resources
+C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\InspectionSystemManager\obj\Release\InspectionSystemManager.csproj.GenerateResource.Cache
+C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\InspectionSystemManager\obj\Release\InspectionSystemManager.dll
+C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\InspectionSystemManager\obj\Release\InspectionSystemManager.pdb
+D:\Program SW\CIPOS Lead Inspection2\InspectionSystemManager\bin\Release\InspectionSystemManager.dll
+D:\Program SW\CIPOS Lead Inspection2\InspectionSystemManager\bin\Release\InspectionSystemManager.pdb
+D:\Program SW\CIPOS Lead Inspection2\InspectionSystemManager\bin\Release\Cognex.VisionPro.Controls.dll
+D:\Program SW\CIPOS Lead Inspection2\InspectionSystemManager\bin\Release\Cognex.VisionPro.Core.dll
+D:\Program SW\CIPOS Lead Inspection2\InspectionSystemManager\bin\Release\Cognex.VisionPro.Display.Controls.dll
+D:\Program SW\CIPOS Lead Inspection2\InspectionSystemManager\bin\Release\Cognex.VisionPro.dll
+D:\Program SW\CIPOS Lead Inspection2\InspectionSystemManager\bin\Release\Cognex.VisionPro.ImageFile.Controls.dll
+D:\Program SW\CIPOS Lead Inspection2\InspectionSystemManager\bin\Release\Cognex.VisionPro.ImageFile.dll
+D:\Program SW\CIPOS Lead Inspection2\InspectionSystemManager\bin\Release\CustomControl.dll
+D:\Program SW\CIPOS Lead Inspection2\InspectionSystemManager\bin\Release\KPDisplay.dll
+D:\Program SW\CIPOS Lead Inspection2\InspectionSystemManager\bin\Release\ParameterManager.dll
+D:\Program SW\CIPOS Lead Inspection2\InspectionSystemManager\bin\Release\Cognex.VisionPro.CorePlus.dll
+D:\Program SW\CIPOS Lead Inspection2\InspectionSystemManager\bin\Release\Cognex.VisionPro.ImageProcessing.dll
+D:\Program SW\CIPOS Lead Inspection2\InspectionSystemManager\bin\Release\KPDisplay.pdb
+D:\Program SW\CIPOS Lead Inspection2\InspectionSystemManager\bin\Release\ParameterManager.pdb
+D:\Program SW\CIPOS Lead Inspection2\InspectionSystemManager\bin\Release\Cognex.VisionPro.xml
+D:\Program SW\CIPOS Lead Inspection2\InspectionSystemManager\bin\Release\Cognex.VisionPro.Core.xml
+D:\Program SW\CIPOS Lead Inspection2\InspectionSystemManager\bin\Release\Cognex.VisionPro.Display.Controls.xml
+D:\Program SW\CIPOS Lead Inspection2\InspectionSystemManager\bin\Release\Cognex.VisionPro.ImageFile.xml
+D:\Program SW\CIPOS Lead Inspection2\InspectionSystemManager\bin\Release\CustomControl.pdb
+D:\Program SW\CIPOS Lead Inspection2\InspectionSystemManager\bin\Release\Cognex.VisionPro.CorePlus.xml
+D:\Program SW\CIPOS Lead Inspection2\InspectionSystemManager\bin\Release\Cognex.VisionPro.ImageProcessing.xml
+D:\Program SW\CIPOS Lead Inspection2\InspectionSystemManager\obj\Release\InspectionSystemManager.csprojResolveAssemblyReference.cache
+D:\Program SW\CIPOS Lead Inspection2\InspectionSystemManager\obj\Release\InspectionSystemManager.InspectionWindow.resources
+D:\Program SW\CIPOS Lead Inspection2\InspectionSystemManager\obj\Release\InspectionSystemManager.Properties.Resources.resources
+D:\Program SW\CIPOS Lead Inspection2\InspectionSystemManager\obj\Release\InspectionSystemManager.csproj.GenerateResource.Cache
+D:\Program SW\CIPOS Lead Inspection2\InspectionSystemManager\obj\Release\InspectionSystemManager.dll
+D:\Program SW\CIPOS Lead Inspection2\InspectionSystemManager\obj\Release\InspectionSystemManager.pdb
+D:\Program SW\CIPOS Lead Inspection3\InspectionSystemManager\bin\Release\InspectionSystemManager.dll
+D:\Program SW\CIPOS Lead Inspection3\InspectionSystemManager\bin\Release\InspectionSystemManager.pdb
+D:\Program SW\CIPOS Lead Inspection3\InspectionSystemManager\bin\Release\Cognex.VisionPro.Controls.dll
+D:\Program SW\CIPOS Lead Inspection3\InspectionSystemManager\bin\Release\Cognex.VisionPro.Core.dll
+D:\Program SW\CIPOS Lead Inspection3\InspectionSystemManager\bin\Release\Cognex.VisionPro.Display.Controls.dll
+D:\Program SW\CIPOS Lead Inspection3\InspectionSystemManager\bin\Release\Cognex.VisionPro.dll
+D:\Program SW\CIPOS Lead Inspection3\InspectionSystemManager\bin\Release\Cognex.VisionPro.ImageFile.Controls.dll
+D:\Program SW\CIPOS Lead Inspection3\InspectionSystemManager\bin\Release\Cognex.VisionPro.ImageFile.dll
+D:\Program SW\CIPOS Lead Inspection3\InspectionSystemManager\bin\Release\CustomControl.dll
+D:\Program SW\CIPOS Lead Inspection3\InspectionSystemManager\bin\Release\KPDisplay.dll
+D:\Program SW\CIPOS Lead Inspection3\InspectionSystemManager\bin\Release\ParameterManager.dll
+D:\Program SW\CIPOS Lead Inspection3\InspectionSystemManager\bin\Release\Cognex.VisionPro.CorePlus.dll
+D:\Program SW\CIPOS Lead Inspection3\InspectionSystemManager\bin\Release\Cognex.VisionPro.ImageProcessing.dll
+D:\Program SW\CIPOS Lead Inspection3\InspectionSystemManager\bin\Release\KPDisplay.pdb
+D:\Program SW\CIPOS Lead Inspection3\InspectionSystemManager\bin\Release\ParameterManager.pdb
+D:\Program SW\CIPOS Lead Inspection3\InspectionSystemManager\bin\Release\Cognex.VisionPro.xml
+D:\Program SW\CIPOS Lead Inspection3\InspectionSystemManager\bin\Release\Cognex.VisionPro.Core.xml
+D:\Program SW\CIPOS Lead Inspection3\InspectionSystemManager\bin\Release\Cognex.VisionPro.Display.Controls.xml
+D:\Program SW\CIPOS Lead Inspection3\InspectionSystemManager\bin\Release\Cognex.VisionPro.ImageFile.xml
+D:\Program SW\CIPOS Lead Inspection3\InspectionSystemManager\bin\Release\CustomControl.pdb
+D:\Program SW\CIPOS Lead Inspection3\InspectionSystemManager\bin\Release\Cognex.VisionPro.CorePlus.xml
+D:\Program SW\CIPOS Lead Inspection3\InspectionSystemManager\bin\Release\Cognex.VisionPro.ImageProcessing.xml
+D:\Program SW\CIPOS Lead Inspection3\InspectionSystemManager\obj\Release\InspectionSystemManager.csprojResolveAssemblyReference.cache
+D:\Program SW\CIPOS Lead Inspection3\InspectionSystemManager\obj\Release\InspectionSystemManager.InspectionWindow.resources
+D:\Program SW\CIPOS Lead Inspection3\InspectionSystemManager\obj\Release\InspectionSystemManager.Properties.Resources.resources
+D:\Program SW\CIPOS Lead Inspection3\InspectionSystemManager\obj\Release\InspectionSystemManager.csproj.GenerateResource.Cache
+D:\Program SW\CIPOS Lead Inspection3\InspectionSystemManager\obj\Release\InspectionSystemManager.dll
+D:\Program SW\CIPOS Lead Inspection3\InspectionSystemManager\obj\Release\InspectionSystemManager.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\InspectionSystemManager.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\InspectionSystemManager.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\CameraManager.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.Blob.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.Caliper.Controls.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.Caliper.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.Core.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.Dimensioning.Controls.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.Dimensioning.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.Display.Controls.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.ID.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.ImageFile.Controls.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.ImageFile.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.ImageProcessing.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.PMAlign.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\CPressingButton.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\CustomControl.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\KPDisplay.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\LogMessageManager.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\MapDataManager.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\ParameterManager.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\WindowKeyPad.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\PylonC.NET.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\log4net.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.Controls.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.CorePlus.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.Interop.Core.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\stdole.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro3D.Core.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.FGGigE.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro3D.Graphic.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro3D.Display.Controls.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.ToolGroup.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro3D.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\CameraManager.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\CustomControl.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\LogMessageManager.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\MapDataManager.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\ParameterManager.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\WindowKeyPad.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\KPDisplay.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.xml
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.Blob.xml
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.Caliper.xml
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.Core.xml
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.Dimensioning.xml
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.Display.Controls.xml
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.ID.xml
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.ImageFile.xml
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.ImageProcessing.xml
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.PMAlign.xml
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\PylonC.NET.xml
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.CorePlus.xml
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro3D.Core.xml
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.FGGigE.xml
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro3D.Graphic.xml
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro3D.Display.Controls.xml
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.ToolGroup.xml
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro3D.xml
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Release\InspectionSystemManager.csprojResolveAssemblyReference.cache
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Release\InspectionSystemManager.ucCogAutoPattern.resources
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Release\InspectionSystemManager.ucCogBlob.resources
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Release\InspectionSystemManager.ucCogBlobReference.resources
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Release\InspectionSystemManager.ucCogLeadInspection.resources
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Release\InspectionSystemManager.ucCogMultiPattern.resources
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Release\InspectionSystemManager.ucCogNeedleCircleFind.resources
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Release\InspectionSystemManager.ucCogPattern.resources
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Release\InspectionSystemManager.InspectionWindow.resources
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Release\InspectionSystemManager.Properties.Resources.resources
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Release\InspectionSystemManager.ImageDeleteWindow.resources
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Release\InspectionSystemManager.TeachingWindow.resources
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Release\InspectionSystemManager.ucCogID.resources
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Release\InspectionSystemManager.ucCogLineFind.resources
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Release\InspectionSystemManager.csproj.GenerateResource.Cache
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Release\InspectionSystemManager.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Release\InspectionSystemManager.pdb

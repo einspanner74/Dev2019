@@ -1,0 +1,129 @@
+F:\[Project]\2018\MIT_Blower\Program\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Debug\DIOControlManager.dll
+F:\[Project]\2018\MIT_Blower\Program\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Debug\DIOControlManager.pdb
+F:\[Project]\2018\MIT_Blower\Program\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Debug\LogMessageManager.dll
+F:\[Project]\2018\MIT_Blower\Program\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Debug\ParameterManager.dll
+F:\[Project]\2018\MIT_Blower\Program\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Debug\log4net.dll
+F:\[Project]\2018\MIT_Blower\Program\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Debug\Cognex.VisionPro.PMAlign.dll
+F:\[Project]\2018\MIT_Blower\Program\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Debug\Cognex.VisionPro.Core.dll
+F:\[Project]\2018\MIT_Blower\Program\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Debug\Cognex.VisionPro.dll
+F:\[Project]\2018\MIT_Blower\Program\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Debug\Cognex.VisionPro.Interop.Core.dll
+F:\[Project]\2018\MIT_Blower\Program\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Debug\stdole.dll
+F:\[Project]\2018\MIT_Blower\Program\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Debug\LogMessageManager.pdb
+F:\[Project]\2018\MIT_Blower\Program\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Debug\ParameterManager.pdb
+F:\[Project]\2018\MIT_Blower\Program\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Debug\Cognex.VisionPro.PMAlign.xml
+F:\[Project]\2018\MIT_Blower\Program\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Debug\Cognex.VisionPro.Core.xml
+F:\[Project]\2018\MIT_Blower\Program\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Debug\Cognex.VisionPro.xml
+F:\[Project]\2018\MIT_Blower\Program\CIPOSLeadInspection\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.csprojResolveAssemblyReference.cache
+F:\[Project]\2018\MIT_Blower\Program\CIPOSLeadInspection\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.DIOControlWindow.resources
+F:\[Project]\2018\MIT_Blower\Program\CIPOSLeadInspection\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.Properties.Resources.resources
+F:\[Project]\2018\MIT_Blower\Program\CIPOSLeadInspection\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.csproj.GenerateResource.Cache
+F:\[Project]\2018\MIT_Blower\Program\CIPOSLeadInspection\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.dll
+F:\[Project]\2018\MIT_Blower\Program\CIPOSLeadInspection\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Debug\DIOControlManager.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Debug\DIOControlManager.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Debug\CPressingButton.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Debug\CustomControl.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Debug\LogMessageManager.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Debug\ParameterManager.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Debug\log4net.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Debug\Cognex.VisionPro.PMAlign.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Debug\Cognex.VisionPro.Core.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Debug\Cognex.VisionPro.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Debug\Cognex.VisionPro.Interop.Core.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Debug\stdole.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Debug\CustomControl.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Debug\LogMessageManager.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Debug\ParameterManager.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Debug\Cognex.VisionPro.PMAlign.xml
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Debug\Cognex.VisionPro.Core.xml
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Debug\Cognex.VisionPro.xml
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.csprojResolveAssemblyReference.cache
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.DIOControlWindow.resources
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.DIONamingWindow.resources
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.Properties.Resources.resources
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.csproj.GenerateResource.Cache
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Debug\CustomMsgBoxManager.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Debug\CustomMsgBoxManager.pdb
+D:\VisionProgram\TrimFormInspection\DIOControlManager\DIOControlManager\bin\Debug\DIOControlManager.dll
+D:\VisionProgram\TrimFormInspection\DIOControlManager\DIOControlManager\bin\Debug\DIOControlManager.pdb
+D:\VisionProgram\TrimFormInspection\DIOControlManager\DIOControlManager\bin\Debug\CPressingButton.dll
+D:\VisionProgram\TrimFormInspection\DIOControlManager\DIOControlManager\bin\Debug\CustomControl.dll
+D:\VisionProgram\TrimFormInspection\DIOControlManager\DIOControlManager\bin\Debug\CustomMsgBoxManager.dll
+D:\VisionProgram\TrimFormInspection\DIOControlManager\DIOControlManager\bin\Debug\LogMessageManager.dll
+D:\VisionProgram\TrimFormInspection\DIOControlManager\DIOControlManager\bin\Debug\ParameterManager.dll
+D:\VisionProgram\TrimFormInspection\DIOControlManager\DIOControlManager\bin\Debug\log4net.dll
+D:\VisionProgram\TrimFormInspection\DIOControlManager\DIOControlManager\bin\Debug\Cognex.VisionPro.PMAlign.dll
+D:\VisionProgram\TrimFormInspection\DIOControlManager\DIOControlManager\bin\Debug\Cognex.VisionPro.Core.dll
+D:\VisionProgram\TrimFormInspection\DIOControlManager\DIOControlManager\bin\Debug\Cognex.VisionPro.dll
+D:\VisionProgram\TrimFormInspection\DIOControlManager\DIOControlManager\bin\Debug\Cognex.VisionPro.Interop.Core.dll
+D:\VisionProgram\TrimFormInspection\DIOControlManager\DIOControlManager\bin\Debug\stdole.dll
+D:\VisionProgram\TrimFormInspection\DIOControlManager\DIOControlManager\bin\Debug\CustomControl.pdb
+D:\VisionProgram\TrimFormInspection\DIOControlManager\DIOControlManager\bin\Debug\LogMessageManager.pdb
+D:\VisionProgram\TrimFormInspection\DIOControlManager\DIOControlManager\bin\Debug\ParameterManager.pdb
+D:\VisionProgram\TrimFormInspection\DIOControlManager\DIOControlManager\bin\Debug\CustomMsgBoxManager.pdb
+D:\VisionProgram\TrimFormInspection\DIOControlManager\DIOControlManager\bin\Debug\Cognex.VisionPro.PMAlign.xml
+D:\VisionProgram\TrimFormInspection\DIOControlManager\DIOControlManager\bin\Debug\Cognex.VisionPro.Core.xml
+D:\VisionProgram\TrimFormInspection\DIOControlManager\DIOControlManager\bin\Debug\Cognex.VisionPro.xml
+D:\VisionProgram\TrimFormInspection\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.csprojResolveAssemblyReference.cache
+D:\VisionProgram\TrimFormInspection\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.DIOControlWindow.resources
+D:\VisionProgram\TrimFormInspection\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.DIONamingWindow.resources
+D:\VisionProgram\TrimFormInspection\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.Properties.Resources.resources
+D:\VisionProgram\TrimFormInspection\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.csproj.GenerateResource.Cache
+D:\VisionProgram\TrimFormInspection\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.dll
+D:\VisionProgram\TrimFormInspection\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.pdb
+D:\VisionProgram\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.csprojResolveAssemblyReference.cache
+D:\VisionProgram\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.DIOControlWindow.resources
+D:\VisionProgram\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.DIONamingWindow.resources
+D:\VisionProgram\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.Properties.Resources.resources
+D:\VisionProgram\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.csproj.GenerateResource.Cache
+D:\VisionProgram\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.dll
+D:\VisionProgram\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.pdb
+D:\VisionProgram\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\bin\Debug\DIOControlManager.dll
+D:\VisionProgram\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\bin\Debug\DIOControlManager.pdb
+D:\VisionProgram\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\bin\Debug\CPressingButton.dll
+D:\VisionProgram\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\bin\Debug\CustomControl.dll
+D:\VisionProgram\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\bin\Debug\CustomMsgBoxManager.dll
+D:\VisionProgram\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\bin\Debug\LogMessageManager.dll
+D:\VisionProgram\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\bin\Debug\ParameterManager.dll
+D:\VisionProgram\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\bin\Debug\log4net.dll
+D:\VisionProgram\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\bin\Debug\Cognex.VisionPro.PMAlign.dll
+D:\VisionProgram\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\bin\Debug\Cognex.VisionPro.Core.dll
+D:\VisionProgram\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\bin\Debug\Cognex.VisionPro.dll
+D:\VisionProgram\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\bin\Debug\Cognex.VisionPro.Interop.Core.dll
+D:\VisionProgram\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\bin\Debug\stdole.dll
+D:\VisionProgram\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\bin\Debug\CustomControl.pdb
+D:\VisionProgram\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\bin\Debug\LogMessageManager.pdb
+D:\VisionProgram\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\bin\Debug\ParameterManager.pdb
+D:\VisionProgram\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\bin\Debug\CustomMsgBoxManager.pdb
+D:\VisionProgram\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\bin\Debug\Cognex.VisionPro.PMAlign.xml
+D:\VisionProgram\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\bin\Debug\Cognex.VisionPro.Core.xml
+D:\VisionProgram\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\bin\Debug\Cognex.VisionPro.xml
+C:\Zoom\Source management\Project\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\bin\Debug\DIOControlManager.dll
+C:\Zoom\Source management\Project\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\bin\Debug\DIOControlManager.pdb
+C:\Zoom\Source management\Project\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\bin\Debug\CPressingButton.dll
+C:\Zoom\Source management\Project\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\bin\Debug\CustomControl.dll
+C:\Zoom\Source management\Project\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\bin\Debug\CustomMsgBoxManager.dll
+C:\Zoom\Source management\Project\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\bin\Debug\LogMessageManager.dll
+C:\Zoom\Source management\Project\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\bin\Debug\ParameterManager.dll
+C:\Zoom\Source management\Project\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\bin\Debug\log4net.dll
+C:\Zoom\Source management\Project\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\bin\Debug\Cognex.VisionPro.PMAlign.dll
+C:\Zoom\Source management\Project\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\bin\Debug\Cognex.VisionPro.Core.dll
+C:\Zoom\Source management\Project\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\bin\Debug\Cognex.VisionPro.dll
+C:\Zoom\Source management\Project\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\bin\Debug\Cognex.VisionPro.Interop.Core.dll
+C:\Zoom\Source management\Project\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\bin\Debug\stdole.dll
+C:\Zoom\Source management\Project\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\bin\Debug\CustomControl.pdb
+C:\Zoom\Source management\Project\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\bin\Debug\LogMessageManager.pdb
+C:\Zoom\Source management\Project\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\bin\Debug\ParameterManager.pdb
+C:\Zoom\Source management\Project\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\bin\Debug\CustomMsgBoxManager.pdb
+C:\Zoom\Source management\Project\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\bin\Debug\Cognex.VisionPro.PMAlign.xml
+C:\Zoom\Source management\Project\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\bin\Debug\Cognex.VisionPro.Core.xml
+C:\Zoom\Source management\Project\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\bin\Debug\Cognex.VisionPro.xml
+C:\Zoom\Source management\Project\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.csprojResolveAssemblyReference.cache
+C:\Zoom\Source management\Project\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.DIOControlWindow.resources
+C:\Zoom\Source management\Project\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.DIONamingWindow.resources
+C:\Zoom\Source management\Project\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.Properties.Resources.resources
+C:\Zoom\Source management\Project\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.csproj.GenerateResource.Cache
+C:\Zoom\Source management\Project\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.dll
+C:\Zoom\Source management\Project\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.pdb

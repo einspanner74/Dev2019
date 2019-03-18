@@ -1,0 +1,9 @@
+C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetServerManager\bin\Release\EthernetServerManager.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetServerManager\bin\Release\EthernetServerManager.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetServerManager\bin\Release\CustonMsgBoxManager.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetServerManager\obj\Release\EthernetServerManager.csprojResolveAssemblyReference.cache
+C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetServerManager\obj\Release\EthernetServerManager.EthernetWindow.resources
+C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetServerManager\obj\Release\EthernetServerManager.Properties.Resources.resources
+C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetServerManager\obj\Release\EthernetServerManager.csproj.GenerateResource.Cache
+C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetServerManager\obj\Release\EthernetServerManager.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetServerManager\obj\Release\EthernetServerManager.pdb
