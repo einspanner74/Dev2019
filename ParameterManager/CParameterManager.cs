@@ -168,8 +168,7 @@ namespace ParameterManager
                         case "ProjectType":      SystemParam.ProjectType = Convert.ToInt32(_Node.InnerText); break;
                         case "IPAddress":        SystemParam.IPAddress = _Node.InnerText; break;
                         case "PortNumber":       SystemParam.PortNumber = Convert.ToInt32(_Node.InnerText); break;
-                        case "InDataPath":       SystemParam.InDataFolderPath = _Node.InnerText; break;
-                        case "OutDataPath":      SystemParam.OutDataFolderPath = _Node.InnerText; break;
+                        case "DataFolderPath":   SystemParam.DataFolderPath = _Node.InnerText; break;
                     }
 
                     if (_Node.Name == "ISMModuleCount") SystemParam.LastRecipeName = new string[SystemParam.InspSystemManagerCount];
@@ -215,8 +214,7 @@ namespace ParameterManager
             XElement _ProjectType            = new XElement("ProjectType", SystemParam.ProjectType.ToString());
             XElement _IPAddress              = new XElement("IPAddress", SystemParam.IPAddress);
             XElement _PortNumber             = new XElement("PortNumber", SystemParam.PortNumber.ToString());
-            XElement _InDataPath             = new XElement("InDataPath", SystemParam.InDataFolderPath);
-            XElement _OutDataPath            = new XElement("OutDataPath", SystemParam.OutDataFolderPath);
+            XElement _DataFolderPath         = new XElement("DataFolderPath", SystemParam.DataFolderPath);
 
             XElement _LastRecipeName         = new XElement("LastRecipeName");
             XElement[] _RecipeName           = new XElement[SystemParam.InspSystemManagerCount];

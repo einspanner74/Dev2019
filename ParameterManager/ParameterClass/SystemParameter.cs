@@ -22,8 +22,7 @@ namespace ParameterManager
         public int ResultWindowWidth;
         public int ResultWindowHeight;
 
-        public string InDataFolderPath;
-        public string OutDataFolderPath;
+        public string DataFolderPath;
 
         public SystemParameter()
         {

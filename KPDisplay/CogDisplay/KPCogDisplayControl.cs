@@ -737,6 +737,42 @@ namespace KPDisplay
         }
 
         /// <summary>
+        /// 현재 Display된 Image jpg로 저장하기 
+        /// </summary>
+        public void SaveDisplayImageJPG(string _DirectoryPath)
+        {
+            DateTime dateTime = DateTime.Now;
+            string ImageSaveFolder = _DirectoryPath;
+            if (false == Directory.Exists(ImageSaveFolder)) Directory.CreateDirectory(ImageSaveFolder);
+            ImageSaveFolder = String.Format("{0}\\{1:D4}\\{2:D2}\\{3:D2}", ImageSaveFolder, dateTime.Year, dateTime.Month, dateTime.Day);
+            if (false == Directory.Exists(ImageSaveFolder)) Directory.CreateDirectory(ImageSaveFolder);
+
+            string ImageSaveFile;
+            ImageSaveFile = String.Format("{0}\\{1:D2}{2:D2}{3:D2}{4:D3}.jpg", ImageSaveFolder, dateTime.Hour, dateTime.Minute, dateTime.Second, dateTime.Millisecond);
+
+            try
+            {
+                ICogImage _CogSaveImage = kCogDisplay.Image;
+                CogImageFile _CogImageFile = new CogImageFile();
+
+                if (_CogSaveImage == null)
+                {
+                    //MessageBox.Show(new Form{TopMost = true}, "영상이 없습니다.");
+                }
+                else
+                {
+                    _CogImageFile.Open(ImageSaveFile, CogImageFileModeConstants.Write);
+                    _CogImageFile.Append(_CogSaveImage);
+                    _CogImageFile.Close();
+                }
+            }
+            catch
+            {
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.ERR, "SetDisplayImageJPG(string) Exception!!", CLogManager.LOG_LEVEL.LOW);
+            }
+        }
+
+        /// <summary>
         /// Display 
         /// </summary>
         /// <returns></returns>

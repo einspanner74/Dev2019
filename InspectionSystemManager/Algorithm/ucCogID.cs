@@ -25,11 +25,14 @@ namespace InspectionSystemManager
         public ucCogID()
         {
             InitializeComponent();
+            Initialize();
         }
 
         public void Initialize()
         {
-
+            comboBoxSymbology.Items.Clear();
+            comboBoxSymbology.Items.Add("DataMatrix");
+            comboBoxSymbology.Items.Add("QRCode");
         }
 
         public void DeInitialize()

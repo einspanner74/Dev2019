@@ -283,17 +283,6 @@ namespace ParameterManager
         public double MatchingScore;
     }
 
-    public class SendIDResult
-    {
-        public string ReadCode;
-    }
-
-    public class SendNeedleAlignResult
-    {
-        public double AlignX;
-        public double AlignY;
-    }
-
     public class SendSurfaceResult
     {
         public double TwoPointAngle;
@@ -320,12 +309,12 @@ namespace ParameterManager
 
     public class SendCardImageSaveResult
     {
-
+        public CogImage8Grey SaveImage;
     }
 
     public class SendCardExistResult
     {
-
+        public bool[] IsGoods;
     }
 
     public class SendCardIDResult
