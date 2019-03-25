@@ -68,13 +68,6 @@ namespace ParameterManager
 
     public enum eSaveMode           { ALL = 0, ONLY_NG };
 
-<<<<<<< HEAD
-    public enum eToigunGoGo         { PM = 0, CalToi};
-
-    public enum PM317               { Time = 0 };
-
-=======
->>>>>>> 39ed17689e1ab04d8177f4f5f9fb248ada18fbe8
     public static class DIO_DEF
     {
         public const int NONE = -1;

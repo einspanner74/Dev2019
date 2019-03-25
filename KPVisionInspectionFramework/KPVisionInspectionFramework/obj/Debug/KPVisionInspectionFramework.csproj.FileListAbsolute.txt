@@ -92,4 +92,3 @@ F:\[Project]\2018\GitFolder\Einspanner\KPVisionInspectionFramework\KPVisionInspe
 F:\[Project]\2018\GitFolder\Einspanner\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Debug\KP INT Vision Inspection.pdb
 F:\[Project]\2018\GitFolder\Einspanner\KPVisionInspectionFramework\KP INT Vision Inspection.exe
 F:\[Project]\2018\GitFolder\Einspanner\KPVisionInspectionFramework\KP INT Vision Inspection.pdb
-C:\Zoom\Team Source management\KPVisionInspectionProgram\KPVisionInspectionFramework\KP INT Vision Inspection.exe.config

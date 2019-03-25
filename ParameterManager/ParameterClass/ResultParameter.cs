@@ -260,6 +260,7 @@ namespace ParameterManager
         public double EndY;
         public double Length;
         public double Rotation;
+        public double LineRotation;
         public int PointCount;
         public bool[] PointStatus;
     }
@@ -267,7 +268,7 @@ namespace ParameterManager
 
     #region Last Send Result Parameter
     public class SendResultParameter
-    {
+    { 
         public eProjectItem ProjectItem;
         public eInspMode InspMode;
         public int ID;
@@ -281,6 +282,17 @@ namespace ParameterManager
     {
         public string ReadCode;
         public double MatchingScore;
+    }
+
+    public class SendIDResult
+    {
+        public string ReadCode;
+    }
+
+    public class SendNeedleAlignResult
+    {
+        public double AlignX;
+        public double AlignY;
     }
 
     public class SendSurfaceResult

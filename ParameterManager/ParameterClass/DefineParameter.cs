@@ -56,6 +56,8 @@ namespace ParameterManager
 
     public enum eBenchMarkPosition { TL = 0, TC, TR, ML, MC, MR, BL, BC, BR, GC };
 
+    public enum eBodyPosition       { TL = 0, TR, BL, BR };
+
     public enum eForeColor          { BLACK = 0, WHITE = 1 };
 
     public enum eSearchDirection    { IN_WARD = 0, OUT_WARD = 1 };
@@ -118,6 +120,33 @@ namespace ParameterManager
     {
         public double X;
         public double Y;
+    }
+
+    /// <summary>
+    /// double형 Rectangle
+    /// </summary>
+    public class RectangleD
+    {
+        public double CenterX;
+        public double CenterY;
+        public double Width;
+        public double Height;
+        
+        public RectangleD()
+        {
+            CenterX = 100;
+            CenterY = 100;
+            Width = 150;
+            Height = 200;
+        }
+
+        public void SetCenterWidthHeight(double _X, double _Y, double _W, double _H)
+        {
+            CenterX = _X;
+            CenterY = _Y;
+            Width = _W;
+            Height = _H;
+        }
     }
 
     public class MapIDRectInfo

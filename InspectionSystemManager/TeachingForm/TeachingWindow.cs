@@ -188,7 +188,7 @@ namespace InspectionSystemManager
             else if (ProjectItem == eProjectItem.LEAD_TRIM_INSP)
             {
                 ContextMenuAlgo.MenuItems.Add("기준 패턴 검사", new EventHandler(PatternFindAlgorithm));
-                ContextMenuAlgo.MenuItems.Add("기준 멀티 패턴 검사", new EventHandler(MultiPatternFindAlgorithm));
+                ContextMenuAlgo.MenuItems.Add("기준 라인 검사", new EventHandler(LineFineAlgorithm));
                 ContextMenuAlgo.MenuItems.Add("Lead Trim 검사", new EventHandler(LeadTrimInspectionAlgorithm));
             }
 
@@ -1179,6 +1179,7 @@ namespace InspectionSystemManager
                 {
                     if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_PATTERN)            _Name = "기준 패턴 검사";      //"Pattern - Reference"
                     else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_MULTI_PATTERN) _Name = "기준 멀티패턴 검사";
+                    else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_LINE_FIND)     _Name = "제품 라인 검사";
                     else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_LEAD_TRIM)     _Name = "Lead Trim 검사";
                 }
 

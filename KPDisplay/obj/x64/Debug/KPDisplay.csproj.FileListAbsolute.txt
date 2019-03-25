@@ -151,3 +151,5 @@ D:\VisionProgram\KPVisionInspectionProgram\KPDisplay\obj\x64\Debug\KPDisplay.KPC
 D:\VisionProgram\KPVisionInspectionProgram\KPDisplay\obj\x64\Debug\KPDisplay.csproj.GenerateResource.Cache
 D:\VisionProgram\KPVisionInspectionProgram\KPDisplay\obj\x64\Debug\KPDisplay.dll
 D:\VisionProgram\KPVisionInspectionProgram\KPDisplay\obj\x64\Debug\KPDisplay.pdb
+C:\Zoom\Team Source management\KPVisionInspectionProgram\KPDisplay\bin\Debug\Cognex.VisionPro3D.Graphic.dll
+C:\Zoom\Team Source management\KPVisionInspectionProgram\KPDisplay\bin\Debug\Cognex.VisionPro3D.xml

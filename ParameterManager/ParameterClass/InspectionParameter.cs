@@ -349,6 +349,23 @@ namespace ParameterManager
             UseAlignment = false;
         }
     }
+
+    /// <summary>
+    /// Lead Trim 검사 알고리즘 
+    /// </summary>
+    public class CogLeadTrimAlgo
+    {
+        public bool             IsUseLeadBody;
+        public RectangleD       BodyArea;
+        public List<RectangleD> BodyMaskingAreaList;
+        public double           BodyAngle;
+
+        public CogLeadTrimAlgo()
+        {
+            BodyArea = new RectangleD();
+            BodyMaskingAreaList = new List<RectangleD>();
+        }
+    }
     #endregion Cog Algorithm Class
 
     public class InspectionAlgorithmParameter
@@ -382,6 +399,7 @@ namespace ParameterManager
             else if (_AlgoType == eAlgoType.C_NEEDLE_FIND)   Algorithm = new CogNeedleFindAlgo();
             else if (_AlgoType == eAlgoType.C_ID)            Algorithm = new CogBarCodeIDAlgo();
             else if (_AlgoType == eAlgoType.C_LINE_FIND)     Algorithm = new CogLineFindAlgo();
+            else if (_AlgoType == eAlgoType.C_LEAD_TRIM)     Algorithm = new CogLeadTrimAlgo();
             else if (_AlgoType == eAlgoType.C_MULTI_PATTERN) Algorithm = new CogMultiPatternAlgo();
         }
     }

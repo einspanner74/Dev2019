@@ -129,6 +129,20 @@ namespace KPDisplay
         }
         #endregion Display Clear
 
+        public void DrawMaskingShape(CogRectangle _cogRect, string _groupName)
+        {
+            CogMaskGraphic _CogMaskGraphic = new CogMaskGraphic();
+            //CogMaskPixelConstants
+
+            StaticRectGraphic = new CogRectangle();
+            StaticRectGraphic = _cogRect;
+            StaticRectGraphic.Color = CogColorConstants.None;
+            StaticRectGraphic.LineStyle = CogGraphicLineStyleConstants.Dash;
+
+            kCogDisplay.ClearDisplay(_groupName);
+            kCogDisplay.StaticGraphics.Add(StaticRectGraphic.CopyBase(CogCopyShapeConstants.All), _groupName);
+        }
+
         #region Draw Shape Display Window
         /// <summary>
         /// Display에 그리기
@@ -358,16 +372,6 @@ namespace KPDisplay
             StaticArrow.SetStartLengthRotation(_StartX, _StartY, _Length, _Rotate);
             kCogDisplay.StaticGraphics.Add(StaticArrow, _GroupName);
         }
-
-        //public void DrawStaticLine(double _StartX, double _StartY, double _EndX, double _EndY, int _Tickness, string _GroupName, CogColorConstants _Color)
-        //{
-        //    StaticLineSegment.Color = _Color;
-        //    StaticLineSegment.Interactive = false;
-        //    StaticLineSegment.LineStyle = CogGraphicLineStyleConstants.Solid;
-        //    StaticLineSegment.LineWidthInScreenPixels = _Tickness;
-        //    StaticLineSegment.SetStartEnd(_StartX, _StartY, _EndX, _EndY);
-        //    kCogDisplay.StaticGraphics.Add(StaticLineSegment, _GroupName);
-        //}
 
         public void DrawStaticLine(CogLineSegment _Line, string _GroupName, CogColorConstants _Color, CogGraphicLineStyleConstants _LineStyle = CogGraphicLineStyleConstants.Solid)
         {

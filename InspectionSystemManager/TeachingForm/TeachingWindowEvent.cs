@@ -37,6 +37,10 @@ namespace InspectionSystemManager
             ucCogAutoPatternWnd.DrawReferRegionEvent += new ucCogAutoPattern.DrawReferRegionHandler(DrawReferRegionFunction);
             ucCogAutoPatternWnd.ReferenceActionEvent += new ucCogAutoPattern.ReferenceActionHandler(ReferenceActionFunction);
             ucCogAutoPatternWnd.ApplyAutoPatternFindValueEvent += new ucCogAutoPattern.ApplyAutoPatternFindValueHandler(ApplyAutoPatternFindValueFunction);
+
+            ucCogLeadTrimInspWnd.GetRegionEvent += new ucCogLeadTrimInspection.GetRegionHandler(GetRegionFunction);
+            ucCogLeadTrimInspWnd.DrawRegionEvent += new ucCogLeadTrimInspection.DrawRegionHandler(DrawRegionFunction);
+            ucCogLeadTrimInspWnd.DrawMaskingRegionEven += new ucCogLeadTrimInspection.DrawMaskingRegionHandler(DrawMaskingRegionFunction);
         }
 
         private void DeInitializeEvent()
@@ -59,6 +63,10 @@ namespace InspectionSystemManager
             ucCogAutoPatternWnd.DrawReferRegionEvent -= new ucCogAutoPattern.DrawReferRegionHandler(DrawReferRegionFunction);
             ucCogAutoPatternWnd.ReferenceActionEvent -= new ucCogAutoPattern.ReferenceActionHandler(ReferenceActionFunction);
             ucCogAutoPatternWnd.ApplyAutoPatternFindValueEvent -= new ucCogAutoPattern.ApplyAutoPatternFindValueHandler(ApplyAutoPatternFindValueFunction);
+
+            ucCogLeadTrimInspWnd.GetRegionEvent -= new ucCogLeadTrimInspection.GetRegionHandler(GetRegionFunction);
+            ucCogLeadTrimInspWnd.DrawRegionEvent -= new ucCogLeadTrimInspection.DrawRegionHandler(DrawRegionFunction);
+            ucCogLeadTrimInspWnd.DrawMaskingRegionEven -= new ucCogLeadTrimInspection.DrawMaskingRegionHandler(DrawMaskingRegionFunction);
         }
         #endregion InitializeEvent & DeInitializeEvent
 
@@ -375,6 +383,34 @@ namespace InspectionSystemManager
 
                 string _MatchingName = string.Format($"Rate = {_CogAutoPatternResult.Score:F2}, X = {_CogAutoPatternResult.OriginPointX:F2}, Y = {_CogAutoPatternResult.OriginPointY:F2}");
                 kpTeachDisplay.DrawText(_MatchingName, _CogAutoPatternResult.OriginPointX, _CogAutoPatternResult.OriginPointY + 30, CogColorConstants.Green, 10, CogGraphicLabelAlignmentConstants.BaselineCenter);
+            }
+        }
+
+        private CogRectangle GetRegionFunction()
+        {
+            return kpTeachDisplay.GetInterActiveRectangle();
+        }
+
+        private void DrawRegionFunction(CogRectangle _Region, bool _IsStatic)
+        {
+            if (_IsStatic)
+                kpTeachDisplay.DrawStaticShape(_Region, "Region", CogColorConstants.Magenta, 2, CogGraphicLineStyleConstants.Dash);
+            else
+                kpTeachDisplay.DrawInterActiveShape(_Region, "Region", CogColorConstants.Magenta);
+        }   
+
+        private void DrawMaskingRegionFunction(List<RectangleD> _MaskingArea)
+        {
+            for (int iLoopCount = 0; iLoopCount < 10; ++iLoopCount)
+                kpTeachDisplay.ClearDisplay("MaskingArea" + iLoopCount);
+
+            for (int iLoopCount = 0; iLoopCount < _MaskingArea.Count; ++iLoopCount)
+            {
+                CogRectangle _Area = new CogRectangle();
+                _Area.SetCenterWidthHeight(_MaskingArea[iLoopCount].CenterX, _MaskingArea[iLoopCount].CenterY,
+                                           _MaskingArea[iLoopCount].Width, _MaskingArea[iLoopCount].Height);
+
+                kpTeachDisplay.DrawStaticShape(_Area, "MaskingArea" + iLoopCount, CogColorConstants.Yellow, 2);
             }
         }
         #endregion Pattern Matching Window Event : ucCogPatternWindow -> TeachingWindow
