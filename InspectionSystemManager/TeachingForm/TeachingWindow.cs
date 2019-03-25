@@ -762,6 +762,8 @@ namespace InspectionSystemManager
                 if (gridViewAlgo.RowCount <= 0) return;
                 if (gridViewAlgo.SelectedRows.Count == 0) return;
 
+                panelTeaching.Controls.Clear();
+
                 int _ID = Convert.ToInt32(gridViewAlgo.SelectedRows[0].Cells[(int)eAlgoList.ID].Value) - 1;
                 GetAlgoResultDataOffset(InspAreaSelected, _ID);
 

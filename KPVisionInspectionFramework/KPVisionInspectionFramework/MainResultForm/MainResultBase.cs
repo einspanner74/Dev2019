@@ -233,7 +233,7 @@ namespace KPVisionInspectionFramework
             else if (_ResultParam.ProjectItem == eProjectItem.LEAD_TRIM_INSP)   MainResultTrimFormWnd.SetTrimResultData(_ResultParam);
             else if (_ResultParam.ProjectItem == eProjectItem.LEAD_FORM_ALIGN)  MainResultTrimFormWnd.SetFormResultData(_ResultParam);
             else if (_ResultParam.ProjectItem == eProjectItem.BC_IMG_SAVE)      MainResultCardManagerWnd.SetImageSaveResultData(_ResultParam);
-            else if (_ResultParam.ProjectItem == eProjectItem.BC_ID)            MainResultCardManagerWnd.SetQrCodResultData(_ResultParam);
+            else if (_ResultParam.ProjectItem == eProjectItem.BC_ID)            MainResultCardManagerWnd.SetQRCodeResultData(_ResultParam);
             else if (_ResultParam.ProjectItem == eProjectItem.BC_EXIST)         MainResultCardManagerWnd.SetExistResultData(_ResultParam);
         }
 
@@ -275,6 +275,12 @@ namespace KPVisionInspectionFramework
             {
                 CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "Screenshot Exception : " + ex.ToString(), CLogManager.LOG_LEVEL.LOW);
             }
+        }
+
+        //LDH, 2019.03.20, 저장 Data Foler 지정 함수
+        public void SetDataFolderPath(string _FolderPath)
+        {
+            MainResultCardManagerWnd.SetDataFolderPath(_FolderPath);
         }
     }
 }

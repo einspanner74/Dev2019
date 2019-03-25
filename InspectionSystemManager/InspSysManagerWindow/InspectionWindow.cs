@@ -1386,7 +1386,9 @@ namespace InspectionSystemManager
             CogLineSegment _CogLine = new CogLineSegment();
             if (_CogLineFindResult.Length == 0 || _CogLineFindResult.Rotation == 0) return false;
             _CogLine.SetStartLengthRotation(_CogLineFindResult.StartX, _CogLineFindResult.StartY, _CogLineFindResult.Length, _CogLineFindResult.Rotation);
-            ResultDisplay(_CogLine, "LineFind", CogColorConstants.Green);
+
+            if(_CogLineFindResult.IsGood) ResultDisplay(_CogLine, "LineFind", CogColorConstants.Green);
+            else
 
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "InspectionWindow - DisplayResultLineFind Complete", CLogManager.LOG_LEVEL.MID);
 

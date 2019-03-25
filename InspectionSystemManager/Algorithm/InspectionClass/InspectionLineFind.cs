@@ -87,8 +87,6 @@ namespace InspectionSystemManager
                             _CogLineFindResult.Length = FindLineResults.GetLineSegment().Length;
                             _CogLineFindResult.Rotation = FindLineResults.GetLineSegment().Rotation;
                             _CogLineFindResult.PointCount = FindLineResults.Count;
-
-                            _CogLineFindResult.IsGood = true;
                         }
 
                         else
@@ -104,7 +102,9 @@ namespace InspectionSystemManager
                         _CogLineFindResult.Rotation = FindLineResults.GetLineSegment().Rotation;
                         double _Rotation = 0;
                         _Rotation = _CogLineFindResult.Rotation * 180 / Math.PI;
-                        _CogLineFindResult.IsGood = true;
+
+                        if (_Rotation > 4 || _Rotation < -4) _CogLineFindResult.IsGood = false;
+                        else                                 _CogLineFindResult.IsGood = true;
                     }
                 }
 
@@ -152,6 +152,8 @@ namespace InspectionSystemManager
             FindLineProc.RunParams.CaliperProjectionLength = _ProjectionLength;
             FindLineProc.RunParams.NumToIgnore = _CaliperIgnoreNumber;
             //FindLineProc.RunParams.CaliperSearchDirection = _SearchDir;
+
+            FindLineProc.RunParams.CaliperRunParams.Edge0Polarity = CogCaliperPolarityConstants.DarkToLight;
         }
 
         private void SetCaliperLine(double _StartX, double _StartY, double _EndX, double _EndY)

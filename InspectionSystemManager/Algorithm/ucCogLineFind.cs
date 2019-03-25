@@ -99,6 +99,7 @@ namespace InspectionSystemManager
                 numUpDownEndX.Value = Convert.ToDecimal(CogLineFindAlgoRcp.CaliperLineEndX);
                 numUpDownEndY.Value = Convert.ToDecimal(CogLineFindAlgoRcp.CaliperLineEndY);
                 ckUseAlignment.Checked = CogLineFindAlgoRcp.UseAlignment;
+                graLabelSearchDirection.Text = Convert.ToString(CogLineFindAlgoRcp.CaliperSearchDirection);
 
                 SetSearchDirection(CogLineFindAlgoRcp.CaliperSearchDirection);
 

@@ -32,6 +32,7 @@ namespace KPVisionInspectionFramework
         private RecipeWindow                RecipeWnd;
         private MainProcessBase             MainProcess;
         private CHistoryManager             HistoryManager;
+        private FolderPathWindow            FolderPathWnd;
 
         private string ProjectName;
         private int ISMModuleCount = 1;
@@ -129,7 +130,6 @@ namespace KPVisionInspectionFramework
                 rbAlign.Visible = false;
                 rbSerial.Visible = false;
                 rbConfig.Visible = false;
-                rbFolder.Visible = false;
             }
             #endregion Ribbon Menu Setting
 
@@ -155,6 +155,8 @@ namespace KPVisionInspectionFramework
             ResultBaseWnd.SetWindowLocation(ParamManager.SystemParam.ResultWindowLocationX, ParamManager.SystemParam.ResultWindowLocationY);
             ResultBaseWnd.SetWindowSize(ParamManager.SystemParam.ResultWindowWidth, ParamManager.SystemParam.ResultWindowHeight);
             ResultBaseWnd.ClearResultData();
+
+            if((eProjectType)ParamManager.SystemParam.ProjectType == eProjectType.BC_QCC) ResultBaseWnd.SetDataFolderPath(ParamManager.SystemParam.DataFolderPath);
             #endregion Result Window Initialize
 
             #region Light Window Initialize
@@ -166,6 +168,11 @@ namespace KPVisionInspectionFramework
             #region History Window Initialize
             HistoryManager = new CHistoryManager(ProjectName, ((eProjectType)ParamManager.SystemParam.ProjectType).ToString());
             #endregion History Window Initialize
+
+            #region FolderPath Window Initialize
+            FolderPathWnd = new FolderPathWindow(ParamManager.SystemParam.IsSimulationMode);
+            FolderPathWnd.SetDataPathEvent += new FolderPathWindow.SetDataPathHandler(SetDataFolderPath);
+            #endregion FolderPath Window Initialize
 
             System.Threading.Thread.Sleep(100);
             #endregion SubWindow 생성 및 Event 등록
@@ -216,6 +223,8 @@ namespace KPVisionInspectionFramework
             ParamManager.DeInitialize();
 
             LightControlManager.DeInitialize();
+
+            FolderPathWnd.SetDataPathEvent -= new FolderPathWindow.SetDataPathHandler(SetDataFolderPath);
 
             MainProcess.MainProcessCommandEvent -= new MainProcessBase.MainProcessCommandHandler(MainProcessCommandEventFunction);
             MainProcess.DeInitialize();
@@ -436,9 +445,10 @@ namespace KPVisionInspectionFramework
 
         private void rbFolder_Click(object sender, EventArgs e)
         {
-            string[] DataPath = new string[2];
-            DataPath[0] = ParamManager.SystemParam.InDataFolderPath;
-            DataPath[1] = ParamManager.SystemParam.OutDataFolderPath;
+            string DataPath = ParamManager.SystemParam.DataFolderPath;
+
+            FolderPathWnd.SetCurrentDataPath(DataPath);
+            FolderPathWnd.ShowDialog();
         }
 		
         private void rbExit_Click(object sender, EventArgs e)
@@ -679,12 +689,12 @@ namespace KPVisionInspectionFramework
             //}
         }
 
-        private void SetDataFolderPath(string[] _DataPath)
+        private void SetDataFolderPath(string _DataPath)
         {
-            ParamManager.SystemParam.InDataFolderPath = _DataPath[0];
-            ParamManager.SystemParam.OutDataFolderPath = _DataPath[1];
-
+            ParamManager.SystemParam.DataFolderPath = _DataPath;
             ParamManager.WriteSystemParameter();
+
+            ResultBaseWnd.SetDataFolderPath(_DataPath);
         }
         #endregion Main Process
     }
