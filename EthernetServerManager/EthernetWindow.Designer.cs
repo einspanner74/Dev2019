@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EthernetWindow));
             this.btnReceive = new System.Windows.Forms.Button();
             this.btnSend = new System.Windows.Forms.Button();
             this.btnDisconnect = new System.Windows.Forms.Button();
@@ -66,6 +67,7 @@
             this.btnReceive.Text = " Recv Test";
             this.btnReceive.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnReceive.UseVisualStyleBackColor = true;
+            this.btnReceive.Click += new System.EventHandler(this.btnReceive_Click);
             // 
             // btnSend
             // 
@@ -339,7 +341,7 @@
             this.Name = "EthernetWindow";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "EthernetWindow";
+            this.Text = resources.GetString("$this.Text");
             this.TopMost = true;
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.EthernetWindow_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.picConnection)).EndInit();

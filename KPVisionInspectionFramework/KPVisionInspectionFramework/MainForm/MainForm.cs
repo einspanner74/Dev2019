@@ -132,7 +132,7 @@ namespace KPVisionInspectionFramework
                 rbConfig.Visible = false;
             }
             #endregion Ribbon Menu Setting
-
+            
             #region Log Window Initialize
             LogWnd = new CLogManager(ProjectName);
             CLogManager.LogSystemSetting(@"D:\VisionInspectionData\" + ProjectName + @"\Log\SystemLog");
@@ -185,6 +185,11 @@ namespace KPVisionInspectionFramework
             else                                                                            MainProcess = new MainProcessBase();
 
             MainProcess.MainProcessCommandEvent += new MainProcessBase.MainProcessCommandHandler(MainProcessCommandEventFunction);
+            if ((int)eProjectType.BC_QCC == ParamManager.SystemParam.ProjectType)
+            {
+                MainProcess.EthernetRecvStringEvent += new MainProcessBase.EthernetRecvStringHandler(MainProcessEthernetRecvEventFunction);
+            }
+            
             MainProcess.Initialize(@"D:\VisionInspectionData\Common\");
             #endregion MainProcess Setting
 
@@ -227,6 +232,10 @@ namespace KPVisionInspectionFramework
             FolderPathWnd.SetDataPathEvent -= new FolderPathWindow.SetDataPathHandler(SetDataFolderPath);
 
             MainProcess.MainProcessCommandEvent -= new MainProcessBase.MainProcessCommandHandler(MainProcessCommandEventFunction);
+            if ((int)eProjectType.BC_QCC == ParamManager.SystemParam.ProjectType)
+            {
+                MainProcess.EthernetRecvStringEvent -= new MainProcessBase.EthernetRecvStringHandler(MainProcessEthernetRecvEventFunction);
+            }
             MainProcess.DeInitialize();
 
             if((int)eProjectType.NONE == ParamManager.SystemParam.ProjectType)              MainProcess.DeInitialize();
@@ -658,6 +667,12 @@ namespace KPVisionInspectionFramework
             int _ID = Convert.ToInt32(_Value);
             CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("Main : Data Request{0} Event", _ID + 1));
             InspSysManager[_ID].DataSend();
+        }
+
+        //LDH, 2019.04.02, Ethernet Receive Data 전달 Event
+        private void MainProcessEthernetRecvEventFunction(string[] _Value)
+        {
+            ResultBaseWnd.SetEthernetRecvData(_Value);
         }
 
         private void SendResultData(object _Result)

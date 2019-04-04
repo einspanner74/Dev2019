@@ -55,9 +55,7 @@ namespace EthernetServerManager
             ConnectCheckTimer = new Timer();
             ConnectCheckTimer.Tick += ConnectCheckTimer_Tick;
             ConnectCheckTimer.Interval = 250;
-            ConnectCheckTimer.Start();
-
-            
+            ConnectCheckTimer.Start();            
         }
 
         public void DeInitialize()
@@ -326,6 +324,12 @@ namespace EthernetServerManager
 
             IsShowWindow = true;
             this.Show();
+        }
+
+        private void btnReceive_Click(object sender, EventArgs e)
+        {
+            string[] _RecvTest = textBoxManualData.Text.Split(',');
+            ReceiveStringEvent(_RecvTest);
         }
     }
 }

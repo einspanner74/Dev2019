@@ -88,6 +88,14 @@
             this.gradientLabel21 = new CustomControl.GradientLabel();
             this.gradientLabel22 = new CustomControl.GradientLabel();
             this.gradientLabelResult4 = new CustomControl.GradientLabel();
+            this.gradientLabel9 = new CustomControl.GradientLabel();
+            this.gradientLabelEtherRecv1 = new CustomControl.GradientLabel();
+            this.gradientLabel23 = new CustomControl.GradientLabel();
+            this.gradientLabelEtherRecv3 = new CustomControl.GradientLabel();
+            this.gradientLabel16 = new CustomControl.GradientLabel();
+            this.gradientLabelEtherRecv2 = new CustomControl.GradientLabel();
+            this.gradientLabel25 = new CustomControl.GradientLabel();
+            this.gradientLabelEtherRecv4 = new CustomControl.GradientLabel();
             this.panelMain.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -96,6 +104,8 @@
             // 
             // panelMain
             // 
+            this.panelMain.Controls.Add(this.gradientLabel9);
+            this.panelMain.Controls.Add(this.gradientLabelEtherRecv1);
             this.panelMain.Controls.Add(this.gradientLabelTotalCount);
             this.panelMain.Controls.Add(this.gradientLabelYield);
             this.panelMain.Controls.Add(this.gradientLabelNgCount);
@@ -319,7 +329,9 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.gradientLabel16);
             this.panel1.Controls.Add(this.gradientLabel1);
+            this.panel1.Controls.Add(this.gradientLabelEtherRecv2);
             this.panel1.Controls.Add(this.gradientLabel2);
             this.panel1.Controls.Add(this.gradientLabel3);
             this.panel1.Controls.Add(this.sevenSegmentArray1);
@@ -542,7 +554,9 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.gradientLabel23);
             this.panel2.Controls.Add(this.gradientLabel10);
+            this.panel2.Controls.Add(this.gradientLabelEtherRecv3);
             this.panel2.Controls.Add(this.gradientLabel11);
             this.panel2.Controls.Add(this.gradientLabel12);
             this.panel2.Controls.Add(this.sevenSegmentArray5);
@@ -765,6 +779,8 @@
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.gradientLabel25);
+            this.panel3.Controls.Add(this.gradientLabelEtherRecv4);
             this.panel3.Controls.Add(this.gradientLabel17);
             this.panel3.Controls.Add(this.gradientLabel18);
             this.panel3.Controls.Add(this.gradientLabel19);
@@ -986,6 +1002,126 @@
             this.gradientLabelResult4.Text = "-";
             this.gradientLabelResult4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // gradientLabel9
+            // 
+            this.gradientLabel9.BackColor = System.Drawing.Color.White;
+            this.gradientLabel9.ColorBottom = System.Drawing.Color.CadetBlue;
+            this.gradientLabel9.ColorTop = System.Drawing.Color.DarkSlateGray;
+            this.gradientLabel9.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel9.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel9.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
+            this.gradientLabel9.Location = new System.Drawing.Point(3, 205);
+            this.gradientLabel9.Name = "gradientLabel9";
+            this.gradientLabel9.Size = new System.Drawing.Size(85, 24);
+            this.gradientLabel9.TabIndex = 46;
+            this.gradientLabel9.Text = "Result";
+            this.gradientLabel9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // gradientLabelEtherRecv1
+            // 
+            this.gradientLabelEtherRecv1.BackColor = System.Drawing.Color.DarkGreen;
+            this.gradientLabelEtherRecv1.ColorBottom = System.Drawing.Color.White;
+            this.gradientLabelEtherRecv1.ColorTop = System.Drawing.Color.White;
+            this.gradientLabelEtherRecv1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gradientLabelEtherRecv1.ForeColor = System.Drawing.Color.Black;
+            this.gradientLabelEtherRecv1.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
+            this.gradientLabelEtherRecv1.Location = new System.Drawing.Point(94, 205);
+            this.gradientLabelEtherRecv1.Name = "gradientLabelEtherRecv1";
+            this.gradientLabelEtherRecv1.Size = new System.Drawing.Size(219, 24);
+            this.gradientLabelEtherRecv1.TabIndex = 45;
+            this.gradientLabelEtherRecv1.Text = "-";
+            this.gradientLabelEtherRecv1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // gradientLabel23
+            // 
+            this.gradientLabel23.BackColor = System.Drawing.Color.White;
+            this.gradientLabel23.ColorBottom = System.Drawing.Color.CadetBlue;
+            this.gradientLabel23.ColorTop = System.Drawing.Color.DarkSlateGray;
+            this.gradientLabel23.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel23.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel23.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
+            this.gradientLabel23.Location = new System.Drawing.Point(3, 205);
+            this.gradientLabel23.Name = "gradientLabel23";
+            this.gradientLabel23.Size = new System.Drawing.Size(85, 24);
+            this.gradientLabel23.TabIndex = 48;
+            this.gradientLabel23.Text = "Result";
+            this.gradientLabel23.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // gradientLabelEtherRecv3
+            // 
+            this.gradientLabelEtherRecv3.BackColor = System.Drawing.Color.DarkGreen;
+            this.gradientLabelEtherRecv3.ColorBottom = System.Drawing.Color.White;
+            this.gradientLabelEtherRecv3.ColorTop = System.Drawing.Color.White;
+            this.gradientLabelEtherRecv3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gradientLabelEtherRecv3.ForeColor = System.Drawing.Color.Black;
+            this.gradientLabelEtherRecv3.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
+            this.gradientLabelEtherRecv3.Location = new System.Drawing.Point(94, 205);
+            this.gradientLabelEtherRecv3.Name = "gradientLabelEtherRecv3";
+            this.gradientLabelEtherRecv3.Size = new System.Drawing.Size(219, 24);
+            this.gradientLabelEtherRecv3.TabIndex = 47;
+            this.gradientLabelEtherRecv3.Text = "-";
+            this.gradientLabelEtherRecv3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // gradientLabel16
+            // 
+            this.gradientLabel16.BackColor = System.Drawing.Color.White;
+            this.gradientLabel16.ColorBottom = System.Drawing.Color.CadetBlue;
+            this.gradientLabel16.ColorTop = System.Drawing.Color.DarkSlateGray;
+            this.gradientLabel16.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel16.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel16.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
+            this.gradientLabel16.Location = new System.Drawing.Point(3, 205);
+            this.gradientLabel16.Name = "gradientLabel16";
+            this.gradientLabel16.Size = new System.Drawing.Size(85, 24);
+            this.gradientLabel16.TabIndex = 48;
+            this.gradientLabel16.Text = "Result";
+            this.gradientLabel16.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // gradientLabelEtherRecv2
+            // 
+            this.gradientLabelEtherRecv2.BackColor = System.Drawing.Color.DarkGreen;
+            this.gradientLabelEtherRecv2.ColorBottom = System.Drawing.Color.White;
+            this.gradientLabelEtherRecv2.ColorTop = System.Drawing.Color.White;
+            this.gradientLabelEtherRecv2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gradientLabelEtherRecv2.ForeColor = System.Drawing.Color.Black;
+            this.gradientLabelEtherRecv2.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
+            this.gradientLabelEtherRecv2.Location = new System.Drawing.Point(94, 205);
+            this.gradientLabelEtherRecv2.Name = "gradientLabelEtherRecv2";
+            this.gradientLabelEtherRecv2.Size = new System.Drawing.Size(219, 24);
+            this.gradientLabelEtherRecv2.TabIndex = 47;
+            this.gradientLabelEtherRecv2.Text = "-";
+            this.gradientLabelEtherRecv2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // gradientLabel25
+            // 
+            this.gradientLabel25.BackColor = System.Drawing.Color.White;
+            this.gradientLabel25.ColorBottom = System.Drawing.Color.CadetBlue;
+            this.gradientLabel25.ColorTop = System.Drawing.Color.DarkSlateGray;
+            this.gradientLabel25.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel25.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel25.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
+            this.gradientLabel25.Location = new System.Drawing.Point(3, 205);
+            this.gradientLabel25.Name = "gradientLabel25";
+            this.gradientLabel25.Size = new System.Drawing.Size(85, 24);
+            this.gradientLabel25.TabIndex = 50;
+            this.gradientLabel25.Text = "Result";
+            this.gradientLabel25.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // gradientLabelEtherRecv4
+            // 
+            this.gradientLabelEtherRecv4.BackColor = System.Drawing.Color.DarkGreen;
+            this.gradientLabelEtherRecv4.ColorBottom = System.Drawing.Color.White;
+            this.gradientLabelEtherRecv4.ColorTop = System.Drawing.Color.White;
+            this.gradientLabelEtherRecv4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gradientLabelEtherRecv4.ForeColor = System.Drawing.Color.Black;
+            this.gradientLabelEtherRecv4.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
+            this.gradientLabelEtherRecv4.Location = new System.Drawing.Point(94, 205);
+            this.gradientLabelEtherRecv4.Name = "gradientLabelEtherRecv4";
+            this.gradientLabelEtherRecv4.Size = new System.Drawing.Size(219, 24);
+            this.gradientLabelEtherRecv4.TabIndex = 49;
+            this.gradientLabelEtherRecv4.Text = "-";
+            this.gradientLabelEtherRecv4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // ucMainResultCardManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1068,5 +1204,13 @@
         private CustomControl.GradientLabel gradientLabel21;
         private CustomControl.GradientLabel gradientLabel22;
         private CustomControl.GradientLabel gradientLabelResult4;
+        private CustomControl.GradientLabel gradientLabel9;
+        private CustomControl.GradientLabel gradientLabelEtherRecv1;
+        private CustomControl.GradientLabel gradientLabel23;
+        private CustomControl.GradientLabel gradientLabelEtherRecv3;
+        private CustomControl.GradientLabel gradientLabel16;
+        private CustomControl.GradientLabel gradientLabelEtherRecv2;
+        private CustomControl.GradientLabel gradientLabel25;
+        private CustomControl.GradientLabel gradientLabelEtherRecv4;
     }
 }

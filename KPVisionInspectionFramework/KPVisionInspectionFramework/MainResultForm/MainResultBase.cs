@@ -226,6 +226,12 @@ namespace KPVisionInspectionFramework
             else if (ProjectType == eProjectType.BC_QCC)    MainResultCardManagerWnd.ClearResult();
         }
 
+        //LDH, 2019.04.02, Ethernet Receive Data 전달
+        public void SetEthernetRecvData(string[] _Value)
+        {
+            if (ProjectType == eProjectType.BC_QCC) MainResultCardManagerWnd.SetEthernetRecvData(_Value);
+        }
+
         public void SetResultData(SendResultParameter _ResultParam)
         {
             if (_ResultParam.ProjectItem == eProjectItem.NONE)                  MainResultNoneWnd.SetNoneResultData(_ResultParam);

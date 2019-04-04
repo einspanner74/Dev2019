@@ -107,6 +107,14 @@ namespace KPVisionInspectionFramework
             }
         }
 
+        //LDH, 2019.04.02, Ethernet string 결과창에 출력
+        public void SetEthernetRecvData(string[] _Value)
+        {
+            string _RecvString = string.Join(",", _Value);
+
+            ControlInvoke.GradientLabelText(gradientLabelEtherRecv1, _RecvString);
+        }
+
         //LDH, 2019.03.20, Inspection #1, JPG로 저장 결과
         public void SetImageSaveResultData(SendResultParameter _ResultParam)
         {
