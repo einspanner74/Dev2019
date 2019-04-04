@@ -264,6 +264,33 @@ namespace ParameterManager
         public int PointCount;
         public bool[] PointStatus;
     }
+
+    public class CogLeadTrimResult : Result
+    {
+        public double LeadBodyOriginX;
+        public double LeadBodyOriginY;
+
+        public double LeadBodyOffsetX;
+        public double LeadBodyOffsetY;
+
+        public PointD LeadBodyLeftTop;
+        public PointD LeadBodyRightTop;
+        public PointD LeadBodyLeftBottom;
+        public PointD LeadBodyRightBottom;
+
+        public List<CogRectangle> ChipOutNgList;
+
+        public CogLeadTrimResult()
+        {
+            LeadBodyOriginX = 0;
+            LeadBodyOriginY = 0;
+
+            LeadBodyOffsetX = 0;
+            LeadBodyOffsetY = 0;
+
+            ChipOutNgList = new List<CogRectangle>();
+        }
+    }
     #endregion Inspection Result Parameter
 
     #region Last Send Result Parameter

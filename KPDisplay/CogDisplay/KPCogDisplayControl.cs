@@ -127,6 +127,11 @@ namespace KPDisplay
         {
             kCogDisplay.ClearDisplay(_groupName);
         }
+
+        public void ClearDisplay(string[] _ExceptGroupName)
+        {
+            kCogDisplay.ClearDisplay(_ExceptGroupName);
+        }
         #endregion Display Clear
 
         public void DrawMaskingShape(CogRectangle _cogRect, string _groupName)

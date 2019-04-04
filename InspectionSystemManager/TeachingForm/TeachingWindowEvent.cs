@@ -41,6 +41,7 @@ namespace InspectionSystemManager
             ucCogLeadTrimInspWnd.GetRegionEvent += new ucCogLeadTrimInspection.GetRegionHandler(GetRegionFunction);
             ucCogLeadTrimInspWnd.DrawRegionEvent += new ucCogLeadTrimInspection.DrawRegionHandler(DrawRegionFunction);
             ucCogLeadTrimInspWnd.DrawMaskingRegionEven += new ucCogLeadTrimInspection.DrawMaskingRegionHandler(DrawMaskingRegionFunction);
+            ucCogLeadTrimInspWnd.ApplyLeadTrimValueEvent += new ucCogLeadTrimInspection.ApplyLeadTrimValueHandler(ApplyLeadTrimValueFunction);
         }
 
         private void DeInitializeEvent()
@@ -67,6 +68,7 @@ namespace InspectionSystemManager
             ucCogLeadTrimInspWnd.GetRegionEvent -= new ucCogLeadTrimInspection.GetRegionHandler(GetRegionFunction);
             ucCogLeadTrimInspWnd.DrawRegionEvent -= new ucCogLeadTrimInspection.DrawRegionHandler(DrawRegionFunction);
             ucCogLeadTrimInspWnd.DrawMaskingRegionEven -= new ucCogLeadTrimInspection.DrawMaskingRegionHandler(DrawMaskingRegionFunction);
+            ucCogLeadTrimInspWnd.ApplyLeadTrimValueEvent -= new ucCogLeadTrimInspection.ApplyLeadTrimValueHandler(ApplyLeadTrimValueFunction);
         }
         #endregion InitializeEvent & DeInitializeEvent
 
@@ -385,34 +387,6 @@ namespace InspectionSystemManager
                 kpTeachDisplay.DrawText(_MatchingName, _CogAutoPatternResult.OriginPointX, _CogAutoPatternResult.OriginPointY + 30, CogColorConstants.Green, 10, CogGraphicLabelAlignmentConstants.BaselineCenter);
             }
         }
-
-        private CogRectangle GetRegionFunction()
-        {
-            return kpTeachDisplay.GetInterActiveRectangle();
-        }
-
-        private void DrawRegionFunction(CogRectangle _Region, bool _IsStatic)
-        {
-            if (_IsStatic)
-                kpTeachDisplay.DrawStaticShape(_Region, "Region", CogColorConstants.Magenta, 2, CogGraphicLineStyleConstants.Dash);
-            else
-                kpTeachDisplay.DrawInterActiveShape(_Region, "Region", CogColorConstants.Magenta);
-        }   
-
-        private void DrawMaskingRegionFunction(List<RectangleD> _MaskingArea)
-        {
-            for (int iLoopCount = 0; iLoopCount < 10; ++iLoopCount)
-                kpTeachDisplay.ClearDisplay("MaskingArea" + iLoopCount);
-
-            for (int iLoopCount = 0; iLoopCount < _MaskingArea.Count; ++iLoopCount)
-            {
-                CogRectangle _Area = new CogRectangle();
-                _Area.SetCenterWidthHeight(_MaskingArea[iLoopCount].CenterX, _MaskingArea[iLoopCount].CenterY,
-                                           _MaskingArea[iLoopCount].Width, _MaskingArea[iLoopCount].Height);
-
-                kpTeachDisplay.DrawStaticShape(_Area, "MaskingArea" + iLoopCount, CogColorConstants.Yellow, 2);
-            }
-        }
         #endregion Pattern Matching Window Event : ucCogPatternWindow -> TeachingWindow
 
         #region Blob Reference Window Event : ucCogBlobReferenceWindow -> TeachingWindow
@@ -660,5 +634,125 @@ namespace InspectionSystemManager
             kpTeachDisplay.DrawFindLineCaliper(_CogFindLine);
         }
         #endregion Line Find Window Event : ucCogLineFind -> TeachingWindow
+
+        #region Lead Trim Inspection Window Event : ucCogLeadTrimInspection -> TeachingWindow
+        private CogRectangle GetRegionFunction()
+        {
+            return kpTeachDisplay.GetInterActiveRectangle();
+        }
+
+        private void DrawRegionFunction(CogRectangle _Region, bool _IsStatic)
+        {
+            string[] _ExceptGroupName = new string[3] { "InspRegion", "AlgoRegion", "Message" };
+            kpTeachDisplay.ClearDisplay(_ExceptGroupName);
+
+            if (_IsStatic)
+                kpTeachDisplay.DrawStaticShape(_Region, "Region", CogColorConstants.Magenta, 2, CogGraphicLineStyleConstants.Dash);
+            else
+                kpTeachDisplay.DrawInterActiveShape(_Region, "Region", CogColorConstants.Magenta);
+        }
+
+        private void DrawMaskingRegionFunction(List<RectangleD> _MaskingArea)
+        {
+            kpTeachDisplay.ClearDisplay(false, true);
+
+            string[] _ExceptGroupName = new string[3] { "InspRegion", "AlgoRegion", "Message" };
+            kpTeachDisplay.ClearDisplay(_ExceptGroupName);
+
+            for (int iLoopCount = 0; iLoopCount < _MaskingArea.Count; ++iLoopCount)
+            {
+                CogRectangle _Area = new CogRectangle();
+                _Area.SetCenterWidthHeight(_MaskingArea[iLoopCount].CenterX, _MaskingArea[iLoopCount].CenterY,
+                                           _MaskingArea[iLoopCount].Width, _MaskingArea[iLoopCount].Height);
+
+                kpTeachDisplay.DrawStaticShape(_Area, "MaskingArea" + iLoopCount, CogColorConstants.Yellow, 2);
+            }
+        }
+
+        private void ApplyLeadTrimValueFunction(CogLeadTrimAlgo.eAlgoMode _Mode, CogRectangle _InspRegion, CogLeadTrimAlgo _InspAlgo, ref CogLeadTrimResult _InspResult)
+        {
+            string[] _ExceptGroupName = new string[3] { "InspRegion", "AlgoRegion", "Message" };
+            kpTeachDisplay.ClearDisplay(_ExceptGroupName);
+
+            switch (_Mode)
+            {
+                case CogLeadTrimAlgo.eAlgoMode.BODY_CHECK:      LeadBodyCheck(_InspRegion, _InspAlgo, ref _InspResult);         break;
+                case CogLeadTrimAlgo.eAlgoMode.CHIPOUT_CHECK:   ChipOutInspection(_InspRegion, _InspAlgo, ref _InspResult);     break;
+                case CogLeadTrimAlgo.eAlgoMode.LEAD_MEASURE:    LeadMeasurement(_InspRegion, _InspAlgo, ref _InspResult);       break;
+            }
+        }
+
+        private void LeadBodyCheck(CogRectangle _InspRegion, CogLeadTrimAlgo _InspAlgo, ref CogLeadTrimResult _InspResult)
+        {
+            bool _Result = InspLeadTrimProcess.LeadBodySearch(InspectionImage, _InspRegion, _InspAlgo);
+
+            if (true == _Result)
+            {
+                CogLeadTrimResult _LeadTrimResult = new CogLeadTrimResult();
+                _LeadTrimResult = InspLeadTrimProcess.GetLeadTrimResult();
+
+                _InspResult.LeadBodyOriginX = _LeadTrimResult.LeadBodyOriginX;
+                _InspResult.LeadBodyOriginY = _LeadTrimResult.LeadBodyOriginY;
+                _InspResult.LeadBodyOffsetX = _LeadTrimResult.LeadBodyOffsetX;
+                _InspResult.LeadBodyOffsetY = _LeadTrimResult.LeadBodyOffsetY;
+
+                #region Draw Lead Body check Display
+                CogPointMarker _LT = new CogPointMarker();
+                CogPointMarker _RT = new CogPointMarker();
+                CogPointMarker _LB = new CogPointMarker();
+                CogPointMarker _RB = new CogPointMarker();
+
+                _LT.SetCenterRotationSize(_LeadTrimResult.LeadBodyLeftTop.X, _LeadTrimResult.LeadBodyLeftTop.Y, 0, 2);
+                _RT.SetCenterRotationSize(_LeadTrimResult.LeadBodyRightTop.X, _LeadTrimResult.LeadBodyRightTop.Y, 0, 2);
+                _LB.SetCenterRotationSize(_LeadTrimResult.LeadBodyLeftBottom.X, _LeadTrimResult.LeadBodyLeftBottom.Y, 0, 2);
+                _RB.SetCenterRotationSize(_LeadTrimResult.LeadBodyRightBottom.X, _LeadTrimResult.LeadBodyRightBottom.Y, 0, 2);
+
+                kpTeachDisplay.DrawStaticShape(_LT, "LT", CogColorConstants.Green, 50, true);
+                kpTeachDisplay.DrawStaticShape(_RT, "RT", CogColorConstants.Green, 50, true);
+                kpTeachDisplay.DrawStaticShape(_LB, "LB", CogColorConstants.Green, 50, true);
+                kpTeachDisplay.DrawStaticShape(_RB, "RB", CogColorConstants.Green, 50, true);
+
+                CogRectangle _BodyRect = new CogRectangle();
+                _BodyRect.SetXYWidthHeight(_LT.X, _LT.Y, _RT.X - _LT.X, _RB.Y - _RT.Y);
+                kpTeachDisplay.DrawStaticShape(_BodyRect, "BodyRect", CogColorConstants.Green);
+                #endregion
+            }
+        }
+
+        private void ChipOutInspection(CogRectangle _InspRegion, CogLeadTrimAlgo _InspAlgo, ref CogLeadTrimResult _InspResult)
+        {
+            bool _Result = InspLeadTrimProcess.MoldChipOutInspection(InspectionImage, _InspRegion, _InspAlgo);
+
+            if (true == _Result)
+            {
+                CogLeadTrimResult _LeadTrimResult = new CogLeadTrimResult();
+                _LeadTrimResult = InspLeadTrimProcess.GetLeadTrimResult();
+
+                #region Draw Chip Out Inspection Display
+                for (int iLoopCount = 0; iLoopCount < _LeadTrimResult.ChipOutNgList.Count; ++iLoopCount)
+                {
+                    CogRectangle _NgRegion = new CogRectangle(_LeadTrimResult.ChipOutNgList[iLoopCount]);
+                    _InspResult.ChipOutNgList.Add(_NgRegion);
+
+                    kpTeachDisplay.DrawStaticShape(_NgRegion, "ChipOutDefect" + (iLoopCount + 1), CogColorConstants.Red);
+
+                    CogPointMarker _Point = new CogPointMarker();
+                    _Point.X = _NgRegion.CenterX;
+                    _Point.Y = _NgRegion.CenterY;
+                    kpTeachDisplay.DrawStaticShape(_Point, "BlobSearchPoint", CogColorConstants.Red, 5);
+
+                    string _RectSizeName = string.Format("W : {0:F2}mm, H : {1:F2}mm", _NgRegion.Width, _NgRegion.Height);
+                    kpTeachDisplay.DrawText(_RectSizeName, _NgRegion.CenterX + _NgRegion.Width / 2 + 100,
+                                                           _NgRegion.CenterY + _NgRegion.Height / 2 + 100, CogColorConstants.Red, 8, CogGraphicLabelAlignmentConstants.BaselineCenter);
+                }
+                #endregion 
+            }
+        }
+
+        private void LeadMeasurement(CogRectangle _InspRegion, CogLeadTrimAlgo _InspAlgo, ref CogLeadTrimResult _InspResult)
+        {
+            
+        }
+        #endregion
     }
 }

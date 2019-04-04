@@ -75,6 +75,7 @@
     <Compile Include="Algorithm\InspectionClass\InspectionID.cs" />
     <Compile Include="Algorithm\InspectionClass\InspectionLineFind.cs" />
     <Compile Include="Algorithm\InspectionClass\InspectionAutoPattern.cs" />
+    <Compile Include="InspectionLeadTrim.cs" />
     <Compile Include="InspSysManagerWindow\InspectionWindowProcCardManager.cs">
       <SubType>Form</SubType>
     </Compile>

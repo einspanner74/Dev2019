@@ -97,6 +97,26 @@ namespace KPDisplay
             _index = _collectionString.IndexOf(_groupName);
             if (_index >= 0) this.InteractiveGraphics.Remove(_groupName);
         }
+
+        public void ClearDisplay(string[] _ExceptGroupName)
+        {
+            bool _Flag = false;
+            CogStringCollection _CollectionString = this.StaticGraphics.ZOrderGroups;
+            for (int iLoopCount = 0; iLoopCount < _CollectionString.Count; ++iLoopCount)
+            {
+                _Flag = false;
+                for (int jLoopCount = 0; jLoopCount < _ExceptGroupName.Length; ++jLoopCount)
+                {
+                    if (_CollectionString[iLoopCount] == _ExceptGroupName[jLoopCount])
+                        _Flag = true;
+                }
+
+                if (false == _Flag)
+                {
+                    this.StaticGraphics.Remove(_CollectionString[iLoopCount]);
+                }
+            }
+        }
         #endregion Clear CogDisplay()
     }
 }

@@ -42,7 +42,6 @@ namespace InspectionSystemManager
         {
             bool _Result = true;
 
-
             SetCaliperDirection(_CogLineFindAlgo.CaliperSearchDirection);
             SetCaliper(_CogLineFindAlgo.CaliperNumber, _CogLineFindAlgo.CaliperSearchLength, _CogLineFindAlgo.CaliperProjectionLength, _CogLineFindAlgo.IgnoreNumber);
             SetCaliperLine(_CogLineFindAlgo.CaliperLineStartX, _CogLineFindAlgo.CaliperLineStartY, _CogLineFindAlgo.CaliperLineEndX, _CogLineFindAlgo.CaliperLineEndY);

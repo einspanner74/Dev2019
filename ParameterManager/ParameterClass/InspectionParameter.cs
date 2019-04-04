@@ -355,15 +355,69 @@ namespace ParameterManager
     /// </summary>
     public class CogLeadTrimAlgo
     {
+        public enum eAlgoMode   { BODY_CHECK = 0, CHIPOUT_CHECK, LEAD_MEASURE };
+
         public bool             IsUseLeadBody;
         public RectangleD       BodyArea;
+        public CenterPoint      BodyCenterOrigin;
+        public CenterPoint      BodyCenterOffset;
+
         public List<RectangleD> BodyMaskingAreaList;
         public double           BodyAngle;
 
+
+        public bool             IsUseMoldChipOut;
+        public RectangleD       ChipOutArea;
+        public int              ChipOutForeground;
+        public int              ChipOutThreshold;
+        public double           ChipOutBlobAreaMin;
+        public double           ChipOutBlobAreaMax;
+        public double           ChipOutWidthMin;
+        public double           ChipOutWidthMax;
+        public double           ChipOutHeightMin;
+        public double           ChipOutHeightMax;
+
+
+        public bool             IsUseLeadMeasurement;
+        public RectangleD       LeadMeasurementArea;
+        public int              LeadCount;
+        public int              LeadForeground;
+        public int              LeadThreshold;
+        public double           LeadPitch;
+        public double           LeadPitchMin;
+        public double           LeadPitchmax;
+        public double           LeadLength;
+        public double           LeadLengthMin;
+        public double           LeadLengthMax;
+
         public CogLeadTrimAlgo()
         {
+            IsUseLeadBody = true;
             BodyArea = new RectangleD();
             BodyMaskingAreaList = new List<RectangleD>();
+
+            IsUseMoldChipOut = true;
+            ChipOutArea = new RectangleD();
+            ChipOutForeground = 1;
+            ChipOutThreshold = 200;
+            ChipOutBlobAreaMin = 1000;
+            ChipOutBlobAreaMax = 9000000;
+            ChipOutWidthMin = 5;
+            ChipOutWidthMax = 2000;
+            ChipOutHeightMin = 5;
+            ChipOutHeightMax = 2000;
+
+            IsUseLeadMeasurement = true;
+            LeadMeasurementArea = new RectangleD();
+            LeadCount = 1;
+            LeadForeground = 0;
+            LeadThreshold = 200;
+            LeadPitch = 1;
+            LeadPitchMin = 0.5;
+            LeadPitchmax = 1.5;
+            LeadLength = 18;
+            LeadLengthMin = 15;
+            LeadLengthMax = 20;
         }
     }
     #endregion Cog Algorithm Class

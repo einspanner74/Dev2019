@@ -35,6 +35,7 @@ namespace InspectionSystemManager
         private InspectionLineFind          InspLineFindProcess;
         private InspectionMultiPattern      InspMultiPatternProcess;
         private InspectionAutoPattern       InspAutoPatternProcess;
+        private InspectionLeadTrim          InspLeadTrimProcess;
 
         //검사 Algorithm Teaching UI
         private ucCogPattern            ucCogPatternWnd;
@@ -130,6 +131,7 @@ namespace InspectionSystemManager
             InspLeadProcess = new InspectionLead();
             InspIDProcess = new InspectionID();
             InspLineFindProcess = new InspectionLineFind();
+            InspLeadTrimProcess = new InspectionLeadTrim();
 
             InspAreaSelected = -1;
             InspAlgoSelected = -1;
@@ -1105,7 +1107,8 @@ namespace InspectionSystemManager
                 else
                 {
                     string _IndexString = (iLoopCount + 1).ToString();
-                    string _Name = "Area" + _IndexString;
+                    //string _Name = "Area" + _IndexString;
+                    string _Name = "검사영역" + _IndexString;
                     bool _Enable = InspParam.InspAreaParam[iLoopCount].Enable;
 
                     AddInspectionArea(_IndexString, _Name, _Enable);

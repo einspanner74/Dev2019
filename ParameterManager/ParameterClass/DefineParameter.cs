@@ -122,6 +122,12 @@ namespace ParameterManager
         public double Y;
     }
 
+    public struct PointD
+    {
+        public double X;
+        public double Y;
+    }
+
     /// <summary>
     /// double형 Rectangle
     /// </summary>

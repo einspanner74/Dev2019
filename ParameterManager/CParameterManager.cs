@@ -587,6 +587,7 @@ namespace ParameterManager
                 else if ((int)eAlgoType.C_ID == _InspAlgoParamTemp.AlgoType)            GetBarCodeIDInspectionParameter(_Node, ref _InspAlgoParamTemp);
                 else if ((int)eAlgoType.C_LINE_FIND == _InspAlgoParamTemp.AlgoType)     GetLineFindInspectionParameter(_Node, ref _InspAlgoParamTemp);
                 else if ((int)eAlgoType.C_MULTI_PATTERN == _InspAlgoParamTemp.AlgoType) GetMultiPatternInspectionparameter(_Node, ref _InspAlgoParamTemp);
+                else if ((int)eAlgoType.C_LEAD_TRIM == _InspAlgoParamTemp.AlgoType)     GetLeadTrimInspectionParameter(_Node, ref _InspAlgoParamTemp);
 
                 _InspAreaParam.InspAlgoParam.Add(_InspAlgoParamTemp);
             }
@@ -892,6 +893,86 @@ namespace ParameterManager
             _InspParam.Algorithm = _CogLineFind;
         }
 
+        private void GetLeadTrimInspectionParameter(XmlNode _Nodes, ref InspectionAlgorithmParameter _InspParam)
+        {
+            if (null == _Nodes) return;
+            CogLeadTrimAlgo _CogLeadTrim = new CogLeadTrimAlgo();
+            foreach (XmlNode _NodeChild in _Nodes)
+            {
+                if (null == _NodeChild) return;
+                switch(_NodeChild.Name)
+                {
+                    //Lead Body Inspection Parameter
+                    case "IsUsableLeadBody":    _CogLeadTrim.IsUseLeadBody = Convert.ToBoolean(_NodeChild.InnerText); break;
+                    case "BodyAreaCenterX":     _CogLeadTrim.BodyArea.CenterX = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "BodyAreaCenterY":     _CogLeadTrim.BodyArea.CenterY = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "BodyAreaWidth":       _CogLeadTrim.BodyArea.Width = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "BodyAreaHeight":      _CogLeadTrim.BodyArea.Height = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "BodyAngle":           _CogLeadTrim.BodyAngle = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "BodyMasking":         GetLeadTrimMaskingArea(_NodeChild, _CogLeadTrim.BodyMaskingAreaList); break;
+                    case "BodyCenterOriginX":   _CogLeadTrim.BodyCenterOrigin.X = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "BodyCenterOriginY":   _CogLeadTrim.BodyCenterOrigin.Y = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "BodyCenterOffsetX":   _CogLeadTrim.BodyCenterOffset.Y = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "BodyCenterOffsetY":   _CogLeadTrim.BodyCenterOffset.Y = Convert.ToDouble(_NodeChild.InnerText); break;
+
+                    //Chip Out Inspection Parameter
+                    case "IsUseMoldChipOut":    _CogLeadTrim.IsUseMoldChipOut = Convert.ToBoolean(_NodeChild.InnerText); break;
+                    case "ChipOutAreaCenterX":  _CogLeadTrim.ChipOutArea.CenterX = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "ChipOutAreaCenterY":  _CogLeadTrim.ChipOutArea.CenterY = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "ChipOutAreaWidth":    _CogLeadTrim.ChipOutArea.Width = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "ChipOutAreaHeight":   _CogLeadTrim.ChipOutArea.Height = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "ChipOutForground":    _CogLeadTrim.ChipOutForeground = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "ChipOutThreshold":    _CogLeadTrim.ChipOutThreshold = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "ChipOutBlobAreaMin":  _CogLeadTrim.ChipOutBlobAreaMin = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "ChipOutBlobAreaMax":  _CogLeadTrim.ChipOutBlobAreaMax = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "ChipOutWidthMin":     _CogLeadTrim.ChipOutWidthMin = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "ChipOutWidthMax":     _CogLeadTrim.ChipOutWidthMax = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "ChipOutHeightMin":    _CogLeadTrim.ChipOutHeightMin = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "ChipOutHeightMax":    _CogLeadTrim.ChipOutHeightMax = Convert.ToDouble(_NodeChild.InnerText); break;
+
+
+                    //Lead Measurement Parameter
+                    case "IsUseLeadMeasurement":    _CogLeadTrim.IsUseLeadMeasurement = Convert.ToBoolean(_NodeChild.InnerText); break;
+                    case "LeadMeasureAreaCenterX":  _CogLeadTrim.LeadMeasurementArea.CenterX = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "LeadMeasureAreaCenterY":  _CogLeadTrim.LeadMeasurementArea.CenterY = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "LeadMeasureAreaWidth":    _CogLeadTrim.LeadMeasurementArea.Width = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "LeadMeasureAreaHeight":   _CogLeadTrim.LeadMeasurementArea.Height = Convert.ToDouble(_NodeChild.InnerText); break;
+                }
+            }
+            _InspParam.Algorithm = _CogLeadTrim;
+        }
+
+        private void GetLeadTrimMaskingArea(XmlNode _Nodes, List<RectangleD> _MaskingAreaList)
+        {
+            int _Cnt = 1;
+            if (null == _Nodes) return;
+
+            //BodyMasking
+            _MaskingAreaList.Clear();
+            foreach (XmlNode _NodeChild in _Nodes)
+            {
+                if (null == _NodeChild) return;
+
+                string      _MaskingAreaName = string.Format("MaskingArea{0}", _Cnt++);
+                RectangleD  _MaskingArea = new RectangleD();
+                if (_NodeChild.Name == _MaskingAreaName)
+                {
+                    foreach (XmlNode _Node in _NodeChild)
+                    {
+                        if (null == _Node) return;
+                        switch (_Node.Name)
+                        {
+                            case "CenterX":  _MaskingArea.CenterX = Convert.ToDouble(_Node.InnerText);  break;
+                            case "CenterY":  _MaskingArea.CenterY = Convert.ToDouble(_Node.InnerText); break;
+                            case "Width":    _MaskingArea.Width = Convert.ToDouble(_Node.InnerText); break;
+                            case "Height":   _MaskingArea.Height = Convert.ToDouble(_Node.InnerText); break;
+                        }
+                    }
+                    _MaskingAreaList.Add(_MaskingArea);
+                }
+            }
+        }
+
         public void WriteInspectionParameter(int _ID, string _InspParamFullPath = null)
         {
             //LDH, 2019.01.15, 별도 Recipe 사용을 위해 ISMCount 따로 설정
@@ -959,6 +1040,7 @@ namespace ParameterManager
                                 else if (eAlgoType.C_ID == _AlgoType)            WriteBarCodeIDInspectionParameter(_ID, ISMCount, _XmlWriter, _InspAlgoParamTemp.Algorithm);
                                 else if (eAlgoType.C_LINE_FIND == _AlgoType)     WriteLineFindInspectionParameter(_ID, ISMCount, _XmlWriter, _InspAlgoParamTemp.Algorithm);
                                 else if (eAlgoType.C_MULTI_PATTERN == _AlgoType) WriteMultiPatternInspectionParameter(_ID, ISMCount, _XmlWriter, _InspAlgoParamTemp.Algorithm);
+                                else if (eAlgoType.C_LEAD_TRIM == _AlgoType)     WriteLeadTrimInspectionParameter(_ID, ISMCount, _XmlWriter, _InspAlgoParamTemp.Algorithm);
                             }
                             _XmlWriter.WriteEndElement();
                         }
@@ -1169,6 +1251,58 @@ namespace ParameterManager
             _XmlWriter.WriteElementString("ContrastThreshold", _CogLineFindAlgo.ContrastThreshold.ToString());
             _XmlWriter.WriteElementString("FilterHalfSizePixels", _CogLineFindAlgo.FilterHalfSizePixels.ToString());
             _XmlWriter.WriteElementString("UseAlignment", _CogLineFindAlgo.UseAlignment.ToString());
+        }
+
+        private void WriteLeadTrimInspectionParameter(int _ID, int _ISMCount, XmlTextWriter _XmlWriter, Object _InspAlgoParam)
+        {
+            var _CogLeadTrimAlgo = _InspAlgoParam as CogLeadTrimAlgo;
+            _XmlWriter.WriteElementString("IsUsableLeadBody", _CogLeadTrimAlgo.IsUseLeadBody.ToString());
+            _XmlWriter.WriteElementString("BodyAreaCenterX", _CogLeadTrimAlgo.BodyArea.CenterX.ToString());
+            _XmlWriter.WriteElementString("BodyAreaCenterY", _CogLeadTrimAlgo.BodyArea.CenterY.ToString());
+            _XmlWriter.WriteElementString("BodyAreaWidth", _CogLeadTrimAlgo.BodyArea.Width.ToString());
+            _XmlWriter.WriteElementString("BodyAreaHeight", _CogLeadTrimAlgo.BodyArea.Height.ToString());
+            _XmlWriter.WriteElementString("BodyAngle", _CogLeadTrimAlgo.BodyAngle.ToString());
+            _XmlWriter.WriteElementString("BodyCenterOriginX", _CogLeadTrimAlgo.BodyCenterOrigin.X.ToString());
+            _XmlWriter.WriteElementString("BodyCenterOriginY", _CogLeadTrimAlgo.BodyCenterOrigin.Y.ToString());
+            _XmlWriter.WriteElementString("BodyCenterOffsetX", _CogLeadTrimAlgo.BodyCenterOffset.X.ToString());
+            _XmlWriter.WriteElementString("BodyCenterOffsetY", _CogLeadTrimAlgo.BodyCenterOffset.Y.ToString());
+            _XmlWriter.WriteStartElement("BodyMasking");
+            {
+                for (int iLoopCount = 0; iLoopCount < _CogLeadTrimAlgo.BodyMaskingAreaList.Count; ++iLoopCount)
+                {
+                    string _MaskingAreaName = string.Format("MaskingArea{0}", iLoopCount + 1);
+                    _XmlWriter.WriteStartElement(_MaskingAreaName);
+                    {
+                        _XmlWriter.WriteElementString("CenterX", _CogLeadTrimAlgo.BodyMaskingAreaList[iLoopCount].CenterX.ToString());
+                        _XmlWriter.WriteElementString("CenterY", _CogLeadTrimAlgo.BodyMaskingAreaList[iLoopCount].CenterY.ToString());
+                        _XmlWriter.WriteElementString("Width", _CogLeadTrimAlgo.BodyMaskingAreaList[iLoopCount].Width.ToString());
+                        _XmlWriter.WriteElementString("Height", _CogLeadTrimAlgo.BodyMaskingAreaList[iLoopCount].Height.ToString());
+                    }
+                    _XmlWriter.WriteEndElement();
+                }
+            }
+            _XmlWriter.WriteEndElement();
+
+            _XmlWriter.WriteElementString("IsUseMoldChipOut", _CogLeadTrimAlgo.IsUseMoldChipOut.ToString());
+            _XmlWriter.WriteElementString("ChipOutAreaCenterX", _CogLeadTrimAlgo.ChipOutArea.CenterX.ToString());
+            _XmlWriter.WriteElementString("ChipOutAreaCenterY", _CogLeadTrimAlgo.ChipOutArea.CenterY.ToString());
+            _XmlWriter.WriteElementString("ChipOutAreaWidth", _CogLeadTrimAlgo.ChipOutArea.Width.ToString());
+            _XmlWriter.WriteElementString("ChipOutAreaHeight", _CogLeadTrimAlgo.ChipOutArea.Height.ToString());
+            _XmlWriter.WriteElementString("ChipOutForground", _CogLeadTrimAlgo.ChipOutForeground.ToString());
+            _XmlWriter.WriteElementString("ChipOutThreshold", _CogLeadTrimAlgo.ChipOutThreshold.ToString());
+            _XmlWriter.WriteElementString("ChipOutBlobAreaMin", _CogLeadTrimAlgo.ChipOutBlobAreaMin.ToString());
+            _XmlWriter.WriteElementString("ChipOutBlobAreaMax", _CogLeadTrimAlgo.ChipOutBlobAreaMax.ToString());
+            _XmlWriter.WriteElementString("ChipOutWidthMin", _CogLeadTrimAlgo.ChipOutWidthMin.ToString());
+            _XmlWriter.WriteElementString("ChipOutWidthMax", _CogLeadTrimAlgo.ChipOutWidthMax.ToString());
+            _XmlWriter.WriteElementString("ChipOutHeightMin", _CogLeadTrimAlgo.ChipOutHeightMin.ToString());
+            _XmlWriter.WriteElementString("ChipOutHeightMax", _CogLeadTrimAlgo.ChipOutHeightMax.ToString());
+
+            _XmlWriter.WriteElementString("IsUseLeadMeasurement", _CogLeadTrimAlgo.IsUseLeadMeasurement.ToString());
+            _XmlWriter.WriteElementString("LeadMeasureAreaCenterX", _CogLeadTrimAlgo.LeadMeasurementArea.CenterX.ToString());
+            _XmlWriter.WriteElementString("LeadMeasureAreaCenterY", _CogLeadTrimAlgo.LeadMeasurementArea.CenterY.ToString());
+            _XmlWriter.WriteElementString("LeadMeasureAreaWidth", _CogLeadTrimAlgo.LeadMeasurementArea.Width.ToString());
+            _XmlWriter.WriteElementString("LeadMeasureAreaHeight", _CogLeadTrimAlgo.LeadMeasurementArea.Height.ToString());
+
         }
         #endregion Read & Write InspectionParameter
 
@@ -1563,6 +1697,7 @@ namespace ParameterManager
 
                     else if (eAlgoType.C_NEEDLE_FIND == _AlgoType)
                     {
+                        #region Needle Find Algorithm Copy
                         var _Algorithm = _InspAlgoParam.Algorithm as CogNeedleFindAlgo;
                         var _SrcAlgorithm = _SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm as CogNeedleFindAlgo;
 
@@ -1583,6 +1718,7 @@ namespace ParameterManager
                         _Algorithm.OriginRadius     = _SrcAlgorithm.OriginRadius;
 
                         _InspAlgoParam.Algorithm = _Algorithm;
+                        #endregion
                     }
 
                     else if (eAlgoType.C_LEAD == _AlgoType)
@@ -1656,6 +1792,55 @@ namespace ParameterManager
                         _InspAlgoParam.Algorithm = _Algorithm;
                     }
 
+
+                    else if (eAlgoType.C_LEAD_TRIM == _AlgoType)
+                    {
+                        var _Algorithm = _InspAlgoParam.Algorithm as CogLeadTrimAlgo;
+                        var _SrcAlgorithm = _SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm as CogLeadTrimAlgo;
+
+                        _Algorithm = new CogLeadTrimAlgo();
+                        _Algorithm.IsUseLeadBody = _SrcAlgorithm.IsUseLeadBody;
+                        _Algorithm.BodyArea.CenterX = _SrcAlgorithm.BodyArea.CenterX;
+                        _Algorithm.BodyArea.CenterY = _SrcAlgorithm.BodyArea.CenterY;
+                        _Algorithm.BodyArea.Width = _SrcAlgorithm.BodyArea.Width;
+                        _Algorithm.BodyArea.Height = _SrcAlgorithm.BodyArea.Height;
+                        _Algorithm.BodyAngle = _SrcAlgorithm.BodyAngle;
+                        _Algorithm.BodyCenterOrigin.X = _SrcAlgorithm.BodyCenterOrigin.X;
+                        _Algorithm.BodyCenterOrigin.Y = _SrcAlgorithm.BodyCenterOrigin.Y;
+                        _Algorithm.BodyCenterOffset.X = _SrcAlgorithm.BodyCenterOffset.X;
+                        _Algorithm.BodyCenterOffset.Y = _SrcAlgorithm.BodyCenterOffset.Y;
+
+                        for (int zLoopCount = 0; zLoopCount < _SrcAlgorithm.BodyMaskingAreaList.Count; ++zLoopCount)
+                        {
+                            RectangleD _MaskArea = new RectangleD();
+                            _MaskArea.CenterX = _SrcAlgorithm.BodyMaskingAreaList[zLoopCount].CenterX;
+                            _MaskArea.CenterY = _SrcAlgorithm.BodyMaskingAreaList[zLoopCount].CenterY;
+                            _MaskArea.Width = _SrcAlgorithm.BodyMaskingAreaList[zLoopCount].Width;
+                            _MaskArea.Height = _SrcAlgorithm.BodyMaskingAreaList[zLoopCount].Height;
+                            _Algorithm.BodyMaskingAreaList.Add(_MaskArea);
+                        }
+
+                        _Algorithm.IsUseMoldChipOut = _SrcAlgorithm.IsUseMoldChipOut;
+                        _Algorithm.ChipOutArea.CenterX = _SrcAlgorithm.ChipOutArea.CenterX;
+                        _Algorithm.ChipOutArea.CenterY = _SrcAlgorithm.ChipOutArea.CenterY;
+                        _Algorithm.ChipOutArea.Width = _SrcAlgorithm.ChipOutArea.Width;
+                        _Algorithm.ChipOutArea.Height = _SrcAlgorithm.ChipOutArea.Height;
+                        _Algorithm.ChipOutThreshold = _SrcAlgorithm.ChipOutThreshold;
+                        _Algorithm.ChipOutBlobAreaMin = _SrcAlgorithm.ChipOutBlobAreaMin;
+                        _Algorithm.ChipOutBlobAreaMax = _SrcAlgorithm.ChipOutBlobAreaMax;
+                        _Algorithm.ChipOutWidthMin = _SrcAlgorithm.ChipOutWidthMin;
+                        _Algorithm.ChipOutWidthMax = _SrcAlgorithm.ChipOutWidthMax;
+                        _Algorithm.ChipOutHeightMin = _SrcAlgorithm.ChipOutHeightMin;
+                        _Algorithm.ChipOutHeightMax = _SrcAlgorithm.ChipOutHeightMax;
+
+                        _Algorithm.IsUseLeadMeasurement = _SrcAlgorithm.IsUseLeadMeasurement;
+                        _Algorithm.LeadMeasurementArea.CenterX = _SrcAlgorithm.LeadMeasurementArea.CenterX;
+                        _Algorithm.LeadMeasurementArea.CenterY = _SrcAlgorithm.LeadMeasurementArea.CenterY;
+                        _Algorithm.LeadMeasurementArea.Width = _SrcAlgorithm.LeadMeasurementArea.Width;
+                        _Algorithm.LeadMeasurementArea.Height = _SrcAlgorithm.LeadMeasurementArea.Height;
+
+                        _InspAlgoParam.Algorithm = _Algorithm;
+                    }
                     _InspAreaParam.InspAlgoParam.Add(_InspAlgoParam);
                 }
                 _DestParam.InspAreaParam.Add(_InspAreaParam);

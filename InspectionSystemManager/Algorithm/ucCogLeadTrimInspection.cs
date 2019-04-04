@@ -25,6 +25,9 @@ namespace InspectionSystemManager
         private List<RectangleD> BodyMaskingAreaListBack = new List<RectangleD>();
         private RectangleD       BodyMaskingLastArea = new RectangleD();
 
+        private RectangleD       ChipOutArea = new RectangleD();
+        private RectangleD       LeadMeasureArea = new RectangleD();
+
         private double ResolutionX = 0.005;
         private double ResolutionY = 0.005;
         private double BenchMarkOffsetX = 0;
@@ -39,6 +42,9 @@ namespace InspectionSystemManager
         public delegate void DrawMaskingRegionHandler(List<RectangleD> _MaskingArea);
         public event DrawMaskingRegionHandler DrawMaskingRegionEven;
 
+        public delegate void ApplyLeadTrimValueHandler(CogLeadTrimAlgo.eAlgoMode _Mode, CogRectangle _Region, CogLeadTrimAlgo _Algo, ref CogLeadTrimResult _Result);
+        public event ApplyLeadTrimValueHandler ApplyLeadTrimValueEvent;
+
         public ucCogLeadTrimInspection()
         {
             InitializeComponent();
@@ -52,6 +58,7 @@ namespace InspectionSystemManager
 
         public void SaveAlgoRecipe()
         {
+            CogLeadTrimAlgoRcp.IsUseLeadBody = chUseLeadBody.Checked;
             CogLeadTrimAlgoRcp.BodyArea = new RectangleD();
             CogLeadTrimAlgoRcp.BodyArea.SetCenterWidthHeight(BodyArea.CenterX, BodyArea.CenterY, BodyArea.Width, BodyArea.Height);
 
@@ -62,6 +69,27 @@ namespace InspectionSystemManager
                 _MaskingArea.SetCenterWidthHeight(BodyMaskingAreaList[iLoopCount].CenterX, BodyMaskingAreaList[iLoopCount].CenterY, BodyMaskingAreaList[iLoopCount].Width, BodyMaskingAreaList[iLoopCount].Height);
                 CogLeadTrimAlgoRcp.BodyMaskingAreaList.Add(_MaskingArea);
             }
+
+
+            CogLeadTrimAlgoRcp.IsUseMoldChipOut = chUseMoldChipOut.Checked;
+            CogLeadTrimAlgoRcp.ChipOutArea.CenterX = ChipOutArea.CenterX;
+            CogLeadTrimAlgoRcp.ChipOutArea.CenterY = ChipOutArea.CenterY;
+            CogLeadTrimAlgoRcp.ChipOutArea.Width = ChipOutArea.Width;
+            CogLeadTrimAlgoRcp.ChipOutArea.Height = ChipOutArea.Height;
+            CogLeadTrimAlgoRcp.ChipOutForeground = 1;
+            CogLeadTrimAlgoRcp.ChipOutThreshold = Convert.ToInt32(graLabelChipOutThresholdValue.Text);
+            CogLeadTrimAlgoRcp.ChipOutBlobAreaMin = Convert.ToDouble(textBoxChipOutBlobAreaMin.Text);
+            CogLeadTrimAlgoRcp.ChipOutBlobAreaMax = Convert.ToDouble(textBoxChipOutBlobAreaMax.Text);
+            CogLeadTrimAlgoRcp.ChipOutWidthMin = Convert.ToDouble(textBoxChipOutWidthSizeMin.Text);
+            CogLeadTrimAlgoRcp.ChipOutWidthMax = Convert.ToDouble(textBoxChipOutWidthSizeMax.Text);
+            CogLeadTrimAlgoRcp.ChipOutHeightMin = Convert.ToDouble(textBoxChipOutHeightSizeMin.Text);
+            CogLeadTrimAlgoRcp.ChipOutHeightMax = Convert.ToDouble(textBoxChipOutHeightSizeMax.Text);
+
+
+            CogLeadTrimAlgoRcp.LeadMeasurementArea.CenterX = LeadMeasureArea.CenterX;
+            CogLeadTrimAlgoRcp.LeadMeasurementArea.CenterY = LeadMeasureArea.CenterY;
+            CogLeadTrimAlgoRcp.LeadMeasurementArea.Width = LeadMeasureArea.Width;
+            CogLeadTrimAlgoRcp.LeadMeasurementArea.Height = LeadMeasureArea.Height;
         }
 
         public void SetAlgoRecipe(Object _Algorithm, double _BenchMarkOffsetX, double _BenchMarkOffsetY, double _ResolutionX, double _ResolutionY)
@@ -75,10 +103,12 @@ namespace InspectionSystemManager
             BenchMarkOffsetX = _BenchMarkOffsetX;
             BenchMarkOffsetY = _BenchMarkOffsetY;
 
+            chUseLeadBody.Checked = CogLeadTrimAlgoRcp.IsUseLeadBody;
+
             //Lead Body Search Area Copy
             BodyArea.SetCenterWidthHeight(CogLeadTrimAlgoRcp.BodyArea.CenterX, CogLeadTrimAlgoRcp.BodyArea.CenterY, CogLeadTrimAlgoRcp.BodyArea.Width, CogLeadTrimAlgoRcp.BodyArea.Height);
 
-            //Masking Area Copy
+            //Lead Body Masking Area Copy
             BodyMaskingAreaList.Clear();
             BodyMaskingAreaListBack.Clear();
             for (int iLoopCount = 0; iLoopCount < CogLeadTrimAlgoRcp.BodyMaskingAreaList.Count; ++iLoopCount)
@@ -92,8 +122,25 @@ namespace InspectionSystemManager
                 BodyMaskingAreaList.Add(_MaskingArea);
                 BodyMaskingAreaListBack.Add(_MaskingAreaBack);
             }
+
+
+            //Chip Out Area Copy
+            ChipOutArea.SetCenterWidthHeight(CogLeadTrimAlgoRcp.ChipOutArea.CenterX, CogLeadTrimAlgoRcp.ChipOutArea.CenterY, CogLeadTrimAlgoRcp.ChipOutArea.Width, CogLeadTrimAlgoRcp.ChipOutArea.Height);
+            graLabelChipOutThresholdValue.Text = CogLeadTrimAlgoRcp.ChipOutThreshold.ToString();
+            hScrollBarChipOutThreshold.Value = CogLeadTrimAlgoRcp.ChipOutThreshold;
+            textBoxChipOutBlobAreaMin.Text = CogLeadTrimAlgoRcp.ChipOutBlobAreaMin.ToString();
+            textBoxChipOutBlobAreaMax.Text = CogLeadTrimAlgoRcp.ChipOutBlobAreaMax.ToString();
+            textBoxChipOutWidthSizeMin.Text = CogLeadTrimAlgoRcp.ChipOutWidthMin.ToString();
+            textBoxChipOutWidthSizeMax.Text = CogLeadTrimAlgoRcp.ChipOutWidthMax.ToString();
+            textBoxChipOutHeightSizeMin.Text = CogLeadTrimAlgoRcp.ChipOutHeightMin.ToString();
+            textBoxChipOutHeightSizeMax.Text = CogLeadTrimAlgoRcp.ChipOutHeightMax.ToString();
+
+
+            //Lead Length / Bent Area Copy
+            LeadMeasureArea.SetCenterWidthHeight(CogLeadTrimAlgoRcp.LeadMeasurementArea.CenterX, CogLeadTrimAlgoRcp.LeadMeasurementArea.CenterY, CogLeadTrimAlgoRcp.LeadMeasurementArea.Width, CogLeadTrimAlgoRcp.LeadMeasurementArea.Height);
         }
 
+        #region Lead Body Button Event
         private void btnLeadBodyAreaShow_Click(object sender, EventArgs e)
         {
             CogRectangle _Region = new CogRectangle();
@@ -172,8 +219,6 @@ namespace InspectionSystemManager
 
             var _DrawMaskingRegionEven = DrawMaskingRegionEven;
             _DrawMaskingRegionEven?.Invoke(BodyMaskingAreaList);
-
-            
         }
 
         private void btnMaskingClear_Click(object sender, EventArgs e)
@@ -185,7 +230,97 @@ namespace InspectionSystemManager
 
         private void btnBodyAreaCheck_Click(object sender, EventArgs e)
         {
+            CogRectangle _InspRegion = new CogRectangle();
+            _InspRegion.SetCenterWidthHeight(BodyArea.CenterX, BodyArea.CenterY, BodyArea.Width, BodyArea.Height);
+
+            CogLeadTrimResult _CogLeadTrimResult = new CogLeadTrimResult();
+
+            var _ApplyLeadTrimValueEvent = ApplyLeadTrimValueEvent;
+            _ApplyLeadTrimValueEvent?.Invoke(CogLeadTrimAlgo.eAlgoMode.BODY_CHECK, _InspRegion, CogLeadTrimAlgoRcp, ref _CogLeadTrimResult);
+
+            CogLeadTrimAlgoRcp.BodyCenterOrigin.X = _CogLeadTrimResult.LeadBodyOriginX;
+            CogLeadTrimAlgoRcp.BodyCenterOrigin.Y = _CogLeadTrimResult.LeadBodyOriginY;
+            CogLeadTrimAlgoRcp.BodyCenterOffset.X = _CogLeadTrimResult.LeadBodyOffsetX;
+            CogLeadTrimAlgoRcp.BodyCenterOffset.Y = _CogLeadTrimResult.LeadBodyOffsetY;
+        }
+        #endregion
+
+        #region Chip Out Button Event
+        private void hScrollBarChipOutThreshold_Scroll(object sender, ScrollEventArgs e)
+        {
+            graLabelChipOutThresholdValue.Text = hScrollBarChipOutThreshold.Value.ToString();
+        }
+
+        private void btnChipOutAreaShow_Click(object sender, EventArgs e)
+        {
+            CogRectangle _Region = new CogRectangle();
+            _Region.SetCenterWidthHeight(ChipOutArea.CenterX, ChipOutArea.CenterY, ChipOutArea.Width, ChipOutArea.Height);
+
+            var _DrawRegionEvent = DrawRegionEvent;
+            _DrawRegionEvent?.Invoke(_Region, false);
+        }
+
+        private void btnChipOutAreaSet_Click(object sender, EventArgs e)
+        {
+            var _GetRegionEvent = GetRegionEvent;
+            CogRectangle _Region = GetRegionEvent?.Invoke();
+
+            var _DrawRegionEvent = DrawRegionEvent;
+            _DrawRegionEvent?.Invoke(_Region, true);
+
+            ChipOutArea = new RectangleD();
+            ChipOutArea.SetCenterWidthHeight(_Region.CenterX, _Region.CenterY, _Region.Width, _Region.Height);
+        }
+
+        private void btnChipOutAreaCheck_Click(object sender, EventArgs e)
+        {
+            CogRectangle _InspRegion = new CogRectangle();
+            _InspRegion.SetCenterWidthHeight(ChipOutArea.CenterX, ChipOutArea.CenterY, ChipOutArea.Width, ChipOutArea.Height);
+
+            CogLeadTrimResult _CogLeadTrimResult = new CogLeadTrimResult();
+
+            var _ApplyLeadTrimValueEvent = ApplyLeadTrimValueEvent;
+            _ApplyLeadTrimValueEvent?.Invoke(CogLeadTrimAlgo.eAlgoMode.CHIPOUT_CHECK, _InspRegion, CogLeadTrimAlgoRcp, ref _CogLeadTrimResult);
+        }
+        #endregion
+
+        #region Lead Bent Length Button Event
+        private void btnLeadBendLengthCheck_Click(object sender, EventArgs e)
+        {
 
         }
+
+        private void btnLeadLengthAreaShow_Click(object sender, EventArgs e)
+        {
+            CogRectangle _Region = new CogRectangle();
+            _Region.SetCenterWidthHeight(LeadMeasureArea.CenterX, LeadMeasureArea.CenterY, LeadMeasureArea.Width, LeadMeasureArea.Height);
+
+            var _DrawRegionEvent = DrawRegionEvent;
+            _DrawRegionEvent?.Invoke(_Region, false);
+        }
+
+        private void btnLeadLengthAreaSet_Click(object sender, EventArgs e)
+        {
+            var _GetRegionEvent = GetRegionEvent;
+            CogRectangle _Region = GetRegionEvent?.Invoke();
+
+            var _DrawRegionEvent = DrawRegionEvent;
+            _DrawRegionEvent?.Invoke(_Region, true);
+
+            LeadMeasureArea = new RectangleD();
+            LeadMeasureArea.SetCenterWidthHeight(_Region.CenterX, _Region.CenterY, _Region.Width, _Region.Height);
+        }
+
+        private void btnLeadLengthAreaCheck_Click(object sender, EventArgs e)
+        {
+            CogRectangle _InspRegion = new CogRectangle();
+            _InspRegion.SetCenterWidthHeight(LeadMeasureArea.CenterX, LeadMeasureArea.CenterY, LeadMeasureArea.Width, LeadMeasureArea.Height);
+
+            CogLeadTrimResult _CogLeadTrimResult = new CogLeadTrimResult();
+
+            var _ApplyLeadTrimValueEvent = ApplyLeadTrimValueEvent;
+            _ApplyLeadTrimValueEvent?.Invoke(CogLeadTrimAlgo.eAlgoMode.LEAD_MEASURE, _InspRegion, CogLeadTrimAlgoRcp, ref _CogLeadTrimResult);
+        }
+        #endregion
     }
 }
