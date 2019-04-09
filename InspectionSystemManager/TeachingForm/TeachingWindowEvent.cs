@@ -8,6 +8,7 @@ using Cognex.VisionPro;
 using Cognex.VisionPro.PMAlign;
 using Cognex.VisionPro.ImageProcessing;
 using Cognex.VisionPro.Caliper;
+using Cognex.VisionPro.Dimensioning;
 
 using ParameterManager;
 using LogMessageManager;
@@ -751,7 +752,41 @@ namespace InspectionSystemManager
 
         private void LeadMeasurement(CogRectangle _InspRegion, CogLeadTrimAlgo _InspAlgo, ref CogLeadTrimResult _InspResult)
         {
-            
+            bool _Result = InspLeadTrimProcess.LeadMeasurement(InspectionImage, _InspRegion, _InspAlgo);
+
+            if (true == _Result)
+            {
+                CogLeadTrimResult _LeadTrimResult = new CogLeadTrimResult();
+                _LeadTrimResult = InspLeadTrimProcess.GetLeadTrimResult();
+
+                _InspResult.LeadCount = _LeadTrimResult.LeadCount;
+                _InspResult.LeadLength = _LeadTrimResult.LeadLength;
+                _InspResult.LeadPitchLength = _LeadTrimResult.LeadPitchLength;
+                _InspResult.LeadWidth = _LeadTrimResult.LeadWidth;
+
+                #region Draw Lead Measurement Display
+                for (int iLoopCount = 0; iLoopCount < _LeadTrimResult.LeadCount; ++iLoopCount)
+                {
+                    //Blob Boundary
+                    //CogRectangleAffine _BlobRectAffine = new CogRectangleAffine();
+                    //_BlobRectAffine.SetCenterLengthsRotationSkew(_LeadTrimResult.LeadCenterX[iLoopCount], _LeadTrimResult.LeadCenterY[iLoopCount], _LeadTrimResult.LeadWidth[iLoopCount], _LeadTrimResult.LeadLength[iLoopCount], _LeadTrimResult.Angle[iLoopCount], 0);
+                    //kpTeachDisplay.DrawStaticShape(_BlobRectAffine, "BlobRectAffine" + (iLoopCount + 1), CogColorConstants.Green);
+                    
+                    //kpTeachDisplay.DrawBlobResult(_LeadTrimResult.ResultGraphic[iLoopCount], "BlobRectGra" + (iLoopCount + 1));
+
+                    CogPointMarker _PitchPoint = new CogPointMarker();
+                    _PitchPoint.SetCenterRotationSize(_LeadTrimResult.LeadPitchTopX[iLoopCount], _LeadTrimResult.LeadPitchTopY[iLoopCount], 0, 1);
+                    kpTeachDisplay.DrawStaticShape(_PitchPoint, "PointStart" + (iLoopCount + 1), CogColorConstants.Yellow, 10);
+                    _PitchPoint.SetCenterRotationSize(_LeadTrimResult.LeadPitchBottomX[iLoopCount], _LeadTrimResult.LeadPitchBottomY[iLoopCount], 0, 1);
+                    kpTeachDisplay.DrawStaticShape(_PitchPoint, "PointEnd" + (iLoopCount + 1), CogColorConstants.Orange, 10);
+
+                    CogLineSegment _LeadLine = new CogLineSegment();
+                    _LeadLine.SetStartEnd(_LeadTrimResult.LeadPitchTopX[iLoopCount], _LeadTrimResult.LeadPitchTopY[iLoopCount], _LeadTrimResult.LeadPitchBottomX[iLoopCount], _LeadTrimResult.LeadPitchBottomY[iLoopCount]);
+                    kpTeachDisplay.DrawStaticLine(_LeadLine, "CenterLine+_" + (iLoopCount + 1), CogColorConstants.Cyan);
+                }
+
+                #endregion
+            }
         }
         #endregion
     }

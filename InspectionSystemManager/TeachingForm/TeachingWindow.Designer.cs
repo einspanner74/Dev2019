@@ -255,6 +255,7 @@
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.gridViewArea.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.gridViewArea.ColumnHeadersHeight = 22;
+            this.gridViewArea.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.gridViewArea.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.gridAreaID,
             this.gridAreaName,
@@ -577,20 +578,16 @@
             this.labelStatus.Text = "Status";
             this.labelStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // gradientLabel1
+            // kpTeachDisplay
             // 
-            this.gradientLabel1.BackColor = System.Drawing.Color.White;
-            this.gradientLabel1.ColorBottom = System.Drawing.Color.White;
-            this.gradientLabel1.ColorTop = System.Drawing.Color.SteelBlue;
-            this.gradientLabel1.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.gradientLabel1.ForeColor = System.Drawing.Color.White;
-            this.gradientLabel1.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel1.Location = new System.Drawing.Point(677, 32);
-            this.gradientLabel1.Name = "gradientLabel1";
-            this.gradientLabel1.Size = new System.Drawing.Size(583, 30);
-            this.gradientLabel1.TabIndex = 18;
-            this.gradientLabel1.Text = " Inspection & Algorithm Area Setting Window";
-            this.gradientLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.kpTeachDisplay.BackColor = System.Drawing.Color.White;
+            this.kpTeachDisplay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.kpTeachDisplay.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.kpTeachDisplay.Location = new System.Drawing.Point(1, 31);
+            this.kpTeachDisplay.Name = "kpTeachDisplay";
+            this.kpTeachDisplay.Size = new System.Drawing.Size(672, 789);
+            this.kpTeachDisplay.TabIndex = 9;
+            this.kpTeachDisplay.UseStatusBar = true;
             // 
             // panelTeaching
             // 
@@ -617,16 +614,20 @@
             this.gradientLabelTeaching.Text = " Teaching Window";
             this.gradientLabelTeaching.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // kpTeachDisplay
+            // gradientLabel1
             // 
-            this.kpTeachDisplay.BackColor = System.Drawing.Color.White;
-            this.kpTeachDisplay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.kpTeachDisplay.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.kpTeachDisplay.Location = new System.Drawing.Point(1, 31);
-            this.kpTeachDisplay.Name = "kpTeachDisplay";
-            this.kpTeachDisplay.Size = new System.Drawing.Size(672, 789);
-            this.kpTeachDisplay.TabIndex = 9;
-            this.kpTeachDisplay.UseStatusBar = true;
+            this.gradientLabel1.BackColor = System.Drawing.Color.White;
+            this.gradientLabel1.ColorBottom = System.Drawing.Color.White;
+            this.gradientLabel1.ColorTop = System.Drawing.Color.SteelBlue;
+            this.gradientLabel1.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel1.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel1.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel1.Location = new System.Drawing.Point(677, 32);
+            this.gradientLabel1.Name = "gradientLabel1";
+            this.gradientLabel1.Size = new System.Drawing.Size(583, 30);
+            this.gradientLabel1.TabIndex = 18;
+            this.gradientLabel1.Text = " Inspection & Algorithm Area Setting Window";
+            this.gradientLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // TeachingWindow
             // 

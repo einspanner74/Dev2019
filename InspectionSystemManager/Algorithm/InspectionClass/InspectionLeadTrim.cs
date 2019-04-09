@@ -9,6 +9,7 @@ using Cognex.VisionPro.Blob;
 using Cognex.VisionPro.Caliper;
 using Cognex.VisionPro.ImageFile;
 using Cognex.VisionPro.ImageProcessing;
+using Cognex.VisionPro.Dimensioning;
 
 using ParameterManager;
 using LogMessageManager;
@@ -21,10 +22,11 @@ namespace InspectionSystemManager
 
         private CogImage8Grey SrcImage = new CogImage8Grey();
 
-        private CogBlob         BlobProc;
-        private CogBlobResults  BlobResults;
-        private CogBlobResult   BlobResult;
-        private CogBlobReferenceResult InspResults;
+        private CogBlob                 BlobProc;
+        private CogBlobResults          BlobResults;
+        private CogBlobResult           BlobResult;
+        //private CogBlobReferenceResult  InspBlobReferResults;
+        private CogLeadTrimResult       InspLeadTrimResults;
 
         #region Initialize & Deinitialize
         public InspectionLeadTrim()
@@ -32,7 +34,8 @@ namespace InspectionSystemManager
             BlobProc = new CogBlob();
             BlobResults = new CogBlobResults();
             BlobResult = new CogBlobResult();
-            InspResults = new CogBlobReferenceResult();
+            //InspBlobReferResults = new CogBlobReferenceResult();
+            InspLeadTrimResults = new CogLeadTrimResult();
 
             BlobProc.SegmentationParams.Mode = CogBlobSegmentationModeConstants.HardFixedThreshold;
             BlobProc.SegmentationParams.Polarity = CogBlobSegmentationPolarityConstants.LightBlobs;
@@ -61,6 +64,8 @@ namespace InspectionSystemManager
             {
                 //Lead body search
                 if (false == LeadBodySearch(_SrcImage, _InspRegion, _CogLeadTrimAlgo)) break;
+                if (false == MoldChipOutInspection(_SrcImage, _InspRegion, _CogLeadTrimAlgo)) break;
+                if (false == LeadMeasurement(_SrcImage, _InspRegion, _CogLeadTrimAlgo)) break;
 
                 _Result = true;
             } while (false);
@@ -97,7 +102,7 @@ namespace InspectionSystemManager
                 BlobResults = BlobProc.Execute(_SrcImage, _InspRegion);
                 GetResult(true);
 
-                CogBlobReferenceResult _CogBlobReferResultTemp = new CogBlobReferenceResult();
+                CogLeadTrimResult _CogBlobReferResultTemp = new CogLeadTrimResult();
                 _CogBlobReferResultTemp = GetResults();
 
                 if (_CogBlobReferResultTemp.BlobCount <= 0) return false;
@@ -184,7 +189,7 @@ namespace InspectionSystemManager
                 BlobResults = BlobProc.Execute(_CogCopyImage, _InspRegion);
                 GetResult(true);
 
-                _CogBlobReferResultTemp = new CogBlobReferenceResult();
+                _CogBlobReferResultTemp = new CogLeadTrimResult();
                 _CogBlobReferResultTemp = GetResults();
 
                 if (_CogBlobReferResultTemp.BlobCount <= 0) return false;
@@ -206,13 +211,16 @@ namespace InspectionSystemManager
                 LeadTrimResult.LeadBodyLeftBottom.Y = _CogBlobReferResultTemp.BlobMaxY[_Index];
                 LeadTrimResult.LeadBodyRightBottom.X = _CogBlobReferResultTemp.BlobMaxX[_Index];
                 LeadTrimResult.LeadBodyRightBottom.Y = _CogBlobReferResultTemp.BlobMaxY[_Index];
+
+                CogLine _CogLine = new CogLine();
+                _CogLine.SetFromStartXYEndXY(LeadTrimResult.LeadBodyLeftTop.X, LeadTrimResult.LeadBodyLeftTop.Y, LeadTrimResult.LeadBodyRightTop.X, LeadTrimResult.LeadBodyRightTop.Y);
+                LeadTrimResult.LeadBodyBaseLine = _CogLine;
                 #endregion
 
                 _ProcessWatch.Stop();
                 string _ProcessTime = String.Format("Lead Body Search Time : {0} ms", _ProcessWatch.Elapsed.TotalSeconds.ToString());
                 CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, _ProcessTime, CLogManager.LOG_LEVEL.LOW);
                 
-
                 #region Masking Image Save
                 //CogImageFile _CogImageFile = new CogImageFile();
                 //_CogImageFile.Open(@"D:\Origin.jpg", CogImageFileModeConstants.Write);
@@ -260,7 +268,7 @@ namespace InspectionSystemManager
                 BlobResults = BlobProc.Execute(_SrcImage, _InspRegion);
                 GetResult(true);
 
-                CogBlobReferenceResult _CogChipOutResult = new CogBlobReferenceResult();
+                CogLeadTrimResult _CogChipOutResult = new CogLeadTrimResult();
                 _CogChipOutResult = GetResults();
 
                 if (null == LeadTrimResult.ChipOutNgList) LeadTrimResult.ChipOutNgList = new List<CogRectangle>();
@@ -291,8 +299,141 @@ namespace InspectionSystemManager
                 _Result = false;
             }
 
-
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "MoldChipOutInspection - End", CLogManager.LOG_LEVEL.MID);
+            return _Result;
+        }
+
+        public bool LeadMeasurement(CogImage8Grey _SrcImage, CogRectangle _InspRegion, CogLeadTrimAlgo _CogLeadTrimAlgo)
+        {
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "LeadMeasurement - Start", CLogManager.LOG_LEVEL.MID);
+
+            if (false == _CogLeadTrimAlgo.IsUseLeadMeasurement)
+            {
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "LeadMeasurement Disable - End", CLogManager.LOG_LEVEL.MID);
+                return true;
+            }
+
+            bool _Result = true;
+
+            try
+            {
+                System.Diagnostics.Stopwatch _ProcessWatch = new System.Diagnostics.Stopwatch();
+                _ProcessWatch.Reset(); _ProcessWatch.Start();
+
+
+                SetConnectivityMinimum(10000);
+                SetHardFixedThreshold(_CogLeadTrimAlgo.LeadThreshold);
+                SetPolarity(Convert.ToBoolean(_CogLeadTrimAlgo.LeadForeground));
+
+                BlobResults = BlobProc.Execute(_SrcImage, _InspRegion);
+                GetResult(true);
+
+                CogLeadTrimResult _CogLeadTrimResult = new CogLeadTrimResult();
+                _CogLeadTrimResult = GetResults();
+
+                if (null == LeadTrimResult.LeadMeasureList) LeadTrimResult.LeadMeasureList = new List<CogRectangle>();
+                LeadTrimResult.LeadMeasureList.Clear();
+
+                #region Lead Pitch Point Get
+                LeadTrimResult.LeadCount = _CogLeadTrimResult.BlobCount;
+                LeadTrimResult.LeadCenterX = new double[_CogLeadTrimResult.BlobCount];
+                LeadTrimResult.LeadCenterY = new double[_CogLeadTrimResult.BlobCount];
+                LeadTrimResult.LeadWidth = new double[_CogLeadTrimResult.BlobCount];
+                LeadTrimResult.LeadLength = new double[_CogLeadTrimResult.BlobCount];
+                LeadTrimResult.LeadPitchLength = new double[_CogLeadTrimResult.BlobCount - 1];
+                LeadTrimResult.LeadPitchTopX = new double[_CogLeadTrimResult.BlobCount];
+                LeadTrimResult.LeadPitchTopY = new double[_CogLeadTrimResult.BlobCount];
+                LeadTrimResult.LeadPitchBottomX = new double[_CogLeadTrimResult.BlobCount];
+                LeadTrimResult.LeadPitchBottomY = new double[_CogLeadTrimResult.BlobCount];
+                LeadTrimResult.Angle = new double[_CogLeadTrimResult.BlobCount];
+
+                for (int iLoopCount = 0; iLoopCount < _CogLeadTrimResult.BlobCount; ++iLoopCount)
+                {
+                    #region Lead Bent Check
+                    //double _Angle = _CogLeadMeasureResult.Angle[iLoopCount] * 180 / Math.PI;
+                    //if (_Angle > 0) _Angle = 90 - (_CogLeadMeasureResult.Angle[iLoopCount] * 180 / Math.PI);
+                    //else _Angle = -(90 + (_CogLeadMeasureResult.Angle[iLoopCount] * 180 / Math.PI));
+                    //
+                    //_CogLeadMeasureResult.IsLeadBentGood[iLoopCount] = true;
+                    ////if ((_Angle > _CogLeadTrimAlgo.LeadBentMax) || (_Angle < -_CogLeadTrimAlgo.LeadBentMin))
+                    //{
+                    //    _CogLeadMeasureResult.IsLeadBentGood[iLoopCount] = false;
+                    //    _CogLeadMeasureResult.IsGood &= _CogLeadMeasureResult.IsLeadBentGood[iLoopCount];
+                    //}
+                    #endregion
+
+                    #region Pitch Point 구하기
+                    CogLineSegment _CenterLine = new CogLineSegment();
+                    if (_CogLeadTrimResult.Angle[iLoopCount] > 0)
+                    {
+                        _CenterLine.SetStartLengthRotation(_CogLeadTrimResult.BlobCenterX[iLoopCount], _CogLeadTrimResult.BlobCenterY[iLoopCount], _CogLeadTrimResult.PrincipalWidth[iLoopCount] / 2, (Math.PI) + _CogLeadTrimResult.Angle[iLoopCount]);
+                        LeadTrimResult.LeadPitchTopX[iLoopCount] = _CenterLine.EndX;
+                        LeadTrimResult.LeadPitchTopY[iLoopCount] = _CenterLine.EndY;
+
+                        _CenterLine.SetStartLengthRotation(_CogLeadTrimResult.BlobCenterX[iLoopCount], _CogLeadTrimResult.BlobCenterY[iLoopCount], _CogLeadTrimResult.PrincipalWidth[iLoopCount] / 2, _CogLeadTrimResult.Angle[iLoopCount]);
+                        LeadTrimResult.LeadPitchBottomX[iLoopCount] = _CenterLine.EndX;
+                        LeadTrimResult.LeadPitchBottomY[iLoopCount] = _CenterLine.EndY;
+                    }
+
+                    else
+                    {
+                        _CenterLine.SetStartLengthRotation(_CogLeadTrimResult.BlobCenterX[iLoopCount], _CogLeadTrimResult.BlobCenterY[iLoopCount], _CogLeadTrimResult.PrincipalWidth[iLoopCount] / 2, _CogLeadTrimResult.Angle[iLoopCount]);
+                        LeadTrimResult.LeadPitchTopX[iLoopCount] = _CenterLine.EndX;
+                        LeadTrimResult.LeadPitchTopY[iLoopCount] = _CenterLine.EndY;
+
+                        _CenterLine.SetStartLengthRotation(_CogLeadTrimResult.BlobCenterX[iLoopCount], _CogLeadTrimResult.BlobCenterY[iLoopCount], _CogLeadTrimResult.PrincipalWidth[iLoopCount] / 2, (Math.PI) + _CogLeadTrimResult.Angle[iLoopCount]);
+                        LeadTrimResult.LeadPitchBottomX[iLoopCount] = _CenterLine.EndX;
+                        LeadTrimResult.LeadPitchBottomY[iLoopCount] = _CenterLine.EndY;
+                    }
+                    LeadTrimResult.Angle[iLoopCount] = _CogLeadTrimResult.Angle[iLoopCount];
+                    LeadTrimResult.LeadCenterX[iLoopCount] = _CogLeadTrimResult.BlobCenterX[iLoopCount];
+                    LeadTrimResult.LeadCenterY[iLoopCount] = _CogLeadTrimResult.BlobCenterY[iLoopCount];
+                    //LeadTrimResult.LeadWidth[iLoopCount] = _CogLeadTrimResult.PrincipalWidth[iLoopCount];
+                    //LeadTrimResult.LeadLength[iLoopCount] = _CogLeadTrimResult.PrincipalHeight[iLoopCount];
+                    LeadTrimResult.LeadWidth[iLoopCount] = _CogLeadTrimResult.PrincipalHeight[iLoopCount];
+                    LeadTrimResult.LeadLength[iLoopCount] = _CogLeadTrimResult.PrincipalWidth[iLoopCount];
+                    #endregion
+
+                    #region Length 구하기
+                    CogLine _CogLeadLine = new CogLine();
+                    _CogLeadLine.SetFromStartXYEndXY(LeadTrimResult.LeadPitchTopX[iLoopCount], LeadTrimResult.LeadPitchTopX[iLoopCount], LeadTrimResult.LeadPitchBottomX[iLoopCount], LeadTrimResult.LeadPitchBottomY[iLoopCount]);
+
+                    CogIntersectLineLineTool _CogIntersect = new CogIntersectLineLineTool();
+                    _CogIntersect.InputImage = _SrcImage;
+                    _CogIntersect.LineA = LeadTrimResult.LeadBodyBaseLine;
+                    _CogIntersect.LineB = _CogLeadLine;
+                    _CogIntersect.Run();
+
+                    LeadTrimResult.LeadPitchBottomX[iLoopCount] = _CogIntersect.X;
+                    LeadTrimResult.LeadPitchBottomY[iLoopCount] = _CogIntersect.Y;
+
+                    double _Angle;
+                    double _Length = CogMath.DistancePointPoint(LeadTrimResult.LeadPitchTopX[iLoopCount], LeadTrimResult.LeadPitchTopY[iLoopCount], LeadTrimResult.LeadPitchBottomX[iLoopCount], LeadTrimResult.LeadPitchBottomY[iLoopCount], out _Angle);
+                    LeadTrimResult.LeadLength[iLoopCount] = _Length;
+                    #endregion 
+
+                    #region Pitch 구하기
+                    if (iLoopCount > 0) LeadTrimResult.LeadPitchLength[iLoopCount - 1] = LeadTrimResult.LeadPitchTopX[iLoopCount] - LeadTrimResult.LeadPitchTopX[iLoopCount - 1];
+                    #endregion
+
+                    #region Lead Wdith 구하기
+                    //Width는 그대로 사용
+                    #endregion
+                }
+                #endregion
+
+                _ProcessWatch.Stop();
+                string _ProcessTime = String.Format("LeadMeasurement Time : {0} ms", _ProcessWatch.Elapsed.TotalSeconds.ToString());
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, _ProcessTime, CLogManager.LOG_LEVEL.LOW);
+            }
+
+            catch (Exception ex)
+            {
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "LeadMeasurement - Inspection Exception : " + ex.ToString(), CLogManager.LOG_LEVEL.LOW);
+                _Result = false;
+            }
+
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "LeadMeasurement - End", CLogManager.LOG_LEVEL.MID);
             return _Result;
         }
 
@@ -331,9 +472,10 @@ namespace InspectionSystemManager
             BlobProc.RunTimeMeasures.Add(_BlobMeasure);
         }
 
-        private CogBlobReferenceResult GetResults()
+        private CogLeadTrimResult GetResults()
         {
-            return InspResults;
+            //return InspBlobReferResults;
+            return InspLeadTrimResults;
         }
 
         private bool GetResult(bool _IsGraphicResult)
@@ -342,40 +484,57 @@ namespace InspectionSystemManager
 
             if (null == BlobResults || BlobResults.GetBlobs().Count < 0) return false;
 
-            InspResults.BlobCount = BlobResults.GetBlobs().Count;
-            InspResults.BlobArea = new double[BlobResults.GetBlobs().Count];
-            InspResults.Width = new double[BlobResults.GetBlobs().Count];
-            InspResults.Height = new double[BlobResults.GetBlobs().Count];
-            InspResults.BlobMinX = new double[BlobResults.GetBlobs().Count];
-            InspResults.BlobMinY = new double[BlobResults.GetBlobs().Count];
-            InspResults.BlobMaxX = new double[BlobResults.GetBlobs().Count];
-            InspResults.BlobMaxY = new double[BlobResults.GetBlobs().Count];
-            InspResults.BlobCenterX = new double[BlobResults.GetBlobs().Count];
-            InspResults.BlobCenterY = new double[BlobResults.GetBlobs().Count];
-            InspResults.BlobMessCenterX = new double[BlobResults.GetBlobs().Count];
-            InspResults.BlobMessCenterY = new double[BlobResults.GetBlobs().Count];
-            InspResults.OriginX = new double[BlobResults.GetBlobs().Count];
-            InspResults.OriginY = new double[BlobResults.GetBlobs().Count];
-            InspResults.IsGoods = new bool[BlobResults.GetBlobs().Count];
-            if (_IsGraphicResult) InspResults.ResultGraphic = new CogCompositeShape[InspResults.BlobCount];
+            InspLeadTrimResults.BlobCount = BlobResults.GetBlobs().Count;
+            InspLeadTrimResults.BlobArea = new double[BlobResults.GetBlobs().Count];
+            InspLeadTrimResults.Width = new double[BlobResults.GetBlobs().Count];
+            InspLeadTrimResults.Height = new double[BlobResults.GetBlobs().Count];
+            InspLeadTrimResults.BlobMinX = new double[BlobResults.GetBlobs().Count];
+            InspLeadTrimResults.BlobMinY = new double[BlobResults.GetBlobs().Count];
+            InspLeadTrimResults.BlobMaxX = new double[BlobResults.GetBlobs().Count];
+            InspLeadTrimResults.BlobMaxY = new double[BlobResults.GetBlobs().Count];
+            InspLeadTrimResults.BlobCenterX = new double[BlobResults.GetBlobs().Count];
+            InspLeadTrimResults.BlobCenterY = new double[BlobResults.GetBlobs().Count];
+            InspLeadTrimResults.PrincipalWidth = new double[BlobResults.GetBlobs().Count];
+            InspLeadTrimResults.PrincipalHeight = new double[BlobResults.GetBlobs().Count];
+            InspLeadTrimResults.BlobMessCenterX = new double[BlobResults.GetBlobs().Count];
+            InspLeadTrimResults.BlobMessCenterY = new double[BlobResults.GetBlobs().Count];
+            InspLeadTrimResults.Angle = new double[BlobResults.GetBlobs().Count];
+            if (_IsGraphicResult) InspLeadTrimResults.ResultGraphic = new CogCompositeShape[InspLeadTrimResults.BlobCount];
 
-            for (int iLoopCount = 0; iLoopCount < InspResults.BlobCount; ++iLoopCount)
+            InspLeadTrimResults.LeadCount = InspLeadTrimResults.BlobCount;
+            InspLeadTrimResults.LeadAngle = new double[InspLeadTrimResults.LeadCount];
+            InspLeadTrimResults.LeadPitchTopX = new double[InspLeadTrimResults.LeadCount];
+            InspLeadTrimResults.LeadPitchTopY = new double[InspLeadTrimResults.LeadCount];
+            InspLeadTrimResults.LeadPitchBottomX = new double[InspLeadTrimResults.LeadCount];
+            InspLeadTrimResults.LeadPitchBottomY = new double[InspLeadTrimResults.LeadCount];
+            InspLeadTrimResults.LeadLength = new double[InspLeadTrimResults.LeadCount];
+            InspLeadTrimResults.LeadPitchLength = new double[InspLeadTrimResults.LeadCount - 1];
+            InspLeadTrimResults.LeadWidth = new double[InspLeadTrimResults.LeadCount];
+            InspLeadTrimResults.LeadLengthStartX = new double[InspLeadTrimResults.LeadCount];
+            InspLeadTrimResults.LeadLengthStartY = new double[InspLeadTrimResults.LeadCount];
+            InspLeadTrimResults.IsLeadBentGood = new bool[InspLeadTrimResults.LeadCount];
+
+            for (int iLoopCount = 0; iLoopCount < InspLeadTrimResults.BlobCount; ++iLoopCount)
             {
                 BlobResult = BlobResults.GetBlobByID(iLoopCount);
 
-                InspResults.BlobArea[iLoopCount] = BlobResults.GetBlobMeasure(CogBlobMeasureConstants.Area, iLoopCount);
-                InspResults.Width[iLoopCount] = BlobResults.GetBlobMeasure(CogBlobMeasureConstants.BoundingBoxPixelAlignedNoExcludeWidth, iLoopCount);
-                InspResults.Height[iLoopCount] = BlobResults.GetBlobMeasure(CogBlobMeasureConstants.BoundingBoxPixelAlignedNoExcludeHeight, iLoopCount);
-                InspResults.BlobMinX[iLoopCount] = BlobResults.GetBlobMeasure(CogBlobMeasureConstants.BoundingBoxPixelAlignedNoExcludeMinX, iLoopCount);
-                InspResults.BlobMinY[iLoopCount] = BlobResults.GetBlobMeasure(CogBlobMeasureConstants.BoundingBoxPixelAlignedNoExcludeMinY, iLoopCount);
-                InspResults.BlobMaxX[iLoopCount] = BlobResults.GetBlobMeasure(CogBlobMeasureConstants.BoundingBoxPixelAlignedNoExcludeMaxX, iLoopCount);
-                InspResults.BlobMaxY[iLoopCount] = BlobResults.GetBlobMeasure(CogBlobMeasureConstants.BoundingBoxPixelAlignedNoExcludeMaxY, iLoopCount);
-                InspResults.BlobCenterX[iLoopCount] = (InspResults.BlobMaxX[iLoopCount] + InspResults.BlobMinX[iLoopCount]) / 2;
-                InspResults.BlobCenterY[iLoopCount] = (InspResults.BlobMaxY[iLoopCount] + InspResults.BlobMinY[iLoopCount]) / 2;
-                InspResults.BlobMessCenterX[iLoopCount] = BlobResults.GetBlobMeasure(CogBlobMeasureConstants.CenterMassX, iLoopCount);
-                InspResults.BlobMessCenterY[iLoopCount] = BlobResults.GetBlobMeasure(CogBlobMeasureConstants.CenterMassY, iLoopCount);
+                InspLeadTrimResults.BlobArea[iLoopCount] = BlobResults.GetBlobMeasure(CogBlobMeasureConstants.Area, iLoopCount);
+                InspLeadTrimResults.Width[iLoopCount] = BlobResults.GetBlobMeasure(CogBlobMeasureConstants.BoundingBoxPixelAlignedNoExcludeWidth, iLoopCount);
+                InspLeadTrimResults.Height[iLoopCount] = BlobResults.GetBlobMeasure(CogBlobMeasureConstants.BoundingBoxPixelAlignedNoExcludeHeight, iLoopCount);
+                InspLeadTrimResults.BlobMinX[iLoopCount] = BlobResults.GetBlobMeasure(CogBlobMeasureConstants.BoundingBoxPixelAlignedNoExcludeMinX, iLoopCount);
+                InspLeadTrimResults.BlobMinY[iLoopCount] = BlobResults.GetBlobMeasure(CogBlobMeasureConstants.BoundingBoxPixelAlignedNoExcludeMinY, iLoopCount);
+                InspLeadTrimResults.BlobMaxX[iLoopCount] = BlobResults.GetBlobMeasure(CogBlobMeasureConstants.BoundingBoxPixelAlignedNoExcludeMaxX, iLoopCount);
+                InspLeadTrimResults.BlobMaxY[iLoopCount] = BlobResults.GetBlobMeasure(CogBlobMeasureConstants.BoundingBoxPixelAlignedNoExcludeMaxY, iLoopCount);
+                InspLeadTrimResults.BlobCenterX[iLoopCount] = (InspLeadTrimResults.BlobMaxX[iLoopCount] + InspLeadTrimResults.BlobMinX[iLoopCount]) / 2;
+                InspLeadTrimResults.BlobCenterY[iLoopCount] = (InspLeadTrimResults.BlobMaxY[iLoopCount] + InspLeadTrimResults.BlobMinY[iLoopCount]) / 2;
+                InspLeadTrimResults.PrincipalWidth[iLoopCount] = BlobResults.GetBlobMeasure(CogBlobMeasureConstants.BoundingBoxPrincipalAxisWidth, iLoopCount);
+                InspLeadTrimResults.PrincipalHeight[iLoopCount] = BlobResults.GetBlobMeasure(CogBlobMeasureConstants.BoundingBoxPrincipalAxisHeight, iLoopCount);
+                InspLeadTrimResults.BlobMessCenterX[iLoopCount] = BlobResults.GetBlobMeasure(CogBlobMeasureConstants.CenterMassX, iLoopCount);
+                InspLeadTrimResults.BlobMessCenterY[iLoopCount] = BlobResults.GetBlobMeasure(CogBlobMeasureConstants.CenterMassY, iLoopCount);
+                InspLeadTrimResults.Angle[iLoopCount] = BlobResults.GetBlobMeasure(CogBlobMeasureConstants.Angle, iLoopCount);
+                InspLeadTrimResults.LeadAngle[iLoopCount] = BlobResults.GetBlobMeasure(CogBlobMeasureConstants.Angle, iLoopCount);
 
-                if (_IsGraphicResult) InspResults.ResultGraphic[iLoopCount] = BlobResult.CreateResultGraphics(CogBlobResultGraphicConstants.Boundary);
+                if (_IsGraphicResult) InspLeadTrimResults.ResultGraphic[iLoopCount] = BlobResult.CreateResultGraphics(CogBlobResultGraphicConstants.Boundary);
             }
 
             return _Result;

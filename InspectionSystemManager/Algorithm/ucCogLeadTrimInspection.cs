@@ -90,6 +90,17 @@ namespace InspectionSystemManager
             CogLeadTrimAlgoRcp.LeadMeasurementArea.CenterY = LeadMeasureArea.CenterY;
             CogLeadTrimAlgoRcp.LeadMeasurementArea.Width = LeadMeasureArea.Width;
             CogLeadTrimAlgoRcp.LeadMeasurementArea.Height = LeadMeasureArea.Height;
+
+
+            CogLeadTrimAlgoRcp.LeadLengthArray = new double[CogLeadTrimAlgoRcp.LeadCount];
+            CogLeadTrimAlgoRcp.LeadPitchArray = new double[CogLeadTrimAlgoRcp.LeadCount - 1];
+            CogLeadTrimAlgoRcp.LeadWidthArray = new double[CogLeadTrimAlgoRcp.LeadCount];
+            for (int iLoopCount = 0; iLoopCount < QuickGridViewLeadSetting.Rows.Count; ++iLoopCount)
+            {
+                CogLeadTrimAlgoRcp.LeadLengthArray[iLoopCount] = Convert.ToDouble(QuickGridViewLeadSetting[1, iLoopCount].Value);
+                CogLeadTrimAlgoRcp.LeadWidthArray[iLoopCount] = Convert.ToDouble(QuickGridViewLeadSetting[3, iLoopCount].Value);
+                if (iLoopCount > 0) CogLeadTrimAlgoRcp.LeadPitchArray[iLoopCount - 1] = Convert.ToDouble(QuickGridViewLeadSetting[2, iLoopCount].Value);
+            }
         }
 
         public void SetAlgoRecipe(Object _Algorithm, double _BenchMarkOffsetX, double _BenchMarkOffsetY, double _ResolutionX, double _ResolutionY)
@@ -138,6 +149,30 @@ namespace InspectionSystemManager
 
             //Lead Length / Bent Area Copy
             LeadMeasureArea.SetCenterWidthHeight(CogLeadTrimAlgoRcp.LeadMeasurementArea.CenterX, CogLeadTrimAlgoRcp.LeadMeasurementArea.CenterY, CogLeadTrimAlgoRcp.LeadMeasurementArea.Width, CogLeadTrimAlgoRcp.LeadMeasurementArea.Height);
+            textBoxLeadCount.Text = CogLeadTrimAlgoRcp.LeadCount.ToString();
+            textBoxLeadLengthSpec.Text = CogLeadTrimAlgoRcp.LeadLengthSpec.ToString();
+            textBoxLeadPitchSpec.Text = CogLeadTrimAlgoRcp.LeadPitchSpec.ToString();
+
+            InitializeQuickGridView(CogLeadTrimAlgoRcp.LeadCount);
+            for (int iLoopCount = 0; iLoopCount < CogLeadTrimAlgoRcp.LeadLengthArray.Length; ++iLoopCount)
+            {
+                QuickGridViewLeadSetting[1, iLoopCount].Value = CogLeadTrimAlgoRcp.LeadLengthArray[iLoopCount].ToString("F4");
+                QuickGridViewLeadSetting[3, iLoopCount].Value = CogLeadTrimAlgoRcp.LeadWidthArray[iLoopCount].ToString("F4");
+                if (iLoopCount > 0) QuickGridViewLeadSetting[2, iLoopCount].Value = CogLeadTrimAlgoRcp.LeadPitchArray[iLoopCount - 1].ToString("F4");
+
+                if (iLoopCount % 2 == 0)
+                {
+                    QuickGridViewLeadSetting[1, iLoopCount].Style.BackColor = Color.DarkCyan;
+                    QuickGridViewLeadSetting[2, iLoopCount].Style.BackColor = Color.DarkCyan;
+                    QuickGridViewLeadSetting[3, iLoopCount].Style.BackColor = Color.DarkCyan;
+                }
+                else
+                {
+                    QuickGridViewLeadSetting[1, iLoopCount].Style.BackColor = Color.CadetBlue;
+                    QuickGridViewLeadSetting[2, iLoopCount].Style.BackColor = Color.CadetBlue;
+                    QuickGridViewLeadSetting[3, iLoopCount].Style.BackColor = Color.CadetBlue;
+                }
+            }
         }
 
         #region Lead Body Button Event
@@ -320,7 +355,58 @@ namespace InspectionSystemManager
 
             var _ApplyLeadTrimValueEvent = ApplyLeadTrimValueEvent;
             _ApplyLeadTrimValueEvent?.Invoke(CogLeadTrimAlgo.eAlgoMode.LEAD_MEASURE, _InspRegion, CogLeadTrimAlgoRcp, ref _CogLeadTrimResult);
+
+            CogLeadTrimAlgoRcp.LeadCount = _CogLeadTrimResult.LeadCount;
+            SetGridViewLeadMeasurementValue(_CogLeadTrimResult);
         }
         #endregion
+
+        private void InitializeQuickGridView(int _RowCount)
+        {
+            QuickGridViewLeadSetting.Rows.Clear();
+            for (int iLoopCount = 0; iLoopCount < _RowCount; ++iLoopCount)
+            {
+                DataGridViewRow _GridRow = new DataGridViewRow();
+                DataGridViewCell[] _GridCell = new DataGridViewCell[4];
+                _GridCell[0] = gridLeadNum.CellTemplate.Clone() as DataGridViewCell;
+                _GridCell[1] = gridLeadLength.CellTemplate.Clone() as DataGridViewCell;
+                _GridCell[2] = gridLeadPitch.CellTemplate.Clone() as DataGridViewCell;
+                _GridCell[3] = gridLeadWidth.CellTemplate.Clone() as DataGridViewCell;
+
+                _GridCell[0].Value = (iLoopCount + 1);
+                _GridCell[0].Style.BackColor = Color.DarkGreen;
+                _GridCell[0].Style.ForeColor = Color.White;
+
+                _GridRow.Height = 22;
+                _GridRow.Cells.AddRange(_GridCell);
+                QuickGridViewLeadSetting.Rows.Add(_GridRow);
+            }
+            QuickGridViewLeadSetting.ClearSelection();
+        }
+
+        private void SetGridViewLeadMeasurementValue(CogLeadTrimResult _Result)
+        {
+            InitializeQuickGridView(_Result.LeadLength.Length);
+
+            for (int iLoopCount = 0; iLoopCount < _Result.LeadLength.Length; ++iLoopCount)
+            {
+                QuickGridViewLeadSetting[1, iLoopCount].Value = _Result.LeadLength[iLoopCount].ToString("F4");
+                QuickGridViewLeadSetting[3, iLoopCount].Value = _Result.LeadWidth[iLoopCount].ToString("F4");
+                if (iLoopCount > 0)  QuickGridViewLeadSetting[2, iLoopCount].Value = _Result.LeadPitchLength[iLoopCount - 1].ToString("F4");
+
+                if (iLoopCount % 2 == 0)
+                {
+                    QuickGridViewLeadSetting[1, iLoopCount].Style.BackColor = Color.PowderBlue;
+                    QuickGridViewLeadSetting[2, iLoopCount].Style.BackColor = Color.PowderBlue;
+                    QuickGridViewLeadSetting[3, iLoopCount].Style.BackColor = Color.PowderBlue;
+                }
+                else
+                {
+                    QuickGridViewLeadSetting[1, iLoopCount].Style.BackColor = Color.CadetBlue;
+                    QuickGridViewLeadSetting[2, iLoopCount].Style.BackColor = Color.CadetBlue;
+                    QuickGridViewLeadSetting[3, iLoopCount].Style.BackColor = Color.CadetBlue;
+                }
+            }
+        }
     }
 }

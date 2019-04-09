@@ -383,12 +383,11 @@ namespace ParameterManager
         public int              LeadCount;
         public int              LeadForeground;
         public int              LeadThreshold;
-        public double           LeadPitch;
-        public double           LeadPitchMin;
-        public double           LeadPitchmax;
-        public double           LeadLength;
-        public double           LeadLengthMin;
-        public double           LeadLengthMax;
+        public double           LeadPitchSpec;
+        public double           LeadLengthSpec;
+        public double[]         LeadPitchArray;
+        public double[]         LeadLengthArray;
+        public double[]         LeadWidthArray;
 
         public CogLeadTrimAlgo()
         {
@@ -409,15 +408,15 @@ namespace ParameterManager
 
             IsUseLeadMeasurement = true;
             LeadMeasurementArea = new RectangleD();
-            LeadCount = 1;
+            LeadCount = 10;
             LeadForeground = 0;
             LeadThreshold = 200;
-            LeadPitch = 1;
-            LeadPitchMin = 0.5;
-            LeadPitchmax = 1.5;
-            LeadLength = 18;
-            LeadLengthMin = 15;
-            LeadLengthMax = 20;
+            LeadPitchSpec = 0.5;
+            LeadLengthSpec = 0.5;
+
+            LeadLengthArray = new double[LeadCount];
+            LeadPitchArray = new double[LeadCount - 1];
+            LeadWidthArray = new double[LeadCount];
         }
     }
     #endregion Cog Algorithm Class

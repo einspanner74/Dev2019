@@ -937,6 +937,14 @@ namespace ParameterManager
                     case "LeadMeasureAreaCenterY":  _CogLeadTrim.LeadMeasurementArea.CenterY = Convert.ToDouble(_NodeChild.InnerText); break;
                     case "LeadMeasureAreaWidth":    _CogLeadTrim.LeadMeasurementArea.Width = Convert.ToDouble(_NodeChild.InnerText); break;
                     case "LeadMeasureAreaHeight":   _CogLeadTrim.LeadMeasurementArea.Height = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "LeadCount":               _CogLeadTrim.LeadCount = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "LeadForeground":          _CogLeadTrim.LeadForeground = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "LeadThreshold":           _CogLeadTrim.LeadThreshold = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "LeadPitchSpec":           _CogLeadTrim.LeadPitchSpec = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "LeadLengthSpec":          _CogLeadTrim.LeadLengthSpec = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "LeadLength":              GetLeadLengthArray(_NodeChild, _CogLeadTrim.LeadCount, ref _CogLeadTrim.LeadLengthArray); break;
+                    case "LeadPitch":               GetLeadPitchArray(_NodeChild, _CogLeadTrim.LeadCount, ref _CogLeadTrim.LeadPitchArray); break;
+                    case "LeadWidth":               GetLeadWidthArray(_NodeChild, _CogLeadTrim.LeadCount, ref _CogLeadTrim.LeadWidthArray); break;
                 }
             }
             _InspParam.Algorithm = _CogLeadTrim;
@@ -970,6 +978,57 @@ namespace ParameterManager
                     }
                     _MaskingAreaList.Add(_MaskingArea);
                 }
+            }
+        }
+
+        private void GetLeadLengthArray(XmlNode _Nodes, int _LeadCount, ref double[] _LeadLengthArray)
+        {
+            int _Cnt = 1;
+            if (null == _Nodes) return;
+
+            _LeadLengthArray = new double[_LeadCount];
+            foreach (XmlNode _NodeChild in _Nodes)
+            {
+                if (null == _NodeChild) return;
+
+                string _LeadLengthName = string.Format("LeadLength{0}", _Cnt);
+                if (_NodeChild.Name == _LeadLengthName)
+                    _LeadLengthArray[_Cnt - 1] = Convert.ToDouble(_NodeChild.InnerText);
+                _Cnt++;
+            }
+        }
+
+        private void GetLeadPitchArray(XmlNode _Nodes, int _LeadCount, ref double[] _LeadPitchArray)
+        {
+            int _Cnt = 1;
+            if (null == _Nodes) return;
+
+            _LeadPitchArray = new double[_LeadCount - 1];
+            foreach (XmlNode _NodeChild in _Nodes)
+            {
+                if (null == _NodeChild) return;
+
+                string _LeadPitchName = string.Format("LeadPitch{0}", _Cnt);
+                if (_NodeChild.Name == _LeadPitchName)
+                    _LeadPitchArray[_Cnt - 1] = Convert.ToDouble(_NodeChild.InnerText);
+                _Cnt++;
+            }
+        }
+
+        private void GetLeadWidthArray(XmlNode _Nodes, int _LeadCount, ref double[] _LeadWidthArray)
+        {
+            int _Cnt = 1;
+            if (null == _Nodes) return;
+
+            _LeadWidthArray = new double[_LeadCount];
+            foreach (XmlNode _NodeChild in _Nodes)
+            {
+                if (null == _NodeChild) return;
+
+                string _LeadLengthName = string.Format("LeadWidth{0}", _Cnt);
+                if (_NodeChild.Name == _LeadLengthName)
+                    _LeadWidthArray[_Cnt - 1] = Convert.ToDouble(_NodeChild.InnerText);
+                _Cnt++;
             }
         }
 
@@ -1302,7 +1361,41 @@ namespace ParameterManager
             _XmlWriter.WriteElementString("LeadMeasureAreaCenterY", _CogLeadTrimAlgo.LeadMeasurementArea.CenterY.ToString());
             _XmlWriter.WriteElementString("LeadMeasureAreaWidth", _CogLeadTrimAlgo.LeadMeasurementArea.Width.ToString());
             _XmlWriter.WriteElementString("LeadMeasureAreaHeight", _CogLeadTrimAlgo.LeadMeasurementArea.Height.ToString());
+            _XmlWriter.WriteElementString("LeadCount", _CogLeadTrimAlgo.LeadCount.ToString());
+            _XmlWriter.WriteElementString("LeadForeground", _CogLeadTrimAlgo.LeadForeground.ToString());
+            _XmlWriter.WriteElementString("LeadThreshold", _CogLeadTrimAlgo.LeadThreshold.ToString());
+            _XmlWriter.WriteElementString("LeadPitchSpec", _CogLeadTrimAlgo.LeadPitchSpec.ToString());
+            _XmlWriter.WriteElementString("LeadLengthSpec", _CogLeadTrimAlgo.LeadLengthSpec.ToString());
 
+            _XmlWriter.WriteStartElement("LeadLength");
+            {
+                for (int iLoopCount = 0; iLoopCount < _CogLeadTrimAlgo.LeadLengthArray.Length; ++iLoopCount)
+                {
+                    string _LeadLengthName = string.Format("LeadLength{0}", iLoopCount + 1);
+                    _XmlWriter.WriteElementString(_LeadLengthName, _CogLeadTrimAlgo.LeadLengthArray[iLoopCount].ToString());
+                }
+            }
+            _XmlWriter.WriteEndElement();
+
+            _XmlWriter.WriteStartElement("LeadPitch");
+            {
+                for (int iLoopCount = 0; iLoopCount < _CogLeadTrimAlgo.LeadPitchArray.Length; ++iLoopCount)
+                {
+                    string _LeadPitchName = string.Format("LeadPitch{0}", iLoopCount + 1);
+                    _XmlWriter.WriteElementString(_LeadPitchName, _CogLeadTrimAlgo.LeadPitchArray[iLoopCount].ToString());
+                }
+            }
+            _XmlWriter.WriteEndElement();
+
+            _XmlWriter.WriteStartElement("LeadWidth");
+            {
+                for (int iLoopCount = 0; iLoopCount < _CogLeadTrimAlgo.LeadWidthArray.Length; ++iLoopCount)
+                {
+                    string _LeadWidthName = string.Format("LeadWidth{0}", iLoopCount + 1);
+                    _XmlWriter.WriteElementString(_LeadWidthName, _CogLeadTrimAlgo.LeadWidthArray[iLoopCount].ToString());
+                }
+            }
+            _XmlWriter.WriteEndElement();
         }
         #endregion Read & Write InspectionParameter
 
@@ -1838,6 +1931,24 @@ namespace ParameterManager
                         _Algorithm.LeadMeasurementArea.CenterY = _SrcAlgorithm.LeadMeasurementArea.CenterY;
                         _Algorithm.LeadMeasurementArea.Width = _SrcAlgorithm.LeadMeasurementArea.Width;
                         _Algorithm.LeadMeasurementArea.Height = _SrcAlgorithm.LeadMeasurementArea.Height;
+
+                        _Algorithm.LeadCount = _SrcAlgorithm.LeadCount;
+                        _Algorithm.LeadForeground = _SrcAlgorithm.LeadForeground;
+                        _Algorithm.LeadThreshold = _SrcAlgorithm.LeadThreshold;
+                        _Algorithm.LeadPitchSpec = _SrcAlgorithm.LeadPitchSpec;
+                        _Algorithm.LeadLengthSpec = _SrcAlgorithm.LeadLengthSpec;
+
+                        _Algorithm.LeadLengthArray = new double[_SrcAlgorithm.LeadLengthArray.Length];
+                        for (int zLoopCount = 0; zLoopCount < _SrcAlgorithm.LeadLengthArray.Length; ++zLoopCount)
+                            _Algorithm.LeadLengthArray[zLoopCount] = _SrcAlgorithm.LeadLengthArray[zLoopCount];
+
+                        _Algorithm.LeadPitchArray = new double[_SrcAlgorithm.LeadPitchArray.Length];
+                        for (int zLoopCount = 0; zLoopCount < _SrcAlgorithm.LeadPitchArray.Length; ++zLoopCount)
+                            _Algorithm.LeadPitchArray[zLoopCount] = _SrcAlgorithm.LeadPitchArray[zLoopCount];
+
+                        _Algorithm.LeadWidthArray = new double[_SrcAlgorithm.LeadWidthArray.Length];
+                        for (int zLoopCount = 0; zLoopCount < _SrcAlgorithm.LeadWidthArray.Length; ++zLoopCount)
+                            _Algorithm.LeadWidthArray[zLoopCount] = _SrcAlgorithm.LeadWidthArray[zLoopCount];
 
                         _InspAlgoParam.Algorithm = _Algorithm;
                     }

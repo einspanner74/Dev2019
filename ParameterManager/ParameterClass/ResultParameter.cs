@@ -267,6 +267,33 @@ namespace ParameterManager
 
     public class CogLeadTrimResult : Result
     {
+        //Lead Search Parameter
+        public int  BlobCount;
+        public double[] BlobArea;
+        public double[] BlobCenterX;
+        public double[] BlobCenterY;
+        public double[] BlobMinX;
+        public double[] BlobMinY;
+        public double[] BlobMaxX;
+        public double[] BlobMaxY;
+        public double[] Width;
+        public double[] Height;
+
+        public double[] BlobMessCenterX;
+        public double[] BlobMessCenterY;
+        public double[] PrincipalWidth;
+        public double[] PrincipalHeight;
+        public double[] Angle;
+        public double[] Degree;
+
+        public CogCompositeShape[] ResultGraphic;
+
+        public double OriginX;
+        public double OriginY;
+
+        //Lead 검사에 필요한 Parameter
+        public int    LeadCount;
+
         public double LeadBodyOriginX;
         public double LeadBodyOriginY;
 
@@ -277,8 +304,25 @@ namespace ParameterManager
         public PointD LeadBodyRightTop;
         public PointD LeadBodyLeftBottom;
         public PointD LeadBodyRightBottom;
+        public CogLine LeadBodyBaseLine;
 
         public List<CogRectangle> ChipOutNgList;
+
+        public List<CogRectangle> LeadMeasureList;
+
+        public double[] LeadAngle;
+        public double[] LeadPitchTopX;
+        public double[] LeadPitchTopY;
+        public double[] LeadPitchBottomX;
+        public double[] LeadPitchBottomY;
+        public double[] LeadCenterX;
+        public double[] LeadCenterY;
+        public double[] LeadLength;
+        public double[] LeadPitchLength;
+        public double[] LeadWidth;
+        public double[] LeadLengthStartX;
+        public double[] LeadLengthStartY;
+        public bool[] IsLeadBentGood;
 
         public CogLeadTrimResult()
         {
@@ -289,6 +333,8 @@ namespace ParameterManager
             LeadBodyOffsetY = 0;
 
             ChipOutNgList = new List<CogRectangle>();
+
+            LeadBodyBaseLine = new CogLine();
         }
     }
     #endregion Inspection Result Parameter
