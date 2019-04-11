@@ -340,4 +340,3 @@ C:\Zoom\Source management\Project\KPVisionInspectionProgram\InspectionSystemMana
 C:\Zoom\Source management\Project\KPVisionInspectionProgram\InspectionSystemManager\obj\Debug\InspectionSystemManager.csproj.GenerateResource.Cache
 C:\Zoom\Source management\Project\KPVisionInspectionProgram\InspectionSystemManager\obj\Debug\InspectionSystemManager.dll
 C:\Zoom\Source management\Project\KPVisionInspectionProgram\InspectionSystemManager\obj\Debug\InspectionSystemManager.pdb
-D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\InspectionSystemManager\bin\Debug\Cognex.VisionPro.ImageProcessing.xml

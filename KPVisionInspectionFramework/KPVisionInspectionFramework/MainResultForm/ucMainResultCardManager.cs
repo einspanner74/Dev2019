@@ -112,7 +112,19 @@ namespace KPVisionInspectionFramework
         {
             string _RecvString = string.Join(",", _Value);
 
-            ControlInvoke.GradientLabelText(gradientLabelEtherRecv1, _RecvString);
+            ControlInvoke.GradientLabelText(gradientLabelEtherRecv1, "-");
+            ControlInvoke.GradientLabelText(gradientLabelEtherRecv2, "-");
+            ControlInvoke.GradientLabelText(gradientLabelEtherRecv3, "-");
+            ControlInvoke.GradientLabelText(gradientLabelEtherRecv4, "-");
+
+            switch (_Value[0])
+            {
+                case "0": ControlInvoke.GradientLabelText(gradientLabelEtherRecv1, _RecvString); break;
+                case "1": ControlInvoke.GradientLabelText(gradientLabelEtherRecv2, _RecvString); break;
+                case "2": ControlInvoke.GradientLabelText(gradientLabelEtherRecv3, _RecvString); break;
+                case "3": ControlInvoke.GradientLabelText(gradientLabelEtherRecv4, _RecvString); break;
+            }
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.ERR, _RecvString, CLogManager.LOG_LEVEL.LOW);
         }
 
         //LDH, 2019.03.20, Inspection #1, JPG로 저장 결과

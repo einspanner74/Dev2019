@@ -33,6 +33,7 @@ namespace KPVisionInspectionFramework
         private MainProcessBase             MainProcess;
         private CHistoryManager             HistoryManager;
         private FolderPathWindow            FolderPathWnd;
+        private MainLogoWindow              MainLogoWnd;
 
         private string ProjectName;
         private int ISMModuleCount = 1;
@@ -110,11 +111,13 @@ namespace KPVisionInspectionFramework
                 rbSerial.Visible = false;
                 rbConfig.Visible = false;
                 rbFolder.Visible = false;
+                this.Size = new Size(1280, 1024);
             }
 
             else if ((int)eProjectType.SORTER == ParamManager.SystemParam.ProjectType)
             {
                 rbAlign.Visible = false;
+                this.Size = new Size(1280, 1024);
             }
 
             else if ((int)eProjectType.TRIM_FORM == ParamManager.SystemParam.ProjectType)
@@ -123,6 +126,7 @@ namespace KPVisionInspectionFramework
                 rbSerial.Visible = false;
                 rbConfig.Visible = false;
                 rbFolder.Visible = false;
+                this.Size = new Size(1280, 1024);
             }
 
             else if ((int)eProjectType.BC_QCC == ParamManager.SystemParam.ProjectType)
@@ -130,6 +134,12 @@ namespace KPVisionInspectionFramework
                 rbAlign.Visible = false;
                 rbSerial.Visible = false;
                 rbConfig.Visible = false;
+                rbMapData.Visible = false;
+                this.Size = new Size(2560, 1080);
+
+                MainLogoWnd = new MainLogoWindow();
+                MainLogoWnd.Initialize(this);
+                MainLogoWnd.Location = new Point(2250, 56);
             }
             #endregion Ribbon Menu Setting
             
@@ -308,7 +318,10 @@ namespace KPVisionInspectionFramework
 
             //FormTopMostInvoke(this, true);
             if (false == ParamManager.SystemParam.IsSimulationMode)
-                this.WindowState = FormWindowState.Maximized;   
+                this.WindowState = FormWindowState.Maximized;
+
+            if (MainLogoWnd != null) MainLogoWnd.Show();
+
         }
 
         protected override void WndProc(ref Message message)

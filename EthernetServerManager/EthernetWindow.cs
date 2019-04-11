@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,8 +10,10 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Xml;
+using System.Threading;
 
 using CustonMsgBoxManager;
+using LogMessageManager;
 
 namespace EthernetServerManager
 {
@@ -28,10 +31,17 @@ namespace EthernetServerManager
         private string ClientIPAddress = "127.0.0.0";
 
         private bool IsConnected = false;
-        private Timer ConnectCheckTimer;
+        //private Timer ConnectCheckTimer;
 
-        public delegate void ReceiveStringHandler(string[] _ReceiveMsasage);
+        public delegate bool ReceiveStringHandler(string[] _ReceiveMsasage);
         public event ReceiveStringHandler ReceiveStringEvent;
+
+        //LDH, 2019.04.03, timer를 Thread로 변경
+        private Thread ThreadConnectCheck;
+        private bool IsThreadConnectCheckExit = false;
+
+        private Thread ThreadReceiveDataCheck;
+        private bool IsThreadReceiveDataCheckExit = false;
 
         #region Initialize & DeInitialize
         public EthernetWindow()
@@ -52,15 +62,25 @@ namespace EthernetServerManager
             ServerSock.Initialize(IPAddress, PortNumber);
             ServerSock.RecvMessageEvent += new CEtherentServerManager.RecvMessageHandler(SetReceiveMessage);
 
-            ConnectCheckTimer = new Timer();
-            ConnectCheckTimer.Tick += ConnectCheckTimer_Tick;
-            ConnectCheckTimer.Interval = 250;
-            ConnectCheckTimer.Start();            
+            //ConnectCheckTimer = new Timer();
+            //ConnectCheckTimer.Tick += ConnectCheckTimer_Tick;
+            //ConnectCheckTimer.Interval = 250;
+            //ConnectCheckTimer.Start();
+
+            ThreadConnectCheck = new Thread(ThreadConnectCheckFunction);
+            IsThreadConnectCheckExit = false;
+            ThreadConnectCheck.Start();
+
+            ThreadReceiveDataCheck = new Thread(ThreadReceiceDataCheckFunction);
+            IsThreadReceiveDataCheckExit = false;
+            ThreadReceiveDataCheck.Start();            
         }
 
         public void DeInitialize()
         {
-            ConnectCheckTimer.Stop();
+            //ConnectCheckTimer.Stop();
+            if (ThreadConnectCheck != null) { IsThreadConnectCheckExit = true; Thread.Sleep(200); ThreadConnectCheck.Abort(); ThreadConnectCheck = null; }
+            if (ThreadReceiveDataCheck != null) { IsThreadReceiveDataCheckExit = true; Thread.Sleep(200); ThreadReceiveDataCheck.Abort(); ThreadReceiveDataCheck = null; }
 
             ServerSock.RecvMessageEvent -= new CEtherentServerManager.RecvMessageHandler(SetReceiveMessage);
             ServerSock.DeInitialize();
@@ -138,6 +158,42 @@ namespace EthernetServerManager
         }
         #endregion Read & Write Ethernet Information
         #endregion Initialize & DeInitialize
+        
+        //LDH, 2019.04.03, Client Connect Check
+        private void ThreadConnectCheckFunction()
+        {
+            try
+            {
+                while (false == IsThreadConnectCheckExit)
+                {
+                    ConnectCheckTimer_Tick();
+                    Thread.Sleep(10);
+                }
+            }
+
+            catch (System.Exception ex)
+            {
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "ThreadConnectCheckFunction Exception : " + ex.ToString(), CLogManager.LOG_LEVEL.LOW);
+            }
+        }
+
+        //LDH, 2019.04.03,  Check
+        private void ThreadReceiceDataCheckFunction()
+        {
+            try
+            {
+                while (false == IsThreadConnectCheckExit)
+                {
+                    ProtocolCommandProcess();
+                    Thread.Sleep(10);
+                }
+            }
+
+            catch (System.Exception ex)
+            {
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "ThreadReceiceDataCheckFunction Exception : " + ex.ToString(), CLogManager.LOG_LEVEL.LOW);
+            }
+        }
 
         #region Control Default Event
         private void EthernetWindow_KeyDown(object sender, KeyEventArgs e)
@@ -242,7 +298,7 @@ namespace EthernetServerManager
         #endregion "Control Invoke"
 
 
-        private void ConnectCheckTimer_Tick(object sender, EventArgs e)
+        private void ConnectCheckTimer_Tick()
         {
             string[] _ConnectedList = ServerSock.GetConnectedClientList();
 
@@ -273,40 +329,53 @@ namespace EthernetServerManager
             for (int iLoopCount = 0; iLoopCount < _RecvCmd.Length; ++iLoopCount)
                 CmdQueue.Enqueue(_RecvCmd[iLoopCount]);
 
-            if (true == ProtocolCommandProcess())
-            {
-                //CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "Receive Data : " + _RecvString);
-                //CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "ProtocolCommandProcess : Good");
-            }
+            //if (true == ProtocolCommandProcess())
+            //{
+            //    CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "Receive Data : " + _RecvString);
+            //    CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "ProtocolCommandProcess : Good");
+            //}
 
-            else
-            {
-                //CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "Receive Data : " + _RecvString);
-                //CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "ProtocolCommandProcess : Bad");
-            }
+            //else
+            //{
+            //    CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "Receive Data : " + _RecvString);
+            //    CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "ProtocolCommandProcess : Bad");
+            //}
 
-            ControlInvoke(textBoxRecvString, _RecvMessage);
+            string _RecvText = string.Join(",", _RecvCmd);
+            ControlInvoke(textBoxRecvString, _RecvText);
         }
 
         private bool ProtocolCommandProcess()
         {
+            bool _Result = false;
+
             if (CmdQueue.Contains(CEtherentServerManager.STX.ToString()) == false) return false;
             if (CmdQueue.Contains(CEtherentServerManager.ETX.ToString()) == false) return false;
-            if (CmdQueue.Count < 4) return false;
 
             string _Data = "";
             while (_Data != CEtherentServerManager.STX.ToString()) _Data = CmdQueue.Dequeue();
 
-            string[] _Datas = new string[3];
-            for (int iLoopCount = 0; iLoopCount < _Datas.Length; ++iLoopCount)
-                _Datas[iLoopCount] = CmdQueue.Dequeue();
 
-            if (_Datas[_Datas.Length - 1] != CEtherentServerManager.ETX.ToString()) return false;
+            //string[] _Datas = new string[2];
+            //for (int iLoopCount = 0; iLoopCount < _Datas.Length; ++iLoopCount)
+            //    _Datas[iLoopCount] = CmdQueue.Dequeue();
+            
+            //if (_Datas[_Datas.Length - 1] != CEtherentServerManager.ETX.ToString()) return false;
+            
+            List<string> _Datas = new List<string>();
+
+            do
+            {
+                _Datas.Add(CmdQueue.Dequeue());
+            }
+            while (_Datas[_Datas.Count - 1] != CEtherentServerManager.ETX.ToString());
+
+            if (_Datas.Count != 2) { _Result = false; return _Result; }
 
             var _ReceiveStringEvent = ReceiveStringEvent;
-            _ReceiveStringEvent?.Invoke(_Datas);
+            if (true == _ReceiveStringEvent?.Invoke(_Datas.ToArray())) _Result = true;
 
-            return true;
+            return _Result;
         }
 
         public void SendResultData(string _ResultDataString)

@@ -73,7 +73,7 @@
             this.ribbonMain.OrbImage = null;
             this.ribbonMain.OrbStyle = System.Windows.Forms.RibbonOrbStyle.Office_2013;
             this.ribbonMain.RibbonTabFont = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
-            this.ribbonMain.Size = new System.Drawing.Size(1264, 140);
+            this.ribbonMain.Size = new System.Drawing.Size(1351, 140);
             this.ribbonMain.TabIndex = 0;
             this.ribbonMain.Tabs.Add(this.ribbonTab1);
             this.ribbonMain.TabsMargin = new System.Windows.Forms.Padding(12, 26, 20, 0);
@@ -244,7 +244,7 @@
             this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelMain.Location = new System.Drawing.Point(0, 140);
             this.panelMain.Name = "panelMain";
-            this.panelMain.Size = new System.Drawing.Size(1264, 846);
+            this.panelMain.Size = new System.Drawing.Size(1351, 846);
             this.panelMain.TabIndex = 2;
             // 
             // MainForm
@@ -252,7 +252,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DimGray;
-            this.ClientSize = new System.Drawing.Size(1264, 986);
+            this.ClientSize = new System.Drawing.Size(1351, 986);
             this.Controls.Add(this.panelMain);
             this.Controls.Add(this.ribbonMain);
             this.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
