@@ -46,6 +46,7 @@ namespace KPVisionInspectionFramework
         public override void DeInitialize()
         {
             EthernetServerWnd.ReceiveStringEvent -= new EthernetWindow.ReceiveStringHandler(GetEthernetRecvData);
+            EthernetServerWnd.DeInitialize();
 
             if (ThreadGetReceiveData != null) { IsThreadGetReceiveDataExit = true; Thread.Sleep(200); ThreadGetReceiveData.Abort(); ThreadGetReceiveData = null; }
         }

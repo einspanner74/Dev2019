@@ -75,6 +75,8 @@ namespace InspectionSystemManager
         private double ResolutionX;
         private double ResolutionY;
 
+        private bool    IsWindowMoving = false;
+
         #region Initialize & DeInitialize
         public TeachingWindow()
         {
@@ -143,6 +145,10 @@ namespace InspectionSystemManager
             InitializeEvent();
             InitializeContextMenu();
             InitializeAreaControl(_ProjectType);
+
+            //LJH 2019.04.11
+            //BC QCC의 경우 Teaching을 움직일 수 있게 하고 Center에 위치하도록 설정
+            if (_ProjectType == eProjectType.BC_QCC) { IsWindowMoving = true; this.StartPosition = FormStartPosition.CenterScreen; /*this.Location = new Point(1000, 149);*/ }
 
             //gridViewArea.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(238, 239, 249);
             //gridViewArea.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
@@ -274,6 +280,37 @@ namespace InspectionSystemManager
             return InspParam;
         }
         #endregion Initialize & DeInitialize
+
+        #region Control Default Event
+        private void labelTitle_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (false == IsWindowMoving) return;
+
+            var s = sender as Label;
+            if (e.Button != System.Windows.Forms.MouseButtons.Left) return;
+
+            s.Parent.Left = this.Left + (e.X - ((Point)s.Tag).X);
+            s.Parent.Top = this.Top + (e.Y - ((Point)s.Tag).Y);
+
+            this.Cursor = Cursors.Default;
+        }
+
+        private void labelTitle_MouseDown(object sender, MouseEventArgs e)
+        {
+            var s = sender as Label;
+            s.Tag = new Point(e.X, e.Y);
+        }
+
+        private void labelTitle_Paint(object sender, PaintEventArgs e)
+        {
+            ControlPaint.DrawBorder(e.Graphics, this.labelTitle.ClientRectangle, Color.White, ButtonBorderStyle.Solid);
+        }
+
+        private void panelMain_Paint(object sender, PaintEventArgs e)
+        {
+            ControlPaint.DrawBorder(e.Graphics, this.panelMain.ClientRectangle, Color.White, ButtonBorderStyle.Solid);
+        }
+        #endregion
 
         #region Conext Menu Function
         private void PatternFindAlgorithm(object sender, EventArgs e)

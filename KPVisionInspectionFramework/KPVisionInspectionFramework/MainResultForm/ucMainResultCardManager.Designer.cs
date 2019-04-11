@@ -203,7 +203,7 @@
             // 
             // SevenSegTotal
             // 
-            this.SevenSegTotal.ArrayCount = 10;
+            this.SevenSegTotal.ArrayCount = 25;
             this.SevenSegTotal.ColorBackground = System.Drawing.Color.DimGray;
             this.SevenSegTotal.ColorDark = System.Drawing.Color.Gray;
             this.SevenSegTotal.ColorLight = System.Drawing.Color.White;
@@ -213,7 +213,7 @@
             this.SevenSegTotal.ItalicFactor = -0.04F;
             this.SevenSegTotal.Location = new System.Drawing.Point(94, 94);
             this.SevenSegTotal.Name = "SevenSegTotal";
-            this.SevenSegTotal.Size = new System.Drawing.Size(219, 24);
+            this.SevenSegTotal.Size = new System.Drawing.Size(534, 24);
             this.SevenSegTotal.TabIndex = 36;
             this.SevenSegTotal.TabStop = false;
             this.SevenSegTotal.Value = "000000";
@@ -235,7 +235,7 @@
             // 
             // SevenSegYield
             // 
-            this.SevenSegYield.ArrayCount = 9;
+            this.SevenSegYield.ArrayCount = 24;
             this.SevenSegYield.ColorBackground = System.Drawing.Color.DimGray;
             this.SevenSegYield.ColorDark = System.Drawing.Color.Gray;
             this.SevenSegYield.ColorLight = System.Drawing.Color.Yellow;
@@ -245,14 +245,14 @@
             this.SevenSegYield.ItalicFactor = -0.04F;
             this.SevenSegYield.Location = new System.Drawing.Point(95, 177);
             this.SevenSegYield.Name = "SevenSegYield";
-            this.SevenSegYield.Size = new System.Drawing.Size(195, 24);
+            this.SevenSegYield.Size = new System.Drawing.Size(508, 24);
             this.SevenSegYield.TabIndex = 37;
             this.SevenSegYield.TabStop = false;
             this.SevenSegYield.Value = "00000";
             // 
             // SevenSegNg
             // 
-            this.SevenSegNg.ArrayCount = 10;
+            this.SevenSegNg.ArrayCount = 25;
             this.SevenSegNg.ColorBackground = System.Drawing.Color.DimGray;
             this.SevenSegNg.ColorDark = System.Drawing.Color.Gray;
             this.SevenSegNg.ColorLight = System.Drawing.Color.Red;
@@ -262,14 +262,14 @@
             this.SevenSegNg.ItalicFactor = -0.04F;
             this.SevenSegNg.Location = new System.Drawing.Point(94, 150);
             this.SevenSegNg.Name = "SevenSegNg";
-            this.SevenSegNg.Size = new System.Drawing.Size(219, 24);
+            this.SevenSegNg.Size = new System.Drawing.Size(534, 24);
             this.SevenSegNg.TabIndex = 38;
             this.SevenSegNg.TabStop = false;
             this.SevenSegNg.Value = "000000";
             // 
             // SevenSegGood
             // 
-            this.SevenSegGood.ArrayCount = 10;
+            this.SevenSegGood.ArrayCount = 25;
             this.SevenSegGood.ColorBackground = System.Drawing.Color.DimGray;
             this.SevenSegGood.ColorDark = System.Drawing.Color.Gray;
             this.SevenSegGood.ColorLight = System.Drawing.Color.Lime;
@@ -279,7 +279,7 @@
             this.SevenSegGood.ItalicFactor = -0.04F;
             this.SevenSegGood.Location = new System.Drawing.Point(94, 123);
             this.SevenSegGood.Name = "SevenSegGood";
-            this.SevenSegGood.Size = new System.Drawing.Size(219, 24);
+            this.SevenSegGood.Size = new System.Drawing.Size(534, 24);
             this.SevenSegGood.TabIndex = 39;
             this.SevenSegGood.TabStop = false;
             this.SevenSegGood.Value = "000000";
@@ -288,7 +288,7 @@
             // 
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Bold);
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(286, 177);
+            this.label1.Location = new System.Drawing.Point(600, 177);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(29, 24);
             this.label1.TabIndex = 44;
@@ -459,7 +459,7 @@
             // 
             // sevenSegmentArray1
             // 
-            this.sevenSegmentArray1.ArrayCount = 10;
+            this.sevenSegmentArray1.ArrayCount = 25;
             this.sevenSegmentArray1.ColorBackground = System.Drawing.Color.DimGray;
             this.sevenSegmentArray1.ColorDark = System.Drawing.Color.Gray;
             this.sevenSegmentArray1.ColorLight = System.Drawing.Color.White;
@@ -469,7 +469,7 @@
             this.sevenSegmentArray1.ItalicFactor = -0.04F;
             this.sevenSegmentArray1.Location = new System.Drawing.Point(94, 94);
             this.sevenSegmentArray1.Name = "sevenSegmentArray1";
-            this.sevenSegmentArray1.Size = new System.Drawing.Size(219, 24);
+            this.sevenSegmentArray1.Size = new System.Drawing.Size(534, 24);
             this.sevenSegmentArray1.TabIndex = 36;
             this.sevenSegmentArray1.TabStop = false;
             this.sevenSegmentArray1.Value = "000000";
@@ -491,7 +491,7 @@
             // 
             // sevenSegmentArray2
             // 
-            this.sevenSegmentArray2.ArrayCount = 9;
+            this.sevenSegmentArray2.ArrayCount = 24;
             this.sevenSegmentArray2.ColorBackground = System.Drawing.Color.DimGray;
             this.sevenSegmentArray2.ColorDark = System.Drawing.Color.Gray;
             this.sevenSegmentArray2.ColorLight = System.Drawing.Color.Yellow;
@@ -501,14 +501,14 @@
             this.sevenSegmentArray2.ItalicFactor = -0.04F;
             this.sevenSegmentArray2.Location = new System.Drawing.Point(95, 177);
             this.sevenSegmentArray2.Name = "sevenSegmentArray2";
-            this.sevenSegmentArray2.Size = new System.Drawing.Size(195, 24);
+            this.sevenSegmentArray2.Size = new System.Drawing.Size(508, 24);
             this.sevenSegmentArray2.TabIndex = 37;
             this.sevenSegmentArray2.TabStop = false;
             this.sevenSegmentArray2.Value = "00000";
             // 
             // sevenSegmentArray3
             // 
-            this.sevenSegmentArray3.ArrayCount = 10;
+            this.sevenSegmentArray3.ArrayCount = 25;
             this.sevenSegmentArray3.ColorBackground = System.Drawing.Color.DimGray;
             this.sevenSegmentArray3.ColorDark = System.Drawing.Color.Gray;
             this.sevenSegmentArray3.ColorLight = System.Drawing.Color.Red;
@@ -518,14 +518,14 @@
             this.sevenSegmentArray3.ItalicFactor = -0.04F;
             this.sevenSegmentArray3.Location = new System.Drawing.Point(94, 150);
             this.sevenSegmentArray3.Name = "sevenSegmentArray3";
-            this.sevenSegmentArray3.Size = new System.Drawing.Size(219, 24);
+            this.sevenSegmentArray3.Size = new System.Drawing.Size(534, 24);
             this.sevenSegmentArray3.TabIndex = 38;
             this.sevenSegmentArray3.TabStop = false;
             this.sevenSegmentArray3.Value = "000000";
             // 
             // sevenSegmentArray4
             // 
-            this.sevenSegmentArray4.ArrayCount = 10;
+            this.sevenSegmentArray4.ArrayCount = 25;
             this.sevenSegmentArray4.ColorBackground = System.Drawing.Color.DimGray;
             this.sevenSegmentArray4.ColorDark = System.Drawing.Color.Gray;
             this.sevenSegmentArray4.ColorLight = System.Drawing.Color.Lime;
@@ -535,7 +535,7 @@
             this.sevenSegmentArray4.ItalicFactor = -0.04F;
             this.sevenSegmentArray4.Location = new System.Drawing.Point(94, 123);
             this.sevenSegmentArray4.Name = "sevenSegmentArray4";
-            this.sevenSegmentArray4.Size = new System.Drawing.Size(219, 24);
+            this.sevenSegmentArray4.Size = new System.Drawing.Size(534, 24);
             this.sevenSegmentArray4.TabIndex = 39;
             this.sevenSegmentArray4.TabStop = false;
             this.sevenSegmentArray4.Value = "000000";
@@ -544,7 +544,7 @@
             // 
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Bold);
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(286, 177);
+            this.label2.Location = new System.Drawing.Point(600, 177);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(29, 24);
             this.label2.TabIndex = 44;
@@ -715,7 +715,7 @@
             // 
             // sevenSegmentArray5
             // 
-            this.sevenSegmentArray5.ArrayCount = 10;
+            this.sevenSegmentArray5.ArrayCount = 25;
             this.sevenSegmentArray5.ColorBackground = System.Drawing.Color.DimGray;
             this.sevenSegmentArray5.ColorDark = System.Drawing.Color.Gray;
             this.sevenSegmentArray5.ColorLight = System.Drawing.Color.White;
@@ -725,7 +725,7 @@
             this.sevenSegmentArray5.ItalicFactor = -0.04F;
             this.sevenSegmentArray5.Location = new System.Drawing.Point(94, 94);
             this.sevenSegmentArray5.Name = "sevenSegmentArray5";
-            this.sevenSegmentArray5.Size = new System.Drawing.Size(219, 24);
+            this.sevenSegmentArray5.Size = new System.Drawing.Size(534, 24);
             this.sevenSegmentArray5.TabIndex = 36;
             this.sevenSegmentArray5.TabStop = false;
             this.sevenSegmentArray5.Value = "000000";
@@ -747,7 +747,7 @@
             // 
             // sevenSegmentArray6
             // 
-            this.sevenSegmentArray6.ArrayCount = 9;
+            this.sevenSegmentArray6.ArrayCount = 24;
             this.sevenSegmentArray6.ColorBackground = System.Drawing.Color.DimGray;
             this.sevenSegmentArray6.ColorDark = System.Drawing.Color.Gray;
             this.sevenSegmentArray6.ColorLight = System.Drawing.Color.Yellow;
@@ -757,14 +757,14 @@
             this.sevenSegmentArray6.ItalicFactor = -0.04F;
             this.sevenSegmentArray6.Location = new System.Drawing.Point(95, 177);
             this.sevenSegmentArray6.Name = "sevenSegmentArray6";
-            this.sevenSegmentArray6.Size = new System.Drawing.Size(195, 24);
+            this.sevenSegmentArray6.Size = new System.Drawing.Size(508, 24);
             this.sevenSegmentArray6.TabIndex = 37;
             this.sevenSegmentArray6.TabStop = false;
             this.sevenSegmentArray6.Value = "00000";
             // 
             // sevenSegmentArray7
             // 
-            this.sevenSegmentArray7.ArrayCount = 10;
+            this.sevenSegmentArray7.ArrayCount = 25;
             this.sevenSegmentArray7.ColorBackground = System.Drawing.Color.DimGray;
             this.sevenSegmentArray7.ColorDark = System.Drawing.Color.Gray;
             this.sevenSegmentArray7.ColorLight = System.Drawing.Color.Red;
@@ -774,14 +774,14 @@
             this.sevenSegmentArray7.ItalicFactor = -0.04F;
             this.sevenSegmentArray7.Location = new System.Drawing.Point(94, 150);
             this.sevenSegmentArray7.Name = "sevenSegmentArray7";
-            this.sevenSegmentArray7.Size = new System.Drawing.Size(219, 24);
+            this.sevenSegmentArray7.Size = new System.Drawing.Size(534, 24);
             this.sevenSegmentArray7.TabIndex = 38;
             this.sevenSegmentArray7.TabStop = false;
             this.sevenSegmentArray7.Value = "000000";
             // 
             // sevenSegmentArray8
             // 
-            this.sevenSegmentArray8.ArrayCount = 10;
+            this.sevenSegmentArray8.ArrayCount = 25;
             this.sevenSegmentArray8.ColorBackground = System.Drawing.Color.DimGray;
             this.sevenSegmentArray8.ColorDark = System.Drawing.Color.Gray;
             this.sevenSegmentArray8.ColorLight = System.Drawing.Color.Lime;
@@ -791,7 +791,7 @@
             this.sevenSegmentArray8.ItalicFactor = -0.04F;
             this.sevenSegmentArray8.Location = new System.Drawing.Point(94, 123);
             this.sevenSegmentArray8.Name = "sevenSegmentArray8";
-            this.sevenSegmentArray8.Size = new System.Drawing.Size(219, 24);
+            this.sevenSegmentArray8.Size = new System.Drawing.Size(534, 24);
             this.sevenSegmentArray8.TabIndex = 39;
             this.sevenSegmentArray8.TabStop = false;
             this.sevenSegmentArray8.Value = "000000";
@@ -800,7 +800,7 @@
             // 
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Bold);
             this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(286, 177);
+            this.label3.Location = new System.Drawing.Point(600, 177);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(29, 24);
             this.label3.TabIndex = 44;
@@ -971,7 +971,7 @@
             // 
             // sevenSegmentArray9
             // 
-            this.sevenSegmentArray9.ArrayCount = 10;
+            this.sevenSegmentArray9.ArrayCount = 25;
             this.sevenSegmentArray9.ColorBackground = System.Drawing.Color.DimGray;
             this.sevenSegmentArray9.ColorDark = System.Drawing.Color.Gray;
             this.sevenSegmentArray9.ColorLight = System.Drawing.Color.White;
@@ -981,7 +981,7 @@
             this.sevenSegmentArray9.ItalicFactor = -0.04F;
             this.sevenSegmentArray9.Location = new System.Drawing.Point(94, 94);
             this.sevenSegmentArray9.Name = "sevenSegmentArray9";
-            this.sevenSegmentArray9.Size = new System.Drawing.Size(219, 24);
+            this.sevenSegmentArray9.Size = new System.Drawing.Size(534, 24);
             this.sevenSegmentArray9.TabIndex = 36;
             this.sevenSegmentArray9.TabStop = false;
             this.sevenSegmentArray9.Value = "000000";
@@ -1003,7 +1003,7 @@
             // 
             // sevenSegmentArray10
             // 
-            this.sevenSegmentArray10.ArrayCount = 9;
+            this.sevenSegmentArray10.ArrayCount = 24;
             this.sevenSegmentArray10.ColorBackground = System.Drawing.Color.DimGray;
             this.sevenSegmentArray10.ColorDark = System.Drawing.Color.Gray;
             this.sevenSegmentArray10.ColorLight = System.Drawing.Color.Yellow;
@@ -1013,14 +1013,14 @@
             this.sevenSegmentArray10.ItalicFactor = -0.04F;
             this.sevenSegmentArray10.Location = new System.Drawing.Point(95, 177);
             this.sevenSegmentArray10.Name = "sevenSegmentArray10";
-            this.sevenSegmentArray10.Size = new System.Drawing.Size(195, 24);
+            this.sevenSegmentArray10.Size = new System.Drawing.Size(508, 24);
             this.sevenSegmentArray10.TabIndex = 37;
             this.sevenSegmentArray10.TabStop = false;
             this.sevenSegmentArray10.Value = "00000";
             // 
             // sevenSegmentArray11
             // 
-            this.sevenSegmentArray11.ArrayCount = 10;
+            this.sevenSegmentArray11.ArrayCount = 25;
             this.sevenSegmentArray11.ColorBackground = System.Drawing.Color.DimGray;
             this.sevenSegmentArray11.ColorDark = System.Drawing.Color.Gray;
             this.sevenSegmentArray11.ColorLight = System.Drawing.Color.Red;
@@ -1030,14 +1030,14 @@
             this.sevenSegmentArray11.ItalicFactor = -0.04F;
             this.sevenSegmentArray11.Location = new System.Drawing.Point(94, 150);
             this.sevenSegmentArray11.Name = "sevenSegmentArray11";
-            this.sevenSegmentArray11.Size = new System.Drawing.Size(219, 24);
+            this.sevenSegmentArray11.Size = new System.Drawing.Size(534, 24);
             this.sevenSegmentArray11.TabIndex = 38;
             this.sevenSegmentArray11.TabStop = false;
             this.sevenSegmentArray11.Value = "000000";
             // 
             // sevenSegmentArray12
             // 
-            this.sevenSegmentArray12.ArrayCount = 10;
+            this.sevenSegmentArray12.ArrayCount = 25;
             this.sevenSegmentArray12.ColorBackground = System.Drawing.Color.DimGray;
             this.sevenSegmentArray12.ColorDark = System.Drawing.Color.Gray;
             this.sevenSegmentArray12.ColorLight = System.Drawing.Color.Lime;
@@ -1047,7 +1047,7 @@
             this.sevenSegmentArray12.ItalicFactor = -0.04F;
             this.sevenSegmentArray12.Location = new System.Drawing.Point(94, 123);
             this.sevenSegmentArray12.Name = "sevenSegmentArray12";
-            this.sevenSegmentArray12.Size = new System.Drawing.Size(219, 24);
+            this.sevenSegmentArray12.Size = new System.Drawing.Size(534, 24);
             this.sevenSegmentArray12.TabIndex = 39;
             this.sevenSegmentArray12.TabStop = false;
             this.sevenSegmentArray12.Value = "000000";
@@ -1056,7 +1056,7 @@
             // 
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Bold);
             this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(286, 177);
+            this.label4.Location = new System.Drawing.Point(600, 177);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(29, 24);
             this.label4.TabIndex = 44;

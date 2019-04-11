@@ -62,11 +62,6 @@ namespace EthernetServerManager
             ServerSock.Initialize(IPAddress, PortNumber);
             ServerSock.RecvMessageEvent += new CEtherentServerManager.RecvMessageHandler(SetReceiveMessage);
 
-            //ConnectCheckTimer = new Timer();
-            //ConnectCheckTimer.Tick += ConnectCheckTimer_Tick;
-            //ConnectCheckTimer.Interval = 250;
-            //ConnectCheckTimer.Start();
-
             ThreadConnectCheck = new Thread(ThreadConnectCheckFunction);
             IsThreadConnectCheckExit = false;
             ThreadConnectCheck.Start();
@@ -78,7 +73,6 @@ namespace EthernetServerManager
 
         public void DeInitialize()
         {
-            //ConnectCheckTimer.Stop();
             if (ThreadConnectCheck != null) { IsThreadConnectCheckExit = true; Thread.Sleep(200); ThreadConnectCheck.Abort(); ThreadConnectCheck = null; }
             if (ThreadReceiveDataCheck != null) { IsThreadReceiveDataCheckExit = true; Thread.Sleep(200); ThreadReceiveDataCheck.Abort(); ThreadReceiveDataCheck = null; }
 
@@ -177,7 +171,7 @@ namespace EthernetServerManager
             }
         }
 
-        //LDH, 2019.04.03,  Check
+        //LDH, 2019.04.03, Check
         private void ThreadReceiceDataCheckFunction()
         {
             try
@@ -297,7 +291,6 @@ namespace EthernetServerManager
         }
         #endregion "Control Invoke"
 
-
         private void ConnectCheckTimer_Tick()
         {
             string[] _ConnectedList = ServerSock.GetConnectedClientList();
@@ -329,18 +322,6 @@ namespace EthernetServerManager
             for (int iLoopCount = 0; iLoopCount < _RecvCmd.Length; ++iLoopCount)
                 CmdQueue.Enqueue(_RecvCmd[iLoopCount]);
 
-            //if (true == ProtocolCommandProcess())
-            //{
-            //    CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "Receive Data : " + _RecvString);
-            //    CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "ProtocolCommandProcess : Good");
-            //}
-
-            //else
-            //{
-            //    CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "Receive Data : " + _RecvString);
-            //    CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "ProtocolCommandProcess : Bad");
-            //}
-
             string _RecvText = string.Join(",", _RecvCmd);
             ControlInvoke(textBoxRecvString, _RecvText);
         }
@@ -354,13 +335,6 @@ namespace EthernetServerManager
 
             string _Data = "";
             while (_Data != CEtherentServerManager.STX.ToString()) _Data = CmdQueue.Dequeue();
-
-
-            //string[] _Datas = new string[2];
-            //for (int iLoopCount = 0; iLoopCount < _Datas.Length; ++iLoopCount)
-            //    _Datas[iLoopCount] = CmdQueue.Dequeue();
-            
-            //if (_Datas[_Datas.Length - 1] != CEtherentServerManager.ETX.ToString()) return false;
             
             List<string> _Datas = new List<string>();
 
@@ -380,10 +354,9 @@ namespace EthernetServerManager
 
         public void SendResultData(string _ResultDataString)
         {
-            //if (false == IsConnected) { MessageBox.Show("Not connected"); return; }
             if (false == IsConnected) { CMsgBoxManager.Show("Not connected", "", 2000); return; }
             ServerSock.Send(_ResultDataString);
-            //CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "Receive Data : " + _ResultDataString);
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "Receive Data : " + _ResultDataString);
         }
 
         public void ShowEthernetWindow()

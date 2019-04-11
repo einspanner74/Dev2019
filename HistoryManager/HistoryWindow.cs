@@ -86,7 +86,8 @@ namespace HistoryManager
                 case "Open": dataGridViewHistory.DataSource = SqliteManager.SqlOpen(SelectDate, SelectedDateFrom, SelectedDateTo).Tables[0]; break;
                 case "Delete": dataGridViewHistory.DataSource = SqliteManager.SqlDelete(SelectDate, SelectedDateFrom, SelectedDateTo).Tables[0]; break;
             }
-
+            
+            GridViewInitialize();
             dataGridViewHistory.Refresh();          
             //GridViewInitialize();
         }
@@ -105,14 +106,16 @@ namespace HistoryManager
         }
 
         public void ClearSearchOption()
-        {
-            comboBoxResult.SelectedIndex = 0;
+        {            
             ckListBoxRecipe.Items.Clear();
             ckListBoxNGType.Items.Clear();
+            comboBoxResult.Items.Clear();
             SetckListBoxRecipe();
             SetckListBoxNGType();
+            SetcomboBoxResult();
         }
 
+        //LDH, 2016.12.13 Inspection ScreenShot 삭제
         private void DeleteScreenShot()
         {
             string ScreenShotpath;
@@ -162,14 +165,14 @@ namespace HistoryManager
             }
 
             //Day 폴더 삭제
-            ScreenShotpath = String.Format("{0}\\{1}", ScreenShotpath, SplitFolderName[FolderLength - 2]);
+            ScreenShotpath = String.Format("{0}\\{1}", ScreenShotpath, SplitFolderName[FolderLength - 3]);
             DirectoryInfo DeleteDayFolderInfo = new DirectoryInfo(ScreenShotpath);
             if (DeleteDayFolderInfo.Exists)
             {
                 DirectoryInfo[] DayFolderInfo = DeleteDayFolderInfo.GetDirectories();
                 foreach (DirectoryInfo DayFolder in DayFolderInfo)
                 {
-                    if (Convert.ToInt32(DayFolder.Name) < Convert.ToInt32(SplitFolderName[FolderLength - 1]))
+                    if (Convert.ToInt32(DayFolder.Name) < Convert.ToInt32(SplitFolderName[FolderLength - 2]))
                     {
                         DeleteFolder = String.Format("{0}\\{1}", ScreenShotpath, DayFolder.Name);
                         Directory.Delete(DeleteFolder, true);
@@ -294,11 +297,24 @@ namespace HistoryManager
         {
             if (e.RowIndex < 0) return;
             string ScreenshotImagePath = dataGridViewHistory.Rows[e.RowIndex].Cells[ScreenshotIndex].Value.ToString();
+            SelectHistoryData(ScreenshotImagePath);
+        }
 
-            if (ScreenshotImagePath == "") { MessageBox.Show(new Form { TopMost = true }, "Image is not found"); return; }
-            else if (File.Exists(ScreenshotImagePath) == false) { MessageBox.Show(new Form { TopMost = true }, "Image is not found"); return; }
+        private void SelectHistoryData(string _ScreenshotImagePath)
+        {
+            if (_ScreenshotImagePath == "") { MessageBox.Show(new Form { TopMost = true }, "Image is not found"); return; }
+            else if (File.Exists(_ScreenshotImagePath) == false) { MessageBox.Show(new Form { TopMost = true }, "Image is not found"); return; }
 
-            pictureBoxScreenshot.Image = Bitmap.FromFile(ScreenshotImagePath);
+            pictureBoxScreenshot.Image = Bitmap.FromFile(_ScreenshotImagePath);
+        }
+
+        private void SetcomboBoxResult()
+        {
+            
+                comboBoxResult.Items.Add("All");
+                comboBoxResult.Items.Add("OK");
+                comboBoxResult.Items.Add("NG");
+            comboBoxResult.SelectedIndex = 0;
         }
 
         private void SetckListBoxRecipe()
@@ -308,7 +324,8 @@ namespace HistoryManager
 
             if (Recipecount < 6) { Height = 28 * Recipecount; }
             else { Height = 28 * 6; }
-            ckListBoxRecipe.Location = new System.Drawing.Point(883, 392);
+            //ckListBoxRecipe.Location = new System.Drawing.Point(883, 392);
+            ckListBoxRecipe.Location = new System.Drawing.Point(881, 359);
             ckListBoxRecipe.Size = new System.Drawing.Size(369, Height);
         }
 
@@ -407,11 +424,6 @@ namespace HistoryManager
             else { btnNGType.Enabled = false; ckListBoxNGType.Visible = false; btnNGType.Text = "All"; }
         }
 
-        private void btnSearch_Click(object sender, EventArgs e)
-        {
-            SetSearchCondition();
-        }
-
         private void btnNGType_Click(object sender, EventArgs e)
         {
             if (ckListBoxNGType.Visible == false) { ckListBoxNGType.Visible = true; }
@@ -453,6 +465,13 @@ namespace HistoryManager
 
                 e.Graphics.DrawString(Number, Font, Brushes.Black, StringPoint.X, StringPoint.Y);
             }
+        }
+
+        private void dataGridViewHistory_RowEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dataGridViewHistory.RowCount == 1 || dataGridViewHistory.SelectedRows.Count == 0) return;
+            string ScreenshotImagePath = dataGridViewHistory.SelectedCells[ScreenshotIndex].Value.ToString();
+            SelectHistoryData(ScreenshotImagePath);
         }
     }
 }

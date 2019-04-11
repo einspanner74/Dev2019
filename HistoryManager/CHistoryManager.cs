@@ -92,7 +92,6 @@ namespace HistoryManager
         private static bool CheckDBFile()
         {
             bool CreateTable = false;
-            //string connStrFolderPath = @"D:\VisionInspectionData\CIPOSLeadInspection\HistoryData";
             string connStrFolderPath = String.Format(@"D:\VisionInspectionData\{0}\HistoryData", ProjectName);
 
             if (false == Directory.Exists(connStrFolderPath))

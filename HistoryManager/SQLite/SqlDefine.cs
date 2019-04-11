@@ -15,6 +15,6 @@ namespace HistoryManager
         internal const string SEARCH_RESULTNAME = "LastResult in";
         internal const string SEARCH_NGTYPENAME = "ResultType in";
         internal const string DELETE_RECORD = "DELETE FROM HistoryFile WHERE";
-        internal const string GET_IMAGEPATH = "SELECT InspImagePath FROM HistoryFile WHERE rowID = 1";
+        internal const string GET_IMAGEPATH = "SELECT InspImagePath FROM HistoryFile LIMIT 1";
     }
 }

@@ -81,6 +81,7 @@
             this.dataGridViewHistory.Size = new System.Drawing.Size(1254, 229);
             this.dataGridViewHistory.TabIndex = 0;
             this.dataGridViewHistory.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewHistory_CellClick);
+            this.dataGridViewHistory.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewHistory_RowEnter);
             this.dataGridViewHistory.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridViewHistory_RowPostPaint);
             // 
             // labelTrainImage
