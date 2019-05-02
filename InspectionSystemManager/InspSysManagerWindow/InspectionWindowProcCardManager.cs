@@ -41,12 +41,13 @@ namespace InspectionSystemManager
             _SendResult.IsGoods = new bool[2];
             _SendResult.IsGoods[0] = true;
             _SendResult.IsGoods[1] = true;
+            _SendResult.SaveImage = OriginImage;
 
             for (int iLoopCount = 0; iLoopCount < AlgoResultParamList.Count; ++iLoopCount)
             {
                 var _AlgoResultParam = AlgoResultParamList[iLoopCount].ResultParam as CogLineFindResult;
-                if (iLoopCount <= 1) _SendResult.IsGoods[0] &= _AlgoResultParam.IsGood;
-                else                 _SendResult.IsGoods[1] &= _AlgoResultParam.IsGood;
+                if (iLoopCount < 1) _SendResult.IsGoods[0] &= _AlgoResultParam.IsGood;
+                else                _SendResult.IsGoods[1] &= _AlgoResultParam.IsGood;
             }
 
             //LDH, 2019.03.21, 카드가 1개도 없으면 NG 처리
@@ -65,10 +66,32 @@ namespace InspectionSystemManager
             _SendResParam.IsGood = true;
             _SendResParam.ProjectItem = ProjectItem;
 
-            SendCardIDResult _SendResult = new SendCardIDResult();
             for (int iLoopCount = 0; iLoopCount < AlgoResultParamList.Count; ++iLoopCount)
             {
+                if (eAlgoType.C_ID == AlgoResultParamList[iLoopCount].ResultAlgoType)
+                {
+                    var _AlgoResultParam = AlgoResultParamList[iLoopCount].ResultParam as CogBarCodeIDResult;
+                    SendCardIDResult _SendResult = new SendCardIDResult();
 
+                    for (int jLoopCount = 0; jLoopCount < _AlgoResultParam.IDResult.Length; jLoopCount++)
+                    {
+                        _SendResParam.IsGood &= _AlgoResultParam.IsGood;
+                        _SendResult.ReadCode = (_AlgoResultParam.IsGood == true) ? _AlgoResultParam.IDResult[jLoopCount] : "";
+                        if (_SendResParam.NgType == eNgType.GOOD)
+                            _SendResParam.NgType = (_AlgoResultParam.IsGood == true) ? eNgType.GOOD : eNgType.ID;
+                    }
+
+                    _SendResParam.SendResult = _SendResult;
+                }
+
+                else if (eAlgoType.C_LINE_FIND == AlgoResultParamList[iLoopCount].ResultAlgoType)
+                {
+                    var _AlgoResultParam = AlgoResultParamList[iLoopCount].ResultParam as CogLineFindResult;
+
+                    _SendResParam.IsGood = _AlgoResultParam.IsGood;
+                    if (_SendResParam.NgType == eNgType.GOOD)
+                        _SendResParam.NgType = (_AlgoResultParam.IsGood == true) ? eNgType.GOOD : eNgType.EMPTY;
+                }
             }
 
             return _SendResParam;

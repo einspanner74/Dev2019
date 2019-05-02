@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Drawing;
 
 using Cognex.VisionPro;
 using Cognex.VisionPro.PMAlign;
@@ -31,6 +32,7 @@ namespace InspectionSystemManager
             ucCogIDInspWnd.ApplyBarCodeIDInspValueEvent += new ucCogID.ApplyBarCodeIDInspValueHandler(ApplyBarCodeIDInspValueFunction);
             ucCogLineFindWnd.ApplyLineFindEvent += new ucCogLineFind.ApplyLineFindHandler(ApplyLineFindValueFunction);
             ucCogLineFindWnd.DrawLineFindCaliperEvent += new ucCogLineFind.DrawLineFindCaliperHandler(DrawLineFindCaliperFunction);
+            ucCogLineFindWnd.CheckCaliperStatusEvent += new ucCogLineFind.CheckCaliperStatusHandler(CheckCaliperStatusFunction);
             kpTeachDisplay.CogDisplayMouseUpEvent += new KPDisplay.KPCogDisplayControl.CogDisplayMouseUpHandler(TeachDisplayMouseUpEvent);
             ucCogMultiPatternWnd.DrawReferRegionEvent += new ucCogMultiPattern.DrawReferRegionHandler(DrawReferRegionFunction);
             ucCogMultiPatternWnd.ReferenceActionEvent += new ucCogMultiPattern.ReferenceActionHandler(ReferenceActionFunction);
@@ -58,6 +60,7 @@ namespace InspectionSystemManager
             ucCogIDInspWnd.ApplyBarCodeIDInspValueEvent -= new ucCogID.ApplyBarCodeIDInspValueHandler(ApplyBarCodeIDInspValueFunction);
             ucCogLineFindWnd.ApplyLineFindEvent -= new ucCogLineFind.ApplyLineFindHandler(ApplyLineFindValueFunction);
             ucCogLineFindWnd.DrawLineFindCaliperEvent -= new ucCogLineFind.DrawLineFindCaliperHandler(DrawLineFindCaliperFunction);
+            ucCogLineFindWnd.CheckCaliperStatusEvent -= new ucCogLineFind.CheckCaliperStatusHandler(CheckCaliperStatusFunction);
             kpTeachDisplay.CogDisplayMouseUpEvent -= new KPDisplay.KPCogDisplayControl.CogDisplayMouseUpHandler(TeachDisplayMouseUpEvent);
             ucCogMultiPatternWnd.DrawReferRegionEvent -= new ucCogMultiPattern.DrawReferRegionHandler(DrawReferRegionFunction);
             ucCogMultiPatternWnd.ReferenceActionEvent -= new ucCogMultiPattern.ReferenceActionHandler(ReferenceActionFunction);
@@ -604,6 +607,13 @@ namespace InspectionSystemManager
         private void ApplyLineFindValueFunction(CogLineFindAlgo _CogLineFindAlgo, ref CogLineFindResult _CogLineFindResult)
         {
             if (eTeachStep.ALGO_SET != CurrentTeachStep) { MessageBox.Show("Not select \"Algorithm Set\" button"); return; }
+
+            #region Caliper Area Check
+            Rectangle _Bound = new Rectangle((int)AlgoRegionRectangle.X, (int)AlgoRegionRectangle.Y, (int)AlgoRegionRectangle.Width, (int)AlgoRegionRectangle.Height);
+            if (false == _Bound.Contains((int)_CogLineFindAlgo.CaliperLineStartX, (int)_CogLineFindAlgo.CaliperLineStartY))  { MessageBox.Show("The caliper is outisde the inspection area."); return;}
+            else if (false == _Bound.Contains((int)_CogLineFindAlgo.CaliperLineEndX, (int)_CogLineFindAlgo.CaliperLineEndY)) { MessageBox.Show("The caliper is outisde the inspection area."); return; }
+            #endregion
+
             AlgorithmAreaDisplayRefresh();
 
             CogImage8Grey _DestImage = new CogImage8Grey();
@@ -633,6 +643,20 @@ namespace InspectionSystemManager
             _CogFindLine.ExpectedLineSegment.SetStartEnd(_CogLineFindAlgo.CaliperLineStartX, _CogLineFindAlgo.CaliperLineStartY, _CogLineFindAlgo.CaliperLineEndX, _CogLineFindAlgo.CaliperLineEndY);
 
             kpTeachDisplay.DrawFindLineCaliper(_CogFindLine);
+        }
+
+        private bool CheckCaliperStatusFunction(CogLineFindAlgo _CogLineFindAlgo)
+        {
+            bool _Result = true;
+
+            #region Caliper Area Check
+            Rectangle _Bound = new Rectangle((int)AlgoRegionRectangle.X, (int)AlgoRegionRectangle.Y, (int)AlgoRegionRectangle.Width, (int)AlgoRegionRectangle.Height);
+            if (false == _Bound.Contains((int)_CogLineFindAlgo.CaliperLineStartX, (int)_CogLineFindAlgo.CaliperLineStartY))  { MessageBox.Show("The caliper is outisde the inspection area."); return false; }
+            else if (false == _Bound.Contains((int)_CogLineFindAlgo.CaliperLineEndX, (int)_CogLineFindAlgo.CaliperLineEndY)) { MessageBox.Show("The caliper is outisde the inspection area."); return false; }
+            #endregion
+
+            return _Result;
+
         }
         #endregion Line Find Window Event : ucCogLineFind -> TeachingWindow
 

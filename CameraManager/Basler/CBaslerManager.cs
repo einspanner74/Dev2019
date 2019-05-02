@@ -72,7 +72,7 @@ namespace CameraManager
                     break;
                 }
 
-                catch
+                catch(Exception ex)
                 {
                     CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.ERR, "CBaslerManager Initialize Exception!!", CLogManager.LOG_LEVEL.LOW);
                     _Result = false;

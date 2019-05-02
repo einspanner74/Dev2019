@@ -589,7 +589,6 @@ namespace KPDisplay
             }
         }
 
-
         private void SetDisplayInvoke(KPCogDisplay _Display, CogImage8Grey _DispImage)
         {
             if (_Display.InvokeRequired)

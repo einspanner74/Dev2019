@@ -22,7 +22,7 @@ namespace ParameterManager
         public int ResultWindowWidth;
         public int ResultWindowHeight;
 
-        public string DataFolderPath;
+        public string[] DataFolderPath = new string[2];
 
         public SystemParameter()
         {
@@ -43,6 +43,9 @@ namespace ParameterManager
 
             IPAddress = "192.168.0.100";
             PortNumber = 5050;
+
+            DataFolderPath[0] = "";
+            DataFolderPath[1] = "";
         }
     }
 }

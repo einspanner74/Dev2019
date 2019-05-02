@@ -400,11 +400,12 @@ namespace ParameterManager
     public class SendCardExistResult
     {
         public bool[] IsGoods;
+        public CogImage8Grey SaveImage;
     }
 
     public class SendCardIDResult
     {
-
+        public string ReadCode;
     }
     #endregion Last Send Result Parameter
 }

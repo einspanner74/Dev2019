@@ -7,7 +7,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Windows.Forms;
 
-using CustonMsgBoxManager;
+using CustomMsgBoxManager;
 
 namespace EthernetServerManager
 {
@@ -136,7 +136,7 @@ namespace EthernetServerManager
         public void Connection()
         {
             //if (true == IsServerAlready) { MessageBox.Show("Already connected"); return; }
-            if (true == IsServerAlready) { CMsgBoxManager.Show("Already connected", "", 2000); return; }
+            if (true == IsServerAlready) { CMsgBoxManager.Show("Already connected", "", false, 2000); return; }
 
             SockClientList.Clear();
 
@@ -155,7 +155,7 @@ namespace EthernetServerManager
         public void Connection(string _IPAddress, int _PortNumber)
         {
             //if (true == IsServerAlready) { MessageBox.Show("Already connected"); return; }
-            if (true == IsServerAlready) { CMsgBoxManager.Show("Already connected", "", 2000); return; }
+            if (true == IsServerAlready) { CMsgBoxManager.Show("Already connected", "", false, 2000); return; }
 
             ConnectIP = _IPAddress;
             ConnectPort = _PortNumber;
@@ -198,6 +198,25 @@ namespace EthernetServerManager
             LastSendMessage = _Data;
 
             string _SendProtocol = String.Format("{0},{1},{2}", STX, LastSendMessage, ETX);
+            byte[] _SendData = Encoding.ASCII.GetBytes(_SendProtocol);
+            //byte[] _SendData = Encoding.Unicode.GetBytes(_SendProtocol);
+
+            SocketAsyncEventArgs _SockArgs = new SocketAsyncEventArgs();
+            _SockArgs.SetBuffer(_SendData, 0, _SendData.Length);
+
+            foreach (Socket _SockClient in SockClientList)
+            {
+                //_SockClient.Sㅁend(_SendData);
+                _SockClient.SendAsync(_SockArgs);
+            }
+        }
+
+        //LDH, 2019.04.26, ','로 구분하지 않는 Data는 앞뒤로 STX, ETX만 붙여서 보냄
+        public void SendNotFormat(string _Data)
+        {
+            LastSendMessage = _Data;
+
+            string _SendProtocol = String.Format("{0}{1}{2}", STX, LastSendMessage, ETX);
             byte[] _SendData = Encoding.ASCII.GetBytes(_SendProtocol);
             //byte[] _SendData = Encoding.Unicode.GetBytes(_SendProtocol);
 

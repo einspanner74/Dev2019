@@ -1370,6 +1370,7 @@ namespace InspectionSystemManager
 
                     string _ResultIDName = string.Format("ID = {0}", _CogBarCodeIDResult.IDResult);
                     ResultDisplayMessage(_CogBarCodeIDResult.IDCenterX[iLoopCount], _CogBarCodeIDResult.IDCenterY[iLoopCount] + 30, _ResultIDName, true, CogGraphicLabelAlignmentConstants.BaselineCenter);
+                    ResultDisplayMessage(50, 125, _ResultIDName + ".", true, CogGraphicLabelAlignmentConstants.BaselineLeft);
                 }
 
             }
@@ -1475,6 +1476,7 @@ namespace InspectionSystemManager
             else if (ProjectItem == eProjectItem.LEAD_FORM_ALIGN)   SendResParam = GetLeadFormAlignResultAnalysis();
             else if (ProjectItem == eProjectItem.BC_IMG_SAVE)       SendResParam = GetCardImageSaveResultAnalysis();
             else if (ProjectItem == eProjectItem.BC_ID)             SendResParam = GetCardIDResultAnalysis();
+            else if (ProjectItem == eProjectItem.BC_ID_SECOND)      SendResParam = GetCardIDResultAnalysis();
             else if (ProjectItem == eProjectItem.BC_EXIST)          SendResParam = GetCardExistResultAnalysis();
 
             return _Result;
@@ -1523,9 +1525,10 @@ namespace InspectionSystemManager
                 }
             }
 
-            catch
+            catch(Exception ex)
             {
                 CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.ERR, String.Format("ISM {0} - ThreadInspectionProcessFunction Exception", ID + 1), CLogManager.LOG_LEVEL.LOW);
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.ERR, String.Format("{0}", ex));
             }
         }
 

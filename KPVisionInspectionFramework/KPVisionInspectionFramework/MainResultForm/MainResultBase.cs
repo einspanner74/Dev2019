@@ -70,7 +70,7 @@ namespace KPVisionInspectionFramework
             else if (ProjectType == eProjectType.BC_QCC)
             {
                 MainResultCardManagerWnd = new ucMainResultCardManager(LastRecipeName);
-                MainResultCardManagerWnd.ScreenshotEvent += new ucMainResultCardManager.ScreenshotHandler(ScreenShot);
+                MainResultCardManagerWnd.ScreenshotEvent += new ucMainResultCardManager.ScreenshotHandler(ScreenShotSetSize);
                 panelMain.Controls.Add(MainResultCardManagerWnd);
             }
 
@@ -96,7 +96,7 @@ namespace KPVisionInspectionFramework
 
             else if (ProjectType == eProjectType.BC_QCC)
             {
-                MainResultCardManagerWnd.ScreenshotEvent -= new ucMainResultCardManager.ScreenshotHandler(ScreenShot);
+                MainResultCardManagerWnd.ScreenshotEvent -= new ucMainResultCardManager.ScreenshotHandler(ScreenShotSetSize);
             }
 
             panelMain.Controls.Clear();
@@ -227,7 +227,7 @@ namespace KPVisionInspectionFramework
         }
 
         //LDH, 2019.04.02, Ethernet Receive Data 전달
-        public void SetEthernetRecvData(string[] _Value)
+        public void SetEthernetRecvData(object _Value)
         {
             if (ProjectType == eProjectType.BC_QCC) MainResultCardManagerWnd.SetEthernetRecvData(_Value);
         }
@@ -240,6 +240,7 @@ namespace KPVisionInspectionFramework
             else if (_ResultParam.ProjectItem == eProjectItem.LEAD_FORM_ALIGN)  MainResultTrimFormWnd.SetFormResultData(_ResultParam);
             else if (_ResultParam.ProjectItem == eProjectItem.BC_IMG_SAVE)      MainResultCardManagerWnd.SetImageSaveResultData(_ResultParam);
             else if (_ResultParam.ProjectItem == eProjectItem.BC_ID)            MainResultCardManagerWnd.SetQRCodeResultData(_ResultParam);
+            else if (_ResultParam.ProjectItem == eProjectItem.BC_ID_SECOND)     MainResultCardManagerWnd.SetSecondQRCodeResultData(_ResultParam);
             else if (_ResultParam.ProjectItem == eProjectItem.BC_EXIST)         MainResultCardManagerWnd.SetExistResultData(_ResultParam);
         }
 
@@ -283,8 +284,25 @@ namespace KPVisionInspectionFramework
             }
         }
 
+        private void ScreenShotSetSize(string ImageSaveFile, Size ScreenshotSize)
+        {
+            try
+            {
+                Size Wondbounds = new Size(ScreenshotSize.Width, ScreenshotSize.Height - 150);
+                Bitmap printScreen = new Bitmap(ScreenshotSize.Width, ScreenshotSize.Height - 150);
+                Graphics graphics = Graphics.FromImage(printScreen as Image);
+                graphics.CopyFromScreen(new Point(8, 150), Point.Empty, Wondbounds);
+                printScreen.Save(ImageSaveFile, ImageFormat.Jpeg);
+                printScreen.Dispose();
+            }
+            catch (System.Exception ex)
+            {
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "Screenshot Exception : " + ex.ToString(), CLogManager.LOG_LEVEL.LOW);
+            }
+        }
+
         //LDH, 2019.03.20, 저장 Data Foler 지정 함수
-        public void SetDataFolderPath(string _FolderPath)
+        public void SetDataFolderPath(string[] _FolderPath)
         {
             MainResultCardManagerWnd.SetDataFolderPath(_FolderPath);
         }

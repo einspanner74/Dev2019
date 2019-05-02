@@ -123,6 +123,7 @@ namespace InspectionSystemManager
             else if (_ProjectItem == eProjectItem.LEAD_FORM_ALIGN)  ucCogBlobReferWnd.Initialize(false);
             else if (_ProjectItem == eProjectItem.BC_IMG_SAVE)      ucCogBlobReferWnd.Initialize(false);
             else if (_ProjectItem == eProjectItem.BC_ID)            ucCogBlobReferWnd.Initialize(false);
+            else if (_ProjectItem == eProjectItem.BC_ID_SECOND)     ucCogBlobReferWnd.Initialize(false);
             else if (_ProjectItem == eProjectItem.BC_EXIST)         ucCogBlobReferWnd.Initialize(false);
 
             InspPatternProcess = new InspectionPattern();
@@ -210,7 +211,7 @@ namespace InspectionSystemManager
 
             }
 
-            else if (ProjectItem == eProjectItem.BC_ID)
+            else if (ProjectItem == eProjectItem.BC_ID || ProjectItem == eProjectItem.BC_ID_SECOND)
             {
                 ContextMenuAlgo.MenuItems.Add("코드 검사", new EventHandler(BarCodeIDAlgorithm));
             }
@@ -244,7 +245,11 @@ namespace InspectionSystemManager
             {
                 case eProjectType.TRIM_FORM:
                 case eProjectType.BC_QCC:
+                    btnInspectionAreaAdd.Visible = false;
+                    btnInspectionAreaDel.Visible = false;
                     btnInspectionAreaCopy.Visible = false;
+                    btnInspectionAlgoAdd.Visible = false;
+                    btnInspectionAlgoDel.Visible = false;
                     btnShowAllArea.Visible = false;
                     btnMapDataApplyInspectionArea.Visible = false;
                     btnMapDataAlgorithmSet.Visible = false;
@@ -1233,7 +1238,7 @@ namespace InspectionSystemManager
 
                 }
 
-                else if (ProjectItem == eProjectItem.BC_ID)
+                else if (ProjectItem == eProjectItem.BC_ID || ProjectItem == eProjectItem.BC_ID_SECOND)
                 {
                     if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_ID) _Name = "코드 검사"; //"ID - Search"
                 }

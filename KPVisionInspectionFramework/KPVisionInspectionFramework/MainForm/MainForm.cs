@@ -195,10 +195,6 @@ namespace KPVisionInspectionFramework
             else                                                                            MainProcess = new MainProcessBase();
 
             MainProcess.MainProcessCommandEvent += new MainProcessBase.MainProcessCommandHandler(MainProcessCommandEventFunction);
-            if ((int)eProjectType.BC_QCC == ParamManager.SystemParam.ProjectType)
-            {
-                MainProcess.EthernetRecvStringEvent += new MainProcessBase.EthernetRecvStringHandler(MainProcessEthernetRecvEventFunction);
-            }
             
             MainProcess.Initialize(@"D:\VisionInspectionData\Common\");
             #endregion MainProcess Setting
@@ -242,10 +238,6 @@ namespace KPVisionInspectionFramework
             FolderPathWnd.SetDataPathEvent -= new FolderPathWindow.SetDataPathHandler(SetDataFolderPath);
 
             MainProcess.MainProcessCommandEvent -= new MainProcessBase.MainProcessCommandHandler(MainProcessCommandEventFunction);
-            if ((int)eProjectType.BC_QCC == ParamManager.SystemParam.ProjectType)
-            {
-                MainProcess.EthernetRecvStringEvent -= new MainProcessBase.EthernetRecvStringHandler(MainProcessEthernetRecvEventFunction);
-            }
             MainProcess.DeInitialize();
 
             if((int)eProjectType.NONE == ParamManager.SystemParam.ProjectType)              MainProcess.DeInitialize();
@@ -467,9 +459,10 @@ namespace KPVisionInspectionFramework
 
         private void rbFolder_Click(object sender, EventArgs e)
         {
-            string DataPath = ParamManager.SystemParam.DataFolderPath;
-
-            FolderPathWnd.SetCurrentDataPath(DataPath);
+            for(int iLoopCount = 0; iLoopCount < 2; iLoopCount++)
+            {
+                FolderPathWnd.SetCurrentDataPath(iLoopCount, ParamManager.SystemParam.DataFolderPath[iLoopCount]);
+            }
             FolderPathWnd.ShowDialog();
         }
 		
@@ -647,8 +640,9 @@ namespace KPVisionInspectionFramework
             switch (_MainProcCmd)
             {
                 case eMainProcCmd.TRG:          MainProcessTriggerOn(_Value);    break;
-                case eMainProcCmd.REQUEST:      MainProcessDataRequest(_Value); break;
+                case eMainProcCmd.REQUEST:      MainProcessDataRequest(_Value);  break;
                 case eMainProcCmd.RCP_CHANGE:   MainProcessRcpChange(_Value);    break;
+                case eMainProcCmd.RECV_DATA:    MainProcessEthernetRecv(_Value); break;
             }
         }
 
@@ -683,9 +677,25 @@ namespace KPVisionInspectionFramework
         }
 
         //LDH, 2019.04.02, Ethernet Receive Data 전달 Event
-        private void MainProcessEthernetRecvEventFunction(string[] _Value)
+        private void MainProcessEthernetRecv(object _Value)
         {
             ResultBaseWnd.SetEthernetRecvData(_Value);
+
+            //Data 받은거 확인 command 넘길때
+            if (eProjectType.BC_QCC == (eProjectType)ParamManager.SystemParam.ProjectType)
+            {
+                EthernetRecvInfo _ReceiveData = _Value as EthernetRecvInfo;
+
+                switch (_ReceiveData.RecvData[0])
+                {
+                    case "00": MainProcess.SendSerialData(eMainProcCmd.ACK_COMPLETE, _ReceiveData.PortNumber.ToString()); break;
+                }
+            }
+
+            else
+            {
+                string[] _ReceiveData = _Value as string[];
+            }
         }
 
         private void SendResultData(object _Result)
@@ -717,9 +727,12 @@ namespace KPVisionInspectionFramework
             //}
         }
 
-        private void SetDataFolderPath(string _DataPath)
+        private void SetDataFolderPath(string[] _DataPath)
         {
-            ParamManager.SystemParam.DataFolderPath = _DataPath;
+            for(int iLoopCount = 0; iLoopCount < ParamManager.SystemParam.DataFolderPath.Count(); iLoopCount++)
+            {
+                ParamManager.SystemParam.DataFolderPath[iLoopCount] = _DataPath[iLoopCount];
+            }            
             ParamManager.WriteSystemParameter();
 
             ResultBaseWnd.SetDataFolderPath(_DataPath);

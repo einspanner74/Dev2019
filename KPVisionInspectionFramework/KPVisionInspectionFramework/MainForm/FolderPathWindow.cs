@@ -11,26 +11,46 @@ namespace KPVisionInspectionFramework
 {
     public partial class FolderPathWindow : Form
     {
-        public delegate void SetDataPathHandler(string _DataPath);
+        public delegate void SetDataPathHandler(string[] _DataPath);
         public event SetDataPathHandler SetDataPathEvent;
+
+        Label[] lbPathName;
+        TextBox[] tbPath;
+        Button[] btnPathSearch;
 
         public FolderPathWindow(bool _SimulationModeFlag)
         {
             InitializeComponent();
+
+            lbPathName = new Label[2] { labelPath1, labelPath2 };
+            tbPath = new TextBox[2] { textBoxPath1, textBoxPath2 };
+            btnPathSearch = new Button[2] { btnPathSearch1, btnPathSearch2 };
+
+            SetlabelPathName();
         }
 
-        public void SetCurrentDataPath(string _CurrentDataPath)
+        private void SetlabelPathName()
         {
-            textBoxInDataPath.Clear();
+            lbPathName[0].Text = "Cam 1";
+            lbPathName[1].Text = "Cam 2";
+        }
 
-            textBoxInDataPath.Text = _CurrentDataPath;
+        public void SetCurrentDataPath(int Num, string _CurrentDataPath)
+        {
+            tbPath[Num].Clear();
+            tbPath[Num].Text = _CurrentDataPath;
         }
 
         private void btnConfirm_Click(object sender, EventArgs e)
         {
-            if (textBoxInDataPath.Text == null || textBoxInDataPath.Text == "") { MessageBox.Show("In Data 폴더 경로가 없습니다."); return; }
+            string[] DataPath = new string[2];
 
-            string DataPath = textBoxInDataPath.Text;
+            for (int iLoopCount = 0; iLoopCount < 2; iLoopCount++)
+            {
+                if (tbPath[iLoopCount].Text == null || tbPath[iLoopCount].Text == "") { MessageBox.Show("폴더 경로가 없습니다."); return; }
+
+                DataPath[iLoopCount] = tbPath[iLoopCount].Text;
+            }
 
             var _RecipeCopyEvent = SetDataPathEvent;
             _RecipeCopyEvent?.Invoke(DataPath);
@@ -57,11 +77,13 @@ namespace KPVisionInspectionFramework
         }
         
         private void btnSearchDataPath_Click(object sender, EventArgs e)
-        {  
+        {
+            int Num = Convert.ToInt32(((Button)sender).Tag);
+
             FolderBrowserDialog FolderDialog = new FolderBrowserDialog();
             if (DialogResult.OK == FolderDialog.ShowDialog())
             {
-                textBoxInDataPath.Text = FolderDialog.SelectedPath;
+                tbPath[Num].Text = FolderDialog.SelectedPath;
             }
         }
     }

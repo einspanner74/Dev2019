@@ -212,7 +212,7 @@ namespace InspectionSystemManager
             InspWnd.GrabAndInspection();
 
             //InspWnd.IsThreadInspectionProcessTrigger = true;
-            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "ISM{0} IsThreadInspectionProcessTrigger = true", CLogManager.LOG_LEVEL.LOW);
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM{0} IsThreadInspectionProcessTrigger = true", ID + 1), CLogManager.LOG_LEVEL.LOW);
         }
 
         private void ImageGrabLive()

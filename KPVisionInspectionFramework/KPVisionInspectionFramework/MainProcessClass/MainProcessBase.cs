@@ -14,9 +14,6 @@ namespace KPVisionInspectionFramework
         public delegate void MainProcessCommandHandler(eMainProcCmd _MainCmd, object _Value);
         public event MainProcessCommandHandler MainProcessCommandEvent;
 
-        public delegate void EthernetRecvStringHandler(string[] _EthernetRecvMessage);
-        public event EthernetRecvStringHandler EthernetRecvStringEvent;
-
         public virtual void Initialize(string CommonFolderPath)
         {
 
@@ -93,12 +90,6 @@ namespace KPVisionInspectionFramework
         {
             var _MainProcessCommandEvent = MainProcessCommandEvent;
             _MainProcessCommandEvent?.Invoke(_MainCmd, _Value);
-        }
-
-        protected virtual void EthernetRecvString(string[] _Value)
-        {
-            var _EthernetReceiveEvent = EthernetRecvStringEvent;
-            _EthernetReceiveEvent?.Invoke(_Value);
         }
 
         public virtual bool TriggerOn(int _ID)

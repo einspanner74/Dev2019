@@ -15,7 +15,7 @@ namespace ParameterManager
     /// <summary>
     /// Project Item
     /// </summary>
-    public enum eProjectItem { NONE = 0, SURFACE, LEAD_TRIM_INSP, LEAD_FORM_ALIGN, BC_IMG_SAVE, BC_ID, BC_EXIST };
+    public enum eProjectItem { NONE = 0, SURFACE, LEAD_TRIM_INSP, LEAD_FORM_ALIGN, BC_IMG_SAVE, BC_ID, BC_EXIST, BC_ID_SECOND };
 
     /// <summary>
     /// Algorithm Type
@@ -30,7 +30,7 @@ namespace ParameterManager
     /// <summary>
     /// 
     /// </summary>
-    public enum eMainProcCmd { TRG = 1, REQUEST, RCP_CHANGE, LOT_CHANGE, LOT_RETURN, ACK_COMPLETE, ACK_FAIL }
+    public enum eMainProcCmd { TRG = 1, REQUEST, RCP_CHANGE, RECV_DATA, ACK_COMPLETE, ACK_FAIL }
 
     /// <summary>
     /// Inspection Window Command
@@ -166,6 +166,23 @@ namespace ParameterManager
             CenterPt = new CenterPoint();
             Width = 0;
             Height = 0;
+        }
+    }
+
+    public class EthernetRecvInfo
+    {
+        public int PortNumber;
+        public string[] RecvData;
+
+        public EthernetRecvInfo()
+        {
+            PortNumber = 5000;
+        }
+
+        public void SetRecvInfo(int _PortNumber, string[] _RecvData)
+        {
+            PortNumber = _PortNumber;
+            RecvData = _RecvData;
         }
     }
 }

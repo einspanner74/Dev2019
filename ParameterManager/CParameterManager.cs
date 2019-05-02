@@ -168,7 +168,8 @@ namespace ParameterManager
                         case "ProjectType":      SystemParam.ProjectType = Convert.ToInt32(_Node.InnerText); break;
                         case "IPAddress":        SystemParam.IPAddress = _Node.InnerText; break;
                         case "PortNumber":       SystemParam.PortNumber = Convert.ToInt32(_Node.InnerText); break;
-                        case "DataFolderPath":   SystemParam.DataFolderPath = _Node.InnerText; break;
+                        case "DataFolderPath0":  SystemParam.DataFolderPath[0] = _Node.InnerText; break;
+                        case "DataFolderPath1":  SystemParam.DataFolderPath[1] = _Node.InnerText; break;
                     }
 
                     if (_Node.Name == "ISMModuleCount") SystemParam.LastRecipeName = new string[SystemParam.InspSystemManagerCount];
@@ -214,7 +215,8 @@ namespace ParameterManager
             XElement _ProjectType            = new XElement("ProjectType", SystemParam.ProjectType.ToString());
             XElement _IPAddress              = new XElement("IPAddress", SystemParam.IPAddress);
             XElement _PortNumber             = new XElement("PortNumber", SystemParam.PortNumber.ToString());
-            XElement _DataFolderPath         = new XElement("DataFolderPath", SystemParam.DataFolderPath);
+            XElement _DataFolderPath0        = new XElement("DataFolderPath0", SystemParam.DataFolderPath[0]);
+            XElement _DataFolderPath1        = new XElement("DataFolderPath1", SystemParam.DataFolderPath[1]);
 
             XElement _LastRecipeName         = new XElement("LastRecipeName");
             XElement[] _RecipeName           = new XElement[SystemParam.InspSystemManagerCount];
@@ -232,6 +234,8 @@ namespace ParameterManager
             _SystemParameter.Add(_ProjectType);
             _SystemParameter.Add(_IPAddress);
             _SystemParameter.Add(_PortNumber);
+            _SystemParameter.Add(_DataFolderPath0);
+            _SystemParameter.Add(_DataFolderPath1);
 
             _SystemParameter.Add(_LastRecipeName);
             for (int iLoopCount = 0; iLoopCount < SystemParam.InspSystemManagerCount; iLoopCount++)

@@ -27,6 +27,9 @@ namespace InspectionSystemManager
         public delegate void ApplyLineFindHandler(CogLineFindAlgo _CogLineFindAlgo, ref CogLineFindResult _CogLineFindResult);
         public event ApplyLineFindHandler ApplyLineFindEvent;
 
+        public delegate bool CheckCaliperStatusHandler(CogLineFindAlgo _CogLineFindAlgo);
+        public event CheckCaliperStatusHandler CheckCaliperStatusEvent;
+
         public delegate void DrawLineFindCaliperHandler(CogLineFindAlgo _CogLineFindAlgo);
         public event DrawLineFindCaliperHandler DrawLineFindCaliperEvent;
 
@@ -109,20 +112,39 @@ namespace InspectionSystemManager
 
         public void SaveAlgoRecipe()
         {
-            CogLineFindAlgoRcp.CaliperNumber = Convert.ToInt32(numUpDownCaliperNumber.Value);
-            CogLineFindAlgoRcp.CaliperSearchLength = Convert.ToInt32(numUpDownSearchLength.Value);
-            CogLineFindAlgoRcp.CaliperProjectionLength = Convert.ToInt32(numUpDownProjectionLength.Value);
-            CogLineFindAlgoRcp.CaliperSearchDirection = Convert.ToInt32(graLabelSearchDirection.Text);
-            CogLineFindAlgoRcp.IgnoreNumber = Convert.ToInt32(numUpDownIgnoreNumber.Value);
-            CogLineFindAlgoRcp.ContrastThreshold = Convert.ToInt32(numUpDownContrastThreshold.Value);
-            CogLineFindAlgoRcp.FilterHalfSizePixels = Convert.ToInt32(numUpDownFilterHalfSizePixels.Value);
-            CogLineFindAlgoRcp.CaliperLineStartX = Convert.ToInt32(numUpDownStartX.Value);
-            CogLineFindAlgoRcp.CaliperLineStartY = Convert.ToInt32(numUpDownStartY.Value);
-            CogLineFindAlgoRcp.CaliperLineEndX = Convert.ToInt32(numUpDownEndX.Value);
-            CogLineFindAlgoRcp.CaliperLineEndY = Convert.ToInt32(numUpDownEndY.Value);
-            CogLineFindAlgoRcp.UseAlignment = ckUseAlignment.Checked;
+            CogLineFindAlgo _CogLineFindAlgoRcp = new CogLineFindAlgo();
+            _CogLineFindAlgoRcp.CaliperNumber = Convert.ToInt32(numUpDownCaliperNumber.Value);
+            _CogLineFindAlgoRcp.CaliperSearchLength = Convert.ToDouble(numUpDownSearchLength.Value);
+            _CogLineFindAlgoRcp.CaliperProjectionLength = Convert.ToDouble(numUpDownProjectionLength.Value);
+            _CogLineFindAlgoRcp.CaliperSearchDirection = Convert.ToInt32(graLabelSearchDirection.Text);
+            _CogLineFindAlgoRcp.IgnoreNumber = Convert.ToInt32(numUpDownIgnoreNumber.Text);
+            _CogLineFindAlgoRcp.ContrastThreshold = Convert.ToInt32(numUpDownContrastThreshold.Value);
+            _CogLineFindAlgoRcp.FilterHalfSizePixels = Convert.ToInt32(numUpDownFilterHalfSizePixels.Value);
+            _CogLineFindAlgoRcp.CaliperLineStartX = Convert.ToDouble(numUpDownStartX.Value);
+            _CogLineFindAlgoRcp.CaliperLineStartY = Convert.ToDouble(numUpDownStartY.Value);
+            _CogLineFindAlgoRcp.CaliperLineEndX = Convert.ToDouble(numUpDownEndX.Value);
+            _CogLineFindAlgoRcp.CaliperLineEndY = Convert.ToDouble(numUpDownEndY.Value);
 
-            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "Teaching CogLineFind SaveAlgoRecipe", CLogManager.LOG_LEVEL.MID);
+            var _CheckCaliperStatusEvent = CheckCaliperStatusEvent;
+            bool? _Result = _CheckCaliperStatusEvent?.Invoke(_CogLineFindAlgoRcp);
+
+            if (true == _Result)
+            {
+                CogLineFindAlgoRcp.CaliperNumber = Convert.ToInt32(numUpDownCaliperNumber.Value);
+                CogLineFindAlgoRcp.CaliperSearchLength = Convert.ToInt32(numUpDownSearchLength.Value);
+                CogLineFindAlgoRcp.CaliperProjectionLength = Convert.ToInt32(numUpDownProjectionLength.Value);
+                CogLineFindAlgoRcp.CaliperSearchDirection = Convert.ToInt32(graLabelSearchDirection.Text);
+                CogLineFindAlgoRcp.IgnoreNumber = Convert.ToInt32(numUpDownIgnoreNumber.Value);
+                CogLineFindAlgoRcp.ContrastThreshold = Convert.ToInt32(numUpDownContrastThreshold.Value);
+                CogLineFindAlgoRcp.FilterHalfSizePixels = Convert.ToInt32(numUpDownFilterHalfSizePixels.Value);
+                CogLineFindAlgoRcp.CaliperLineStartX = Convert.ToInt32(numUpDownStartX.Value);
+                CogLineFindAlgoRcp.CaliperLineStartY = Convert.ToInt32(numUpDownStartY.Value);
+                CogLineFindAlgoRcp.CaliperLineEndX = Convert.ToInt32(numUpDownEndX.Value);
+                CogLineFindAlgoRcp.CaliperLineEndY = Convert.ToInt32(numUpDownEndY.Value);
+                CogLineFindAlgoRcp.UseAlignment = ckUseAlignment.Checked;
+
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "Teaching CogLineFind SaveAlgoRecipe", CLogManager.LOG_LEVEL.MID);
+            }
         }
 
         public void SetCaliper(int _CaliperNumber, double _SearchLength, double _ProjectionLength, double _SearchDirection)

@@ -224,7 +224,7 @@
             // 
             // rbLabelCurrentRecipe
             // 
-            this.rbLabelCurrentRecipe.Text = "Recipe : Default Recipe";
+            this.rbLabelCurrentRecipe.Text = "Recipe : Default";
             // 
             // ribbonPanelSystem
             // 

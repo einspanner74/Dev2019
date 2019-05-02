@@ -34,11 +34,11 @@
             this.gradientLabelTotalCount = new CustomControl.GradientLabel();
             this.gradientLabelYield = new CustomControl.GradientLabel();
             this.gradientLabelNgCount = new CustomControl.GradientLabel();
-            this.SevenSegTotal = new DmitryBrant.CustomControls.SevenSegmentArray();
+            this.SevenSegTotal1 = new DmitryBrant.CustomControls.SevenSegmentArray();
             this.gradientLabelGoodCount = new CustomControl.GradientLabel();
-            this.SevenSegYield = new DmitryBrant.CustomControls.SevenSegmentArray();
-            this.SevenSegNg = new DmitryBrant.CustomControls.SevenSegmentArray();
-            this.SevenSegGood = new DmitryBrant.CustomControls.SevenSegmentArray();
+            this.SevenSegYield1 = new DmitryBrant.CustomControls.SevenSegmentArray();
+            this.SevenSegNg1 = new DmitryBrant.CustomControls.SevenSegmentArray();
+            this.SevenSegGood1 = new DmitryBrant.CustomControls.SevenSegmentArray();
             this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.btnResultTest = new System.Windows.Forms.Button();
@@ -51,11 +51,11 @@
             this.gradientLabelEtherRecv2 = new CustomControl.GradientLabel();
             this.gradientLabel2 = new CustomControl.GradientLabel();
             this.gradientLabel3 = new CustomControl.GradientLabel();
-            this.sevenSegmentArray1 = new DmitryBrant.CustomControls.SevenSegmentArray();
+            this.SevenSegTotal2 = new DmitryBrant.CustomControls.SevenSegmentArray();
             this.gradientLabel5 = new CustomControl.GradientLabel();
-            this.sevenSegmentArray2 = new DmitryBrant.CustomControls.SevenSegmentArray();
-            this.sevenSegmentArray3 = new DmitryBrant.CustomControls.SevenSegmentArray();
-            this.sevenSegmentArray4 = new DmitryBrant.CustomControls.SevenSegmentArray();
+            this.SevenSegYield2 = new DmitryBrant.CustomControls.SevenSegmentArray();
+            this.SevenSegNg2 = new DmitryBrant.CustomControls.SevenSegmentArray();
+            this.SevenSegGood2 = new DmitryBrant.CustomControls.SevenSegmentArray();
             this.label2 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
@@ -68,11 +68,11 @@
             this.gradientLabelEtherRecv3 = new CustomControl.GradientLabel();
             this.gradientLabel11 = new CustomControl.GradientLabel();
             this.gradientLabel12 = new CustomControl.GradientLabel();
-            this.sevenSegmentArray5 = new DmitryBrant.CustomControls.SevenSegmentArray();
+            this.SevenSegTotal3 = new DmitryBrant.CustomControls.SevenSegmentArray();
             this.gradientLabel13 = new CustomControl.GradientLabel();
-            this.sevenSegmentArray6 = new DmitryBrant.CustomControls.SevenSegmentArray();
-            this.sevenSegmentArray7 = new DmitryBrant.CustomControls.SevenSegmentArray();
-            this.sevenSegmentArray8 = new DmitryBrant.CustomControls.SevenSegmentArray();
+            this.SevenSegYield3 = new DmitryBrant.CustomControls.SevenSegmentArray();
+            this.SevenSegNg3 = new DmitryBrant.CustomControls.SevenSegmentArray();
+            this.SevenSegGood3 = new DmitryBrant.CustomControls.SevenSegmentArray();
             this.label3 = new System.Windows.Forms.Label();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
@@ -85,11 +85,11 @@
             this.gradientLabel17 = new CustomControl.GradientLabel();
             this.gradientLabel18 = new CustomControl.GradientLabel();
             this.gradientLabel19 = new CustomControl.GradientLabel();
-            this.sevenSegmentArray9 = new DmitryBrant.CustomControls.SevenSegmentArray();
+            this.SevenSegTotal4 = new DmitryBrant.CustomControls.SevenSegmentArray();
             this.gradientLabel20 = new CustomControl.GradientLabel();
-            this.sevenSegmentArray10 = new DmitryBrant.CustomControls.SevenSegmentArray();
-            this.sevenSegmentArray11 = new DmitryBrant.CustomControls.SevenSegmentArray();
-            this.sevenSegmentArray12 = new DmitryBrant.CustomControls.SevenSegmentArray();
+            this.SevenSegYield4 = new DmitryBrant.CustomControls.SevenSegmentArray();
+            this.SevenSegNg4 = new DmitryBrant.CustomControls.SevenSegmentArray();
+            this.SevenSegGood4 = new DmitryBrant.CustomControls.SevenSegmentArray();
             this.label4 = new System.Windows.Forms.Label();
             this.button6 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
@@ -110,11 +110,11 @@
             this.panelMain.Controls.Add(this.gradientLabelTotalCount);
             this.panelMain.Controls.Add(this.gradientLabelYield);
             this.panelMain.Controls.Add(this.gradientLabelNgCount);
-            this.panelMain.Controls.Add(this.SevenSegTotal);
+            this.panelMain.Controls.Add(this.SevenSegTotal1);
             this.panelMain.Controls.Add(this.gradientLabelGoodCount);
-            this.panelMain.Controls.Add(this.SevenSegYield);
-            this.panelMain.Controls.Add(this.SevenSegNg);
-            this.panelMain.Controls.Add(this.SevenSegGood);
+            this.panelMain.Controls.Add(this.SevenSegYield1);
+            this.panelMain.Controls.Add(this.SevenSegNg1);
+            this.panelMain.Controls.Add(this.SevenSegGood1);
             this.panelMain.Controls.Add(this.label1);
             this.panelMain.Controls.Add(this.button1);
             this.panelMain.Controls.Add(this.btnResultTest);
@@ -201,22 +201,23 @@
             this.gradientLabelNgCount.Text = "NG";
             this.gradientLabelNgCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // SevenSegTotal
+            // SevenSegTotal1
             // 
-            this.SevenSegTotal.ArrayCount = 25;
-            this.SevenSegTotal.ColorBackground = System.Drawing.Color.DimGray;
-            this.SevenSegTotal.ColorDark = System.Drawing.Color.Gray;
-            this.SevenSegTotal.ColorLight = System.Drawing.Color.White;
-            this.SevenSegTotal.DecimalShow = true;
-            this.SevenSegTotal.ElementPadding = new System.Windows.Forms.Padding(2);
-            this.SevenSegTotal.ElementWidth = 10;
-            this.SevenSegTotal.ItalicFactor = -0.04F;
-            this.SevenSegTotal.Location = new System.Drawing.Point(94, 94);
-            this.SevenSegTotal.Name = "SevenSegTotal";
-            this.SevenSegTotal.Size = new System.Drawing.Size(534, 24);
-            this.SevenSegTotal.TabIndex = 36;
-            this.SevenSegTotal.TabStop = false;
-            this.SevenSegTotal.Value = "000000";
+            this.SevenSegTotal1.ArrayCount = 25;
+            this.SevenSegTotal1.ColorBackground = System.Drawing.Color.DimGray;
+            this.SevenSegTotal1.ColorDark = System.Drawing.Color.Gray;
+            this.SevenSegTotal1.ColorLight = System.Drawing.Color.White;
+            this.SevenSegTotal1.DecimalShow = true;
+            this.SevenSegTotal1.ElementPadding = new System.Windows.Forms.Padding(2);
+            this.SevenSegTotal1.ElementWidth = 10;
+            this.SevenSegTotal1.ItalicFactor = -0.04F;
+            this.SevenSegTotal1.Location = new System.Drawing.Point(94, 94);
+            this.SevenSegTotal1.Name = "SevenSegTotal1";
+            this.SevenSegTotal1.Size = new System.Drawing.Size(534, 24);
+            this.SevenSegTotal1.TabIndex = 36;
+            this.SevenSegTotal1.TabStop = false;
+            this.SevenSegTotal1.Tag = "1";
+            this.SevenSegTotal1.Value = "000000";
             // 
             // gradientLabelGoodCount
             // 
@@ -233,56 +234,59 @@
             this.gradientLabelGoodCount.Text = "Good";
             this.gradientLabelGoodCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // SevenSegYield
+            // SevenSegYield1
             // 
-            this.SevenSegYield.ArrayCount = 24;
-            this.SevenSegYield.ColorBackground = System.Drawing.Color.DimGray;
-            this.SevenSegYield.ColorDark = System.Drawing.Color.Gray;
-            this.SevenSegYield.ColorLight = System.Drawing.Color.Yellow;
-            this.SevenSegYield.DecimalShow = true;
-            this.SevenSegYield.ElementPadding = new System.Windows.Forms.Padding(2);
-            this.SevenSegYield.ElementWidth = 10;
-            this.SevenSegYield.ItalicFactor = -0.04F;
-            this.SevenSegYield.Location = new System.Drawing.Point(95, 177);
-            this.SevenSegYield.Name = "SevenSegYield";
-            this.SevenSegYield.Size = new System.Drawing.Size(508, 24);
-            this.SevenSegYield.TabIndex = 37;
-            this.SevenSegYield.TabStop = false;
-            this.SevenSegYield.Value = "00000";
+            this.SevenSegYield1.ArrayCount = 24;
+            this.SevenSegYield1.ColorBackground = System.Drawing.Color.DimGray;
+            this.SevenSegYield1.ColorDark = System.Drawing.Color.Gray;
+            this.SevenSegYield1.ColorLight = System.Drawing.Color.Yellow;
+            this.SevenSegYield1.DecimalShow = true;
+            this.SevenSegYield1.ElementPadding = new System.Windows.Forms.Padding(2);
+            this.SevenSegYield1.ElementWidth = 10;
+            this.SevenSegYield1.ItalicFactor = -0.04F;
+            this.SevenSegYield1.Location = new System.Drawing.Point(95, 177);
+            this.SevenSegYield1.Name = "SevenSegYield1";
+            this.SevenSegYield1.Size = new System.Drawing.Size(508, 24);
+            this.SevenSegYield1.TabIndex = 37;
+            this.SevenSegYield1.TabStop = false;
+            this.SevenSegYield1.Tag = "1";
+            this.SevenSegYield1.Value = "00000";
             // 
-            // SevenSegNg
+            // SevenSegNg1
             // 
-            this.SevenSegNg.ArrayCount = 25;
-            this.SevenSegNg.ColorBackground = System.Drawing.Color.DimGray;
-            this.SevenSegNg.ColorDark = System.Drawing.Color.Gray;
-            this.SevenSegNg.ColorLight = System.Drawing.Color.Red;
-            this.SevenSegNg.DecimalShow = true;
-            this.SevenSegNg.ElementPadding = new System.Windows.Forms.Padding(2);
-            this.SevenSegNg.ElementWidth = 10;
-            this.SevenSegNg.ItalicFactor = -0.04F;
-            this.SevenSegNg.Location = new System.Drawing.Point(94, 150);
-            this.SevenSegNg.Name = "SevenSegNg";
-            this.SevenSegNg.Size = new System.Drawing.Size(534, 24);
-            this.SevenSegNg.TabIndex = 38;
-            this.SevenSegNg.TabStop = false;
-            this.SevenSegNg.Value = "000000";
+            this.SevenSegNg1.ArrayCount = 25;
+            this.SevenSegNg1.ColorBackground = System.Drawing.Color.DimGray;
+            this.SevenSegNg1.ColorDark = System.Drawing.Color.Gray;
+            this.SevenSegNg1.ColorLight = System.Drawing.Color.Red;
+            this.SevenSegNg1.DecimalShow = true;
+            this.SevenSegNg1.ElementPadding = new System.Windows.Forms.Padding(2);
+            this.SevenSegNg1.ElementWidth = 10;
+            this.SevenSegNg1.ItalicFactor = -0.04F;
+            this.SevenSegNg1.Location = new System.Drawing.Point(94, 150);
+            this.SevenSegNg1.Name = "SevenSegNg1";
+            this.SevenSegNg1.Size = new System.Drawing.Size(534, 24);
+            this.SevenSegNg1.TabIndex = 38;
+            this.SevenSegNg1.TabStop = false;
+            this.SevenSegNg1.Tag = "1";
+            this.SevenSegNg1.Value = "000000";
             // 
-            // SevenSegGood
+            // SevenSegGood1
             // 
-            this.SevenSegGood.ArrayCount = 25;
-            this.SevenSegGood.ColorBackground = System.Drawing.Color.DimGray;
-            this.SevenSegGood.ColorDark = System.Drawing.Color.Gray;
-            this.SevenSegGood.ColorLight = System.Drawing.Color.Lime;
-            this.SevenSegGood.DecimalShow = true;
-            this.SevenSegGood.ElementPadding = new System.Windows.Forms.Padding(2);
-            this.SevenSegGood.ElementWidth = 10;
-            this.SevenSegGood.ItalicFactor = -0.04F;
-            this.SevenSegGood.Location = new System.Drawing.Point(94, 123);
-            this.SevenSegGood.Name = "SevenSegGood";
-            this.SevenSegGood.Size = new System.Drawing.Size(534, 24);
-            this.SevenSegGood.TabIndex = 39;
-            this.SevenSegGood.TabStop = false;
-            this.SevenSegGood.Value = "000000";
+            this.SevenSegGood1.ArrayCount = 25;
+            this.SevenSegGood1.ColorBackground = System.Drawing.Color.DimGray;
+            this.SevenSegGood1.ColorDark = System.Drawing.Color.Gray;
+            this.SevenSegGood1.ColorLight = System.Drawing.Color.Lime;
+            this.SevenSegGood1.DecimalShow = true;
+            this.SevenSegGood1.ElementPadding = new System.Windows.Forms.Padding(2);
+            this.SevenSegGood1.ElementWidth = 10;
+            this.SevenSegGood1.ItalicFactor = -0.04F;
+            this.SevenSegGood1.Location = new System.Drawing.Point(94, 123);
+            this.SevenSegGood1.Name = "SevenSegGood1";
+            this.SevenSegGood1.Size = new System.Drawing.Size(534, 24);
+            this.SevenSegGood1.TabIndex = 39;
+            this.SevenSegGood1.TabStop = false;
+            this.SevenSegGood1.Tag = "1";
+            this.SevenSegGood1.Value = "000000";
             // 
             // label1
             // 
@@ -366,11 +370,11 @@
             this.panel1.Controls.Add(this.gradientLabelEtherRecv2);
             this.panel1.Controls.Add(this.gradientLabel2);
             this.panel1.Controls.Add(this.gradientLabel3);
-            this.panel1.Controls.Add(this.sevenSegmentArray1);
+            this.panel1.Controls.Add(this.SevenSegTotal2);
             this.panel1.Controls.Add(this.gradientLabel5);
-            this.panel1.Controls.Add(this.sevenSegmentArray2);
-            this.panel1.Controls.Add(this.sevenSegmentArray3);
-            this.panel1.Controls.Add(this.sevenSegmentArray4);
+            this.panel1.Controls.Add(this.SevenSegYield2);
+            this.panel1.Controls.Add(this.SevenSegNg2);
+            this.panel1.Controls.Add(this.SevenSegGood2);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.button3);
@@ -457,22 +461,23 @@
             this.gradientLabel3.Text = "NG";
             this.gradientLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // sevenSegmentArray1
+            // SevenSegTotal2
             // 
-            this.sevenSegmentArray1.ArrayCount = 25;
-            this.sevenSegmentArray1.ColorBackground = System.Drawing.Color.DimGray;
-            this.sevenSegmentArray1.ColorDark = System.Drawing.Color.Gray;
-            this.sevenSegmentArray1.ColorLight = System.Drawing.Color.White;
-            this.sevenSegmentArray1.DecimalShow = true;
-            this.sevenSegmentArray1.ElementPadding = new System.Windows.Forms.Padding(2);
-            this.sevenSegmentArray1.ElementWidth = 10;
-            this.sevenSegmentArray1.ItalicFactor = -0.04F;
-            this.sevenSegmentArray1.Location = new System.Drawing.Point(94, 94);
-            this.sevenSegmentArray1.Name = "sevenSegmentArray1";
-            this.sevenSegmentArray1.Size = new System.Drawing.Size(534, 24);
-            this.sevenSegmentArray1.TabIndex = 36;
-            this.sevenSegmentArray1.TabStop = false;
-            this.sevenSegmentArray1.Value = "000000";
+            this.SevenSegTotal2.ArrayCount = 25;
+            this.SevenSegTotal2.ColorBackground = System.Drawing.Color.DimGray;
+            this.SevenSegTotal2.ColorDark = System.Drawing.Color.Gray;
+            this.SevenSegTotal2.ColorLight = System.Drawing.Color.White;
+            this.SevenSegTotal2.DecimalShow = true;
+            this.SevenSegTotal2.ElementPadding = new System.Windows.Forms.Padding(2);
+            this.SevenSegTotal2.ElementWidth = 10;
+            this.SevenSegTotal2.ItalicFactor = -0.04F;
+            this.SevenSegTotal2.Location = new System.Drawing.Point(94, 94);
+            this.SevenSegTotal2.Name = "SevenSegTotal2";
+            this.SevenSegTotal2.Size = new System.Drawing.Size(534, 24);
+            this.SevenSegTotal2.TabIndex = 36;
+            this.SevenSegTotal2.TabStop = false;
+            this.SevenSegTotal2.Tag = "2";
+            this.SevenSegTotal2.Value = "000000";
             // 
             // gradientLabel5
             // 
@@ -489,56 +494,59 @@
             this.gradientLabel5.Text = "Good";
             this.gradientLabel5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // sevenSegmentArray2
+            // SevenSegYield2
             // 
-            this.sevenSegmentArray2.ArrayCount = 24;
-            this.sevenSegmentArray2.ColorBackground = System.Drawing.Color.DimGray;
-            this.sevenSegmentArray2.ColorDark = System.Drawing.Color.Gray;
-            this.sevenSegmentArray2.ColorLight = System.Drawing.Color.Yellow;
-            this.sevenSegmentArray2.DecimalShow = true;
-            this.sevenSegmentArray2.ElementPadding = new System.Windows.Forms.Padding(2);
-            this.sevenSegmentArray2.ElementWidth = 10;
-            this.sevenSegmentArray2.ItalicFactor = -0.04F;
-            this.sevenSegmentArray2.Location = new System.Drawing.Point(95, 177);
-            this.sevenSegmentArray2.Name = "sevenSegmentArray2";
-            this.sevenSegmentArray2.Size = new System.Drawing.Size(508, 24);
-            this.sevenSegmentArray2.TabIndex = 37;
-            this.sevenSegmentArray2.TabStop = false;
-            this.sevenSegmentArray2.Value = "00000";
+            this.SevenSegYield2.ArrayCount = 24;
+            this.SevenSegYield2.ColorBackground = System.Drawing.Color.DimGray;
+            this.SevenSegYield2.ColorDark = System.Drawing.Color.Gray;
+            this.SevenSegYield2.ColorLight = System.Drawing.Color.Yellow;
+            this.SevenSegYield2.DecimalShow = true;
+            this.SevenSegYield2.ElementPadding = new System.Windows.Forms.Padding(2);
+            this.SevenSegYield2.ElementWidth = 10;
+            this.SevenSegYield2.ItalicFactor = -0.04F;
+            this.SevenSegYield2.Location = new System.Drawing.Point(95, 177);
+            this.SevenSegYield2.Name = "SevenSegYield2";
+            this.SevenSegYield2.Size = new System.Drawing.Size(508, 24);
+            this.SevenSegYield2.TabIndex = 37;
+            this.SevenSegYield2.TabStop = false;
+            this.SevenSegYield2.Tag = "2";
+            this.SevenSegYield2.Value = "00000";
             // 
-            // sevenSegmentArray3
+            // SevenSegNg2
             // 
-            this.sevenSegmentArray3.ArrayCount = 25;
-            this.sevenSegmentArray3.ColorBackground = System.Drawing.Color.DimGray;
-            this.sevenSegmentArray3.ColorDark = System.Drawing.Color.Gray;
-            this.sevenSegmentArray3.ColorLight = System.Drawing.Color.Red;
-            this.sevenSegmentArray3.DecimalShow = true;
-            this.sevenSegmentArray3.ElementPadding = new System.Windows.Forms.Padding(2);
-            this.sevenSegmentArray3.ElementWidth = 10;
-            this.sevenSegmentArray3.ItalicFactor = -0.04F;
-            this.sevenSegmentArray3.Location = new System.Drawing.Point(94, 150);
-            this.sevenSegmentArray3.Name = "sevenSegmentArray3";
-            this.sevenSegmentArray3.Size = new System.Drawing.Size(534, 24);
-            this.sevenSegmentArray3.TabIndex = 38;
-            this.sevenSegmentArray3.TabStop = false;
-            this.sevenSegmentArray3.Value = "000000";
+            this.SevenSegNg2.ArrayCount = 25;
+            this.SevenSegNg2.ColorBackground = System.Drawing.Color.DimGray;
+            this.SevenSegNg2.ColorDark = System.Drawing.Color.Gray;
+            this.SevenSegNg2.ColorLight = System.Drawing.Color.Red;
+            this.SevenSegNg2.DecimalShow = true;
+            this.SevenSegNg2.ElementPadding = new System.Windows.Forms.Padding(2);
+            this.SevenSegNg2.ElementWidth = 10;
+            this.SevenSegNg2.ItalicFactor = -0.04F;
+            this.SevenSegNg2.Location = new System.Drawing.Point(94, 150);
+            this.SevenSegNg2.Name = "SevenSegNg2";
+            this.SevenSegNg2.Size = new System.Drawing.Size(534, 24);
+            this.SevenSegNg2.TabIndex = 38;
+            this.SevenSegNg2.TabStop = false;
+            this.SevenSegNg2.Tag = "2";
+            this.SevenSegNg2.Value = "000000";
             // 
-            // sevenSegmentArray4
+            // SevenSegGood2
             // 
-            this.sevenSegmentArray4.ArrayCount = 25;
-            this.sevenSegmentArray4.ColorBackground = System.Drawing.Color.DimGray;
-            this.sevenSegmentArray4.ColorDark = System.Drawing.Color.Gray;
-            this.sevenSegmentArray4.ColorLight = System.Drawing.Color.Lime;
-            this.sevenSegmentArray4.DecimalShow = true;
-            this.sevenSegmentArray4.ElementPadding = new System.Windows.Forms.Padding(2);
-            this.sevenSegmentArray4.ElementWidth = 10;
-            this.sevenSegmentArray4.ItalicFactor = -0.04F;
-            this.sevenSegmentArray4.Location = new System.Drawing.Point(94, 123);
-            this.sevenSegmentArray4.Name = "sevenSegmentArray4";
-            this.sevenSegmentArray4.Size = new System.Drawing.Size(534, 24);
-            this.sevenSegmentArray4.TabIndex = 39;
-            this.sevenSegmentArray4.TabStop = false;
-            this.sevenSegmentArray4.Value = "000000";
+            this.SevenSegGood2.ArrayCount = 25;
+            this.SevenSegGood2.ColorBackground = System.Drawing.Color.DimGray;
+            this.SevenSegGood2.ColorDark = System.Drawing.Color.Gray;
+            this.SevenSegGood2.ColorLight = System.Drawing.Color.Lime;
+            this.SevenSegGood2.DecimalShow = true;
+            this.SevenSegGood2.ElementPadding = new System.Windows.Forms.Padding(2);
+            this.SevenSegGood2.ElementWidth = 10;
+            this.SevenSegGood2.ItalicFactor = -0.04F;
+            this.SevenSegGood2.Location = new System.Drawing.Point(94, 123);
+            this.SevenSegGood2.Name = "SevenSegGood2";
+            this.SevenSegGood2.Size = new System.Drawing.Size(534, 24);
+            this.SevenSegGood2.TabIndex = 39;
+            this.SevenSegGood2.TabStop = false;
+            this.SevenSegGood2.Tag = "2";
+            this.SevenSegGood2.Value = "000000";
             // 
             // label2
             // 
@@ -622,11 +630,11 @@
             this.panel2.Controls.Add(this.gradientLabelEtherRecv3);
             this.panel2.Controls.Add(this.gradientLabel11);
             this.panel2.Controls.Add(this.gradientLabel12);
-            this.panel2.Controls.Add(this.sevenSegmentArray5);
+            this.panel2.Controls.Add(this.SevenSegTotal3);
             this.panel2.Controls.Add(this.gradientLabel13);
-            this.panel2.Controls.Add(this.sevenSegmentArray6);
-            this.panel2.Controls.Add(this.sevenSegmentArray7);
-            this.panel2.Controls.Add(this.sevenSegmentArray8);
+            this.panel2.Controls.Add(this.SevenSegYield3);
+            this.panel2.Controls.Add(this.SevenSegNg3);
+            this.panel2.Controls.Add(this.SevenSegGood3);
             this.panel2.Controls.Add(this.label3);
             this.panel2.Controls.Add(this.button4);
             this.panel2.Controls.Add(this.button5);
@@ -713,22 +721,23 @@
             this.gradientLabel12.Text = "NG";
             this.gradientLabel12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // sevenSegmentArray5
+            // SevenSegTotal3
             // 
-            this.sevenSegmentArray5.ArrayCount = 25;
-            this.sevenSegmentArray5.ColorBackground = System.Drawing.Color.DimGray;
-            this.sevenSegmentArray5.ColorDark = System.Drawing.Color.Gray;
-            this.sevenSegmentArray5.ColorLight = System.Drawing.Color.White;
-            this.sevenSegmentArray5.DecimalShow = true;
-            this.sevenSegmentArray5.ElementPadding = new System.Windows.Forms.Padding(2);
-            this.sevenSegmentArray5.ElementWidth = 10;
-            this.sevenSegmentArray5.ItalicFactor = -0.04F;
-            this.sevenSegmentArray5.Location = new System.Drawing.Point(94, 94);
-            this.sevenSegmentArray5.Name = "sevenSegmentArray5";
-            this.sevenSegmentArray5.Size = new System.Drawing.Size(534, 24);
-            this.sevenSegmentArray5.TabIndex = 36;
-            this.sevenSegmentArray5.TabStop = false;
-            this.sevenSegmentArray5.Value = "000000";
+            this.SevenSegTotal3.ArrayCount = 25;
+            this.SevenSegTotal3.ColorBackground = System.Drawing.Color.DimGray;
+            this.SevenSegTotal3.ColorDark = System.Drawing.Color.Gray;
+            this.SevenSegTotal3.ColorLight = System.Drawing.Color.White;
+            this.SevenSegTotal3.DecimalShow = true;
+            this.SevenSegTotal3.ElementPadding = new System.Windows.Forms.Padding(2);
+            this.SevenSegTotal3.ElementWidth = 10;
+            this.SevenSegTotal3.ItalicFactor = -0.04F;
+            this.SevenSegTotal3.Location = new System.Drawing.Point(94, 94);
+            this.SevenSegTotal3.Name = "SevenSegTotal3";
+            this.SevenSegTotal3.Size = new System.Drawing.Size(534, 24);
+            this.SevenSegTotal3.TabIndex = 36;
+            this.SevenSegTotal3.TabStop = false;
+            this.SevenSegTotal3.Tag = "3";
+            this.SevenSegTotal3.Value = "000000";
             // 
             // gradientLabel13
             // 
@@ -745,56 +754,59 @@
             this.gradientLabel13.Text = "Good";
             this.gradientLabel13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // sevenSegmentArray6
+            // SevenSegYield3
             // 
-            this.sevenSegmentArray6.ArrayCount = 24;
-            this.sevenSegmentArray6.ColorBackground = System.Drawing.Color.DimGray;
-            this.sevenSegmentArray6.ColorDark = System.Drawing.Color.Gray;
-            this.sevenSegmentArray6.ColorLight = System.Drawing.Color.Yellow;
-            this.sevenSegmentArray6.DecimalShow = true;
-            this.sevenSegmentArray6.ElementPadding = new System.Windows.Forms.Padding(2);
-            this.sevenSegmentArray6.ElementWidth = 10;
-            this.sevenSegmentArray6.ItalicFactor = -0.04F;
-            this.sevenSegmentArray6.Location = new System.Drawing.Point(95, 177);
-            this.sevenSegmentArray6.Name = "sevenSegmentArray6";
-            this.sevenSegmentArray6.Size = new System.Drawing.Size(508, 24);
-            this.sevenSegmentArray6.TabIndex = 37;
-            this.sevenSegmentArray6.TabStop = false;
-            this.sevenSegmentArray6.Value = "00000";
+            this.SevenSegYield3.ArrayCount = 24;
+            this.SevenSegYield3.ColorBackground = System.Drawing.Color.DimGray;
+            this.SevenSegYield3.ColorDark = System.Drawing.Color.Gray;
+            this.SevenSegYield3.ColorLight = System.Drawing.Color.Yellow;
+            this.SevenSegYield3.DecimalShow = true;
+            this.SevenSegYield3.ElementPadding = new System.Windows.Forms.Padding(2);
+            this.SevenSegYield3.ElementWidth = 10;
+            this.SevenSegYield3.ItalicFactor = -0.04F;
+            this.SevenSegYield3.Location = new System.Drawing.Point(95, 177);
+            this.SevenSegYield3.Name = "SevenSegYield3";
+            this.SevenSegYield3.Size = new System.Drawing.Size(508, 24);
+            this.SevenSegYield3.TabIndex = 37;
+            this.SevenSegYield3.TabStop = false;
+            this.SevenSegYield3.Tag = "3";
+            this.SevenSegYield3.Value = "00000";
             // 
-            // sevenSegmentArray7
+            // SevenSegNg3
             // 
-            this.sevenSegmentArray7.ArrayCount = 25;
-            this.sevenSegmentArray7.ColorBackground = System.Drawing.Color.DimGray;
-            this.sevenSegmentArray7.ColorDark = System.Drawing.Color.Gray;
-            this.sevenSegmentArray7.ColorLight = System.Drawing.Color.Red;
-            this.sevenSegmentArray7.DecimalShow = true;
-            this.sevenSegmentArray7.ElementPadding = new System.Windows.Forms.Padding(2);
-            this.sevenSegmentArray7.ElementWidth = 10;
-            this.sevenSegmentArray7.ItalicFactor = -0.04F;
-            this.sevenSegmentArray7.Location = new System.Drawing.Point(94, 150);
-            this.sevenSegmentArray7.Name = "sevenSegmentArray7";
-            this.sevenSegmentArray7.Size = new System.Drawing.Size(534, 24);
-            this.sevenSegmentArray7.TabIndex = 38;
-            this.sevenSegmentArray7.TabStop = false;
-            this.sevenSegmentArray7.Value = "000000";
+            this.SevenSegNg3.ArrayCount = 25;
+            this.SevenSegNg3.ColorBackground = System.Drawing.Color.DimGray;
+            this.SevenSegNg3.ColorDark = System.Drawing.Color.Gray;
+            this.SevenSegNg3.ColorLight = System.Drawing.Color.Red;
+            this.SevenSegNg3.DecimalShow = true;
+            this.SevenSegNg3.ElementPadding = new System.Windows.Forms.Padding(2);
+            this.SevenSegNg3.ElementWidth = 10;
+            this.SevenSegNg3.ItalicFactor = -0.04F;
+            this.SevenSegNg3.Location = new System.Drawing.Point(94, 150);
+            this.SevenSegNg3.Name = "SevenSegNg3";
+            this.SevenSegNg3.Size = new System.Drawing.Size(534, 24);
+            this.SevenSegNg3.TabIndex = 38;
+            this.SevenSegNg3.TabStop = false;
+            this.SevenSegNg3.Tag = "3";
+            this.SevenSegNg3.Value = "000000";
             // 
-            // sevenSegmentArray8
+            // SevenSegGood3
             // 
-            this.sevenSegmentArray8.ArrayCount = 25;
-            this.sevenSegmentArray8.ColorBackground = System.Drawing.Color.DimGray;
-            this.sevenSegmentArray8.ColorDark = System.Drawing.Color.Gray;
-            this.sevenSegmentArray8.ColorLight = System.Drawing.Color.Lime;
-            this.sevenSegmentArray8.DecimalShow = true;
-            this.sevenSegmentArray8.ElementPadding = new System.Windows.Forms.Padding(2);
-            this.sevenSegmentArray8.ElementWidth = 10;
-            this.sevenSegmentArray8.ItalicFactor = -0.04F;
-            this.sevenSegmentArray8.Location = new System.Drawing.Point(94, 123);
-            this.sevenSegmentArray8.Name = "sevenSegmentArray8";
-            this.sevenSegmentArray8.Size = new System.Drawing.Size(534, 24);
-            this.sevenSegmentArray8.TabIndex = 39;
-            this.sevenSegmentArray8.TabStop = false;
-            this.sevenSegmentArray8.Value = "000000";
+            this.SevenSegGood3.ArrayCount = 25;
+            this.SevenSegGood3.ColorBackground = System.Drawing.Color.DimGray;
+            this.SevenSegGood3.ColorDark = System.Drawing.Color.Gray;
+            this.SevenSegGood3.ColorLight = System.Drawing.Color.Lime;
+            this.SevenSegGood3.DecimalShow = true;
+            this.SevenSegGood3.ElementPadding = new System.Windows.Forms.Padding(2);
+            this.SevenSegGood3.ElementWidth = 10;
+            this.SevenSegGood3.ItalicFactor = -0.04F;
+            this.SevenSegGood3.Location = new System.Drawing.Point(94, 123);
+            this.SevenSegGood3.Name = "SevenSegGood3";
+            this.SevenSegGood3.Size = new System.Drawing.Size(534, 24);
+            this.SevenSegGood3.TabIndex = 39;
+            this.SevenSegGood3.TabStop = false;
+            this.SevenSegGood3.Tag = "3";
+            this.SevenSegGood3.Value = "000000";
             // 
             // label3
             // 
@@ -878,11 +890,11 @@
             this.panel3.Controls.Add(this.gradientLabel17);
             this.panel3.Controls.Add(this.gradientLabel18);
             this.panel3.Controls.Add(this.gradientLabel19);
-            this.panel3.Controls.Add(this.sevenSegmentArray9);
+            this.panel3.Controls.Add(this.SevenSegTotal4);
             this.panel3.Controls.Add(this.gradientLabel20);
-            this.panel3.Controls.Add(this.sevenSegmentArray10);
-            this.panel3.Controls.Add(this.sevenSegmentArray11);
-            this.panel3.Controls.Add(this.sevenSegmentArray12);
+            this.panel3.Controls.Add(this.SevenSegYield4);
+            this.panel3.Controls.Add(this.SevenSegNg4);
+            this.panel3.Controls.Add(this.SevenSegGood4);
             this.panel3.Controls.Add(this.label4);
             this.panel3.Controls.Add(this.button6);
             this.panel3.Controls.Add(this.button7);
@@ -969,22 +981,23 @@
             this.gradientLabel19.Text = "NG";
             this.gradientLabel19.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // sevenSegmentArray9
+            // SevenSegTotal4
             // 
-            this.sevenSegmentArray9.ArrayCount = 25;
-            this.sevenSegmentArray9.ColorBackground = System.Drawing.Color.DimGray;
-            this.sevenSegmentArray9.ColorDark = System.Drawing.Color.Gray;
-            this.sevenSegmentArray9.ColorLight = System.Drawing.Color.White;
-            this.sevenSegmentArray9.DecimalShow = true;
-            this.sevenSegmentArray9.ElementPadding = new System.Windows.Forms.Padding(2);
-            this.sevenSegmentArray9.ElementWidth = 10;
-            this.sevenSegmentArray9.ItalicFactor = -0.04F;
-            this.sevenSegmentArray9.Location = new System.Drawing.Point(94, 94);
-            this.sevenSegmentArray9.Name = "sevenSegmentArray9";
-            this.sevenSegmentArray9.Size = new System.Drawing.Size(534, 24);
-            this.sevenSegmentArray9.TabIndex = 36;
-            this.sevenSegmentArray9.TabStop = false;
-            this.sevenSegmentArray9.Value = "000000";
+            this.SevenSegTotal4.ArrayCount = 25;
+            this.SevenSegTotal4.ColorBackground = System.Drawing.Color.DimGray;
+            this.SevenSegTotal4.ColorDark = System.Drawing.Color.Gray;
+            this.SevenSegTotal4.ColorLight = System.Drawing.Color.White;
+            this.SevenSegTotal4.DecimalShow = true;
+            this.SevenSegTotal4.ElementPadding = new System.Windows.Forms.Padding(2);
+            this.SevenSegTotal4.ElementWidth = 10;
+            this.SevenSegTotal4.ItalicFactor = -0.04F;
+            this.SevenSegTotal4.Location = new System.Drawing.Point(94, 94);
+            this.SevenSegTotal4.Name = "SevenSegTotal4";
+            this.SevenSegTotal4.Size = new System.Drawing.Size(534, 24);
+            this.SevenSegTotal4.TabIndex = 36;
+            this.SevenSegTotal4.TabStop = false;
+            this.SevenSegTotal4.Tag = "4";
+            this.SevenSegTotal4.Value = "000000";
             // 
             // gradientLabel20
             // 
@@ -1001,56 +1014,59 @@
             this.gradientLabel20.Text = "Good";
             this.gradientLabel20.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // sevenSegmentArray10
+            // SevenSegYield4
             // 
-            this.sevenSegmentArray10.ArrayCount = 24;
-            this.sevenSegmentArray10.ColorBackground = System.Drawing.Color.DimGray;
-            this.sevenSegmentArray10.ColorDark = System.Drawing.Color.Gray;
-            this.sevenSegmentArray10.ColorLight = System.Drawing.Color.Yellow;
-            this.sevenSegmentArray10.DecimalShow = true;
-            this.sevenSegmentArray10.ElementPadding = new System.Windows.Forms.Padding(2);
-            this.sevenSegmentArray10.ElementWidth = 10;
-            this.sevenSegmentArray10.ItalicFactor = -0.04F;
-            this.sevenSegmentArray10.Location = new System.Drawing.Point(95, 177);
-            this.sevenSegmentArray10.Name = "sevenSegmentArray10";
-            this.sevenSegmentArray10.Size = new System.Drawing.Size(508, 24);
-            this.sevenSegmentArray10.TabIndex = 37;
-            this.sevenSegmentArray10.TabStop = false;
-            this.sevenSegmentArray10.Value = "00000";
+            this.SevenSegYield4.ArrayCount = 24;
+            this.SevenSegYield4.ColorBackground = System.Drawing.Color.DimGray;
+            this.SevenSegYield4.ColorDark = System.Drawing.Color.Gray;
+            this.SevenSegYield4.ColorLight = System.Drawing.Color.Yellow;
+            this.SevenSegYield4.DecimalShow = true;
+            this.SevenSegYield4.ElementPadding = new System.Windows.Forms.Padding(2);
+            this.SevenSegYield4.ElementWidth = 10;
+            this.SevenSegYield4.ItalicFactor = -0.04F;
+            this.SevenSegYield4.Location = new System.Drawing.Point(95, 177);
+            this.SevenSegYield4.Name = "SevenSegYield4";
+            this.SevenSegYield4.Size = new System.Drawing.Size(508, 24);
+            this.SevenSegYield4.TabIndex = 37;
+            this.SevenSegYield4.TabStop = false;
+            this.SevenSegYield4.Tag = "4";
+            this.SevenSegYield4.Value = "00000";
             // 
-            // sevenSegmentArray11
+            // SevenSegNg4
             // 
-            this.sevenSegmentArray11.ArrayCount = 25;
-            this.sevenSegmentArray11.ColorBackground = System.Drawing.Color.DimGray;
-            this.sevenSegmentArray11.ColorDark = System.Drawing.Color.Gray;
-            this.sevenSegmentArray11.ColorLight = System.Drawing.Color.Red;
-            this.sevenSegmentArray11.DecimalShow = true;
-            this.sevenSegmentArray11.ElementPadding = new System.Windows.Forms.Padding(2);
-            this.sevenSegmentArray11.ElementWidth = 10;
-            this.sevenSegmentArray11.ItalicFactor = -0.04F;
-            this.sevenSegmentArray11.Location = new System.Drawing.Point(94, 150);
-            this.sevenSegmentArray11.Name = "sevenSegmentArray11";
-            this.sevenSegmentArray11.Size = new System.Drawing.Size(534, 24);
-            this.sevenSegmentArray11.TabIndex = 38;
-            this.sevenSegmentArray11.TabStop = false;
-            this.sevenSegmentArray11.Value = "000000";
+            this.SevenSegNg4.ArrayCount = 25;
+            this.SevenSegNg4.ColorBackground = System.Drawing.Color.DimGray;
+            this.SevenSegNg4.ColorDark = System.Drawing.Color.Gray;
+            this.SevenSegNg4.ColorLight = System.Drawing.Color.Red;
+            this.SevenSegNg4.DecimalShow = true;
+            this.SevenSegNg4.ElementPadding = new System.Windows.Forms.Padding(2);
+            this.SevenSegNg4.ElementWidth = 10;
+            this.SevenSegNg4.ItalicFactor = -0.04F;
+            this.SevenSegNg4.Location = new System.Drawing.Point(94, 150);
+            this.SevenSegNg4.Name = "SevenSegNg4";
+            this.SevenSegNg4.Size = new System.Drawing.Size(534, 24);
+            this.SevenSegNg4.TabIndex = 38;
+            this.SevenSegNg4.TabStop = false;
+            this.SevenSegNg4.Tag = "4";
+            this.SevenSegNg4.Value = "000000";
             // 
-            // sevenSegmentArray12
+            // SevenSegGood4
             // 
-            this.sevenSegmentArray12.ArrayCount = 25;
-            this.sevenSegmentArray12.ColorBackground = System.Drawing.Color.DimGray;
-            this.sevenSegmentArray12.ColorDark = System.Drawing.Color.Gray;
-            this.sevenSegmentArray12.ColorLight = System.Drawing.Color.Lime;
-            this.sevenSegmentArray12.DecimalShow = true;
-            this.sevenSegmentArray12.ElementPadding = new System.Windows.Forms.Padding(2);
-            this.sevenSegmentArray12.ElementWidth = 10;
-            this.sevenSegmentArray12.ItalicFactor = -0.04F;
-            this.sevenSegmentArray12.Location = new System.Drawing.Point(94, 123);
-            this.sevenSegmentArray12.Name = "sevenSegmentArray12";
-            this.sevenSegmentArray12.Size = new System.Drawing.Size(534, 24);
-            this.sevenSegmentArray12.TabIndex = 39;
-            this.sevenSegmentArray12.TabStop = false;
-            this.sevenSegmentArray12.Value = "000000";
+            this.SevenSegGood4.ArrayCount = 25;
+            this.SevenSegGood4.ColorBackground = System.Drawing.Color.DimGray;
+            this.SevenSegGood4.ColorDark = System.Drawing.Color.Gray;
+            this.SevenSegGood4.ColorLight = System.Drawing.Color.Lime;
+            this.SevenSegGood4.DecimalShow = true;
+            this.SevenSegGood4.ElementPadding = new System.Windows.Forms.Padding(2);
+            this.SevenSegGood4.ElementWidth = 10;
+            this.SevenSegGood4.ItalicFactor = -0.04F;
+            this.SevenSegGood4.Location = new System.Drawing.Point(94, 123);
+            this.SevenSegGood4.Name = "SevenSegGood4";
+            this.SevenSegGood4.Size = new System.Drawing.Size(534, 24);
+            this.SevenSegGood4.TabIndex = 39;
+            this.SevenSegGood4.TabStop = false;
+            this.SevenSegGood4.Tag = "4";
+            this.SevenSegGood4.Value = "000000";
             // 
             // label4
             // 
@@ -1152,11 +1168,11 @@
         private CustomControl.GradientLabel gradientLabelTotalCount;
         private CustomControl.GradientLabel gradientLabelYield;
         private CustomControl.GradientLabel gradientLabelNgCount;
-        private DmitryBrant.CustomControls.SevenSegmentArray SevenSegTotal;
+        private DmitryBrant.CustomControls.SevenSegmentArray SevenSegTotal1;
         private CustomControl.GradientLabel gradientLabelGoodCount;
-        private DmitryBrant.CustomControls.SevenSegmentArray SevenSegYield;
-        private DmitryBrant.CustomControls.SevenSegmentArray SevenSegNg;
-        private DmitryBrant.CustomControls.SevenSegmentArray SevenSegGood;
+        private DmitryBrant.CustomControls.SevenSegmentArray SevenSegYield1;
+        private DmitryBrant.CustomControls.SevenSegmentArray SevenSegNg1;
+        private DmitryBrant.CustomControls.SevenSegmentArray SevenSegGood1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btnResultTest;
@@ -1167,11 +1183,11 @@
         private CustomControl.GradientLabel gradientLabel1;
         private CustomControl.GradientLabel gradientLabel2;
         private CustomControl.GradientLabel gradientLabel3;
-        private DmitryBrant.CustomControls.SevenSegmentArray sevenSegmentArray1;
+        private DmitryBrant.CustomControls.SevenSegmentArray SevenSegTotal2;
         private CustomControl.GradientLabel gradientLabel5;
-        private DmitryBrant.CustomControls.SevenSegmentArray sevenSegmentArray2;
-        private DmitryBrant.CustomControls.SevenSegmentArray sevenSegmentArray3;
-        private DmitryBrant.CustomControls.SevenSegmentArray sevenSegmentArray4;
+        private DmitryBrant.CustomControls.SevenSegmentArray SevenSegYield2;
+        private DmitryBrant.CustomControls.SevenSegmentArray SevenSegNg2;
+        private DmitryBrant.CustomControls.SevenSegmentArray SevenSegGood2;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
@@ -1182,11 +1198,11 @@
         private CustomControl.GradientLabel gradientLabel10;
         private CustomControl.GradientLabel gradientLabel11;
         private CustomControl.GradientLabel gradientLabel12;
-        private DmitryBrant.CustomControls.SevenSegmentArray sevenSegmentArray5;
+        private DmitryBrant.CustomControls.SevenSegmentArray SevenSegTotal3;
         private CustomControl.GradientLabel gradientLabel13;
-        private DmitryBrant.CustomControls.SevenSegmentArray sevenSegmentArray6;
-        private DmitryBrant.CustomControls.SevenSegmentArray sevenSegmentArray7;
-        private DmitryBrant.CustomControls.SevenSegmentArray sevenSegmentArray8;
+        private DmitryBrant.CustomControls.SevenSegmentArray SevenSegYield3;
+        private DmitryBrant.CustomControls.SevenSegmentArray SevenSegNg3;
+        private DmitryBrant.CustomControls.SevenSegmentArray SevenSegGood3;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
@@ -1197,11 +1213,11 @@
         private CustomControl.GradientLabel gradientLabel17;
         private CustomControl.GradientLabel gradientLabel18;
         private CustomControl.GradientLabel gradientLabel19;
-        private DmitryBrant.CustomControls.SevenSegmentArray sevenSegmentArray9;
+        private DmitryBrant.CustomControls.SevenSegmentArray SevenSegTotal4;
         private CustomControl.GradientLabel gradientLabel20;
-        private DmitryBrant.CustomControls.SevenSegmentArray sevenSegmentArray10;
-        private DmitryBrant.CustomControls.SevenSegmentArray sevenSegmentArray11;
-        private DmitryBrant.CustomControls.SevenSegmentArray sevenSegmentArray12;
+        private DmitryBrant.CustomControls.SevenSegmentArray SevenSegYield4;
+        private DmitryBrant.CustomControls.SevenSegmentArray SevenSegNg4;
+        private DmitryBrant.CustomControls.SevenSegmentArray SevenSegGood4;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button7;

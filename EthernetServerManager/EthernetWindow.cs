@@ -12,7 +12,7 @@ using System.IO;
 using System.Xml;
 using System.Threading;
 
-using CustonMsgBoxManager;
+using CustomMsgBoxManager;
 using LogMessageManager;
 
 namespace EthernetServerManager
@@ -27,13 +27,13 @@ namespace EthernetServerManager
         private Queue<string> CmdQueue = new Queue<string>();
 
         private string IPAddress = "127.1.1.3";
-        private short PortNumber = 5000;
+        private int PortNumber = 5000;
         private string ClientIPAddress = "127.0.0.0";
 
         private bool IsConnected = false;
         //private Timer ConnectCheckTimer;
 
-        public delegate bool ReceiveStringHandler(string[] _ReceiveMsasage);
+        public delegate bool ReceiveStringHandler(string[] _ReceiveMsasage, int _PortNumber);
         public event ReceiveStringHandler ReceiveStringEvent;
 
         //LDH, 2019.04.03, timer를 Thread로 변경
@@ -49,11 +49,13 @@ namespace EthernetServerManager
             InitializeComponent();
         }
 
-        public void Initialize(string _CommonFolderPath)
+        public void Initialize(string _CommonFolderPath, short _PortNumber)
         {
             CommonFolderPath = _CommonFolderPath;
 
             ReadEthernetInfoFile();
+
+            PortNumber = PortNumber + _PortNumber;
 
             textBoxIPAddress.Text = IPAddress;
             textBoxPortNumber.Text = PortNumber.ToString();
@@ -161,7 +163,7 @@ namespace EthernetServerManager
                 while (false == IsThreadConnectCheckExit)
                 {
                     ConnectCheckTimer_Tick();
-                    Thread.Sleep(10);
+                    Thread.Sleep(500);
                 }
             }
 
@@ -240,7 +242,7 @@ namespace EthernetServerManager
         private void btnSend_Click(object sender, EventArgs e)
         {
             //if (false == IsConnected) { MessageBox.Show("Disconnected"); return; }
-            if (false == IsConnected) { CMsgBoxManager.Show("Disconnected", "", 2000); return; }
+            if (false == IsConnected) { CMsgBoxManager.Show("Disconnected", "", false, 2000); return; }
             ServerSock.Send(textBoxManualData.Text);
         }
 
@@ -252,7 +254,7 @@ namespace EthernetServerManager
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            WriteEthernetInfoFile();
+            //WriteEthernetInfoFile();
             IsShowWindow = false;
             this.Hide();
         }
@@ -317,13 +319,26 @@ namespace EthernetServerManager
             string _RecvString = _RecvMessage.Trim();
             _RecvString = _RecvString.Replace(" ", "");
             _RecvString = _RecvString.Replace("\0", "");
-            string[] _RecvCmd = _RecvString.Split(',');
+            string[] _RecvCmd = ParsingProtocol(_RecvString);
 
             for (int iLoopCount = 0; iLoopCount < _RecvCmd.Length; ++iLoopCount)
                 CmdQueue.Enqueue(_RecvCmd[iLoopCount]);
 
             string _RecvText = string.Join(",", _RecvCmd);
             ControlInvoke(textBoxRecvString, _RecvText);
+        }
+
+        private string[] ParsingProtocol(string _SendProtocol)
+        {
+            string _Protocol = _SendProtocol;
+            char[] _Separators = { '>', ';' };
+
+            int _EtxIndex = _SendProtocol.LastIndexOf(CEtherentServerManager.ETX);
+            if (_EtxIndex != -1) _Protocol = _SendProtocol.Insert(_EtxIndex, ";");
+
+            string[] _RecvCmd = _Protocol.Split(_Separators);
+
+            return _RecvCmd;
         }
 
         private bool ProtocolCommandProcess()
@@ -344,18 +359,21 @@ namespace EthernetServerManager
             }
             while (_Datas[_Datas.Count - 1] != CEtherentServerManager.ETX.ToString());
 
-            if (_Datas.Count != 2) { _Result = false; return _Result; }
+            //if (_Datas.Count != 2) { _Result = false; return _Result; }
 
             var _ReceiveStringEvent = ReceiveStringEvent;
-            if (true == _ReceiveStringEvent?.Invoke(_Datas.ToArray())) _Result = true;
+            if (true == _ReceiveStringEvent?.Invoke(_Datas.ToArray(), PortNumber)) _Result = true;
 
             return _Result;
         }
 
-        public void SendResultData(string _ResultDataString)
+        public void SendResultData(string _ResultDataString, bool _UseFormat)
         {
-            if (false == IsConnected) { CMsgBoxManager.Show("Not connected", "", 2000); return; }
-            ServerSock.Send(_ResultDataString);
+            if (false == IsConnected) { CMsgBoxManager.Show(string.Format("No connection - IP : {0}, Port : {1}", IPAddress, PortNumber), "", false, 2000); return; }
+
+            if(_UseFormat) ServerSock.Send(_ResultDataString);
+            else           ServerSock.SendNotFormat(_ResultDataString);
+
             CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "Receive Data : " + _ResultDataString);
         }
 
@@ -371,7 +389,7 @@ namespace EthernetServerManager
         private void btnReceive_Click(object sender, EventArgs e)
         {
             string[] _RecvTest = textBoxManualData.Text.Split(',');
-            ReceiveStringEvent(_RecvTest);
+            ReceiveStringEvent(_RecvTest, PortNumber);
         }
     }
 }
