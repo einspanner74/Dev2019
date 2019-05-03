@@ -292,6 +292,48 @@ namespace ParameterManager
         }
     }
 
+    public class CogEllipseAlgo
+    {
+        public int CaliperNumber;
+        public double CaliperSearchLength;
+        public double CaliperProjectionLength;
+        public int CaliperSearchDirection;
+        public int CaliperPolarity;
+        public int CaliperIgnoreNumber;
+
+        public double ArcCenterX;
+        public double ArcCenterY;
+        public double ArcRadiusX;
+        public double ArcRadiusY;
+        public double ArcAngleSpan;
+
+        public double OriginX;
+        public double OriginY;
+        public double OriginRadiusX;
+        public double OriginRadiusY;
+
+        public CogEllipseAlgo()
+        {
+            CaliperNumber = 15;
+            CaliperSearchLength = 30;
+            CaliperProjectionLength = 10;
+            CaliperSearchDirection = 1;
+            CaliperPolarity = 1;
+            CaliperIgnoreNumber = 10;
+
+            ArcCenterX = 150;
+            ArcCenterY = 50;
+            ArcRadiusX = 100;
+            ArcRadiusY = 100;
+            ArcAngleSpan = 360;
+
+            OriginX = 0;
+            OriginY = 0;
+            OriginRadiusX = 0;
+            OriginRadiusY = 0;
+        }
+    }
+
     /// <summary>
     /// Code Read 검사 알고리즘
     /// </summary>

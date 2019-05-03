@@ -48,6 +48,7 @@ namespace InspectionSystemManager
         private ucCogMultiPattern       ucCogMultiPatternWnd;
         private ucCogAutoPattern        ucCogAutoPatternWnd;
         private ucCogLeadTrimInspection ucCogLeadTrimInspWnd;
+        private ucCogEllipseFind        ucCogEllipseFindWnd;
 
         private ContextMenu     ContextMenuAlgo;
         private eTeachStep      CurrentTeachStep;
@@ -115,6 +116,7 @@ namespace InspectionSystemManager
             ucCogMultiPatternWnd = new ucCogMultiPattern();
             ucCogAutoPatternWnd = new ucCogAutoPattern();
             ucCogLeadTrimInspWnd = new ucCogLeadTrimInspection();
+            ucCogEllipseFindWnd = new ucCogEllipseFind();
 
 
             if (_ProjectItem == eProjectItem.NONE)                  ucCogBlobReferWnd.Initialize(false);
@@ -232,6 +234,7 @@ namespace InspectionSystemManager
                 //ContextMenuAlgo.MenuItems.Add("Search a BarCode", new EventHandler(BarCodeIDAlgorithm));
                 //ContextMenuAlgo.MenuItems.Add("Search Multi Pattern", new EventHandler(MultiPatternFindAlgorithm));
 				//ContextMenuAlgo.MenuItems.Add("Search Auto Pattern", new EventHandler(AutoPatternFindAlgorithm));
+				ContextMenuAlgo.MenuItems.Add("타원 검사", new EventHandler(EllipseAlgorithm));
             }
         }
 
@@ -372,6 +375,14 @@ namespace InspectionSystemManager
             InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam.Add(_InspAlgoParam);
             UpdateInspectionAlgoList(InspAreaSelected, true);
             UpdateAlgoResultListAddAlgorithm(eAlgoType.C_LEAD);
+        }
+
+        private void EllipseAlgorithm(object sender, EventArgs e)
+        {
+            InspectionAlgorithmParameter _InspAlgoParam = new InspectionAlgorithmParameter(eAlgoType.C_ELLIPSE, ResolutionX, ResolutionY);
+            InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam.Add(_InspAlgoParam);
+            UpdateInspectionAlgoList(InspAreaSelected, true);
+            UpdateAlgoResultListAddAlgorithm(eAlgoType.C_ELLIPSE);
         }
 
         private void BarCodeIDAlgorithm(object sender, EventArgs e)

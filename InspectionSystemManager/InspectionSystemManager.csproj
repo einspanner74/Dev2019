@@ -60,6 +60,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithm\ucCogEllipseFind.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Algorithm\ucCogEllipseFind.designer.cs">
+      <DependentUpon>ucCogEllipseFind.cs</DependentUpon>
+    </Compile>
     <Compile Include="Algorithm\ucCogNeedleCircleFind.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -210,6 +216,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Algorithm\ucCogBlobReference.resx">
       <DependentUpon>ucCogBlobReference.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Algorithm\ucCogEllipseFind.resx">
+      <DependentUpon>ucCogEllipseFind.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Algorithm\ucCogLeadInspection.resx">
       <DependentUpon>ucCogLeadInspection.cs</DependentUpon>

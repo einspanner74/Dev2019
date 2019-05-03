@@ -20,7 +20,7 @@ namespace ParameterManager
     /// <summary>
     /// Algorithm Type
     /// </summary>
-    public enum eAlgoType   { C_NONE = -1, C_PATTERN, C_BLOB_REFER, C_BLOB, C_LEAD, C_NEEDLE_FIND, C_ID, C_LINE_FIND, C_MULTI_PATTERN, C_AUTO_PATTERN, C_LEAD_TRIM, C_LEAD_FORM }
+    public enum eAlgoType   { C_NONE = -1, C_PATTERN, C_BLOB_REFER, C_BLOB, C_LEAD, C_NEEDLE_FIND, C_ID, C_LINE_FIND, C_MULTI_PATTERN, C_AUTO_PATTERN, C_LEAD_TRIM, C_LEAD_FORM, C_ELLIPSE }
 
     /// <summary>
     /// Camera Model Type

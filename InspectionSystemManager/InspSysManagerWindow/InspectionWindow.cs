@@ -933,6 +933,7 @@ namespace InspectionSystemManager
             else if (eAlgoType.C_LEAD == _AlgoType)         _Result = CogLeadAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
             else if (eAlgoType.C_BLOB_REFER == _AlgoType)   _Result = CogBlobReferenceAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegionAffine, _NgAreaNumber);
             else if (eAlgoType.C_NEEDLE_FIND == _AlgoType)  _Result = CogNeedleCircleFindAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
+            else if (eAlgoType.C_ELLIPSE == _AlgoType)      _Result = CogEllipseFindAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
             else if (eAlgoType.C_ID == _AlgoType)           _Result = CogBarCodeIDAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
             else if (eAlgoType.C_LINE_FIND == _AlgoType)    _Result = CogLineFindAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
             else if (eAlgoType.C_MULTI_PATTERN == _AlgoType)_Result = CogMultiPatternAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
@@ -1069,6 +1070,41 @@ namespace InspectionSystemManager
         {
             CogNeedleFindAlgo   _CogNeedleFindAlgo = _Algorithm as CogNeedleFindAlgo;
             CogNeedleFindResult _CogNeedleFindResult = new CogNeedleFindResult();
+
+            //InspNeedleCircleFindProc.SetOffsetValue(BenchMarkOffsetX, BenchMarkOffsetY);
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "Needle Circle Find Algorithm Start", CLogManager.LOG_LEVEL.MID);
+            bool _Result = InspNeedleCircleFindProc.Run(OriginImage, _CogNeedleFindAlgo, ref _CogNeedleFindResult, BenchMarkOffsetX, BenchMarkOffsetY);
+
+            _CogNeedleFindResult.CenterXReal = (_CogNeedleFindResult.CenterX - (OriginImage.Width / 2)) * ResolutionX;
+            _CogNeedleFindResult.CenterYReal = (_CogNeedleFindResult.CenterY - (OriginImage.Height / 2)) * ResolutionY;
+            _CogNeedleFindResult.OriginXReal = (_CogNeedleFindResult.OriginX - (OriginImage.Width / 2)) * ResolutionX;
+            _CogNeedleFindResult.OriginYReal = (_CogNeedleFindResult.OriginY - (OriginImage.Height / 2)) * ResolutionY;
+            _CogNeedleFindResult.RadiusReal = _CogNeedleFindResult.Radius * ResolutionX;
+
+            if (_CogNeedleFindResult.RadiusReal + 0.2 > _CogNeedleFindAlgo.OriginRadius && _CogNeedleFindResult.RadiusReal - 0.2 < _CogNeedleFindAlgo.OriginRadius)
+                _CogNeedleFindResult.IsGood = true;
+            else
+                _CogNeedleFindResult.IsGood = false;
+
+            if (_CogNeedleFindAlgo.CaliperNumber - 2 >= _CogNeedleFindResult.PointFoundCount)
+                _CogNeedleFindResult.IsGood = false;
+
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format(" - Real Position X : {0}, Y : {1}", _CogNeedleFindResult.CenterXReal.ToString("F2"), _CogNeedleFindResult.CenterYReal.ToString("F2")), CLogManager.LOG_LEVEL.MID);
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format(" - Real Radius : {0}", _CogNeedleFindResult.RadiusReal.ToString("F2")), CLogManager.LOG_LEVEL.MID);
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "Needle Circle Find Algorithm End", CLogManager.LOG_LEVEL.MID);
+
+            AlgoResultParameter _AlgoResultParam = new AlgoResultParameter(eAlgoType.C_NEEDLE_FIND, _CogNeedleFindResult);
+            _AlgoResultParam.OffsetX = _CogNeedleFindAlgo.OriginX - _CogNeedleFindResult.CenterX;
+            _AlgoResultParam.OffsetY = _CogNeedleFindAlgo.OriginY - _CogNeedleFindResult.CenterY;
+            AlgoResultParamList.Add(_AlgoResultParam);
+
+            return _CogNeedleFindResult.IsGood;
+        }
+
+        private bool CogEllipseFindAlgorithmStep(Object _Algorithm, CogRectangle _InspRegion, int _NgAreaNumber)
+        {
+            CogEllipseAlgo _CogNeedleFindAlgo = _Algorithm as CogEllipseAlgo;
+            CogEllipseResult _CogNeedleFindResult = new CogEllipseResult();
 
             //InspNeedleCircleFindProc.SetOffsetValue(BenchMarkOffsetX, BenchMarkOffsetY);
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "Needle Circle Find Algorithm Start", CLogManager.LOG_LEVEL.MID);

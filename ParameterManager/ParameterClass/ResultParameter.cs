@@ -194,6 +194,29 @@ namespace ParameterManager
         public bool[] PointStatusInfo;
     }
 
+    public class CogEllipseResult : Result
+    {
+        public double CenterX;
+        public double CenterY;
+        public double OriginX;
+        public double OriginY;
+        public double RadiusX;
+        public double RadiusY;
+
+        public double CenterXReal;
+        public double CenterYReal;
+        public double OriginXReal;
+        public double OriginYReal;
+        public double RadiusXReal;
+        public double RadiusYReal;
+
+        public int PointFoundCount;
+
+        public double[] PointPosXInfo;
+        public double[] PointPosYInfo;
+        public bool[] PointStatusInfo;
+    }
+
     public class CogLeadResult : Result
     {
         public int BlobCount;
