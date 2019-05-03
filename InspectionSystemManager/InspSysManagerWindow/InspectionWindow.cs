@@ -30,6 +30,7 @@ namespace InspectionSystemManager
         private InspectionLineFind          InspLineFindProc;
         private InspectionMultiPattern      InspMultiPatternProc;
         private InspectionAutoPattern       InspAutoPatternProc;
+        private InspectionEllipse           InspEllipseProc;
         private CCameraManager              CameraManager;
 
         private TeachingWindow      TeachWnd;
@@ -1103,37 +1104,36 @@ namespace InspectionSystemManager
 
         private bool CogEllipseFindAlgorithmStep(Object _Algorithm, CogRectangle _InspRegion, int _NgAreaNumber)
         {
-            CogEllipseAlgo _CogNeedleFindAlgo = _Algorithm as CogEllipseAlgo;
-            CogEllipseResult _CogNeedleFindResult = new CogEllipseResult();
+            CogEllipseAlgo _CogEllipseAlgo = _Algorithm as CogEllipseAlgo;
+            CogEllipseResult _CogEllipseResult = new CogEllipseResult();
+            
+            //CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "Needle Circle Find Algorithm Start", CLogManager.LOG_LEVEL.MID);
+            //bool _Result = InspNeedleCircleFindProc.Run(OriginImage, _CogEllipseAlgo, ref _CogEllipseResult, BenchMarkOffsetX, BenchMarkOffsetY);
 
-            //InspNeedleCircleFindProc.SetOffsetValue(BenchMarkOffsetX, BenchMarkOffsetY);
-            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "Needle Circle Find Algorithm Start", CLogManager.LOG_LEVEL.MID);
-            bool _Result = InspNeedleCircleFindProc.Run(OriginImage, _CogNeedleFindAlgo, ref _CogNeedleFindResult, BenchMarkOffsetX, BenchMarkOffsetY);
+            //_CogNeedleFindResult.CenterXReal = (_CogNeedleFindResult.CenterX - (OriginImage.Width / 2)) * ResolutionX;
+            //_CogNeedleFindResult.CenterYReal = (_CogNeedleFindResult.CenterY - (OriginImage.Height / 2)) * ResolutionY;
+            //_CogNeedleFindResult.OriginXReal = (_CogNeedleFindResult.OriginX - (OriginImage.Width / 2)) * ResolutionX;
+            //_CogNeedleFindResult.OriginYReal = (_CogNeedleFindResult.OriginY - (OriginImage.Height / 2)) * ResolutionY;
+            //_CogNeedleFindResult.RadiusReal = _CogNeedleFindResult.Radius * ResolutionX;
 
-            _CogNeedleFindResult.CenterXReal = (_CogNeedleFindResult.CenterX - (OriginImage.Width / 2)) * ResolutionX;
-            _CogNeedleFindResult.CenterYReal = (_CogNeedleFindResult.CenterY - (OriginImage.Height / 2)) * ResolutionY;
-            _CogNeedleFindResult.OriginXReal = (_CogNeedleFindResult.OriginX - (OriginImage.Width / 2)) * ResolutionX;
-            _CogNeedleFindResult.OriginYReal = (_CogNeedleFindResult.OriginY - (OriginImage.Height / 2)) * ResolutionY;
-            _CogNeedleFindResult.RadiusReal = _CogNeedleFindResult.Radius * ResolutionX;
+            //if (_CogNeedleFindResult.RadiusReal + 0.2 > _CogNeedleFindAlgo.OriginRadius && _CogNeedleFindResult.RadiusReal - 0.2 < _CogNeedleFindAlgo.OriginRadius)
+            //    _CogNeedleFindResult.IsGood = true;
+            //else
+            //    _CogNeedleFindResult.IsGood = false;
 
-            if (_CogNeedleFindResult.RadiusReal + 0.2 > _CogNeedleFindAlgo.OriginRadius && _CogNeedleFindResult.RadiusReal - 0.2 < _CogNeedleFindAlgo.OriginRadius)
-                _CogNeedleFindResult.IsGood = true;
-            else
-                _CogNeedleFindResult.IsGood = false;
+            //if (_CogNeedleFindAlgo.CaliperNumber - 2 >= _CogNeedleFindResult.PointFoundCount)
+            //    _CogNeedleFindResult.IsGood = false;
 
-            if (_CogNeedleFindAlgo.CaliperNumber - 2 >= _CogNeedleFindResult.PointFoundCount)
-                _CogNeedleFindResult.IsGood = false;
+            //CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format(" - Real Position X : {0}, Y : {1}", _CogNeedleFindResult.CenterXReal.ToString("F2"), _CogNeedleFindResult.CenterYReal.ToString("F2")), CLogManager.LOG_LEVEL.MID);
+            //CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format(" - Real Radius : {0}", _CogNeedleFindResult.RadiusReal.ToString("F2")), CLogManager.LOG_LEVEL.MID);
+            //CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "Needle Circle Find Algorithm End", CLogManager.LOG_LEVEL.MID);
 
-            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format(" - Real Position X : {0}, Y : {1}", _CogNeedleFindResult.CenterXReal.ToString("F2"), _CogNeedleFindResult.CenterYReal.ToString("F2")), CLogManager.LOG_LEVEL.MID);
-            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format(" - Real Radius : {0}", _CogNeedleFindResult.RadiusReal.ToString("F2")), CLogManager.LOG_LEVEL.MID);
-            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "Needle Circle Find Algorithm End", CLogManager.LOG_LEVEL.MID);
+            //AlgoResultParameter _AlgoResultParam = new AlgoResultParameter(eAlgoType.C_NEEDLE_FIND, _CogNeedleFindResult);
+            //_AlgoResultParam.OffsetX = _CogNeedleFindAlgo.OriginX - _CogNeedleFindResult.CenterX;
+            //_AlgoResultParam.OffsetY = _CogNeedleFindAlgo.OriginY - _CogNeedleFindResult.CenterY;
+            //AlgoResultParamList.Add(_AlgoResultParam);
 
-            AlgoResultParameter _AlgoResultParam = new AlgoResultParameter(eAlgoType.C_NEEDLE_FIND, _CogNeedleFindResult);
-            _AlgoResultParam.OffsetX = _CogNeedleFindAlgo.OriginX - _CogNeedleFindResult.CenterX;
-            _AlgoResultParam.OffsetY = _CogNeedleFindAlgo.OriginY - _CogNeedleFindResult.CenterY;
-            AlgoResultParamList.Add(_AlgoResultParam);
-
-            return _CogNeedleFindResult.IsGood;
+            return _CogEllipseResult.IsGood;
         }
 
         private bool CogBarCodeIDAlgorithmStep(Object _Algorithm, CogRectangle _InspRegion, int _NgAreaNumber)
