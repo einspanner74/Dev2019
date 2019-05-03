@@ -568,6 +568,17 @@ namespace KPDisplay
             kCogDisplay.StaticGraphics.Add(cogLabel, "Message");
         }
 
+        public void DrawText(string _GroupName, string _Message, double _StartX, double _StartY, CogColorConstants _Color, int _FontSize = 9, CogGraphicLabelAlignmentConstants _Align = CogGraphicLabelAlignmentConstants.TopLeft)
+        {
+            System.Drawing.Font _Font = new System.Drawing.Font("나눔바른고딕", _FontSize, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+
+            cogLabel.Color = _Color;
+            cogLabel.Font = _Font;
+            cogLabel.Alignment = _Align;
+            cogLabel.SetXYText(_StartX, _StartY, _Message);
+            kCogDisplay.StaticGraphics.Add(cogLabel, _GroupName);
+        }
+
         #endregion Draw Shape Display Window
 
         #region Display Image get/set

@@ -949,6 +949,33 @@ namespace ParameterManager
                     case "LeadLength":              GetLeadLengthArray(_NodeChild, _CogLeadTrim.LeadCount, ref _CogLeadTrim.LeadLengthArray); break;
                     case "LeadPitch":               GetLeadPitchArray(_NodeChild, _CogLeadTrim.LeadCount, ref _CogLeadTrim.LeadPitchArray); break;
                     case "LeadWidth":               GetLeadWidthArray(_NodeChild, _CogLeadTrim.LeadCount, ref _CogLeadTrim.LeadWidthArray); break;
+
+
+                    //Shoulder Inspection Paramter
+                    case "IsUseShoulderInspection": _CogLeadTrim.IsUseShoulderInspection = Convert.ToBoolean(_NodeChild.InnerText); break;
+                    case "ShoulderInspAreaCenterX": _CogLeadTrim.ShoulderInspArea.CenterX = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "ShoulderInspAreaCenterY": _CogLeadTrim.ShoulderInspArea.CenterY = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "ShoulderInspAreaWidth":   _CogLeadTrim.ShoulderInspArea.Width = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "ShoulderInspAreaHeight":  _CogLeadTrim.ShoulderInspArea.Height = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "ShoulderForeground":      _CogLeadTrim.ShoulderForeground = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "ShoulderThreshold":       _CogLeadTrim.ShoulderThreshold = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "LeadEdgeWidth":           _CogLeadTrim.LeadEdgeWidth = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "ShoulderBurrThreshold":   _CogLeadTrim.ShoulderBurrThreshold = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "ShoulderNickThreshold":   _CogLeadTrim.ShoulderNickThreshold = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "ShoulderBurrSpec":        _CogLeadTrim.ShoulderBurrSpec = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "ShoulderNickSpec":        _CogLeadTrim.ShoulderNickSpec = Convert.ToInt32(_NodeChild.InnerText); break;
+
+                    //Lead Tip Inspection Parameter
+                    case "IsUseLeadTipInspection":  _CogLeadTrim.IsUseLeadTipInspection = Convert.ToBoolean(_NodeChild.InnerText); break;
+                    case "LeadTipInspAreaCenterX":  _CogLeadTrim.LeadTipInspArea.CenterX = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "LeadTipInspAreaCenterY":  _CogLeadTrim.LeadTipInspArea.CenterY = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "LeadTipInspAreaWidth":    _CogLeadTrim.LeadTipInspArea.Width = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "LeadTipInspAreaHeight":   _CogLeadTrim.LeadTipInspArea.Height = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "LeadTipForeground":       _CogLeadTrim.LeadTipForeground = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "LeadTipThreshold":        _CogLeadTrim.LeadTipThreshold = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "LeadTipEdgeWidth":        _CogLeadTrim.LeadTipEdgeWidth = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "LeadTipBurrThreshold":    _CogLeadTrim.LeadTipBurrThreshold = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "LeadTipBurrSpec":         _CogLeadTrim.LeadTipBurrSpec = Convert.ToDouble(_NodeChild.InnerText); break;
                 }
             }
             _InspParam.Algorithm = _CogLeadTrim;
@@ -1400,6 +1427,32 @@ namespace ParameterManager
                 }
             }
             _XmlWriter.WriteEndElement();
+
+
+            _XmlWriter.WriteElementString("IsUseShoulderInspection", _CogLeadTrimAlgo.IsUseShoulderInspection.ToString());
+            _XmlWriter.WriteElementString("ShoulderInspAreaCenterX", _CogLeadTrimAlgo.ShoulderInspArea.CenterX.ToString());
+            _XmlWriter.WriteElementString("ShoulderInspAreaCenterY", _CogLeadTrimAlgo.ShoulderInspArea.CenterY.ToString());
+            _XmlWriter.WriteElementString("ShoulderInspAreaWidth", _CogLeadTrimAlgo.ShoulderInspArea.Width.ToString());
+            _XmlWriter.WriteElementString("ShoulderInspAreaHeight", _CogLeadTrimAlgo.ShoulderInspArea.Height.ToString());
+            _XmlWriter.WriteElementString("ShoulderForeground", _CogLeadTrimAlgo.ShoulderForeground.ToString());
+            _XmlWriter.WriteElementString("ShoulderThreshold", _CogLeadTrimAlgo.ShoulderThreshold.ToString());
+            _XmlWriter.WriteElementString("LeadEdgeWidth", _CogLeadTrimAlgo.LeadEdgeWidth.ToString());
+            _XmlWriter.WriteElementString("ShoulderBurrThreshold", _CogLeadTrimAlgo.ShoulderBurrThreshold.ToString());
+            _XmlWriter.WriteElementString("ShoulderNickThreshold", _CogLeadTrimAlgo.ShoulderNickThreshold.ToString());
+            _XmlWriter.WriteElementString("ShoulderBurrSpec", _CogLeadTrimAlgo.ShoulderBurrSpec.ToString());
+            _XmlWriter.WriteElementString("ShoulderNickSpec", _CogLeadTrimAlgo.ShoulderNickSpec.ToString());
+
+
+            _XmlWriter.WriteElementString("IsUseLeadTipInspection", _CogLeadTrimAlgo.IsUseLeadTipInspection.ToString());
+            _XmlWriter.WriteElementString("LeadTipInspAreaCenterX", _CogLeadTrimAlgo.LeadTipInspArea.CenterX.ToString());
+            _XmlWriter.WriteElementString("LeadTipInspAreaCenterY", _CogLeadTrimAlgo.LeadTipInspArea.CenterY.ToString());
+            _XmlWriter.WriteElementString("LeadTipInspAreaWidth", _CogLeadTrimAlgo.LeadTipInspArea.Width.ToString());
+            _XmlWriter.WriteElementString("LeadTipInspAreaHeight", _CogLeadTrimAlgo.LeadTipInspArea.Height.ToString());
+            _XmlWriter.WriteElementString("LeadTipForeground", _CogLeadTrimAlgo.LeadTipForeground.ToString());
+            _XmlWriter.WriteElementString("LeadTipThreshold", _CogLeadTrimAlgo.LeadTipThreshold.ToString());
+            _XmlWriter.WriteElementString("LeadTipEdgeWidth", _CogLeadTrimAlgo.LeadTipEdgeWidth.ToString());
+            _XmlWriter.WriteElementString("LeadTipBurrThreshold", _CogLeadTrimAlgo.LeadTipBurrThreshold.ToString());
+            _XmlWriter.WriteElementString("LeadTipBurrSpec", _CogLeadTrimAlgo.LeadTipBurrSpec.ToString());
         }
         #endregion Read & Write InspectionParameter
 
@@ -1953,6 +2006,33 @@ namespace ParameterManager
                         _Algorithm.LeadWidthArray = new double[_SrcAlgorithm.LeadWidthArray.Length];
                         for (int zLoopCount = 0; zLoopCount < _SrcAlgorithm.LeadWidthArray.Length; ++zLoopCount)
                             _Algorithm.LeadWidthArray[zLoopCount] = _SrcAlgorithm.LeadWidthArray[zLoopCount];
+
+
+                        _Algorithm.IsUseShoulderInspection = _SrcAlgorithm.IsUseShoulderInspection;
+                        _Algorithm.ShoulderInspArea.CenterX = _SrcAlgorithm.ShoulderInspArea.CenterX;
+                        _Algorithm.ShoulderInspArea.CenterY = _SrcAlgorithm.ShoulderInspArea.CenterY;
+                        _Algorithm.ShoulderInspArea.Width = _SrcAlgorithm.ShoulderInspArea.Width;
+                        _Algorithm.ShoulderInspArea.Height = _SrcAlgorithm.ShoulderInspArea.Height;
+                        _Algorithm.ShoulderForeground = _SrcAlgorithm.ShoulderForeground;
+                        _Algorithm.ShoulderThreshold = _SrcAlgorithm.ShoulderThreshold;
+                        _Algorithm.LeadEdgeWidth = _SrcAlgorithm.LeadEdgeWidth;
+                        _Algorithm.ShoulderBurrThreshold = _SrcAlgorithm.ShoulderBurrThreshold;
+                        _Algorithm.ShoulderNickThreshold = _SrcAlgorithm.ShoulderNickThreshold;
+                        _Algorithm.ShoulderBurrSpec = _SrcAlgorithm.ShoulderBurrSpec;
+                        _Algorithm.ShoulderNickSpec = _SrcAlgorithm.ShoulderNickSpec;
+
+
+                        _Algorithm.IsUseLeadTipInspection = _SrcAlgorithm.IsUseLeadTipInspection;
+                        _Algorithm.LeadTipInspArea.CenterX = _SrcAlgorithm.LeadTipInspArea.CenterX;
+                        _Algorithm.LeadTipInspArea.CenterY = _SrcAlgorithm.LeadTipInspArea.CenterY;
+                        _Algorithm.LeadTipInspArea.Width = _SrcAlgorithm.LeadTipInspArea.Width;
+                        _Algorithm.LeadTipInspArea.Height = _SrcAlgorithm.LeadTipInspArea.Height;
+                        _Algorithm.LeadTipForeground = _SrcAlgorithm.LeadTipForeground;
+                        _Algorithm.LeadTipThreshold = _SrcAlgorithm.LeadTipThreshold;
+                        _Algorithm.LeadTipEdgeWidth = _SrcAlgorithm.LeadTipEdgeWidth;
+                        _Algorithm.LeadTipBurrThreshold = _SrcAlgorithm.LeadTipBurrThreshold;
+                        _Algorithm.LeadTipBurrSpec = _SrcAlgorithm.LeadTipBurrSpec;
+
 
                         _InspAlgoParam.Algorithm = _Algorithm;
                     }

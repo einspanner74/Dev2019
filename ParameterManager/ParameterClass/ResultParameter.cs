@@ -267,6 +267,8 @@ namespace ParameterManager
 
     public class CogLeadTrimResult : Result
     {
+        public string LastErrorMessage;
+
         //Lead Search Parameter
         public int  BlobCount;
         public double[] BlobArea;
@@ -324,6 +326,9 @@ namespace ParameterManager
         public double[] LeadLengthStartY;
         public bool[] IsLeadBentGood;
 
+
+        public List<CogRectangle> ShoulderBurrDefectList;
+
         public CogLeadTrimResult()
         {
             LeadBodyOriginX = 0;
@@ -335,7 +340,81 @@ namespace ParameterManager
             ChipOutNgList = new List<CogRectangle>();
 
             LeadBodyBaseLine = new CogLine();
+
+            ShoulderBurrDefectList = new List<CogRectangle>();
         }
+    }
+
+    public class CogLeadTrimChipoutResult
+    {
+
+    }
+
+    public class CogLeadTrimLeadResult
+    {
+
+    }
+
+    public class CogLeadTrimShoulderResult : CogLeadBlobResult
+    {
+        //public int      BlobCount;
+        //public double[] BlobArea;
+        //public double[] BlobCenterX;
+        //public double[] BlobCenterY;
+        //public double[] BlobMinX;
+        //public double[] BlobMinY;
+        //public double[] BlobMaxX;
+        //public double[] BlobMaxY;
+        //public double[] Width;
+        //public double[] Height;
+
+        //public double[] BlobMessCenterX;
+        //public double[] BlobMessCenterY;
+        //public double[] PrincipalWidth;
+        //public double[] PrincipalHeight;
+        //public double[] Angle;
+        //public double[] Degree;
+
+        public double[] LeadEdgeLeft;
+        public double[] LeadEdgeRight;
+        public double[] LeadEdgeCenter;
+        public double[] LeadEdgeWidth;
+
+        public CogRectangleAffine[] LeadLeftArea;
+        public CogRectangleAffine[] LeadRightArea;
+        public CogRectangleAffine[] LeadCenterArea;
+    }
+
+    public class CogLeadTrimLeadTipResult : CogLeadBlobResult
+    {
+        public double[] LeadEdgeLeft;
+        public double[] LeadEdgeRight;
+        public double[] LeadEdgeCenter;
+        public double[] LeadEdgeWidth;
+
+        public CogRectangleAffine[] LeadTipLeftArea;
+        public CogRectangleAffine[] LeadTipRightArea;
+    }
+
+    public class CogLeadBlobResult
+    {
+        public int      BlobCount;
+        public double[] BlobArea;
+        public double[] BlobCenterX;
+        public double[] BlobCenterY;
+        public double[] BlobMinX;
+        public double[] BlobMinY;
+        public double[] BlobMaxX;
+        public double[] BlobMaxY;
+        public double[] Width;
+        public double[] Height;
+
+        public double[] BlobMessCenterX;
+        public double[] BlobMessCenterY;
+        public double[] PrincipalWidth;
+        public double[] PrincipalHeight;
+        public double[] Angle;
+        public double[] Degree;
     }
     #endregion Inspection Result Parameter
 

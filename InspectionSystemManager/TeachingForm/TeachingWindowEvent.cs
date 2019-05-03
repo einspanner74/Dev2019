@@ -704,6 +704,8 @@ namespace InspectionSystemManager
                 case CogLeadTrimAlgo.eAlgoMode.BODY_CHECK:      LeadBodyCheck(_InspRegion, _InspAlgo, ref _InspResult);         break;
                 case CogLeadTrimAlgo.eAlgoMode.CHIPOUT_CHECK:   ChipOutInspection(_InspRegion, _InspAlgo, ref _InspResult);     break;
                 case CogLeadTrimAlgo.eAlgoMode.LEAD_MEASURE:    LeadMeasurement(_InspRegion, _InspAlgo, ref _InspResult);       break;
+                case CogLeadTrimAlgo.eAlgoMode.SHOULDER_CHECK:  ShoulderInspection(_InspRegion, _InspAlgo, ref _InspResult);    break;
+                case CogLeadTrimAlgo.eAlgoMode.LEADTIP_CHECK:   LeadTipInspection(_InspRegion, _InspAlgo, ref _InspResult);     break;
             }
         }
 
@@ -767,8 +769,8 @@ namespace InspectionSystemManager
                     kpTeachDisplay.DrawStaticShape(_Point, "BlobSearchPoint", CogColorConstants.Red, 5);
 
                     string _RectSizeName = string.Format("W : {0:F2}mm, H : {1:F2}mm", _NgRegion.Width, _NgRegion.Height);
-                    kpTeachDisplay.DrawText(_RectSizeName, _NgRegion.CenterX + _NgRegion.Width / 2 + 100,
-                                                           _NgRegion.CenterY + _NgRegion.Height / 2 + 100, CogColorConstants.Red, 8, CogGraphicLabelAlignmentConstants.BaselineCenter);
+                    kpTeachDisplay.DrawText("ChipOutDefectMessage",_RectSizeName, _NgRegion.CenterX + _NgRegion.Width / 2 + 100,
+                                            _NgRegion.CenterY + _NgRegion.Height / 2 + 100, CogColorConstants.Red, 8, CogGraphicLabelAlignmentConstants.BaselineCenter);
                 }
                 #endregion 
             }
@@ -810,6 +812,37 @@ namespace InspectionSystemManager
                 }
 
                 #endregion
+            }
+        }
+
+        private void ShoulderInspection(CogRectangle _InspRegion, CogLeadTrimAlgo _InspAlgo, ref CogLeadTrimResult _InspResult)
+        {
+            bool _Result = InspLeadTrimProcess.ShoulderInspection(InspectionImage, _InspRegion, _InspAlgo);
+
+            if (true == _Result)
+            {
+                CogLeadTrimResult _LeadTrimResult = new CogLeadTrimResult();
+                _LeadTrimResult = InspLeadTrimProcess.GetLeadTrimResult();
+
+                for (int iLoopCount = 0; iLoopCount < _LeadTrimResult.ShoulderBurrDefectList.Count; ++iLoopCount)
+                {
+                    CogRectangle _NgRegion = new CogRectangle(_LeadTrimResult.ShoulderBurrDefectList[iLoopCount]);
+                    kpTeachDisplay.DrawStaticShape(_NgRegion, "ShoulderBurr" + (iLoopCount + 1), CogColorConstants.Red);
+
+                    //string _RectSizeName = string.Format("W : {0:F2}mm, H : {1:F2}mm", _NgRegion.Width, _NgRegion.Height);
+                    //kpTeachDisplay.DrawText("ShoulderBurr", _RectSizeName, _NgRegion.CenterX + _NgRegion.Width / 2 + 100,
+                    //                        _NgRegion.CenterY + _NgRegion.Height / 2 + 100, CogColorConstants.Red, 8, CogGraphicLabelAlignmentConstants.BaselineCenter);
+                }
+            }
+        }
+
+        private void LeadTipInspection(CogRectangle _InspRegion, CogLeadTrimAlgo _InspAlgo, ref CogLeadTrimResult _InspResult)
+        {
+            bool _Result = InspLeadTrimProcess.LeadTipInspection(InspectionImage, _InspRegion, _InspAlgo);
+
+            if (true == _Result)
+            {
+
             }
         }
         #endregion

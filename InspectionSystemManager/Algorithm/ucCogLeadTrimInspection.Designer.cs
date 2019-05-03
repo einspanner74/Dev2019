@@ -85,6 +85,9 @@
             this.textBoxChipOutWidthSizeMax = new System.Windows.Forms.TextBox();
             this.textBoxChipOutWidthSizeMin = new System.Windows.Forms.TextBox();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.gradientLabel25 = new CustomControl.GradientLabel();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.gradientLabel26 = new CustomControl.GradientLabel();
             this.hScrollBarChipOutThreshold = new System.Windows.Forms.HScrollBar();
             this.gradientLabel13 = new CustomControl.GradientLabel();
             this.graLabelChipOutThresholdValue = new CustomControl.GradientLabel();
@@ -98,6 +101,10 @@
             this.btnLeadLengthAreaShow = new System.Windows.Forms.Button();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
             this.QuickGridViewLeadSetting = new CustomControl.QuickDataGridView();
+            this.gridLeadNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gridLeadLength = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gridLeadPitch = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gridLeadWidth = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gradientLabel28 = new CustomControl.GradientLabel();
             this.textBoxLeadCount = new System.Windows.Forms.TextBox();
             this.gradientLabel18 = new CustomControl.GradientLabel();
@@ -109,10 +116,47 @@
             this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.gradientLabel12 = new CustomControl.GradientLabel();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.btnShoulderAreaCheck = new System.Windows.Forms.Button();
+            this.groupBox14 = new System.Windows.Forms.GroupBox();
+            this.gradientLabel11 = new CustomControl.GradientLabel();
+            this.btnShoulderAreaSet = new System.Windows.Forms.Button();
+            this.btnShoulderAreaShow = new System.Windows.Forms.Button();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.gradientLabel29 = new CustomControl.GradientLabel();
             this.groupBox12 = new System.Windows.Forms.GroupBox();
+            this.gradientLabel31 = new CustomControl.GradientLabel();
+            this.gradientLabel27 = new CustomControl.GradientLabel();
+            this.textBoxShoulderEdgeWidth = new System.Windows.Forms.TextBox();
+            this.hScrollBar2 = new System.Windows.Forms.HScrollBar();
+            this.gradientLabel24 = new CustomControl.GradientLabel();
+            this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
+            this.gradientLabel21 = new CustomControl.GradientLabel();
+            this.graLabelNickThresholdValue = new CustomControl.GradientLabel();
+            this.graLabelBurrThresholdValue = new CustomControl.GradientLabel();
+            this.gradientLabel20 = new CustomControl.GradientLabel();
+            this.gradientLabel15 = new CustomControl.GradientLabel();
+            this.textBoxShoulderBurrSpec = new System.Windows.Forms.TextBox();
+            this.gradientLabel16 = new CustomControl.GradientLabel();
+            this.gradientLabel17 = new CustomControl.GradientLabel();
+            this.textBoxShoulderNickSpec = new System.Windows.Forms.TextBox();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.btnLeadTipAreaCheck = new System.Windows.Forms.Button();
+            this.groupBox15 = new System.Windows.Forms.GroupBox();
+            this.gradientLabel32 = new CustomControl.GradientLabel();
+            this.btnLeadTipAreaSet = new System.Windows.Forms.Button();
+            this.btnLeadTipAreaShow = new System.Windows.Forms.Button();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.gradientLabel33 = new CustomControl.GradientLabel();
+            this.groupBox16 = new System.Windows.Forms.GroupBox();
+            this.gradientLabel34 = new CustomControl.GradientLabel();
+            this.gradientLabel35 = new CustomControl.GradientLabel();
+            this.textBoxLeadTipEdgeWidth = new System.Windows.Forms.TextBox();
+            this.hScrollBar4 = new System.Windows.Forms.HScrollBar();
+            this.gradientLabel37 = new CustomControl.GradientLabel();
+            this.graLabelLeadTipBurrThresholdValue = new CustomControl.GradientLabel();
+            this.gradientLabel41 = new CustomControl.GradientLabel();
+            this.textBoxLeadTipBurrSpec = new System.Windows.Forms.TextBox();
+            this.gradientLabel42 = new CustomControl.GradientLabel();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.button1 = new System.Windows.Forms.Button();
@@ -146,10 +190,6 @@
             this.btnPatternAddRight = new System.Windows.Forms.Button();
             this.btnShowAreaTopRight = new System.Windows.Forms.Button();
             this.kpPatternDisplay1 = new KPDisplay.KPCogDisplayControl();
-            this.gridLeadNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gridLeadLength = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gridLeadPitch = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gridLeadWidth = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox8.SuspendLayout();
@@ -164,6 +204,11 @@
             this.groupBox11.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.QuickGridViewLeadSetting)).BeginInit();
             this.tabPage4.SuspendLayout();
+            this.groupBox14.SuspendLayout();
+            this.groupBox12.SuspendLayout();
+            this.tabPage5.SuspendLayout();
+            this.groupBox15.SuspendLayout();
+            this.groupBox16.SuspendLayout();
             this.tabPage6.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -604,7 +649,7 @@
             this.groupBox7.Controls.Add(this.textBoxChipOutWidthSizeMax);
             this.groupBox7.Controls.Add(this.textBoxChipOutWidthSizeMin);
             this.groupBox7.ForeColor = System.Drawing.Color.White;
-            this.groupBox7.Location = new System.Drawing.Point(7, 163);
+            this.groupBox7.Location = new System.Drawing.Point(6, 189);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(560, 106);
             this.groupBox7.TabIndex = 99;
@@ -841,23 +886,65 @@
             // 
             // groupBox9
             // 
+            this.groupBox9.Controls.Add(this.gradientLabel25);
+            this.groupBox9.Controls.Add(this.textBox2);
+            this.groupBox9.Controls.Add(this.gradientLabel26);
             this.groupBox9.Controls.Add(this.hScrollBarChipOutThreshold);
             this.groupBox9.Controls.Add(this.gradientLabel13);
             this.groupBox9.Controls.Add(this.graLabelChipOutThresholdValue);
             this.groupBox9.ForeColor = System.Drawing.Color.White;
             this.groupBox9.Location = new System.Drawing.Point(7, 104);
             this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(559, 53);
+            this.groupBox9.Size = new System.Drawing.Size(559, 77);
             this.groupBox9.TabIndex = 98;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = " Mold Chip Out Threshold Condition ";
             // 
+            // gradientLabel25
+            // 
+            this.gradientLabel25.BackColor = System.Drawing.Color.SteelBlue;
+            this.gradientLabel25.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.gradientLabel25.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel25.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel25.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel25.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel25.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel25.Location = new System.Drawing.Point(12, 46);
+            this.gradientLabel25.Name = "gradientLabel25";
+            this.gradientLabel25.Size = new System.Drawing.Size(150, 24);
+            this.gradientLabel25.TabIndex = 101;
+            this.gradientLabel25.Text = "Spec (±)";
+            this.gradientLabel25.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(167, 47);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(70, 21);
+            this.textBox2.TabIndex = 100;
+            this.textBox2.Text = "0.075";
+            this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // gradientLabel26
+            // 
+            this.gradientLabel26.AutoSize = true;
+            this.gradientLabel26.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel26.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel26.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel26.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel26.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel26.Location = new System.Drawing.Point(239, 51);
+            this.gradientLabel26.Name = "gradientLabel26";
+            this.gradientLabel26.Size = new System.Drawing.Size(29, 14);
+            this.gradientLabel26.TabIndex = 99;
+            this.gradientLabel26.Text = "mm";
+            // 
             // hScrollBarChipOutThreshold
             // 
-            this.hScrollBarChipOutThreshold.Location = new System.Drawing.Point(146, 17);
+            this.hScrollBarChipOutThreshold.Location = new System.Drawing.Point(167, 17);
             this.hScrollBarChipOutThreshold.Maximum = 255;
             this.hScrollBarChipOutThreshold.Name = "hScrollBarChipOutThreshold";
-            this.hScrollBarChipOutThreshold.Size = new System.Drawing.Size(362, 26);
+            this.hScrollBarChipOutThreshold.Size = new System.Drawing.Size(341, 26);
             this.hScrollBarChipOutThreshold.TabIndex = 18;
             this.hScrollBarChipOutThreshold.Value = 128;
             this.hScrollBarChipOutThreshold.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBarChipOutThreshold_Scroll);
@@ -871,7 +958,7 @@
             this.gradientLabel13.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
             this.gradientLabel13.Location = new System.Drawing.Point(12, 17);
             this.gradientLabel13.Name = "gradientLabel13";
-            this.gradientLabel13.Size = new System.Drawing.Size(126, 24);
+            this.gradientLabel13.Size = new System.Drawing.Size(150, 24);
             this.gradientLabel13.TabIndex = 17;
             this.gradientLabel13.Text = "Threshold";
             this.gradientLabel13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1078,6 +1165,47 @@
             this.QuickGridViewLeadSetting.TabIndex = 95;
             this.QuickGridViewLeadSetting.Tag = "Size : 418, 511";
             // 
+            // gridLeadNum
+            // 
+            dataGridViewCellStyle35.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.gridLeadNum.DefaultCellStyle = dataGridViewCellStyle35;
+            this.gridLeadNum.HeaderText = "Num";
+            this.gridLeadNum.Name = "gridLeadNum";
+            this.gridLeadNum.ReadOnly = true;
+            this.gridLeadNum.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.gridLeadNum.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.gridLeadNum.Width = 50;
+            // 
+            // gridLeadLength
+            // 
+            dataGridViewCellStyle36.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.gridLeadLength.DefaultCellStyle = dataGridViewCellStyle36;
+            this.gridLeadLength.HeaderText = "Lead Length";
+            this.gridLeadLength.Name = "gridLeadLength";
+            this.gridLeadLength.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.gridLeadLength.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.gridLeadLength.Width = 158;
+            // 
+            // gridLeadPitch
+            // 
+            dataGridViewCellStyle37.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.gridLeadPitch.DefaultCellStyle = dataGridViewCellStyle37;
+            this.gridLeadPitch.HeaderText = "Lead Pitch";
+            this.gridLeadPitch.Name = "gridLeadPitch";
+            this.gridLeadPitch.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.gridLeadPitch.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.gridLeadPitch.Width = 158;
+            // 
+            // gridLeadWidth
+            // 
+            dataGridViewCellStyle38.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.gridLeadWidth.DefaultCellStyle = dataGridViewCellStyle38;
+            this.gridLeadWidth.HeaderText = "Lead Width";
+            this.gridLeadWidth.Name = "gridLeadWidth";
+            this.gridLeadWidth.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.gridLeadWidth.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.gridLeadWidth.Width = 158;
+            // 
             // gradientLabel28
             // 
             this.gradientLabel28.BackColor = System.Drawing.Color.SteelBlue;
@@ -1214,6 +1342,8 @@
             // tabPage4
             // 
             this.tabPage4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.tabPage4.Controls.Add(this.btnShoulderAreaCheck);
+            this.tabPage4.Controls.Add(this.groupBox14);
             this.tabPage4.Controls.Add(this.checkBox1);
             this.tabPage4.Controls.Add(this.gradientLabel29);
             this.tabPage4.Controls.Add(this.groupBox12);
@@ -1221,7 +1351,76 @@
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Size = new System.Drawing.Size(572, 298);
             this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "Shoulder Burr/Lead";
+            this.tabPage4.Text = "Shoulder Burr/Nick";
+            // 
+            // btnShoulderAreaCheck
+            // 
+            this.btnShoulderAreaCheck.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnShoulderAreaCheck.ForeColor = System.Drawing.Color.Black;
+            this.btnShoulderAreaCheck.Location = new System.Drawing.Point(500, 10);
+            this.btnShoulderAreaCheck.Name = "btnShoulderAreaCheck";
+            this.btnShoulderAreaCheck.Size = new System.Drawing.Size(66, 29);
+            this.btnShoulderAreaCheck.TabIndex = 108;
+            this.btnShoulderAreaCheck.Tag = "0";
+            this.btnShoulderAreaCheck.Text = "Check";
+            this.btnShoulderAreaCheck.UseVisualStyleBackColor = true;
+            this.btnShoulderAreaCheck.Click += new System.EventHandler(this.btnShoulderAreaCheck_Click);
+            // 
+            // groupBox14
+            // 
+            this.groupBox14.Controls.Add(this.gradientLabel11);
+            this.groupBox14.Controls.Add(this.btnShoulderAreaSet);
+            this.groupBox14.Controls.Add(this.btnShoulderAreaShow);
+            this.groupBox14.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
+            this.groupBox14.ForeColor = System.Drawing.Color.White;
+            this.groupBox14.Location = new System.Drawing.Point(7, 45);
+            this.groupBox14.Name = "groupBox14";
+            this.groupBox14.Size = new System.Drawing.Size(559, 53);
+            this.groupBox14.TabIndex = 107;
+            this.groupBox14.TabStop = false;
+            this.groupBox14.Text = " Shoulder Inspection Area Setting ";
+            // 
+            // gradientLabel11
+            // 
+            this.gradientLabel11.BackColor = System.Drawing.Color.SteelBlue;
+            this.gradientLabel11.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.gradientLabel11.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel11.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel11.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel11.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel11.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel11.Location = new System.Drawing.Point(12, 17);
+            this.gradientLabel11.Name = "gradientLabel11";
+            this.gradientLabel11.Size = new System.Drawing.Size(150, 26);
+            this.gradientLabel11.TabIndex = 92;
+            this.gradientLabel11.Text = "Area Set";
+            this.gradientLabel11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // btnShoulderAreaSet
+            // 
+            this.btnShoulderAreaSet.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnShoulderAreaSet.ForeColor = System.Drawing.Color.Black;
+            this.btnShoulderAreaSet.Location = new System.Drawing.Point(234, 16);
+            this.btnShoulderAreaSet.Name = "btnShoulderAreaSet";
+            this.btnShoulderAreaSet.Size = new System.Drawing.Size(66, 29);
+            this.btnShoulderAreaSet.TabIndex = 91;
+            this.btnShoulderAreaSet.Tag = "0";
+            this.btnShoulderAreaSet.Text = "Set";
+            this.btnShoulderAreaSet.UseVisualStyleBackColor = true;
+            this.btnShoulderAreaSet.Click += new System.EventHandler(this.btnShoulderAreaSet_Click);
+            // 
+            // btnShoulderAreaShow
+            // 
+            this.btnShoulderAreaShow.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnShoulderAreaShow.ForeColor = System.Drawing.Color.Black;
+            this.btnShoulderAreaShow.Location = new System.Drawing.Point(167, 16);
+            this.btnShoulderAreaShow.Name = "btnShoulderAreaShow";
+            this.btnShoulderAreaShow.Size = new System.Drawing.Size(66, 29);
+            this.btnShoulderAreaShow.TabIndex = 90;
+            this.btnShoulderAreaShow.Tag = "0";
+            this.btnShoulderAreaShow.Text = "Show";
+            this.btnShoulderAreaShow.UseVisualStyleBackColor = true;
+            this.btnShoulderAreaShow.Click += new System.EventHandler(this.btnShoulderAreaShow_Click);
             // 
             // checkBox1
             // 
@@ -1229,7 +1428,7 @@
             this.checkBox1.Checked = true;
             this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox1.ForeColor = System.Drawing.Color.Black;
-            this.checkBox1.Location = new System.Drawing.Point(142, 10);
+            this.checkBox1.Location = new System.Drawing.Point(174, 10);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(133, 26);
             this.checkBox1.TabIndex = 106;
@@ -1246,32 +1445,477 @@
             this.gradientLabel29.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gradientLabel29.ForeColor = System.Drawing.Color.White;
             this.gradientLabel29.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel29.Location = new System.Drawing.Point(9, 10);
+            this.gradientLabel29.Location = new System.Drawing.Point(19, 10);
             this.gradientLabel29.Name = "gradientLabel29";
-            this.gradientLabel29.Size = new System.Drawing.Size(124, 26);
+            this.gradientLabel29.Size = new System.Drawing.Size(150, 26);
             this.gradientLabel29.TabIndex = 105;
-            this.gradientLabel29.Text = "Use mold chip out";
+            this.gradientLabel29.Text = "Use shoulder burr / nick";
             this.gradientLabel29.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // groupBox12
             // 
+            this.groupBox12.Controls.Add(this.gradientLabel31);
+            this.groupBox12.Controls.Add(this.gradientLabel27);
+            this.groupBox12.Controls.Add(this.textBoxShoulderEdgeWidth);
+            this.groupBox12.Controls.Add(this.hScrollBar2);
+            this.groupBox12.Controls.Add(this.gradientLabel24);
+            this.groupBox12.Controls.Add(this.hScrollBar1);
+            this.groupBox12.Controls.Add(this.gradientLabel21);
+            this.groupBox12.Controls.Add(this.graLabelNickThresholdValue);
+            this.groupBox12.Controls.Add(this.graLabelBurrThresholdValue);
+            this.groupBox12.Controls.Add(this.gradientLabel20);
+            this.groupBox12.Controls.Add(this.gradientLabel15);
+            this.groupBox12.Controls.Add(this.textBoxShoulderBurrSpec);
+            this.groupBox12.Controls.Add(this.gradientLabel16);
+            this.groupBox12.Controls.Add(this.gradientLabel17);
+            this.groupBox12.Controls.Add(this.textBoxShoulderNickSpec);
             this.groupBox12.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
             this.groupBox12.ForeColor = System.Drawing.Color.White;
-            this.groupBox12.Location = new System.Drawing.Point(7, 51);
+            this.groupBox12.Location = new System.Drawing.Point(7, 104);
             this.groupBox12.Name = "groupBox12";
-            this.groupBox12.Size = new System.Drawing.Size(559, 244);
+            this.groupBox12.Size = new System.Drawing.Size(559, 190);
             this.groupBox12.TabIndex = 104;
             this.groupBox12.TabStop = false;
-            this.groupBox12.Text = " Lead Bend / Length Setting ";
+            this.groupBox12.Text = " Shoulder Burr / Nick Setting ";
+            // 
+            // gradientLabel31
+            // 
+            this.gradientLabel31.AutoSize = true;
+            this.gradientLabel31.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel31.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel31.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel31.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel31.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel31.Location = new System.Drawing.Point(239, 21);
+            this.gradientLabel31.Name = "gradientLabel31";
+            this.gradientLabel31.Size = new System.Drawing.Size(33, 14);
+            this.gradientLabel31.TabIndex = 108;
+            this.gradientLabel31.Text = "Pixel";
+            // 
+            // gradientLabel27
+            // 
+            this.gradientLabel27.BackColor = System.Drawing.Color.SteelBlue;
+            this.gradientLabel27.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.gradientLabel27.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel27.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel27.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel27.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel27.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel27.Location = new System.Drawing.Point(12, 17);
+            this.gradientLabel27.Name = "gradientLabel27";
+            this.gradientLabel27.Size = new System.Drawing.Size(150, 24);
+            this.gradientLabel27.TabIndex = 107;
+            this.gradientLabel27.Text = "      Shoulder Edge Width";
+            this.gradientLabel27.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // textBoxShoulderEdgeWidth
+            // 
+            this.textBoxShoulderEdgeWidth.Location = new System.Drawing.Point(167, 18);
+            this.textBoxShoulderEdgeWidth.Name = "textBoxShoulderEdgeWidth";
+            this.textBoxShoulderEdgeWidth.Size = new System.Drawing.Size(70, 21);
+            this.textBoxShoulderEdgeWidth.TabIndex = 106;
+            this.textBoxShoulderEdgeWidth.Text = "36";
+            this.textBoxShoulderEdgeWidth.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // hScrollBar2
+            // 
+            this.hScrollBar2.Location = new System.Drawing.Point(167, 121);
+            this.hScrollBar2.Maximum = 255;
+            this.hScrollBar2.Name = "hScrollBar2";
+            this.hScrollBar2.Size = new System.Drawing.Size(338, 26);
+            this.hScrollBar2.TabIndex = 105;
+            this.hScrollBar2.Value = 80;
+            // 
+            // gradientLabel24
+            // 
+            this.gradientLabel24.BackColor = System.Drawing.Color.SteelBlue;
+            this.gradientLabel24.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel24.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel24.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel24.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel24.Location = new System.Drawing.Point(12, 121);
+            this.gradientLabel24.Name = "gradientLabel24";
+            this.gradientLabel24.Size = new System.Drawing.Size(150, 24);
+            this.gradientLabel24.TabIndex = 104;
+            this.gradientLabel24.Text = "      Nick Threshold";
+            this.gradientLabel24.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // hScrollBar1
+            // 
+            this.hScrollBar1.Location = new System.Drawing.Point(167, 54);
+            this.hScrollBar1.Maximum = 255;
+            this.hScrollBar1.Name = "hScrollBar1";
+            this.hScrollBar1.Size = new System.Drawing.Size(338, 26);
+            this.hScrollBar1.TabIndex = 103;
+            this.hScrollBar1.Value = 200;
+            // 
+            // gradientLabel21
+            // 
+            this.gradientLabel21.BackColor = System.Drawing.Color.SteelBlue;
+            this.gradientLabel21.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel21.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel21.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel21.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel21.Location = new System.Drawing.Point(12, 54);
+            this.gradientLabel21.Name = "gradientLabel21";
+            this.gradientLabel21.Size = new System.Drawing.Size(150, 24);
+            this.gradientLabel21.TabIndex = 102;
+            this.gradientLabel21.Text = "      Burr Threshold";
+            this.gradientLabel21.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // graLabelNickThresholdValue
+            // 
+            this.graLabelNickThresholdValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.graLabelNickThresholdValue.ColorBottom = System.Drawing.Color.Empty;
+            this.graLabelNickThresholdValue.ColorTop = System.Drawing.Color.Empty;
+            this.graLabelNickThresholdValue.ForeColor = System.Drawing.Color.White;
+            this.graLabelNickThresholdValue.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.graLabelNickThresholdValue.Location = new System.Drawing.Point(508, 121);
+            this.graLabelNickThresholdValue.Name = "graLabelNickThresholdValue";
+            this.graLabelNickThresholdValue.Size = new System.Drawing.Size(38, 24);
+            this.graLabelNickThresholdValue.TabIndex = 101;
+            this.graLabelNickThresholdValue.Text = "80";
+            this.graLabelNickThresholdValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // graLabelBurrThresholdValue
+            // 
+            this.graLabelBurrThresholdValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.graLabelBurrThresholdValue.ColorBottom = System.Drawing.Color.Empty;
+            this.graLabelBurrThresholdValue.ColorTop = System.Drawing.Color.Empty;
+            this.graLabelBurrThresholdValue.ForeColor = System.Drawing.Color.White;
+            this.graLabelBurrThresholdValue.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.graLabelBurrThresholdValue.Location = new System.Drawing.Point(508, 56);
+            this.graLabelBurrThresholdValue.Name = "graLabelBurrThresholdValue";
+            this.graLabelBurrThresholdValue.Size = new System.Drawing.Size(38, 24);
+            this.graLabelBurrThresholdValue.TabIndex = 100;
+            this.graLabelBurrThresholdValue.Text = "200";
+            this.graLabelBurrThresholdValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // gradientLabel20
+            // 
+            this.gradientLabel20.AutoSize = true;
+            this.gradientLabel20.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel20.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel20.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel20.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel20.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel20.Location = new System.Drawing.Point(239, 155);
+            this.gradientLabel20.Name = "gradientLabel20";
+            this.gradientLabel20.Size = new System.Drawing.Size(29, 14);
+            this.gradientLabel20.TabIndex = 99;
+            this.gradientLabel20.Text = "mm";
+            // 
+            // gradientLabel15
+            // 
+            this.gradientLabel15.BackColor = System.Drawing.Color.SteelBlue;
+            this.gradientLabel15.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.gradientLabel15.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel15.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel15.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel15.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel15.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel15.Location = new System.Drawing.Point(12, 83);
+            this.gradientLabel15.Name = "gradientLabel15";
+            this.gradientLabel15.Size = new System.Drawing.Size(150, 24);
+            this.gradientLabel15.TabIndex = 98;
+            this.gradientLabel15.Text = "      Burr Spec (+)";
+            this.gradientLabel15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // textBoxShoulderBurrSpec
+            // 
+            this.textBoxShoulderBurrSpec.Location = new System.Drawing.Point(167, 84);
+            this.textBoxShoulderBurrSpec.Name = "textBoxShoulderBurrSpec";
+            this.textBoxShoulderBurrSpec.Size = new System.Drawing.Size(70, 21);
+            this.textBoxShoulderBurrSpec.TabIndex = 97;
+            this.textBoxShoulderBurrSpec.Text = "0.075";
+            this.textBoxShoulderBurrSpec.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // gradientLabel16
+            // 
+            this.gradientLabel16.AutoSize = true;
+            this.gradientLabel16.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel16.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel16.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel16.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel16.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel16.Location = new System.Drawing.Point(239, 88);
+            this.gradientLabel16.Name = "gradientLabel16";
+            this.gradientLabel16.Size = new System.Drawing.Size(29, 14);
+            this.gradientLabel16.TabIndex = 96;
+            this.gradientLabel16.Text = "mm";
+            // 
+            // gradientLabel17
+            // 
+            this.gradientLabel17.BackColor = System.Drawing.Color.SteelBlue;
+            this.gradientLabel17.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.gradientLabel17.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel17.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel17.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel17.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel17.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel17.Location = new System.Drawing.Point(12, 150);
+            this.gradientLabel17.Name = "gradientLabel17";
+            this.gradientLabel17.Size = new System.Drawing.Size(150, 24);
+            this.gradientLabel17.TabIndex = 95;
+            this.gradientLabel17.Text = "      Nick Spec (-)";
+            this.gradientLabel17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // textBoxShoulderNickSpec
+            // 
+            this.textBoxShoulderNickSpec.Location = new System.Drawing.Point(167, 152);
+            this.textBoxShoulderNickSpec.Name = "textBoxShoulderNickSpec";
+            this.textBoxShoulderNickSpec.Size = new System.Drawing.Size(70, 21);
+            this.textBoxShoulderNickSpec.TabIndex = 94;
+            this.textBoxShoulderNickSpec.Text = "0.075";
+            this.textBoxShoulderNickSpec.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // tabPage5
             // 
             this.tabPage5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.tabPage5.Controls.Add(this.btnLeadTipAreaCheck);
+            this.tabPage5.Controls.Add(this.groupBox15);
+            this.tabPage5.Controls.Add(this.checkBox2);
+            this.tabPage5.Controls.Add(this.gradientLabel33);
+            this.tabPage5.Controls.Add(this.groupBox16);
             this.tabPage5.Location = new System.Drawing.Point(4, 23);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Size = new System.Drawing.Size(572, 298);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "Tip Burr";
+            // 
+            // btnLeadTipAreaCheck
+            // 
+            this.btnLeadTipAreaCheck.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnLeadTipAreaCheck.ForeColor = System.Drawing.Color.Black;
+            this.btnLeadTipAreaCheck.Location = new System.Drawing.Point(500, 10);
+            this.btnLeadTipAreaCheck.Name = "btnLeadTipAreaCheck";
+            this.btnLeadTipAreaCheck.Size = new System.Drawing.Size(66, 29);
+            this.btnLeadTipAreaCheck.TabIndex = 113;
+            this.btnLeadTipAreaCheck.Tag = "0";
+            this.btnLeadTipAreaCheck.Text = "Check";
+            this.btnLeadTipAreaCheck.UseVisualStyleBackColor = true;
+            this.btnLeadTipAreaCheck.Click += new System.EventHandler(this.btnLeadTipAreaCheck_Click);
+            // 
+            // groupBox15
+            // 
+            this.groupBox15.Controls.Add(this.gradientLabel32);
+            this.groupBox15.Controls.Add(this.btnLeadTipAreaSet);
+            this.groupBox15.Controls.Add(this.btnLeadTipAreaShow);
+            this.groupBox15.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
+            this.groupBox15.ForeColor = System.Drawing.Color.White;
+            this.groupBox15.Location = new System.Drawing.Point(7, 45);
+            this.groupBox15.Name = "groupBox15";
+            this.groupBox15.Size = new System.Drawing.Size(559, 53);
+            this.groupBox15.TabIndex = 112;
+            this.groupBox15.TabStop = false;
+            this.groupBox15.Text = " Lead Tip Inspection Area Setting ";
+            // 
+            // gradientLabel32
+            // 
+            this.gradientLabel32.BackColor = System.Drawing.Color.SteelBlue;
+            this.gradientLabel32.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.gradientLabel32.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel32.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel32.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel32.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel32.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel32.Location = new System.Drawing.Point(12, 17);
+            this.gradientLabel32.Name = "gradientLabel32";
+            this.gradientLabel32.Size = new System.Drawing.Size(150, 26);
+            this.gradientLabel32.TabIndex = 92;
+            this.gradientLabel32.Text = "Area Set";
+            this.gradientLabel32.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // btnLeadTipAreaSet
+            // 
+            this.btnLeadTipAreaSet.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnLeadTipAreaSet.ForeColor = System.Drawing.Color.Black;
+            this.btnLeadTipAreaSet.Location = new System.Drawing.Point(234, 16);
+            this.btnLeadTipAreaSet.Name = "btnLeadTipAreaSet";
+            this.btnLeadTipAreaSet.Size = new System.Drawing.Size(66, 29);
+            this.btnLeadTipAreaSet.TabIndex = 91;
+            this.btnLeadTipAreaSet.Tag = "0";
+            this.btnLeadTipAreaSet.Text = "Set";
+            this.btnLeadTipAreaSet.UseVisualStyleBackColor = true;
+            this.btnLeadTipAreaSet.Click += new System.EventHandler(this.btnLeadTipAreaSet_Click);
+            // 
+            // btnLeadTipAreaShow
+            // 
+            this.btnLeadTipAreaShow.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnLeadTipAreaShow.ForeColor = System.Drawing.Color.Black;
+            this.btnLeadTipAreaShow.Location = new System.Drawing.Point(167, 16);
+            this.btnLeadTipAreaShow.Name = "btnLeadTipAreaShow";
+            this.btnLeadTipAreaShow.Size = new System.Drawing.Size(66, 29);
+            this.btnLeadTipAreaShow.TabIndex = 90;
+            this.btnLeadTipAreaShow.Tag = "0";
+            this.btnLeadTipAreaShow.Text = "Show";
+            this.btnLeadTipAreaShow.UseVisualStyleBackColor = true;
+            this.btnLeadTipAreaShow.Click += new System.EventHandler(this.btnLeadTipAreaShow_Click);
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBox2.Checked = true;
+            this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox2.ForeColor = System.Drawing.Color.Black;
+            this.checkBox2.Location = new System.Drawing.Point(174, 10);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(133, 26);
+            this.checkBox2.TabIndex = 111;
+            this.checkBox2.Text = "Used";
+            this.checkBox2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.checkBox2.UseVisualStyleBackColor = true;
+            // 
+            // gradientLabel33
+            // 
+            this.gradientLabel33.BackColor = System.Drawing.Color.SteelBlue;
+            this.gradientLabel33.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.gradientLabel33.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel33.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel33.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel33.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel33.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel33.Location = new System.Drawing.Point(19, 10);
+            this.gradientLabel33.Name = "gradientLabel33";
+            this.gradientLabel33.Size = new System.Drawing.Size(150, 26);
+            this.gradientLabel33.TabIndex = 110;
+            this.gradientLabel33.Text = "Use tip burr / nick";
+            this.gradientLabel33.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // groupBox16
+            // 
+            this.groupBox16.Controls.Add(this.gradientLabel34);
+            this.groupBox16.Controls.Add(this.gradientLabel35);
+            this.groupBox16.Controls.Add(this.textBoxLeadTipEdgeWidth);
+            this.groupBox16.Controls.Add(this.hScrollBar4);
+            this.groupBox16.Controls.Add(this.gradientLabel37);
+            this.groupBox16.Controls.Add(this.graLabelLeadTipBurrThresholdValue);
+            this.groupBox16.Controls.Add(this.gradientLabel41);
+            this.groupBox16.Controls.Add(this.textBoxLeadTipBurrSpec);
+            this.groupBox16.Controls.Add(this.gradientLabel42);
+            this.groupBox16.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
+            this.groupBox16.ForeColor = System.Drawing.Color.White;
+            this.groupBox16.Location = new System.Drawing.Point(7, 104);
+            this.groupBox16.Name = "groupBox16";
+            this.groupBox16.Size = new System.Drawing.Size(559, 190);
+            this.groupBox16.TabIndex = 109;
+            this.groupBox16.TabStop = false;
+            this.groupBox16.Text = " Lead Tip Burr Setting ";
+            // 
+            // gradientLabel34
+            // 
+            this.gradientLabel34.AutoSize = true;
+            this.gradientLabel34.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel34.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel34.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel34.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel34.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel34.Location = new System.Drawing.Point(239, 21);
+            this.gradientLabel34.Name = "gradientLabel34";
+            this.gradientLabel34.Size = new System.Drawing.Size(33, 14);
+            this.gradientLabel34.TabIndex = 108;
+            this.gradientLabel34.Text = "Pixel";
+            // 
+            // gradientLabel35
+            // 
+            this.gradientLabel35.BackColor = System.Drawing.Color.SteelBlue;
+            this.gradientLabel35.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.gradientLabel35.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel35.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel35.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel35.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel35.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel35.Location = new System.Drawing.Point(12, 17);
+            this.gradientLabel35.Name = "gradientLabel35";
+            this.gradientLabel35.Size = new System.Drawing.Size(150, 24);
+            this.gradientLabel35.TabIndex = 107;
+            this.gradientLabel35.Text = "      Lead Tip Edge Width";
+            this.gradientLabel35.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // textBoxLeadTipEdgeWidth
+            // 
+            this.textBoxLeadTipEdgeWidth.Location = new System.Drawing.Point(167, 18);
+            this.textBoxLeadTipEdgeWidth.Name = "textBoxLeadTipEdgeWidth";
+            this.textBoxLeadTipEdgeWidth.Size = new System.Drawing.Size(70, 21);
+            this.textBoxLeadTipEdgeWidth.TabIndex = 106;
+            this.textBoxLeadTipEdgeWidth.Text = "36";
+            this.textBoxLeadTipEdgeWidth.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // hScrollBar4
+            // 
+            this.hScrollBar4.Location = new System.Drawing.Point(167, 54);
+            this.hScrollBar4.Maximum = 255;
+            this.hScrollBar4.Name = "hScrollBar4";
+            this.hScrollBar4.Size = new System.Drawing.Size(338, 26);
+            this.hScrollBar4.TabIndex = 103;
+            this.hScrollBar4.Value = 200;
+            // 
+            // gradientLabel37
+            // 
+            this.gradientLabel37.BackColor = System.Drawing.Color.SteelBlue;
+            this.gradientLabel37.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel37.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel37.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel37.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel37.Location = new System.Drawing.Point(12, 54);
+            this.gradientLabel37.Name = "gradientLabel37";
+            this.gradientLabel37.Size = new System.Drawing.Size(150, 24);
+            this.gradientLabel37.TabIndex = 102;
+            this.gradientLabel37.Text = "      Burr Threshold";
+            this.gradientLabel37.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // graLabelLeadTipBurrThresholdValue
+            // 
+            this.graLabelLeadTipBurrThresholdValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.graLabelLeadTipBurrThresholdValue.ColorBottom = System.Drawing.Color.Empty;
+            this.graLabelLeadTipBurrThresholdValue.ColorTop = System.Drawing.Color.Empty;
+            this.graLabelLeadTipBurrThresholdValue.ForeColor = System.Drawing.Color.White;
+            this.graLabelLeadTipBurrThresholdValue.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.graLabelLeadTipBurrThresholdValue.Location = new System.Drawing.Point(508, 56);
+            this.graLabelLeadTipBurrThresholdValue.Name = "graLabelLeadTipBurrThresholdValue";
+            this.graLabelLeadTipBurrThresholdValue.Size = new System.Drawing.Size(38, 24);
+            this.graLabelLeadTipBurrThresholdValue.TabIndex = 100;
+            this.graLabelLeadTipBurrThresholdValue.Text = "200";
+            this.graLabelLeadTipBurrThresholdValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // gradientLabel41
+            // 
+            this.gradientLabel41.BackColor = System.Drawing.Color.SteelBlue;
+            this.gradientLabel41.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.gradientLabel41.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel41.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel41.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel41.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel41.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel41.Location = new System.Drawing.Point(12, 83);
+            this.gradientLabel41.Name = "gradientLabel41";
+            this.gradientLabel41.Size = new System.Drawing.Size(150, 24);
+            this.gradientLabel41.TabIndex = 98;
+            this.gradientLabel41.Text = "      Burr Spec (+)";
+            this.gradientLabel41.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // textBoxLeadTipBurrSpec
+            // 
+            this.textBoxLeadTipBurrSpec.Location = new System.Drawing.Point(167, 84);
+            this.textBoxLeadTipBurrSpec.Name = "textBoxLeadTipBurrSpec";
+            this.textBoxLeadTipBurrSpec.Size = new System.Drawing.Size(70, 21);
+            this.textBoxLeadTipBurrSpec.TabIndex = 97;
+            this.textBoxLeadTipBurrSpec.Text = "0.075";
+            this.textBoxLeadTipBurrSpec.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // gradientLabel42
+            // 
+            this.gradientLabel42.AutoSize = true;
+            this.gradientLabel42.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel42.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel42.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel42.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel42.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel42.Location = new System.Drawing.Point(239, 88);
+            this.gradientLabel42.Name = "gradientLabel42";
+            this.gradientLabel42.Size = new System.Drawing.Size(29, 14);
+            this.gradientLabel42.TabIndex = 96;
+            this.gradientLabel42.Text = "mm";
             // 
             // tabPage6
             // 
@@ -1707,47 +2351,6 @@
             this.kpPatternDisplay1.Tag = "1";
             this.kpPatternDisplay1.UseStatusBar = false;
             // 
-            // gridLeadNum
-            // 
-            dataGridViewCellStyle35.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.gridLeadNum.DefaultCellStyle = dataGridViewCellStyle35;
-            this.gridLeadNum.HeaderText = "Num";
-            this.gridLeadNum.Name = "gridLeadNum";
-            this.gridLeadNum.ReadOnly = true;
-            this.gridLeadNum.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.gridLeadNum.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.gridLeadNum.Width = 50;
-            // 
-            // gridLeadLength
-            // 
-            dataGridViewCellStyle36.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.gridLeadLength.DefaultCellStyle = dataGridViewCellStyle36;
-            this.gridLeadLength.HeaderText = "Lead Length";
-            this.gridLeadLength.Name = "gridLeadLength";
-            this.gridLeadLength.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.gridLeadLength.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.gridLeadLength.Width = 158;
-            // 
-            // gridLeadPitch
-            // 
-            dataGridViewCellStyle37.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.gridLeadPitch.DefaultCellStyle = dataGridViewCellStyle37;
-            this.gridLeadPitch.HeaderText = "Lead Pitch";
-            this.gridLeadPitch.Name = "gridLeadPitch";
-            this.gridLeadPitch.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.gridLeadPitch.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.gridLeadPitch.Width = 158;
-            // 
-            // gridLeadWidth
-            // 
-            dataGridViewCellStyle38.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.gridLeadWidth.DefaultCellStyle = dataGridViewCellStyle38;
-            this.gridLeadWidth.HeaderText = "Lead Width";
-            this.gridLeadWidth.Name = "gridLeadWidth";
-            this.gridLeadWidth.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.gridLeadWidth.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.gridLeadWidth.Width = 158;
-            // 
             // ucCogLeadTrimInspection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -1768,12 +2371,20 @@
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
             this.groupBox9.ResumeLayout(false);
+            this.groupBox9.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.groupBox13.ResumeLayout(false);
             this.groupBox11.ResumeLayout(false);
             this.groupBox11.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.QuickGridViewLeadSetting)).EndInit();
             this.tabPage4.ResumeLayout(false);
+            this.groupBox14.ResumeLayout(false);
+            this.groupBox12.ResumeLayout(false);
+            this.groupBox12.PerformLayout();
+            this.tabPage5.ResumeLayout(false);
+            this.groupBox15.ResumeLayout(false);
+            this.groupBox16.ResumeLayout(false);
+            this.groupBox16.PerformLayout();
             this.tabPage6.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
@@ -1903,5 +2514,45 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn gridLeadLength;
         private System.Windows.Forms.DataGridViewTextBoxColumn gridLeadPitch;
         private System.Windows.Forms.DataGridViewTextBoxColumn gridLeadWidth;
+        private System.Windows.Forms.GroupBox groupBox14;
+        private CustomControl.GradientLabel gradientLabel11;
+        private System.Windows.Forms.Button btnShoulderAreaSet;
+        private System.Windows.Forms.Button btnShoulderAreaShow;
+        private System.Windows.Forms.Button btnShoulderAreaCheck;
+        private CustomControl.GradientLabel gradientLabel20;
+        private CustomControl.GradientLabel gradientLabel15;
+        private System.Windows.Forms.TextBox textBoxShoulderBurrSpec;
+        private CustomControl.GradientLabel gradientLabel16;
+        private CustomControl.GradientLabel gradientLabel17;
+        private System.Windows.Forms.TextBox textBoxShoulderNickSpec;
+        private CustomControl.GradientLabel graLabelNickThresholdValue;
+        private CustomControl.GradientLabel graLabelBurrThresholdValue;
+        private System.Windows.Forms.HScrollBar hScrollBar2;
+        private CustomControl.GradientLabel gradientLabel24;
+        private System.Windows.Forms.HScrollBar hScrollBar1;
+        private CustomControl.GradientLabel gradientLabel21;
+        private CustomControl.GradientLabel gradientLabel25;
+        private System.Windows.Forms.TextBox textBox2;
+        private CustomControl.GradientLabel gradientLabel26;
+        private CustomControl.GradientLabel gradientLabel31;
+        private CustomControl.GradientLabel gradientLabel27;
+        private System.Windows.Forms.TextBox textBoxShoulderEdgeWidth;
+        private System.Windows.Forms.Button btnLeadTipAreaCheck;
+        private System.Windows.Forms.GroupBox groupBox15;
+        private CustomControl.GradientLabel gradientLabel32;
+        private System.Windows.Forms.Button btnLeadTipAreaSet;
+        private System.Windows.Forms.Button btnLeadTipAreaShow;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private CustomControl.GradientLabel gradientLabel33;
+        private System.Windows.Forms.GroupBox groupBox16;
+        private CustomControl.GradientLabel gradientLabel34;
+        private CustomControl.GradientLabel gradientLabel35;
+        private System.Windows.Forms.TextBox textBoxLeadTipEdgeWidth;
+        private System.Windows.Forms.HScrollBar hScrollBar4;
+        private CustomControl.GradientLabel gradientLabel37;
+        private CustomControl.GradientLabel graLabelLeadTipBurrThresholdValue;
+        private CustomControl.GradientLabel gradientLabel41;
+        private System.Windows.Forms.TextBox textBoxLeadTipBurrSpec;
+        private CustomControl.GradientLabel gradientLabel42;
     }
 }

@@ -66,6 +66,7 @@ namespace InspectionSystemManager
                 if (false == LeadBodySearch(_SrcImage, _InspRegion, _CogLeadTrimAlgo)) break;
                 if (false == MoldChipOutInspection(_SrcImage, _InspRegion, _CogLeadTrimAlgo)) break;
                 if (false == LeadMeasurement(_SrcImage, _InspRegion, _CogLeadTrimAlgo)) break;
+                if (false == ShoulderInspection(_SrcImage, _InspRegion, _CogLeadTrimAlgo)) break;
 
                 _Result = true;
             } while (false);
@@ -100,6 +101,7 @@ namespace InspectionSystemManager
                 #region Step1. Lead 전체의 Center를 구해서 masking 위치를 따라가게 한다.
                 //Step1. Lead 전체의 Center를 구해서 masking 위치를 따라가게 한다.
                 BlobResults = BlobProc.Execute(_SrcImage, _InspRegion);
+                //CogLeadTrimShoulderResult _CogShoulderResult = GetShoulderResult(BlobResults);
                 GetResult(true);
 
                 CogLeadTrimResult _CogBlobReferResultTemp = new CogLeadTrimResult();
@@ -437,9 +439,288 @@ namespace InspectionSystemManager
             return _Result;
         }
 
-        public CogLeadTrimResult GetLeadTrimResult()
+        public bool ShoulderInspection(CogImage8Grey _SrcImage, CogRectangle _InspRegion, CogLeadTrimAlgo _CogLeadTrimAlgo)
         {
-            return LeadTrimResult;
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "ShoulderInspection - Start", CLogManager.LOG_LEVEL.MID);
+
+            if (false == _CogLeadTrimAlgo.IsUseShoulderInspection)
+            {
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "ShoulderInspection Disable - End", CLogManager.LOG_LEVEL.MID);
+                return true;
+            }
+
+            bool _Result = true;
+
+            try
+            {
+                System.Diagnostics.Stopwatch _ProcessWatch = new System.Diagnostics.Stopwatch();
+                _ProcessWatch.Reset(); _ProcessWatch.Start();
+
+                #region Lead Shoulder 영역 추출
+                SetConnectivityMinimum(2000);
+                SetHardFixedThreshold(_CogLeadTrimAlgo.ShoulderThreshold);
+                SetPolarity(Convert.ToBoolean(_CogLeadTrimAlgo.ShoulderForeground));
+                BlobResults = BlobProc.Execute(_SrcImage, _InspRegion);
+                CogLeadTrimShoulderResult _ShoulderResult = GetShoulderResult(BlobResults);
+
+                if (_ShoulderResult.BlobCount != _CogLeadTrimAlgo.LeadCount)
+                {
+                    LeadTrimResult.LastErrorMessage = "Shoulder Lead Count Error";
+                    return false;
+                }
+
+                //Lead Shoulder 영역 추출
+                CogAffineTransformTool  _LeadAreaTransTool = new CogAffineTransformTool();
+                CogRectangleAffine[]    _LeadArea = new CogRectangleAffine[_CogLeadTrimAlgo.LeadCount];
+                CogImage8Grey[]         _ShoulderImage = new CogImage8Grey[_CogLeadTrimAlgo.LeadCount];
+                double[]               _LeadRotation = new double[_CogLeadTrimAlgo.LeadCount];
+                for (int iLoopCount = 0; iLoopCount < _ShoulderResult.BlobCount; ++iLoopCount)
+                {
+                    #region Lead Shoulder 부분 분리
+                    _LeadArea[iLoopCount] = new CogRectangleAffine();
+                    _LeadArea[iLoopCount].CenterX       = _ShoulderResult.BlobCenterX[iLoopCount];
+                    _LeadArea[iLoopCount].CenterY       = _ShoulderResult.BlobCenterY[iLoopCount];
+                    _LeadArea[iLoopCount].SideXLength   = _ShoulderResult.PrincipalHeight[iLoopCount] + 20;
+                    _LeadArea[iLoopCount].SideYLength   = _ShoulderResult.PrincipalWidth[iLoopCount];
+
+                    _LeadAreaTransTool.InputImage = _SrcImage;
+                    _LeadAreaTransTool.Region = _LeadArea[iLoopCount];
+                    _LeadAreaTransTool.Run();
+
+                    _ShoulderImage[iLoopCount] = new CogImage8Grey();
+                    _ShoulderImage[iLoopCount] = (CogImage8Grey)_LeadAreaTransTool.OutputImage;
+
+                    if (_ShoulderResult.Angle[iLoopCount] >= 0) _LeadRotation[iLoopCount] = _ShoulderResult.Angle[iLoopCount] - (Math.PI / 2);
+                    else                                        _LeadRotation[iLoopCount] = (Math.PI / 2) + _ShoulderResult.Angle[iLoopCount];
+
+                    //string _FileName = string.Format(@"D:\Lead{0}.jpg", iLoopCount + 1);
+                    //CogImageFile _CogImageFile = new CogImageFile();
+                    //_CogImageFile.Open(_FileName, CogImageFileModeConstants.Write);
+                    //_CogImageFile.Append(_ShoulderImage[iLoopCount]);
+                    //_CogImageFile.Close();
+                    #endregion
+                }
+                #endregion
+
+                //Caliper로 측정하여 검사영역 나누기
+                #region Caliper Tool Setting
+                CogCaliperTool _LeadCaliper = new CogCaliperTool();
+                _LeadCaliper.RunParams.EdgeMode = CogCaliperEdgeModeConstants.Pair;
+                _LeadCaliper.RunParams.Edge0Polarity = CogCaliperPolarityConstants.LightToDark;
+                _LeadCaliper.RunParams.Edge0Position = _CogLeadTrimAlgo.LeadEdgeWidth / 2 * (-1);
+                _LeadCaliper.RunParams.Edge1Polarity = CogCaliperPolarityConstants.DarkToLight;
+                _LeadCaliper.RunParams.Edge1Position = _CogLeadTrimAlgo.LeadEdgeWidth / 2;
+                _LeadCaliper.Region = null;
+                #endregion
+
+                LeadTrimResult.ShoulderBurrDefectList.Clear();
+                for (int iLoopCount = 0; iLoopCount < _ShoulderResult.BlobCount; ++iLoopCount)
+                {
+                    _LeadCaliper.InputImage = _ShoulderImage[iLoopCount];
+                    _LeadCaliper.InputImage.SelectedSpaceName = "@";
+                    _LeadCaliper.Run();
+                    //CogSerializer.SaveObjectToFile(_LeadCaliper, string.Format(@"D:\Caliper{0}.vpp", iLoopCount + 1));
+
+                    if (_LeadCaliper.Results != null)
+                    {
+                        //Edge 추출
+                        _ShoulderResult.LeadEdgeCenter[iLoopCount]  = _LeadCaliper.Results[0].PositionX;
+                        _ShoulderResult.LeadEdgeWidth[iLoopCount]   = _LeadCaliper.Results[0].Width;
+                        _ShoulderResult.LeadEdgeLeft[iLoopCount]    = _LeadCaliper.Results[0].Edge0.PositionX;
+                        _ShoulderResult.LeadEdgeRight[iLoopCount]   = _LeadCaliper.Results[0].Edge1.PositionX;
+
+                        //Lead 왼쪽, 오른쪽, Lead 영역 추출
+                        GetLeadSectionArea(_LeadCaliper.Results, _LeadArea[iLoopCount], _LeadRotation[iLoopCount], 
+                                           ref _ShoulderResult.LeadLeftArea[iLoopCount], ref _ShoulderResult.LeadRightArea[iLoopCount], ref _ShoulderResult.LeadCenterArea[iLoopCount]);
+
+                        LeadBurrCheck(_SrcImage, _ShoulderResult.LeadLeftArea[iLoopCount], _CogLeadTrimAlgo);
+                        LeadBurrCheck(_SrcImage, _ShoulderResult.LeadRightArea[iLoopCount], _CogLeadTrimAlgo);
+                        LeadNickCheck(_SrcImage, _ShoulderResult.LeadCenterArea[iLoopCount], _CogLeadTrimAlgo);
+
+                        #region Blob 설정값 저장하여 확인하기 위해서 / 주석 처리
+                        //CogBlobMeasure _BlobMeasure = new CogBlobMeasure();
+                        //_BlobMeasure.Measure = CogBlobMeasureConstants.CenterMassX;
+                        //_BlobMeasure.Mode = CogBlobMeasureModeConstants.PreCompute;
+                        //_BlobMeasure.FilterMode = CogBlobFilterModeConstants.IncludeBlobsInRange;
+                        //
+                        //CogBlobTool _Blob = new CogBlobTool();
+                        //_Blob.InputImage = _SrcImage;
+                        //_Blob.RunParams.MorphologyOperations.Add(CogBlobMorphologyConstants.ErodeHorizontal);
+                        //_Blob.RunParams.MorphologyOperations.Add(CogBlobMorphologyConstants.DilateHorizontal);
+                        //_Blob.RunParams.RunTimeMeasures.Add(_BlobMeasure);
+                        //
+                        //_Blob.Region = _ShoulderResult.LeadLeftArea[iLoopCount];
+                        //_Blob.Run();
+                        //CogSerializer.SaveObjectToFile(_Blob, string.Format(@"D:\Blob{0}_Left.vpp", iLoopCount + 1));
+                        //
+                        //_Blob.Region = _ShoulderResult.LeadRightArea[iLoopCount];
+                        //_Blob.Run();
+                        //CogSerializer.SaveObjectToFile(_Blob, string.Format(@"D:\Blob{0}_Right.vpp", iLoopCount + 1));
+                        //
+                        //_Blob.RunParams.SegmentationParams.Mode = CogBlobSegmentationModeConstants.HardFixedThreshold;
+                        //_Blob.RunParams.SegmentationParams.Polarity = CogBlobSegmentationPolarityConstants.LightBlobs;
+                        //_Blob.RunParams.SegmentationParams.HardFixedThreshold = 90;
+                        //_Blob.RunParams.ConnectivityMinPixels = 10;
+                        //_Blob.RunParams.MorphologyOperations.Add(CogBlobMorphologyConstants.DilateHorizontal);
+                        //_Blob.RunParams.MorphologyOperations.Add(CogBlobMorphologyConstants.ErodeHorizontal);
+                        //
+                        //
+                        //_Blob.Region = _ShoulderResult.LeadCenterArea[iLoopCount];
+                        //_Blob.Run();
+                        //CogSerializer.SaveObjectToFile(_Blob, string.Format(@"D:\Blob{0}_Center.vpp", iLoopCount + 1));
+                        #endregion
+                    }
+                }
+
+                _ProcessWatch.Stop();
+                string _ProcessTime = String.Format("ShoulderInspection Time : {0} ms", _ProcessWatch.Elapsed.TotalSeconds.ToString());
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, _ProcessTime, CLogManager.LOG_LEVEL.LOW);
+            }
+
+            catch (Exception ex)
+            {
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "ShoulderInspection - Inspection Exception : " + ex.ToString(), CLogManager.LOG_LEVEL.LOW);
+                _Result = false;
+            }
+
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "ShoulderInspection - End", CLogManager.LOG_LEVEL.MID);
+            return _Result;
+        }
+
+        /// <summary>
+        /// Lead를 Caliper로 측정 후 세 영역으로 나누어 검사하기
+        /// </summary>
+        /// <param name="_LeadCaliperResult">Caliper Result</param>
+        /// <param name="_LeadArea">Lead 전체 영역</param>
+        /// <param name="_Rotation">Lead 기울기</param>
+        /// <param name="_Left">Lead 왼쪽 영역</param>
+        /// <param name="_Right">Lead 오른쪽 영역</param>
+        /// <param name="_Center">Lead 중앙 영역</param>
+        private void GetLeadSectionArea(CogCaliperResults _LeadCaliperResult, CogRectangleAffine _LeadArea, double _Rotation, ref CogRectangleAffine _Left, ref CogRectangleAffine _Right, ref CogRectangleAffine _Center)
+        {
+            double _CX, _CY, _W, _H;
+
+            #region Lead 왼쪽, 오른쪽, Lead 영역 추출
+            //Lead의 왼쪽 영역 추출 : Lead Shoulder Burr 검사
+            _Left = new CogRectangleAffine();
+            _CX = _LeadCaliperResult[0].Edge0.PositionX - 20;
+            _CY = _LeadArea.CenterY;
+            _W = 40;
+            _H = _LeadArea.SideYLength + 10;
+            _Left.SetCenterLengthsRotationSkew(_CX, _CY, _W, _H, _Rotation, 0);
+
+            //Lead의 오른쪽 영역 추출 : Lead Shoulder Burr 검사
+            _Right = new CogRectangleAffine();
+            _CX = _LeadCaliperResult[0].Edge1.PositionX + 20;
+            _CY = _LeadArea.CenterY;
+            _W = 40;
+            _H = _LeadArea.SideYLength + 10;
+            _Right.SetCenterLengthsRotationSkew(_CX, _CY, _W, _H, _Rotation, 0);
+
+            //Lead 영역 추출 : Lead Shoulder nick 검사
+            _Center = new CogRectangleAffine();
+            _CX = _LeadCaliperResult[0].PositionX;
+            _CY = _LeadArea.CenterY;
+            _W = _LeadCaliperResult[0].Width;
+            _H = _LeadArea.SideYLength + 10;
+            _Center.SetCenterLengthsRotationSkew(_CX, _CY, _W, _H, _Rotation, 0);
+            #endregion
+        }
+
+        private void LeadBurrCheck(CogImage8Grey _SrcImage, CogRectangleAffine _BurrArea, CogLeadTrimAlgo _CogLeadTrimAlgo)
+        {
+            SetPolarity(false);
+            SetConnectivityMinimum(50);
+            SetHardFixedThreshold(_CogLeadTrimAlgo.ShoulderBurrThreshold);
+            SetMorphology(CogBlobMorphologyConstants.ErodeHorizontal);
+            SetMorphology(CogBlobMorphologyConstants.DilateHorizontal);
+
+            CogBlobResults _BlobResults = BlobProc.Execute(_SrcImage, _BurrArea);
+            CogLeadTrimShoulderResult _LeadBurrResult = GetShoulderResult(_BlobResults);
+
+            if (0 == _LeadBurrResult.BlobCount) return;
+
+            CogRectangle _DefectArea = new CogRectangle();
+            for (int iLoopCount = 0; iLoopCount < _LeadBurrResult.BlobCount; ++iLoopCount)
+            {
+                _DefectArea = new CogRectangle();
+                _DefectArea.SetCenterWidthHeight(_LeadBurrResult.BlobCenterX[iLoopCount], _LeadBurrResult.BlobCenterY[iLoopCount], _LeadBurrResult.Width[iLoopCount], _LeadBurrResult.Height[iLoopCount]);
+
+                LeadTrimResult.ShoulderBurrDefectList.Add(_DefectArea);
+            }
+        }
+
+        private void LeadNickCheck(CogImage8Grey _SrcImage, CogRectangleAffine _NickArea, CogLeadTrimAlgo _CogLeadTrimAlgo)
+        {
+            SetPolarity(true);
+            SetConnectivityMinimum(50);
+            SetHardFixedThreshold(_CogLeadTrimAlgo.ShoulderNickThreshold);
+            SetMorphology(CogBlobMorphologyConstants.ErodeHorizontal);
+            SetMorphology(CogBlobMorphologyConstants.DilateHorizontal);
+
+            CogBlobResults _BlobResults = BlobProc.Execute(_SrcImage, _NickArea);
+            CogLeadTrimShoulderResult _LeadBurrResult = GetShoulderResult(_BlobResults);
+
+            if (0 == _LeadBurrResult.BlobCount) return;
+
+            CogRectangle _DefectArea = new CogRectangle();
+            for (int iLoopCount = 0; iLoopCount < _LeadBurrResult.BlobCount; ++iLoopCount)
+            {
+                _DefectArea = new CogRectangle();
+                _DefectArea.SetCenterWidthHeight(_LeadBurrResult.BlobCenterX[iLoopCount], _LeadBurrResult.BlobCenterY[iLoopCount], _LeadBurrResult.Width[iLoopCount], _LeadBurrResult.Height[iLoopCount]);
+
+                LeadTrimResult.ShoulderBurrDefectList.Add(_DefectArea);
+            }
+        }
+
+        public bool LeadTipInspection(CogImage8Grey _SrcImage, CogRectangle _InspRegion, CogLeadTrimAlgo _CogLeadTrimAlgo)
+        {
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "LeadTipInspection - Start", CLogManager.LOG_LEVEL.MID);
+
+            if (false == _CogLeadTrimAlgo.IsUseLeadTipInspection)
+            {
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "LeadTipInspection Disable - End", CLogManager.LOG_LEVEL.MID);
+                return true;
+            }
+
+            bool _Result = true;
+
+            try
+            {
+                System.Diagnostics.Stopwatch _ProcessWatch = new System.Diagnostics.Stopwatch();
+                _ProcessWatch.Reset(); _ProcessWatch.Start();
+
+                //Lead Tip 영역 추출
+                SetConnectivityMinimum(2000);
+                SetHardFixedThreshold(_CogLeadTrimAlgo.ShoulderThreshold);
+                SetPolarity(Convert.ToBoolean(_CogLeadTrimAlgo.ShoulderForeground));
+                BlobResults = BlobProc.Execute(_SrcImage, _InspRegion);
+                CogLeadTrimLeadTipResult _LeadTipResult = GetLeadTipResult(BlobResults);
+
+                if (_LeadTipResult.BlobCount != _CogLeadTrimAlgo.LeadCount)
+                {
+                    LeadTrimResult.LastErrorMessage = "Lead Tip Count Error";
+                    return false;
+                }
+
+                //Lead Tip 영역 추출
+                CogAffineTransformTool  _LeadTipAreaTransTool = new CogAffineTransformTool();
+                CogRectangleAffine[]    _LeadTipArea = new CogRectangleAffine[_CogLeadTrimAlgo.LeadCount];
+                CogImage8Grey[]         _LeadTipImage = new CogImage8Grey[_CogLeadTrimAlgo.LeadCount];
+                double[]                _LeadTipRotation = new double[_CogLeadTrimAlgo.LeadCount];
+                for (int iLoopCount = 0; iLoopCount < _LeadTipResult.BlobCount; ++iLoopCount)
+                {
+
+                }
+            }
+
+            catch (Exception ex)
+            {
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "LeadTipInspection - Inspection Exception : " + ex.ToString(), CLogManager.LOG_LEVEL.LOW);
+                _Result = false;
+            }
+
+            return _Result;
         }
 
         private void SetHardFixedThreshold(int _ThresholdValue)
@@ -459,6 +740,11 @@ namespace InspectionSystemManager
             else                    BlobProc.SegmentationParams.Polarity = CogBlobSegmentationPolarityConstants.DarkBlobs;
         }
 
+        private void SetMorphology(CogBlobMorphologyConstants _Mode)
+        {
+            BlobProc.MorphologyOperations.Add(_Mode);
+        }
+
         private void SetMeasurement(CogBlobMeasureConstants _Properties, CogBlobMeasureModeConstants _Filter, CogBlobFilterModeConstants _Range, double _RangeLow, double _RangeHigh, bool _IsNew = true)
         {
             if (_IsNew) BlobProc.RunTimeMeasures.Clear();
@@ -470,6 +756,113 @@ namespace InspectionSystemManager
             _BlobMeasure.FilterRangeLow = _RangeLow;
             _BlobMeasure.FilterRangeHigh = _RangeHigh;
             BlobProc.RunTimeMeasures.Add(_BlobMeasure);
+        }
+
+        public CogLeadTrimResult GetLeadTrimResult()
+        {
+            return LeadTrimResult;
+        }
+
+        private CogLeadTrimLeadTipResult GetLeadTipResult(CogBlobResults _BlobResults)
+        {
+            CogLeadTrimLeadTipResult _LeadTipResult = new CogLeadTrimLeadTipResult();
+
+            if (null == _BlobResults || _BlobResults.GetBlobs().Count < 0) { _LeadTipResult.BlobCount = 0; return _LeadTipResult; }
+
+            _LeadTipResult.BlobCount = _BlobResults.GetBlobs().Count;
+            _LeadTipResult.BlobArea = new double[_BlobResults.GetBlobs().Count];
+            _LeadTipResult.Width = new double[_BlobResults.GetBlobs().Count];
+            _LeadTipResult.Height = new double[_BlobResults.GetBlobs().Count];
+            _LeadTipResult.BlobMinX = new double[_BlobResults.GetBlobs().Count];
+            _LeadTipResult.BlobMinY = new double[_BlobResults.GetBlobs().Count];
+            _LeadTipResult.BlobMaxX = new double[_BlobResults.GetBlobs().Count];
+            _LeadTipResult.BlobMaxY = new double[_BlobResults.GetBlobs().Count];
+            _LeadTipResult.BlobCenterX = new double[_BlobResults.GetBlobs().Count];
+            _LeadTipResult.BlobCenterY = new double[_BlobResults.GetBlobs().Count];
+            _LeadTipResult.PrincipalWidth = new double[_BlobResults.GetBlobs().Count];
+            _LeadTipResult.PrincipalHeight = new double[_BlobResults.GetBlobs().Count];
+            _LeadTipResult.BlobMessCenterX = new double[_BlobResults.GetBlobs().Count];
+            _LeadTipResult.BlobMessCenterY = new double[_BlobResults.GetBlobs().Count];
+            _LeadTipResult.Angle = new double[_BlobResults.GetBlobs().Count];
+
+            _LeadTipResult.LeadEdgeLeft = new double[_BlobResults.GetBlobs().Count];
+            _LeadTipResult.LeadEdgeRight = new double[_BlobResults.GetBlobs().Count];
+            _LeadTipResult.LeadEdgeCenter = new double[_BlobResults.GetBlobs().Count];
+            _LeadTipResult.LeadEdgeWidth = new double[_BlobResults.GetBlobs().Count];
+
+            _LeadTipResult.LeadTipLeftArea = new CogRectangleAffine[_BlobResults.GetBlobs().Count];
+            _LeadTipResult.LeadTipRightArea = new CogRectangleAffine[_BlobResults.GetBlobs().Count];
+
+            for (int iLoopCount = 0; iLoopCount < _BlobResults.GetBlobs().Count; ++iLoopCount)
+            {
+                _LeadTipResult.BlobArea[iLoopCount] = _BlobResults.GetBlobMeasure(CogBlobMeasureConstants.Area, iLoopCount);
+                _LeadTipResult.Width[iLoopCount] = _BlobResults.GetBlobMeasure(CogBlobMeasureConstants.BoundingBoxPixelAlignedNoExcludeWidth, iLoopCount);
+                _LeadTipResult.Height[iLoopCount] = _BlobResults.GetBlobMeasure(CogBlobMeasureConstants.BoundingBoxPixelAlignedNoExcludeHeight, iLoopCount);
+                _LeadTipResult.BlobMinX[iLoopCount] = _BlobResults.GetBlobMeasure(CogBlobMeasureConstants.BoundingBoxPixelAlignedNoExcludeMinX, iLoopCount);
+                _LeadTipResult.BlobMinY[iLoopCount] = _BlobResults.GetBlobMeasure(CogBlobMeasureConstants.BoundingBoxPixelAlignedNoExcludeMinY, iLoopCount);
+                _LeadTipResult.BlobMaxX[iLoopCount] = _BlobResults.GetBlobMeasure(CogBlobMeasureConstants.BoundingBoxPixelAlignedNoExcludeMaxX, iLoopCount);
+                _LeadTipResult.BlobMaxY[iLoopCount] = _BlobResults.GetBlobMeasure(CogBlobMeasureConstants.BoundingBoxPixelAlignedNoExcludeMaxY, iLoopCount);
+                _LeadTipResult.BlobCenterX[iLoopCount] = (_LeadTipResult.BlobMaxX[iLoopCount] + _LeadTipResult.BlobMinX[iLoopCount]) / 2;
+                _LeadTipResult.BlobCenterY[iLoopCount] = (_LeadTipResult.BlobMaxY[iLoopCount] + _LeadTipResult.BlobMinY[iLoopCount]) / 2;
+                _LeadTipResult.PrincipalWidth[iLoopCount] = _BlobResults.GetBlobMeasure(CogBlobMeasureConstants.BoundingBoxPrincipalAxisWidth, iLoopCount);
+                _LeadTipResult.PrincipalHeight[iLoopCount] = _BlobResults.GetBlobMeasure(CogBlobMeasureConstants.BoundingBoxPrincipalAxisHeight, iLoopCount);
+                _LeadTipResult.BlobMessCenterX[iLoopCount] = _BlobResults.GetBlobMeasure(CogBlobMeasureConstants.CenterMassX, iLoopCount);
+                _LeadTipResult.BlobMessCenterY[iLoopCount] = _BlobResults.GetBlobMeasure(CogBlobMeasureConstants.CenterMassY, iLoopCount);
+                _LeadTipResult.Angle[iLoopCount] = _BlobResults.GetBlobMeasure(CogBlobMeasureConstants.Angle, iLoopCount);
+            }
+
+            return _LeadTipResult;
+        }
+
+        private CogLeadTrimShoulderResult GetShoulderResult(CogBlobResults _BlobResults)
+        {
+            CogLeadTrimShoulderResult _ShoulderResult = new CogLeadTrimShoulderResult();
+
+            if (null == _BlobResults || _BlobResults.GetBlobs().Count < 0) { _ShoulderResult.BlobCount = 0; return _ShoulderResult; }
+            _ShoulderResult.BlobCount       = _BlobResults.GetBlobs().Count;
+            _ShoulderResult.BlobArea        = new double[_BlobResults.GetBlobs().Count];
+            _ShoulderResult.Width           = new double[_BlobResults.GetBlobs().Count];
+            _ShoulderResult.Height          = new double[_BlobResults.GetBlobs().Count];
+            _ShoulderResult.BlobMinX        = new double[_BlobResults.GetBlobs().Count];
+            _ShoulderResult.BlobMinY        = new double[_BlobResults.GetBlobs().Count];
+            _ShoulderResult.BlobMaxX        = new double[_BlobResults.GetBlobs().Count];
+            _ShoulderResult.BlobMaxY        = new double[_BlobResults.GetBlobs().Count];
+            _ShoulderResult.BlobCenterX     = new double[_BlobResults.GetBlobs().Count];
+            _ShoulderResult.BlobCenterY     = new double[_BlobResults.GetBlobs().Count];
+            _ShoulderResult.PrincipalWidth  = new double[_BlobResults.GetBlobs().Count];
+            _ShoulderResult.PrincipalHeight = new double[_BlobResults.GetBlobs().Count];
+            _ShoulderResult.BlobMessCenterX = new double[_BlobResults.GetBlobs().Count];
+            _ShoulderResult.BlobMessCenterY = new double[_BlobResults.GetBlobs().Count];
+            _ShoulderResult.Angle           = new double[_BlobResults.GetBlobs().Count];
+
+            _ShoulderResult.LeadEdgeLeft    = new double[_BlobResults.GetBlobs().Count];
+            _ShoulderResult.LeadEdgeRight   = new double[_BlobResults.GetBlobs().Count];
+            _ShoulderResult.LeadEdgeCenter  = new double[_BlobResults.GetBlobs().Count];
+            _ShoulderResult.LeadEdgeWidth   = new double[_BlobResults.GetBlobs().Count];
+
+            _ShoulderResult.LeadLeftArea    = new CogRectangleAffine[_BlobResults.GetBlobs().Count];
+            _ShoulderResult.LeadRightArea   = new CogRectangleAffine[_BlobResults.GetBlobs().Count];
+            _ShoulderResult.LeadCenterArea  = new CogRectangleAffine[_BlobResults.GetBlobs().Count];
+
+            for (int iLoopCount = 0; iLoopCount < _BlobResults.GetBlobs().Count; ++iLoopCount)
+            {
+                _ShoulderResult.BlobArea[iLoopCount]    = _BlobResults.GetBlobMeasure(CogBlobMeasureConstants.Area, iLoopCount);
+                _ShoulderResult.Width[iLoopCount]       = _BlobResults.GetBlobMeasure(CogBlobMeasureConstants.BoundingBoxPixelAlignedNoExcludeWidth, iLoopCount);
+                _ShoulderResult.Height[iLoopCount]      = _BlobResults.GetBlobMeasure(CogBlobMeasureConstants.BoundingBoxPixelAlignedNoExcludeHeight, iLoopCount);
+                _ShoulderResult.BlobMinX[iLoopCount]    = _BlobResults.GetBlobMeasure(CogBlobMeasureConstants.BoundingBoxPixelAlignedNoExcludeMinX, iLoopCount);
+                _ShoulderResult.BlobMinY[iLoopCount]    = _BlobResults.GetBlobMeasure(CogBlobMeasureConstants.BoundingBoxPixelAlignedNoExcludeMinY, iLoopCount);
+                _ShoulderResult.BlobMaxX[iLoopCount]    = _BlobResults.GetBlobMeasure(CogBlobMeasureConstants.BoundingBoxPixelAlignedNoExcludeMaxX, iLoopCount);
+                _ShoulderResult.BlobMaxY[iLoopCount]    = _BlobResults.GetBlobMeasure(CogBlobMeasureConstants.BoundingBoxPixelAlignedNoExcludeMaxY, iLoopCount);
+                _ShoulderResult.BlobCenterX[iLoopCount] = (_ShoulderResult.BlobMaxX[iLoopCount] + _ShoulderResult.BlobMinX[iLoopCount]) / 2;
+                _ShoulderResult.BlobCenterY[iLoopCount] = (_ShoulderResult.BlobMaxY[iLoopCount] + _ShoulderResult.BlobMinY[iLoopCount]) / 2;
+                _ShoulderResult.PrincipalWidth[iLoopCount]  = _BlobResults.GetBlobMeasure(CogBlobMeasureConstants.BoundingBoxPrincipalAxisWidth, iLoopCount);
+                _ShoulderResult.PrincipalHeight[iLoopCount] = _BlobResults.GetBlobMeasure(CogBlobMeasureConstants.BoundingBoxPrincipalAxisHeight, iLoopCount);
+                _ShoulderResult.BlobMessCenterX[iLoopCount] = _BlobResults.GetBlobMeasure(CogBlobMeasureConstants.CenterMassX, iLoopCount);
+                _ShoulderResult.BlobMessCenterY[iLoopCount] = _BlobResults.GetBlobMeasure(CogBlobMeasureConstants.CenterMassY, iLoopCount);
+                _ShoulderResult.Angle[iLoopCount] = _BlobResults.GetBlobMeasure(CogBlobMeasureConstants.Angle, iLoopCount);
+            }
+
+            return _ShoulderResult;
         }
 
         private CogLeadTrimResult GetResults()

@@ -355,7 +355,7 @@ namespace ParameterManager
     /// </summary>
     public class CogLeadTrimAlgo
     {
-        public enum eAlgoMode   { BODY_CHECK = 0, CHIPOUT_CHECK, LEAD_MEASURE };
+        public enum eAlgoMode   { BODY_CHECK = 0, CHIPOUT_CHECK, LEAD_MEASURE, SHOULDER_CHECK, LEADTIP_CHECK };
 
         public bool             IsUseLeadBody;
         public RectangleD       BodyArea;
@@ -389,6 +389,27 @@ namespace ParameterManager
         public double[]         LeadLengthArray;
         public double[]         LeadWidthArray;
 
+        public bool             IsUseShoulderInspection;
+        public RectangleD       ShoulderInspArea;
+        public int              ShoulderForeground;
+        public int              ShoulderThreshold;
+
+        public int              LeadEdgeWidth;
+        public int              ShoulderBurrThreshold;
+        public int              ShoulderNickThreshold;
+        public double           ShoulderBurrSpec;
+        public double           ShoulderNickSpec;
+
+
+        public bool             IsUseLeadTipInspection;
+        public RectangleD       LeadTipInspArea;
+        public int              LeadTipForeground;
+        public int              LeadTipThreshold;
+        public int              LeadTipEdgeWidth;
+        public int              LeadTipBurrThreshold;
+        public double           LeadTipBurrSpec;
+
+
         public CogLeadTrimAlgo()
         {
             IsUseLeadBody = true;
@@ -417,6 +438,26 @@ namespace ParameterManager
             LeadLengthArray = new double[LeadCount];
             LeadPitchArray = new double[LeadCount - 1];
             LeadWidthArray = new double[LeadCount];
+
+            IsUseShoulderInspection = true;
+            ShoulderInspArea = new RectangleD();
+            ShoulderForeground = 0;
+            ShoulderThreshold = 180;
+
+            LeadEdgeWidth = 36;
+            ShoulderBurrThreshold = 200;
+            ShoulderNickThreshold = 100;
+            ShoulderBurrSpec = 0.075;
+            ShoulderNickSpec = 0.075;
+
+
+            IsUseLeadTipInspection = true;
+            LeadTipInspArea = new RectangleD();
+            LeadTipForeground = 0;
+            LeadTipThreshold = 180;
+            LeadTipEdgeWidth = 36;
+            LeadTipBurrThreshold = 200;
+            LeadTipBurrSpec = 0.075;
         }
     }
     #endregion Cog Algorithm Class
