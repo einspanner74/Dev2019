@@ -351,6 +351,7 @@ namespace ParameterManager
 
 
         public List<CogRectangle> ShoulderBurrDefectList;
+        public List<CogRectangle> LeadTipBurrDefectList;
 
         public CogLeadTrimResult()
         {
@@ -365,6 +366,7 @@ namespace ParameterManager
             LeadBodyBaseLine = new CogLine();
 
             ShoulderBurrDefectList = new List<CogRectangle>();
+            LeadTipBurrDefectList = new List<CogRectangle>();
         }
     }
 
@@ -417,6 +419,7 @@ namespace ParameterManager
 
         public CogRectangleAffine[] LeadTipLeftArea;
         public CogRectangleAffine[] LeadTipRightArea;
+        public CogRectangleAffine[] LeadTipCenterArea;
     }
 
     public class CogLeadBlobResult

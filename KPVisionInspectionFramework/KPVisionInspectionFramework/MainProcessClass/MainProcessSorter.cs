@@ -22,7 +22,7 @@ namespace KPVisionInspectionFramework
 
         }
 
-        public override void Initialize(string CommonFolderPath)
+        public override void Initialize(string _CommonFolderPath, bool _IsIOBoardUsable, bool _IsEthernetUsable)
         {
             
         }

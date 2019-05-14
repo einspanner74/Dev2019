@@ -70,6 +70,8 @@ namespace ParameterManager
 
     public enum eSaveMode           { ALL = 0, ONLY_NG };
 
+    public enum eLanguage           { KR = 0, EN };
+
     public static class DIO_DEF
     {
         public const int NONE = -1;

@@ -84,6 +84,7 @@ namespace InspectionSystemManager
         {
             InitializeComponent();
             InitializeContextMenu();
+            InitializeLanguage();
         }
 
         public void SetParameters(InspectionParameter _InspParam, MapDataParameter _MapDataParam)
@@ -100,7 +101,8 @@ namespace InspectionSystemManager
 
         public void Initialize(int _ID = 0, eProjectType _ProjectType = eProjectType.NONE, eProjectItem _ProjectItem = eProjectItem.NONE)
         {
-            string _WindowTextName = String.Format(" Vision{0} - Teaching Window", (_ID + 1));
+            //string _WindowTextName = String.Format(" Vision{0} - Teaching Window", (_ID + 1));
+            string _WindowTextName = String.Format(" {0}{1} - {2}", LanguageResource.Vision, _ID + 1, LanguageResource.TeachingWindow);
             this.labelTitle.Text = _WindowTextName;
             this.labelStatus.Text = "";
 
@@ -163,6 +165,32 @@ namespace InspectionSystemManager
             //gridViewArea.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
         }
 
+        private void InitializeLanguage()
+        {
+            //labelTitle.Text = LanguageResource.Vision;
+            gradientLabelSettingWindowTitle.Text = LanguageResource.AreaSettingWindowTitle;
+            gradientLabelTeaching.Text = LanguageResource.TeachingWindow;
+            labelInspectionArea.Text = LanguageResource.InspectionArea;
+            labelAlgorithmArea.Text = LanguageResource.AlgorithmArea;
+            tabPageInspectionArea.Text = LanguageResource.InspectionArea;
+            tabPageAlgorithmArea.Text = LanguageResource.AlgorithmArea;
+
+            btnInspectionAreaSet.Text = LanguageResource.InspectionAreaSet;
+            btnInspectionAreaAdd.Text = LanguageResource.InspectionAreaPlus;
+            btnInspectionAreaDel.Text = LanguageResource.InspectionAreaMinus;
+            btnInspectionAreaCopy.Text = LanguageResource.InspectionAreaCopy;
+            btnMapDataApplyInspectionArea.Text = LanguageResource.ApplyMapData;
+            btnMapDataAlgorithmSet.Text = LanguageResource.SetMapData;
+
+
+            btnInspectionAlgoSet.Text = LanguageResource.AlgorithmSet;
+
+            btnShowAllArea.Text = LanguageResource.ShowAllArea;
+            btnSave.Text = LanguageResource.Save;
+            btnConfirm.Text = LanguageResource.Confirm;
+            btnCancel.Text = LanguageResource.Cancel;
+        }
+
         public void DeInitialize()
         {
             ucCogPatternWnd.Dispose();
@@ -204,6 +232,7 @@ namespace InspectionSystemManager
                 ContextMenuAlgo.MenuItems.Add("기준 패턴 검사", new EventHandler(PatternFindAlgorithm));
                 ContextMenuAlgo.MenuItems.Add("기준 라인 검사", new EventHandler(LineFineAlgorithm));
                 ContextMenuAlgo.MenuItems.Add("Lead Trim 검사", new EventHandler(LeadTrimInspectionAlgorithm));
+                //ContextMenuAlgo.MenuItems.Add("Body 검사", new EventHandler(BlobReferenceAlgorithm));
             }
 
             else if (ProjectItem == eProjectItem.LEAD_FORM_ALIGN)
@@ -821,6 +850,7 @@ namespace InspectionSystemManager
                 if (gridViewAlgo.SelectedRows.Count == 0) return;
 
                 panelTeaching.Controls.Clear();
+                panelTeaching.Controls.Add(gradientLabelTeaching);
 
                 int _ID = Convert.ToInt32(gridViewAlgo.SelectedRows[0].Cells[(int)eAlgoList.ID].Value) - 1;
                 GetAlgoResultDataOffset(InspAreaSelected, _ID);
@@ -1030,12 +1060,12 @@ namespace InspectionSystemManager
                     ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).ThresholdMin = MapDataParam.MapID.SearchThreshold;
                     ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).BlobAreaMin = MapDataParam.MapID.BlobAreaSizeMin;
                     ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).BlobAreaMax = MapDataParam.MapID.BlobAreaSizeMax;
-                    ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).WidthMin = MapDataParam.MapID.SearchSizeMin;
-                    ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).WidthMax = MapDataParam.MapID.SearchSizeMax;
-                    ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).WidthMin = MapDataParam.MapID.SearchSizeMin;
-                    ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).WidthMax = MapDataParam.MapID.SearchSizeMax;
-                    ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).HeightMin = 5;
-                    ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).HeightMax = 100000;
+                    ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).Width = (MapDataParam.MapID.SearchSizeMin + MapDataParam.MapID.SearchSizeMax) / 2;
+                    ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).WidthPos = MapDataParam.MapID.SearchSizeMax - ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).Width;
+                    ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).WidthNeg = ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).Width - MapDataParam.MapID.SearchSizeMin;
+                    ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).Height = 10000;
+                    ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).HeightPos = 10000;
+                    ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).HeightNeg = 10000;
                     ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).ResolutionX = 1;
                     ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).ResolutionY = 1;
 

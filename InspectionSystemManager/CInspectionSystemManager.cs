@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 using System.Threading;
+using System.Globalization;
 
 using Cognex.VisionPro;
 using Cognex.VisionPro.PMAlign;
@@ -33,6 +34,7 @@ namespace InspectionSystemManager
         private string CameraType;
         private eProjectType ProjectType = 0;
         private eProjectItem ProjectItem = 0;
+        private double CameraRotate;
 
         private Point WndLocation = new Point(0, 0);
 
@@ -42,12 +44,14 @@ namespace InspectionSystemManager
         #region Initialize & DeInitialize
         public CInspectionSystemManager(int _ID, string _SystemName, bool _IsSimulationMode)
         {
+            InitializeLanguage();
+
             ID = _ID;
             IsSimulationMode = _IsSimulationMode;
 
             MapDataWnd = new MapDataWindow();
             InspWnd = new InspectionWindow();
-            InspWndName = String.Format(" {0} Inspection Window", _SystemName);
+            InspWndName = String.Format(" {0} {1}", _SystemName, InspectionSystemManager.LanguageResource.TitleName);
 
             ThreadInspection = new Thread(ThreadInspectionFunction);
             IsThreadInspectionExit = false;
@@ -68,10 +72,8 @@ namespace InspectionSystemManager
 
             InspWnd.Initialize(_OwnerForm, ID, InspParam, ProjectType, ProjectItem, InspWndName, _RecipeName, IsSimulationMode);
             InspWnd.InitializeResolution(_InspSysManagerParam.ResolutionX, _InspSysManagerParam.ResolutionY);
-            InspWnd.InitializeCam(_InspSysManagerParam.CameraType, _InspSysManagerParam.CameraConfigInfo, Convert.ToInt32(_InspSysManagerParam.ImageSizeWidth), Convert.ToInt32(_InspSysManagerParam.ImageSizeHeight));
+            InspWnd.InitializeCam(_InspSysManagerParam.CameraType, _InspSysManagerParam.CameraConfigInfo, Convert.ToInt32(_InspSysManagerParam.ImageSizeWidth), Convert.ToInt32(_InspSysManagerParam.ImageSizeHeight), _InspSysManagerParam.CameraRotate);
             InspWnd.InspectionWindowEvent += new InspectionWindow.InspectionWindowHandler(InspectionWindowEventFunction);
-
-            
         }
 
         public void DeInitialize()
@@ -83,6 +85,16 @@ namespace InspectionSystemManager
             InspWnd.Deinitialize();
 
             if (ThreadInspection != null) { IsThreadInspectionExit = true; Thread.Sleep(200); ThreadInspection.Abort(); ThreadInspection = null; }
+        }
+
+        public void InitializeLanguage()
+        {
+            if (CParameterManager.Language == eLanguage.KR) LanguageResource.Culture = new CultureInfo("ko-KR"); // ko-KR
+            else                                            LanguageResource.Culture = new CultureInfo("en-US"); // ko-KR
+
+            #region Control Name Setting
+
+            #endregion  
         }
 
         public void SetMapDataParameter(MapDataParameter _MapDataParam)

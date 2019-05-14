@@ -87,6 +87,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LanguageResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LanguageResource.resx</DependentUpon>
+    </Compile>
     <Compile Include="MainForm\FolderPathWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -155,6 +160,11 @@
     <Compile Include="MainResultForm\ucMainResultCardManager.Designer.cs">
       <DependentUpon>ucMainResultCardManager.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="LanguageResource.ko-KR.resx" />
+    <EmbeddedResource Include="LanguageResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>LanguageResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <Compile Include="MainResultForm\ucMainResultNavien.cs">
       <SubType>UserControl</SubType>
     </Compile>

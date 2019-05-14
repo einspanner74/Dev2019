@@ -71,6 +71,7 @@ namespace InspectionSystemManager
         private int AreaAlgoCount;
 
         private string CameraType;
+        private double CameraRotate;
         private int ImageSizeWidth = 0;
         private int ImageSizeHeight = 0;
         private bool IsCamLiveFlag = false;
@@ -111,18 +112,18 @@ namespace InspectionSystemManager
             InspMenuToolTip.AutoPopDelay = 0;
             InspMenuToolTip.InitialDelay = 0;
             InspMenuToolTip.ReshowDelay = 500;
-            InspMenuToolTip.SetToolTip(btnInspection, "Inspection");
-            InspMenuToolTip.SetToolTip(btnOneShot, "One Shot Inspection");
-            InspMenuToolTip.SetToolTip(btnRecipe, "Teaching");
-            InspMenuToolTip.SetToolTip(btnRecipeSave, "Teaching Save");
-            InspMenuToolTip.SetToolTip(btnLive, "Camera Live");
-            InspMenuToolTip.SetToolTip(btnImageLoad, "Image Load");
-            InspMenuToolTip.SetToolTip(btnImageSave, "Image Save");
-            InspMenuToolTip.SetToolTip(btnImageAutoSave, "Image Auto Save");
-            InspMenuToolTip.SetToolTip(btnConfigSave, "Image Configuration Save");
-            InspMenuToolTip.SetToolTip(btnAutoDelete, "Set Image Auto Delete");
-            InspMenuToolTip.SetToolTip(btnCrossBar, "Cross Bar");
-            InspMenuToolTip.SetToolTip(btnImageResultDisplay, "Result Display");
+            InspMenuToolTip.SetToolTip(btnInspection, InspectionSystemManager.LanguageResource.ToolTip_Inspection);
+            InspMenuToolTip.SetToolTip(btnOneShot, InspectionSystemManager.LanguageResource.ToolTip_OneShotInspection);
+            InspMenuToolTip.SetToolTip(btnRecipe, InspectionSystemManager.LanguageResource.ToolTip_Teaching);
+            InspMenuToolTip.SetToolTip(btnRecipeSave, InspectionSystemManager.LanguageResource.ToolTip_TeachingSave);
+            InspMenuToolTip.SetToolTip(btnLive, InspectionSystemManager.LanguageResource.ToolTip_CameraLive);
+            InspMenuToolTip.SetToolTip(btnImageLoad, InspectionSystemManager.LanguageResource.ToolTip_ImageLoad);
+            InspMenuToolTip.SetToolTip(btnImageSave, InspectionSystemManager.LanguageResource.ToolTip_ImageSave);
+            InspMenuToolTip.SetToolTip(btnImageAutoSave, InspectionSystemManager.LanguageResource.ToolTip_ImageAutoSave);
+            InspMenuToolTip.SetToolTip(btnConfigSave, InspectionSystemManager.LanguageResource.ToolTip_ImageConfigurationSave);
+            InspMenuToolTip.SetToolTip(btnAutoDelete, InspectionSystemManager.LanguageResource.ToolTip_SetImageAutoDelete);
+            InspMenuToolTip.SetToolTip(btnCrossBar, InspectionSystemManager.LanguageResource.ToolTip_CrossBar);
+            InspMenuToolTip.SetToolTip(btnImageResultDisplay, InspectionSystemManager.LanguageResource.ToolTip_ResultDisplay);
             #endregion
         }
 
@@ -224,12 +225,13 @@ namespace InspectionSystemManager
         /// <param name="_CamInfo"></param>
         /// <param name="_Width"></param>
         /// <param name="_Height"></param>
-        public void InitializeCam(string _CamType, string _CamInfo, int _Width, int _Height)
+        public void InitializeCam(string _CamType, string _CamInfo, int _Width, int _Height, double _Rotate)
         {
             if (IsSimulationMode) return;
 
             ImageSizeWidth = _Width;
             ImageSizeHeight = _Height;
+            CameraRotate = _Rotate;
 
             if (_CamType == eCameraType.Euresys.ToString() || _CamType == eCameraType.EuresysIOTA.ToString())
             {
@@ -637,14 +639,14 @@ namespace InspectionSystemManager
         //LDH, 2018.07.04, byte Image display 함수 
         private void SetDisplayGrabImage(byte[] Image)
         {
-            kpCogDisplayMain.SetDisplayImage(Image, ImageSizeWidth, ImageSizeHeight);
+            kpCogDisplayMain.SetDisplayImage(Image, ImageSizeWidth, ImageSizeHeight, CameraRotate);
             if (CParameterManager.SystemMode != eSysMode.LIVE_MODE)
             {
                 kpCogDisplayMain.SetDisplayZoom(DisplayZoomValue);
                 kpCogDisplayMain.SetDisplayPanX(DisplayPanXValue);
                 kpCogDisplayMain.SetDisplayPanY(DisplayPanYValue);
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM {0} - H/W Trigger ON Grab", ID + 1), CLogManager.LOG_LEVEL.LOW);
             }
-            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM {0} - H/W Trigger ON Grab", ID + 1), CLogManager.LOG_LEVEL.LOW);
 
             OriginImage = (CogImage8Grey)kpCogDisplayMain.GetDisplayImage();
             GC.Collect();

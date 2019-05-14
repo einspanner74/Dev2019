@@ -115,10 +115,14 @@ namespace ParameterManager
         public int ThresholdMax;
         public double BlobAreaMin;
         public double BlobAreaMax;
-        public double WidthMin;
-        public double WidthMax;
-        public double HeightMin;
-        public double HeightMax;
+
+        public double Width;
+        public double WidthPos;
+        public double WidthNeg;
+        public double Height;
+        public double HeightPos;
+        public double HeightNeg;
+
         public double OriginX;
         public double OriginY;
 
@@ -147,10 +151,13 @@ namespace ParameterManager
             ThresholdMax = 200;
             BlobAreaMin = 1000;
             BlobAreaMax = 9000000;
-            WidthMin = 5;
-            WidthMax = 200;
-            HeightMin = 5;
-            HeightMax = 200;
+
+            Width = 10;
+            WidthPos = 0.5;
+            WidthNeg = 0.5;
+            Height = 5;
+            HeightPos = 0.5;
+            HeightNeg = 0.5;
 
             BodyAreaPermitPercent = 85;
             BodyWidthPermitPercent = 85;

@@ -780,10 +780,14 @@ namespace MapDataManager
             _BlobReferAlgo.ThresholdMin = Convert.ToInt32(graLabelThresholdValue.Text);
             _BlobReferAlgo.BlobAreaMin = 100;
             _BlobReferAlgo.BlobAreaMax = 50000;
-            _BlobReferAlgo.WidthMin = Convert.ToDouble(graLabelWidthMin.Text);
-            _BlobReferAlgo.WidthMax = Convert.ToDouble(graLabelWidthMax.Text);
-            _BlobReferAlgo.HeightMin = 5;
-            _BlobReferAlgo.HeightMax = 100000;
+
+            _BlobReferAlgo.Width = 25100;
+            _BlobReferAlgo.WidthPos = 25000;
+            _BlobReferAlgo.WidthNeg = 25000;
+            _BlobReferAlgo.Height = 25100;
+            _BlobReferAlgo.HeightPos = 25000;
+            _BlobReferAlgo.HeightNeg = 25000;
+
             _BlobReferAlgo.ForeGround = 1;
 
             if (null == OriginImage) return;
@@ -801,7 +805,7 @@ namespace MapDataManager
                 double _Width = _BlobReferResult.Width[iLoopCount];
                 double _Height = _BlobReferResult.Height[iLoopCount];
 
-                if (_BlobReferAlgo.WidthMin < _Width && _BlobReferAlgo.WidthMax > _Width)
+                if ((_Width > _BlobReferAlgo.Width - Math.Abs(_BlobReferAlgo.WidthNeg)) && (_Width < _BlobReferAlgo.Width + _BlobReferAlgo.WidthPos))
                 {
                     MapIDRectInfo _RectInfo = new MapIDRectInfo();
                     _RectInfo.CenterPt.X = _BlobReferResult.BlobCenterX[iLoopCount];

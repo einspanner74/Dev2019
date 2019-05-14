@@ -16,6 +16,7 @@ namespace ParameterManager
         public int      ProjectType;
         public string   IPAddress;
         public int      PortNumber;
+        public int      Language;
 
         public int ResultWindowLocationX;
         public int ResultWindowLocationY;
@@ -46,6 +47,8 @@ namespace ParameterManager
 
             DataFolderPath[0] = "";
             DataFolderPath[1] = "";
+
+            Language = 0;
         }
     }
 }

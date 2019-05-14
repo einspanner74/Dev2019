@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.ribbonMain = new System.Windows.Forms.Ribbon();
-            this.ribbonTab1 = new System.Windows.Forms.RibbonTab();
+            this.ribbonTabInspectionMain = new System.Windows.Forms.RibbonTab();
             this.ribbonPanelOperating = new System.Windows.Forms.RibbonPanel();
             this.rbStart = new System.Windows.Forms.RibbonButton();
             this.rbStop = new System.Windows.Forms.RibbonButton();
@@ -75,18 +75,18 @@
             this.ribbonMain.RibbonTabFont = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
             this.ribbonMain.Size = new System.Drawing.Size(1351, 140);
             this.ribbonMain.TabIndex = 0;
-            this.ribbonMain.Tabs.Add(this.ribbonTab1);
+            this.ribbonMain.Tabs.Add(this.ribbonTabInspectionMain);
             this.ribbonMain.TabsMargin = new System.Windows.Forms.Padding(12, 26, 20, 0);
             this.ribbonMain.ThemeColor = System.Windows.Forms.RibbonTheme.Black;
             // 
-            // ribbonTab1
+            // ribbonTabInspectionMain
             // 
-            this.ribbonTab1.Panels.Add(this.ribbonPanelOperating);
-            this.ribbonTab1.Panels.Add(this.ribbonPanelSetting);
-            this.ribbonTab1.Panels.Add(this.ribbonPanelData);
-            this.ribbonTab1.Panels.Add(this.ribbonPanelStatus);
-            this.ribbonTab1.Panels.Add(this.ribbonPanelSystem);
-            this.ribbonTab1.Text = "Inspection Main";
+            this.ribbonTabInspectionMain.Panels.Add(this.ribbonPanelOperating);
+            this.ribbonTabInspectionMain.Panels.Add(this.ribbonPanelSetting);
+            this.ribbonTabInspectionMain.Panels.Add(this.ribbonPanelData);
+            this.ribbonTabInspectionMain.Panels.Add(this.ribbonPanelStatus);
+            this.ribbonTabInspectionMain.Panels.Add(this.ribbonPanelSystem);
+            this.ribbonTabInspectionMain.Text = "Inspection Main";
             // 
             // ribbonPanelOperating
             // 
@@ -273,7 +273,7 @@
 
         private System.Windows.Forms.Ribbon ribbonMain;
         private System.Windows.Forms.Panel panelMain;
-        private System.Windows.Forms.RibbonTab ribbonTab1;
+        private System.Windows.Forms.RibbonTab ribbonTabInspectionMain;
         private System.Windows.Forms.RibbonPanel ribbonPanelOperating;
         private System.Windows.Forms.RibbonButton rbStart;
         private System.Windows.Forms.RibbonButton rbStop;

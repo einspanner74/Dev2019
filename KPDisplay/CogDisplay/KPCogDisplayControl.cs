@@ -8,12 +8,13 @@ using System.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.IO;
+using System.Drawing.Imaging;
 
 using Cognex.VisionPro;
 using Cognex.VisionPro.Caliper;
 using Cognex.VisionPro.Display;
-using System.Drawing.Imaging;
 using Cognex.VisionPro.ImageFile;
+using Cognex.VisionPro.ImageProcessing;
 
 using LogMessageManager;
 
@@ -667,7 +668,7 @@ namespace KPDisplay
             }
         }
 
-        public void SetDisplayImage(byte[] _DisplayImageArray, int _Width, int _Height)
+        public void SetDisplayImage(byte[] _DisplayImageArray, int _Width, int _Height, double _Rotate)
         {
             try
             {
@@ -679,9 +680,26 @@ namespace KPDisplay
 
                 var _CogImage = new CogImage8Grey();
                 _CogImage.SetRoot(cogRoot);
-                //ICogImage InspectionImage = (ICogImage)_CogImage;
+
+                //LJH 2019.05.13 Rotate 기능 추가
+                CogIPOneImageTool _CogOneImageTool = new CogIPOneImageTool();
+                CogIPOneImageFlipRotate _FlipRotate = new CogIPOneImageFlipRotate();
+
+                if (_Rotate > 0)
+                {
+                    if (_Rotate == 90)       _FlipRotate.OperationInPixelSpace = CogIPOneImageFlipRotateOperationConstants.Rotate90Deg;
+                    else if (_Rotate == 270) _FlipRotate.OperationInPixelSpace = CogIPOneImageFlipRotateOperationConstants.Rotate270Deg;
+                    else if (_Rotate == 180) _FlipRotate.OperationInPixelSpace = CogIPOneImageFlipRotateOperationConstants.Rotate180Deg;    
+
+                    _CogOneImageTool.Operators.Add(_FlipRotate);
+                    _CogOneImageTool.InputImage = _CogImage;
+                    _CogOneImageTool.Run();
+                    _CogImage = (CogImage8Grey)_CogOneImageTool.OutputImage;
+                }
 
                 SetDisplayInvoke(kCogDisplay, _CogImage);
+
+                _CogOneImageTool.Dispose();
                 GC.Collect();
             }
             catch

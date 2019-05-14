@@ -22,8 +22,9 @@ namespace ParameterManager
         public InspectionSystemManagerParameter[]   InspSysManagerParam;
         public MapDataParameter[]                   InspMapDataParam;
 
-        public static eSysMode SystemMode;
-        public static eSysMode SystemModeBackup;
+        public static eSysMode  SystemMode;
+        public static eSysMode  SystemModeBackup;
+        public static eLanguage Language;
 
         private string ProjectName;
         private string InspectionDefaultPath;
@@ -168,6 +169,7 @@ namespace ParameterManager
                         case "ProjectType":      SystemParam.ProjectType = Convert.ToInt32(_Node.InnerText); break;
                         case "IPAddress":        SystemParam.IPAddress = _Node.InnerText; break;
                         case "PortNumber":       SystemParam.PortNumber = Convert.ToInt32(_Node.InnerText); break;
+                        case "Language":         SystemParam.Language = Convert.ToInt32(_Node.InnerText); break;
                         case "DataFolderPath0":  SystemParam.DataFolderPath[0] = _Node.InnerText; break;
                         case "DataFolderPath1":  SystemParam.DataFolderPath[1] = _Node.InnerText; break;
                     }
@@ -215,6 +217,7 @@ namespace ParameterManager
             XElement _ProjectType            = new XElement("ProjectType", SystemParam.ProjectType.ToString());
             XElement _IPAddress              = new XElement("IPAddress", SystemParam.IPAddress);
             XElement _PortNumber             = new XElement("PortNumber", SystemParam.PortNumber.ToString());
+            XElement _Language               = new XElement("Language", SystemParam.Language.ToString());
             XElement _DataFolderPath0        = new XElement("DataFolderPath0", SystemParam.DataFolderPath[0]);
             XElement _DataFolderPath1        = new XElement("DataFolderPath1", SystemParam.DataFolderPath[1]);
 
@@ -234,6 +237,7 @@ namespace ParameterManager
             _SystemParameter.Add(_ProjectType);
             _SystemParameter.Add(_IPAddress);
             _SystemParameter.Add(_PortNumber);
+            _SystemParameter.Add(_Language);
             _SystemParameter.Add(_DataFolderPath0);
             _SystemParameter.Add(_DataFolderPath1);
 
@@ -739,10 +743,12 @@ namespace ParameterManager
                     case "ThresholdMax":        _CogBlobRefer.ThresholdMax = Convert.ToInt32(_NodeChild.InnerText); break;
                     case "BlobAreaMin":         _CogBlobRefer.BlobAreaMin = Convert.ToDouble(_NodeChild.InnerText); break;
                     case "BlobAreaMax":         _CogBlobRefer.BlobAreaMax = Convert.ToDouble(_NodeChild.InnerText); break;
-                    case "WidthMin":            _CogBlobRefer.WidthMin = Convert.ToDouble(_NodeChild.InnerText); break;
-                    case "WidthMax":            _CogBlobRefer.WidthMax = Convert.ToDouble(_NodeChild.InnerText); break;
-                    case "HeightMin":           _CogBlobRefer.HeightMin = Convert.ToDouble(_NodeChild.InnerText); break;
-                    case "HeightMax":           _CogBlobRefer.HeightMax = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "Width":               _CogBlobRefer.Width = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "WidthPos":            _CogBlobRefer.WidthPos = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "WidthNeg":            _CogBlobRefer.WidthPos = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "Height":              _CogBlobRefer.Height = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "HeightPos":           _CogBlobRefer.HeightPos = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "HeightNeg":           _CogBlobRefer.HeightNeg = Convert.ToDouble(_NodeChild.InnerText); break;
                     case "OriginX":             _CogBlobRefer.OriginX = Convert.ToDouble(_NodeChild.InnerText); break;
                     case "OriginY":             _CogBlobRefer.OriginY = Convert.ToDouble(_NodeChild.InnerText); break;
                     case "BenchMarkPosition":   _CogBlobRefer.BenchMarkPosition = Convert.ToInt32(_NodeChild.InnerText); break;
@@ -992,8 +998,8 @@ namespace ParameterManager
                     case "LeadEdgeWidth":           _CogLeadTrim.LeadEdgeWidth = Convert.ToInt32(_NodeChild.InnerText); break;
                     case "ShoulderBurrThreshold":   _CogLeadTrim.ShoulderBurrThreshold = Convert.ToInt32(_NodeChild.InnerText); break;
                     case "ShoulderNickThreshold":   _CogLeadTrim.ShoulderNickThreshold = Convert.ToInt32(_NodeChild.InnerText); break;
-                    case "ShoulderBurrSpec":        _CogLeadTrim.ShoulderBurrSpec = Convert.ToInt32(_NodeChild.InnerText); break;
-                    case "ShoulderNickSpec":        _CogLeadTrim.ShoulderNickSpec = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "ShoulderBurrSpec":        _CogLeadTrim.ShoulderBurrSpec = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "ShoulderNickSpec":        _CogLeadTrim.ShoulderNickSpec = Convert.ToDouble(_NodeChild.InnerText); break;
 
                     //Lead Tip Inspection Parameter
                     case "IsUseLeadTipInspection":  _CogLeadTrim.IsUseLeadTipInspection = Convert.ToBoolean(_NodeChild.InnerText); break;
@@ -1262,10 +1268,12 @@ namespace ParameterManager
             _XmlWriter.WriteElementString("ThresholdMax", _CogBlobReferAlgo.ThresholdMax.ToString());
             _XmlWriter.WriteElementString("BlobAreaMin", _CogBlobReferAlgo.BlobAreaMin.ToString());
             _XmlWriter.WriteElementString("BlobAreaMax", _CogBlobReferAlgo.BlobAreaMax.ToString());
-            _XmlWriter.WriteElementString("WidthMin", _CogBlobReferAlgo.WidthMin.ToString());
-            _XmlWriter.WriteElementString("WidthMax", _CogBlobReferAlgo.WidthMax.ToString());
-            _XmlWriter.WriteElementString("HeightMin", _CogBlobReferAlgo.HeightMin.ToString());
-            _XmlWriter.WriteElementString("HeightMax", _CogBlobReferAlgo.HeightMax.ToString());
+            _XmlWriter.WriteElementString("Width", _CogBlobReferAlgo.Width.ToString());
+            _XmlWriter.WriteElementString("WidthPos", _CogBlobReferAlgo.WidthPos.ToString());
+            _XmlWriter.WriteElementString("WidthNeg", _CogBlobReferAlgo.WidthNeg.ToString());
+            _XmlWriter.WriteElementString("Height", _CogBlobReferAlgo.Height.ToString());
+            _XmlWriter.WriteElementString("HeightPos", _CogBlobReferAlgo.HeightPos.ToString());
+            _XmlWriter.WriteElementString("HeightNeg", _CogBlobReferAlgo.HeightNeg.ToString());
             _XmlWriter.WriteElementString("OriginX", _CogBlobReferAlgo.OriginX.ToString());
             _XmlWriter.WriteElementString("OriginY", _CogBlobReferAlgo.OriginY.ToString());
             _XmlWriter.WriteElementString("BenchMarkPosition", _CogBlobReferAlgo.BenchMarkPosition.ToString());
@@ -1873,10 +1881,12 @@ namespace ParameterManager
                         ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).ThresholdMax  = ((CogBlobReferenceAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).ThresholdMax;
                         ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).BlobAreaMin   = ((CogBlobReferenceAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).BlobAreaMin;
                         ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).BlobAreaMax   = ((CogBlobReferenceAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).BlobAreaMax;
-                        ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).WidthMin      = ((CogBlobReferenceAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).WidthMin;
-                        ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).WidthMax      = ((CogBlobReferenceAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).WidthMax;
-                        ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).HeightMin     = ((CogBlobReferenceAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).HeightMin;
-                        ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).HeightMax     = ((CogBlobReferenceAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).HeightMax;
+                        ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).Width = ((CogBlobReferenceAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).Width;
+                        ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).WidthPos = ((CogBlobReferenceAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).WidthPos;
+                        ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).WidthNeg = ((CogBlobReferenceAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).WidthNeg;
+                        ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).Height = ((CogBlobReferenceAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).Height;
+                        ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).HeightPos = ((CogBlobReferenceAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).HeightPos;
+                        ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).HeightNeg = ((CogBlobReferenceAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).HeightNeg;
                         ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).OriginX       = ((CogBlobReferenceAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).OriginX;
                         ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).OriginY       = ((CogBlobReferenceAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).OriginY;
                         ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).BenchMarkPosition = ((CogBlobReferenceAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).BenchMarkPosition;

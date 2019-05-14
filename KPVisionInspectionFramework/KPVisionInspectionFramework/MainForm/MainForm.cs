@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.IO;
 using System.Xml;
+using System.Globalization;
 
 using InspectionSystemManager;
 using ParameterManager;
@@ -36,6 +37,8 @@ namespace KPVisionInspectionFramework
         private MainLogoWindow              MainLogoWnd;
 
         private string ProjectName;
+        private bool IsIOBoardUsable;
+        private bool IsEthernetUsable;
         private int ISMModuleCount = 1;
 
         private Timer TimerShowWindow = new Timer(); //Dialog Show용 Timer
@@ -55,6 +58,7 @@ namespace KPVisionInspectionFramework
 
             CLoadingManager.Show("Program Run", "Program Run Waiting...");
             InitializeComponent();
+            InitializeLanguage();
             Initialize();
             CLoadingManager.Hide();
             System.Threading.Thread.Sleep(200);
@@ -84,7 +88,9 @@ namespace KPVisionInspectionFramework
                     if (null == _Node) return;
                     switch (_Node.Name)
                     {
-                        case "ProjectName": ProjectName = _Node.InnerText; break;
+                        case "ProjectName":     ProjectName = _Node.InnerText; break;
+                        case "IOBoardUsable":   IsIOBoardUsable = Convert.ToBoolean(_Node.InnerText); break;
+                        case "EthernetUsable":  IsEthernetUsable = Convert.ToBoolean(_Node.InnerText); break;
                     }
                 }
             }
@@ -96,6 +102,36 @@ namespace KPVisionInspectionFramework
             ParamManager = new CParameterManager();
             ParamManager.Initialize(ProjectName);
             #endregion Parameter Initialize
+        }
+
+        private void InitializeLanguage()
+        {
+            CParameterManager.Language = (eLanguage)ParamManager.SystemParam.Language;
+            if (CParameterManager.Language == eLanguage.KR) LanguageResource.Culture = new CultureInfo("ko-KR"); // ko-KR
+            else                                            LanguageResource.Culture = new CultureInfo("en-US"); // ko-KR
+
+            #region Control Name Setting
+            this.ribbonTabInspectionMain.Text = KPVisionInspectionFramework.LanguageResource.InspectionMain;
+            this.ribbonPanelOperating.Text = KPVisionInspectionFramework.LanguageResource.InspectionOperating;
+            this.ribbonPanelSetting.Text = KPVisionInspectionFramework.LanguageResource.Setting;
+            this.ribbonPanelData.Text = KPVisionInspectionFramework.LanguageResource.Data;
+            this.ribbonPanelStatus.Text = KPVisionInspectionFramework.LanguageResource.Status;
+            this.ribbonPanelSystem.Text = KPVisionInspectionFramework.LanguageResource.System;
+            this.rbStart.Text = KPVisionInspectionFramework.LanguageResource.Auto;
+            this.rbStop.Text = KPVisionInspectionFramework.LanguageResource.Stop;
+            this.rbAlign.Text = KPVisionInspectionFramework.LanguageResource.Align;
+            this.rbEthernet.Text = KPVisionInspectionFramework.LanguageResource.Ethernet;
+            this.rbSerial.Text = KPVisionInspectionFramework.LanguageResource.Serial;
+            this.rbLight.Text = KPVisionInspectionFramework.LanguageResource.Light;
+            this.rbDIO.Text = KPVisionInspectionFramework.LanguageResource.DIO;
+            this.rbConfig.Text = KPVisionInspectionFramework.LanguageResource.Config;
+            this.rbMapData.Text = KPVisionInspectionFramework.LanguageResource.MapData;
+            this.rbRecipe.Text = KPVisionInspectionFramework.LanguageResource.Recipe;
+            this.rbLog.Text = KPVisionInspectionFramework.LanguageResource.Log;
+            this.rbHistory.Text = KPVisionInspectionFramework.LanguageResource.History;
+            this.rbFolder.Text = KPVisionInspectionFramework.LanguageResource.Folder;
+            this.rbExit.Text = KPVisionInspectionFramework.LanguageResource.Exit;
+            #endregion
         }
 
         private void Initialize()
@@ -195,8 +231,7 @@ namespace KPVisionInspectionFramework
             else                                                                            MainProcess = new MainProcessBase();
 
             MainProcess.MainProcessCommandEvent += new MainProcessBase.MainProcessCommandHandler(MainProcessCommandEventFunction);
-            
-            MainProcess.Initialize(@"D:\VisionInspectionData\Common\");
+            MainProcess.Initialize(@"D:\VisionInspectionData\Common\", IsIOBoardUsable, IsEthernetUsable);
             #endregion MainProcess Setting
 
             #region InspSysManager Initialize
@@ -204,7 +239,7 @@ namespace KPVisionInspectionFramework
             InspSysManager = new CInspectionSystemManager[ISMModuleCount];
             for (int iLoopCount = 0; iLoopCount < ISMModuleCount; ++iLoopCount)
             {
-                InspSysManager[iLoopCount] = new CInspectionSystemManager(iLoopCount, "Vision" + (iLoopCount + 1), ParamManager.SystemParam.IsSimulationMode);
+                InspSysManager[iLoopCount] = new CInspectionSystemManager(iLoopCount, KPVisionInspectionFramework.LanguageResource.Vision + (iLoopCount + 1), ParamManager.SystemParam.IsSimulationMode);
                 InspSysManager[iLoopCount].InspSysManagerEvent += new CInspectionSystemManager.InspSysManagerHandler(InspectionSystemManagerEventFunction);
                 InspSysManager[iLoopCount].Initialize(this, ParamManager.SystemParam.ProjectType, ParamManager.InspSysManagerParam[iLoopCount], ParamManager.InspParam[iLoopCount], ParamManager.SystemParam.LastRecipeName[iLoopCount]);
 

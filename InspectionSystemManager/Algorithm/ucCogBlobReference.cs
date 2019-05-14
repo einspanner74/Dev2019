@@ -243,10 +243,14 @@ namespace InspectionSystemManager
                 hScrollBarThreshold.Value = CogBlobReferAlgoRcp.ThresholdMin;
                 textBoxBlobAreaMin.Text = CogBlobReferAlgoRcp.BlobAreaMin.ToString();
                 textBoxBlobAreaMax.Text = CogBlobReferAlgoRcp.BlobAreaMax.ToString();
-                textBoxWidthSizeMin.Text = CogBlobReferAlgoRcp.WidthMin.ToString();
-                textBoxWidthSizeMax.Text = CogBlobReferAlgoRcp.WidthMax.ToString();
-                textBoxHeightSizeMin.Text = CogBlobReferAlgoRcp.HeightMin.ToString();
-                textBoxHeightSizeMax.Text = CogBlobReferAlgoRcp.HeightMax.ToString();
+
+                textBoxWidthSize.Text       = CogBlobReferAlgoRcp.Width.ToString();
+                textBoxWidthSpecPos.Text    = CogBlobReferAlgoRcp.WidthPos.ToString();
+                textBoxWidthSpecNeg.Text    = CogBlobReferAlgoRcp.WidthNeg.ToString();
+                textBoxHeightSize.Text      = CogBlobReferAlgoRcp.Height.ToString();
+                textBoxHeightSpecPos.Text   = CogBlobReferAlgoRcp.HeightPos.ToString();
+                textBoxHeightSpecNeg.Text   = CogBlobReferAlgoRcp.HeightNeg.ToString();
+
                 textBoxBenchMarkPosition.Text = CogBlobReferAlgoRcp.BenchMarkPosition.ToString();
                 textBoxBodyArea.Text = CogBlobReferAlgoRcp.BodyArea.ToString("F2");
                 textBoxBodyWidth.Text = CogBlobReferAlgoRcp.BodyWidth.ToString("F2");
@@ -281,10 +285,12 @@ namespace InspectionSystemManager
             CogBlobReferAlgoRcp.ThresholdMin = Convert.ToInt32(graLabelThresholdValue.Text);
             CogBlobReferAlgoRcp.BlobAreaMin = Convert.ToDouble(textBoxBlobAreaMin.Text);
             CogBlobReferAlgoRcp.BlobAreaMax = Convert.ToDouble(textBoxBlobAreaMax.Text);
-            CogBlobReferAlgoRcp.WidthMin = Convert.ToDouble(textBoxWidthSizeMin.Text);
-            CogBlobReferAlgoRcp.WidthMax = Convert.ToDouble(textBoxWidthSizeMax.Text);
-            CogBlobReferAlgoRcp.HeightMin = Convert.ToDouble(textBoxHeightSizeMin.Text);
-            CogBlobReferAlgoRcp.HeightMax = Convert.ToDouble(textBoxHeightSizeMax.Text);
+            CogBlobReferAlgoRcp.Width = Convert.ToDouble(textBoxWidthSize.Text);
+            CogBlobReferAlgoRcp.WidthPos = Convert.ToDouble(textBoxWidthSpecPos.Text);
+            CogBlobReferAlgoRcp.WidthNeg = Convert.ToDouble(textBoxWidthSpecNeg.Text);
+            CogBlobReferAlgoRcp.Height = Convert.ToDouble(textBoxHeightSize.Text);
+            CogBlobReferAlgoRcp.HeightPos = Convert.ToDouble(textBoxWidthSpecPos.Text);
+            CogBlobReferAlgoRcp.HeightNeg = Convert.ToDouble(textBoxWidthSpecNeg.Text);
             CogBlobReferAlgoRcp.BenchMarkPosition = Convert.ToInt32(textBoxBenchMarkPosition.Text);
             CogBlobReferAlgoRcp.BodyArea = Convert.ToDouble(textBoxBodyArea.Text);
             CogBlobReferAlgoRcp.BodyWidth = Convert.ToDouble(textBoxBodyWidth.Text);
@@ -349,10 +355,12 @@ namespace InspectionSystemManager
             _CogBlobReferAlgoRcp.ThresholdMin = Convert.ToInt32(graLabelThresholdValue.Text);
             _CogBlobReferAlgoRcp.BlobAreaMin = Convert.ToDouble(textBoxBlobAreaMin.Text);
             _CogBlobReferAlgoRcp.BlobAreaMax = Convert.ToDouble(textBoxBlobAreaMax.Text);
-            _CogBlobReferAlgoRcp.WidthMin = Convert.ToDouble(textBoxWidthSizeMin.Text);
-            _CogBlobReferAlgoRcp.WidthMax = Convert.ToDouble(textBoxWidthSizeMax.Text);
-            _CogBlobReferAlgoRcp.HeightMin = Convert.ToDouble(textBoxHeightSizeMin.Text);
-            _CogBlobReferAlgoRcp.HeightMax = Convert.ToDouble(textBoxHeightSizeMax.Text);
+            _CogBlobReferAlgoRcp.Width = Convert.ToDouble(textBoxWidthSize.Text);
+            _CogBlobReferAlgoRcp.WidthPos = Convert.ToDouble(textBoxWidthSpecPos.Text);
+            _CogBlobReferAlgoRcp.WidthNeg = Convert.ToDouble(textBoxWidthSpecNeg.Text);
+            _CogBlobReferAlgoRcp.Height = Convert.ToDouble(textBoxHeightSize.Text);
+            _CogBlobReferAlgoRcp.HeightPos = Convert.ToDouble(textBoxHeightSpecPos.Text);
+            _CogBlobReferAlgoRcp.HeightNeg = Convert.ToDouble(textBoxHeightSpecNeg.Text);
             _CogBlobReferAlgoRcp.ForeGround = Convert.ToInt32(graLabelForeground.Text);
             _CogBlobReferAlgoRcp.BenchMarkPosition = Convert.ToInt32(textBoxBenchMarkPosition.Text);
             _CogBlobReferAlgoRcp.ResolutionX = ResolutionX;

@@ -508,7 +508,7 @@ namespace InspectionSystemManager
         #endregion
 
         #region Lead Tip Burr Button Event
-        private void btnLeadTipAreaSet_Click(object sender, EventArgs e)
+        private void btnLeadTipAreaShow_Click(object sender, EventArgs e)
         {
             CogRectangle _Region = new CogRectangle();
             _Region.SetCenterWidthHeight(LeadTipInspArea.CenterX, LeadTipInspArea.CenterY, LeadTipInspArea.Width, LeadTipInspArea.Height);
@@ -516,7 +516,8 @@ namespace InspectionSystemManager
             var _DrawRegionEvent = DrawRegionEvent;
             _DrawRegionEvent?.Invoke(_Region, false);
         }
-        private void btnLeadTipAreaCheck_Click(object sender, EventArgs e)
+
+        private void btnLeadTipAreaSet_Click(object sender, EventArgs e)
         {
             var _GetRegionEvent = GetRegionEvent;
             CogRectangle _Region = GetRegionEvent?.Invoke();
@@ -528,11 +529,11 @@ namespace InspectionSystemManager
             LeadTipInspArea.SetCenterWidthHeight(_Region.CenterX, _Region.CenterY, _Region.Width, _Region.Height);
         }
 
-        private void btnLeadTipAreaShow_Click(object sender, EventArgs e)
+        private void btnLeadTipAreaCheck_Click(object sender, EventArgs e)
         {
             CogRectangle _InspRegion = new CogRectangle();
-            _InspRegion.SetCenterWidthHeight(ShoulderInspArea.CenterX, ShoulderInspArea.CenterY, ShoulderInspArea.Width, ShoulderInspArea.Height);
-
+            _InspRegion.SetCenterWidthHeight(LeadTipInspArea.CenterX, LeadTipInspArea.CenterY, LeadTipInspArea.Width, LeadTipInspArea.Height);
+            
             CogLeadTrimResult _CogLeadTrimResult = new CogLeadTrimResult();
             CogLeadTrimAlgo _LeadTipAlgoDest = new CogLeadTrimAlgo();
             _LeadTipAlgoDest.LeadCount = CogLeadTrimAlgoRcp.LeadCount;
@@ -541,7 +542,7 @@ namespace InspectionSystemManager
             _LeadTipAlgoDest.LeadTipThreshold = CogLeadTrimAlgoRcp.LeadTipThreshold;
             _LeadTipAlgoDest.LeadTipBurrThreshold = CogLeadTrimAlgoRcp.LeadTipBurrThreshold;
             _LeadTipAlgoDest.LeadTipBurrSpec = CogLeadTrimAlgoRcp.LeadTipBurrSpec;
-
+            
             var _ApplyLeadTrimValueEvent = ApplyLeadTrimValueEvent;
             _ApplyLeadTrimValueEvent?.Invoke(CogLeadTrimAlgo.eAlgoMode.LEADTIP_CHECK, _InspRegion, _LeadTipAlgoDest, ref _CogLeadTrimResult);
         }

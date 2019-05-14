@@ -202,3 +202,4 @@ C:\Zoom\Source management\Project\KPVisionInspectionProgram\MapDataManager\obj\D
 C:\Zoom\Source management\Project\KPVisionInspectionProgram\MapDataManager\obj\Debug\MapDataManager.csproj.GenerateResource.Cache
 C:\Zoom\Source management\Project\KPVisionInspectionProgram\MapDataManager\obj\Debug\MapDataManager.dll
 C:\Zoom\Source management\Project\KPVisionInspectionProgram\MapDataManager\obj\Debug\MapDataManager.pdb
+C:\Zoom\Team Source management\KPVisionInspectionProgram\MapDataManager\bin\Debug\Cognex.VisionPro3D.dll

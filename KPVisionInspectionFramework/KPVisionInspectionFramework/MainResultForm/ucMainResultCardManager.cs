@@ -70,6 +70,7 @@ namespace KPVisionInspectionFramework
 
             InitializeComponent();
             InitializeControl();
+            InitializeLanguage();
             this.Location = new Point(1, 1);
 
             InspectionTime = new string[4];
@@ -103,6 +104,36 @@ namespace KPVisionInspectionFramework
         private void InitializeControl()
         {
 
+        }
+
+        private void InitializeLanguage()
+        {
+            #region Control Name Setting
+            labelResultTitle1.Text = LanguageResource.ResultTitle + " 1";
+            labelResultTitle2.Text = LanguageResource.ResultTitle + " 2";
+            labelResultTitle3.Text = LanguageResource.ResultTitle + " 3";
+            labelResultTitle4.Text = LanguageResource.ResultTitle + " 4";
+            gradientLabelTotalCount1.Text = LanguageResource.Total;
+            gradientLabelTotalCount2.Text = LanguageResource.Total;
+            gradientLabelTotalCount3.Text = LanguageResource.Total;
+            gradientLabelTotalCount4.Text = LanguageResource.Total;
+            gradientLabelGoodCount1.Text = LanguageResource.Good;
+            gradientLabelGoodCount2.Text = LanguageResource.Good;
+            gradientLabelGoodCount3.Text = LanguageResource.Good;
+            gradientLabelGoodCount4.Text = LanguageResource.Good;
+            gradientLabelNgCount1.Text = LanguageResource.NG;
+            gradientLabelNgCount2.Text = LanguageResource.NG;
+            gradientLabelNgCount3.Text = LanguageResource.NG;
+            gradientLabelNgCount4.Text = LanguageResource.NG;
+            gradientLabelYield1.Text = LanguageResource.Yield;
+            gradientLabelYield2.Text = LanguageResource.Yield;
+            gradientLabelYield3.Text = LanguageResource.Yield;
+            gradientLabelYield4.Text = LanguageResource.Yield;
+            gradientLabelResultComment1.Text = LanguageResource.ResultComment;
+            gradientLabelResultComment2.Text = LanguageResource.ResultComment;
+            gradientLabelResultComment3.Text = LanguageResource.ResultComment;
+            gradientLabelResultComment4.Text = LanguageResource.ResultComment;
+            #endregion
         }
 
         public void DeInitialize()
@@ -239,10 +270,10 @@ namespace KPVisionInspectionFramework
         {
             lock (lockObject)
             {
-                if      (_ResultParam.ProjectItem == eProjectItem.BC_IMG_SAVE) SetImageSaveResultData(_ResultParam);
-                else if (_ResultParam.ProjectItem == eProjectItem.BC_ID) SetQRCodeResultData(_ResultParam);
+                if      (_ResultParam.ProjectItem == eProjectItem.BC_IMG_SAVE) 	SetImageSaveResultData(_ResultParam);
+                else if (_ResultParam.ProjectItem == eProjectItem.BC_ID) 		SetQRCodeResultData(_ResultParam);
                 else if (_ResultParam.ProjectItem == eProjectItem.BC_ID_SECOND) SetSecondQRCodeResultData(_ResultParam);
-                else if (_ResultParam.ProjectItem == eProjectItem.BC_EXIST) SetExistResultData(_ResultParam);
+                else if (_ResultParam.ProjectItem == eProjectItem.BC_EXIST) 	SetExistResultData(_ResultParam);
             }
         }
 

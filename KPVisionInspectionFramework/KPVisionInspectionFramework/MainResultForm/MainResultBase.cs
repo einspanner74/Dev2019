@@ -41,6 +41,7 @@ namespace KPVisionInspectionFramework
                 LastRecipeName[iLoopCount] = _LastRecipeName[iLoopCount];
             }
             InitializeComponent();
+            InitializeLanguage();
         }
 
         public void Initialize(Object _OwnerForm, int _ProjectType)
@@ -83,6 +84,11 @@ namespace KPVisionInspectionFramework
             }
 
             SetWindowLocation(1482, 148);
+        }
+
+        private void InitializeLanguage()
+        {
+            labelTitle.Text = LanguageResource.ResultWindow;
         }
 
         public void DeInitialize()

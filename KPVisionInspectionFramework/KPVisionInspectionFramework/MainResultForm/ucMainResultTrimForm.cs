@@ -201,6 +201,11 @@ namespace KPVisionInspectionFramework
 
         }
 
+        public void SetResult(SendResultParameter _ResultParam)
+        {
+
+        }
+
         public void SetTrimResultData(SendResultParameter _ResultParam)
         {
 

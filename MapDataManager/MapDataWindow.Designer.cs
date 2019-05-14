@@ -57,6 +57,7 @@
             this.rbNormalSearch = new System.Windows.Forms.RadioButton();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.ckMapIDUsable = new System.Windows.Forms.CheckBox();
             this.hScrollBarWidthSizeMax = new System.Windows.Forms.HScrollBar();
             this.hScrollBarWidthSizeMin = new System.Windows.Forms.HScrollBar();
             this.gradientLabel12 = new CustomControl.GradientLabel();
@@ -103,7 +104,12 @@
             this.btnOk = new System.Windows.Forms.Button();
             this.kpTeachDisplay = new KPDisplay.KPCogDisplayControl();
             this.labelInputTitle = new CustomControl.GradientLabel();
-            this.ckMapIDUsable = new System.Windows.Forms.CheckBox();
+            this.gradientLabel14 = new CustomControl.GradientLabel();
+            this.gradientLabel15 = new CustomControl.GradientLabel();
+            this.gradientLabel16 = new CustomControl.GradientLabel();
+            this.gradientLabel17 = new CustomControl.GradientLabel();
+            this.gradientLabel18 = new CustomControl.GradientLabel();
+            this.gradientLabel19 = new CustomControl.GradientLabel();
             this.panelMain.SuspendLayout();
             this.tabControlMapDataArraySetting.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -563,6 +569,12 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.gradientLabel17);
+            this.groupBox4.Controls.Add(this.gradientLabel18);
+            this.groupBox4.Controls.Add(this.gradientLabel19);
+            this.groupBox4.Controls.Add(this.gradientLabel16);
+            this.groupBox4.Controls.Add(this.gradientLabel15);
+            this.groupBox4.Controls.Add(this.gradientLabel14);
             this.groupBox4.Controls.Add(this.ckMapIDUsable);
             this.groupBox4.Controls.Add(this.hScrollBarWidthSizeMax);
             this.groupBox4.Controls.Add(this.hScrollBarWidthSizeMin);
@@ -585,6 +597,16 @@
             this.groupBox4.TabIndex = 320;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Map ID Setting";
+            // 
+            // ckMapIDUsable
+            // 
+            this.ckMapIDUsable.AutoSize = true;
+            this.ckMapIDUsable.Location = new System.Drawing.Point(18, 34);
+            this.ckMapIDUsable.Name = "ckMapIDUsable";
+            this.ckMapIDUsable.Size = new System.Drawing.Size(107, 18);
+            this.ckMapIDUsable.TabIndex = 317;
+            this.ckMapIDUsable.Text = "Map ID Usable";
+            this.ckMapIDUsable.UseVisualStyleBackColor = true;
             // 
             // hScrollBarWidthSizeMax
             // 
@@ -1226,15 +1248,89 @@
             this.labelInputTitle.Text = " Map Data Setting Image";
             this.labelInputTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // ckMapIDUsable
+            // gradientLabel14
             // 
-            this.ckMapIDUsable.AutoSize = true;
-            this.ckMapIDUsable.Location = new System.Drawing.Point(18, 34);
-            this.ckMapIDUsable.Name = "ckMapIDUsable";
-            this.ckMapIDUsable.Size = new System.Drawing.Size(107, 18);
-            this.ckMapIDUsable.TabIndex = 317;
-            this.ckMapIDUsable.Text = "Map ID Usable";
-            this.ckMapIDUsable.UseVisualStyleBackColor = true;
+            this.gradientLabel14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.gradientLabel14.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel14.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel14.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel14.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel14.Location = new System.Drawing.Point(489, 34);
+            this.gradientLabel14.Name = "gradientLabel14";
+            this.gradientLabel14.Size = new System.Drawing.Size(33, 26);
+            this.gradientLabel14.TabIndex = 318;
+            this.gradientLabel14.Text = "128";
+            this.gradientLabel14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // gradientLabel15
+            // 
+            this.gradientLabel15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.gradientLabel15.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel15.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel15.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel15.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel15.Location = new System.Drawing.Point(521, 34);
+            this.gradientLabel15.Name = "gradientLabel15";
+            this.gradientLabel15.Size = new System.Drawing.Size(33, 26);
+            this.gradientLabel15.TabIndex = 319;
+            this.gradientLabel15.Text = "128";
+            this.gradientLabel15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // gradientLabel16
+            // 
+            this.gradientLabel16.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.gradientLabel16.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel16.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel16.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel16.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel16.Location = new System.Drawing.Point(554, 34);
+            this.gradientLabel16.Name = "gradientLabel16";
+            this.gradientLabel16.Size = new System.Drawing.Size(33, 26);
+            this.gradientLabel16.TabIndex = 320;
+            this.gradientLabel16.Text = "128";
+            this.gradientLabel16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // gradientLabel17
+            // 
+            this.gradientLabel17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.gradientLabel17.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel17.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel17.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel17.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel17.Location = new System.Drawing.Point(554, 60);
+            this.gradientLabel17.Name = "gradientLabel17";
+            this.gradientLabel17.Size = new System.Drawing.Size(33, 26);
+            this.gradientLabel17.TabIndex = 323;
+            this.gradientLabel17.Text = "128";
+            this.gradientLabel17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // gradientLabel18
+            // 
+            this.gradientLabel18.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.gradientLabel18.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel18.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel18.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel18.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel18.Location = new System.Drawing.Point(521, 60);
+            this.gradientLabel18.Name = "gradientLabel18";
+            this.gradientLabel18.Size = new System.Drawing.Size(33, 26);
+            this.gradientLabel18.TabIndex = 322;
+            this.gradientLabel18.Text = "128";
+            this.gradientLabel18.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // gradientLabel19
+            // 
+            this.gradientLabel19.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.gradientLabel19.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel19.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel19.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel19.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel19.Location = new System.Drawing.Point(489, 60);
+            this.gradientLabel19.Name = "gradientLabel19";
+            this.gradientLabel19.Size = new System.Drawing.Size(33, 26);
+            this.gradientLabel19.TabIndex = 321;
+            this.gradientLabel19.Text = "128";
+            this.gradientLabel19.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // MapDataWindow
             // 
@@ -1365,6 +1461,12 @@
         private CustomControl.GradientLabel graLabelWidthMin;
         private CustomControl.GradientLabel graLabelThresholdValue;
         private System.Windows.Forms.CheckBox ckMapIDUsable;
+        private CustomControl.GradientLabel gradientLabel17;
+        private CustomControl.GradientLabel gradientLabel18;
+        private CustomControl.GradientLabel gradientLabel19;
+        private CustomControl.GradientLabel gradientLabel16;
+        private CustomControl.GradientLabel gradientLabel15;
+        private CustomControl.GradientLabel gradientLabel14;
     }
 }
 

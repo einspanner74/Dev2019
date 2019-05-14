@@ -430,10 +430,17 @@ namespace InspectionSystemManager
 
             for (int iLoopCount = 0; iLoopCount < _CogBlobReferResult.BlobCount; ++iLoopCount)
             {
-                double _Width = _CogBlobReferResult.Width[iLoopCount] * ResolutionX;
-                double _Height = _CogBlobReferResult.Height[iLoopCount] * ResolutionX;
+                double _ResultRealWidth = _CogBlobReferResult.Width[iLoopCount] * ResolutionX;
+                double _ResultRealHeight = _CogBlobReferResult.Height[iLoopCount] * ResolutionY;
 
-                if (_CogBlobReferAlgo.WidthMin < _Width && _CogBlobReferAlgo.WidthMax > _Width && _CogBlobReferAlgo.HeightMin < _Height && _CogBlobReferAlgo.HeightMax > _Height)
+                double _RealWidth       = _CogBlobReferAlgo.Width;
+                double _RealWidthPos    = _CogBlobReferAlgo.WidthPos;
+                double _RealWidthNeg    = _CogBlobReferAlgo.WidthNeg;
+                double _RealHeight      = _CogBlobReferAlgo.Height;
+                double _RealHeightPos   = _CogBlobReferAlgo.HeightPos;
+                double _RealHeightNeg   = _CogBlobReferAlgo.HeightNeg;
+
+                if ((_ResultRealWidth > _RealWidth - Math.Abs(_RealWidthNeg)) && (_ResultRealWidth < _RealWidth + _RealWidthPos) && (_ResultRealHeight > _RealHeight - Math.Abs(_RealHeightNeg)) && (_ResultRealHeight < _RealHeight + _RealHeightPos))
                 {
                     CogRectangle _BlobRect = new CogRectangle();
                     _BlobRect.SetCenterWidthHeight(_CogBlobReferResult.BlobCenterX[iLoopCount], _CogBlobReferResult.BlobCenterY[iLoopCount], _CogBlobReferResult.Width[iLoopCount], _CogBlobReferResult.Height[iLoopCount]);
@@ -445,7 +452,7 @@ namespace InspectionSystemManager
                     _Point.Y = _CogBlobReferResult.OriginY[iLoopCount];
                     kpTeachDisplay.DrawStaticShape(_Point, "BlobSearchPoint", CogColorConstants.Green, 5);
 
-                    string _RectSizeName = string.Format("W : {0:F2}mm, H : {1:F2}mm, Area : {2}", _Width, _Height, _CogBlobReferResult.BlobArea[iLoopCount]);
+                    string _RectSizeName = string.Format("W : {0:F2}mm, H : {1:F2}mm, Area : {2}", _ResultRealWidth, _ResultRealHeight, _CogBlobReferResult.BlobArea[iLoopCount]);
                     kpTeachDisplay.DrawText(_RectSizeName, _CogBlobReferResult.BlobCenterX[iLoopCount] + _CogBlobReferResult.Width[iLoopCount] / 2 + 100,
                                                            _CogBlobReferResult.BlobCenterY[iLoopCount] + _CogBlobReferResult.Height[iLoopCount] / 2 + 100, CogColorConstants.Green, 10, CogGraphicLabelAlignmentConstants.BaselineCenter);
 
@@ -691,6 +698,21 @@ namespace InspectionSystemManager
 
             AlgorithmAreaDisplayRefresh();
 
+            #region 글자 제거용 Width Morphology 사용 : 주석 처리(문제 될 시 사용 검토
+            //CogIPOneImageTool _CogOneImageTool = new CogIPOneImageTool();
+            //CogIPOneImageGreyMorphologyNxM _Morphology = new CogIPOneImageGreyMorphologyNxM();
+            //_Morphology.Operation = CogIPOneImageMorphologyOperationConstants.Dilate;
+            //_Morphology.KernelHeight = 1;
+            //_Morphology.KernelWidth = 9;
+            //
+            //ICogIPOneImageOperatorParams _Operators = _Morphology;
+            //_CogOneImageTool.Operators.Add(_Operators);
+            //_CogOneImageTool.InputImage = InspectionImage;
+            //_CogOneImageTool.Run();
+            //
+            //CogImage8Grey _MorphImage = (CogImage8Grey)_CogOneImageTool.OutputImage;
+            #endregion
+
             CogImage8Grey _DestImage = new CogImage8Grey();
             bool _Result = InspLineFindProcess.Run(InspectionImage, ref _DestImage, AlgoRegionRectangle, _CogLineFindAlgo, ref _CogLineFindResult);
 
@@ -917,7 +939,14 @@ namespace InspectionSystemManager
 
             if (true == _Result)
             {
+                CogLeadTrimResult _LeadTrimResult = new CogLeadTrimResult();
+                _LeadTrimResult = InspLeadTrimProcess.GetLeadTrimResult();
 
+                for (int iLoopCount = 0; iLoopCount < _LeadTrimResult.LeadTipBurrDefectList.Count; ++iLoopCount)
+                {
+                    CogRectangle _NgRegion = new CogRectangle(_LeadTrimResult.LeadTipBurrDefectList[iLoopCount]);
+                    kpTeachDisplay.DrawStaticShape(_NgRegion, "LeadTipBurr" + (iLoopCount + 1), CogColorConstants.Red);
+                }
             }
         }
         #endregion

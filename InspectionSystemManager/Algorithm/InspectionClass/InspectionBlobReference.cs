@@ -85,9 +85,18 @@ namespace InspectionSystemManager
                     double _ResultRealWidth = _CogBlobReferResultTemp.Width[iLoopCount] * _ResolutionX;
                     double _ResultRealHeight = _CogBlobReferResultTemp.Height[iLoopCount] * _ResolutionY;
 
-                    if (_CogBlobReferAlgo.WidthMin < _ResultRealWidth && _CogBlobReferAlgo.WidthMax > _ResultRealWidth && _CogBlobReferAlgo.HeightMin < _ResultRealHeight && _CogBlobReferAlgo.HeightMax > _ResultRealHeight)
+                    double _RealWidth       = _CogBlobReferAlgo.Width;
+                    double _RealWidthPos    = _CogBlobReferAlgo.WidthPos;
+                    double _RealWidthNeg    = _CogBlobReferAlgo.WidthNeg;
+                    double _RealHeight      = _CogBlobReferAlgo.Height;
+                    double _RealHeightPos   = _CogBlobReferAlgo.HeightPos;
+                    double _RealHeightNeg   = _CogBlobReferAlgo.HeightNeg;
+
+                    if ((_ResultRealWidth > _RealWidth - Math.Abs(_RealWidthNeg)) && (_ResultRealWidth < _RealWidth + _RealWidthPos) && (_ResultRealHeight > _RealHeight - Math.Abs(_RealHeightNeg)) && (_ResultRealHeight < _RealHeight + _RealHeightPos))
                     {
                         _CogBlobReferResultTemp.IsGoods[iLoopCount] = true;
+
+                        #region UseBodyArea/UseBodyWidth/UseBodyHeight Filer
                         if (_CogBlobReferAlgo.UseBodyArea)
                         {
                             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, " - UseBodyArea Flag True", CLogManager.LOG_LEVEL.MID);
@@ -132,6 +141,7 @@ namespace InspectionSystemManager
                                 continue;
                             }
                         }
+                        #endregion
 
                         CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format(" - W : {0}mm, H : {1}mm", _ResultRealWidth, _ResultRealHeight), CLogManager.LOG_LEVEL.MID);
 

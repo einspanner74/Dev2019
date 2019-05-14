@@ -85,7 +85,7 @@ namespace LightManager
         public void SetLightValue(int _LightValue)
         {
             string _Command = String.Format("{0}{1}{2}{3:D3}{4}", STX, ADJ, LightChannel, _LightValue, ETX);
-            SerialLight.Write(_Command);
+            if (true == SerialLight.IsOpen) SerialLight.Write(_Command);
             System.Threading.Thread.Sleep(100);
 
             string _Commands = String.Format("{0}{1}{2}", STX, SAV, ETX);
