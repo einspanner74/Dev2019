@@ -308,7 +308,7 @@ namespace LightManager
                 {
                     switch (_NodeChild.Name)
                     {
-                        case "ComportNum": LightParam.ComportNum[iLoopCount] = Convert.ToInt32(_NodeChild.InnerText); break;
+                        case "ComPortNum": LightParam.ComportNum[iLoopCount] = Convert.ToInt32(_NodeChild.InnerText); break;
                         case "Controller": LightParam.ControllerType[iLoopCount] = Convert.ToInt32(_NodeChild.InnerText); break;
                         case "LightChannel": LightParam.LightChannel[iLoopCount] = Convert.ToInt32(_NodeChild.InnerText); break;
                     }

@@ -58,6 +58,8 @@ namespace KPVisionInspectionFramework
         public delegate void ScreenshotHandler(string ScreenshotImagePath, Size ScreenshotSize);
         public event ScreenshotHandler ScreenshotEvent;
 
+        private object lockObject = new object();
+
         #region Initialize & DeInitialize
         public ucMainResultCardManager(string[] _LastRecipeName)
         {
@@ -231,6 +233,17 @@ namespace KPVisionInspectionFramework
                 case 5003: ControlInvoke.GradientLabelText(gradientLabelEtherRecv4, _RecvString); break;
             }
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.ERR, _RecvString, CLogManager.LOG_LEVEL.LOW);
+        }
+
+        public void SetResult(SendResultParameter _ResultParam)
+        {
+            lock (lockObject)
+            {
+                if      (_ResultParam.ProjectItem == eProjectItem.BC_IMG_SAVE) SetImageSaveResultData(_ResultParam);
+                else if (_ResultParam.ProjectItem == eProjectItem.BC_ID) SetQRCodeResultData(_ResultParam);
+                else if (_ResultParam.ProjectItem == eProjectItem.BC_ID_SECOND) SetSecondQRCodeResultData(_ResultParam);
+                else if (_ResultParam.ProjectItem == eProjectItem.BC_EXIST) SetExistResultData(_ResultParam);
+            }
         }
 
         //LDH, 2019.03.20, Inspection #1, JPG로 저장 결과

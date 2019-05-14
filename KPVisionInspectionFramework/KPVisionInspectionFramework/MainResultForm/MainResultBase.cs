@@ -20,6 +20,7 @@ namespace KPVisionInspectionFramework
         private ucMainResultSorter      MainResultSorterWnd;
         private ucMainResultTrimForm    MainResultTrimFormWnd;
         private ucMainResultCardManager MainResultCardManagerWnd;
+        private ucMainResultNavien      MainResultNavienWnd;
 
         private eProjectType ProjectType;
         private string[] LastRecipeName;
@@ -72,6 +73,13 @@ namespace KPVisionInspectionFramework
                 MainResultCardManagerWnd = new ucMainResultCardManager(LastRecipeName);
                 MainResultCardManagerWnd.ScreenshotEvent += new ucMainResultCardManager.ScreenshotHandler(ScreenShotSetSize);
                 panelMain.Controls.Add(MainResultCardManagerWnd);
+            }
+
+            else if(ProjectType == eProjectType.NAVIEN)
+            {
+                MainResultNavienWnd = new ucMainResultNavien(LastRecipeName);
+                MainResultNavienWnd.ScreenshotEvent += new ucMainResultNavien.ScreenshotHandler(ScreenShotSetSize);
+                panelMain.Controls.Add(MainResultNavienWnd);
             }
 
             SetWindowLocation(1482, 148);
@@ -224,6 +232,7 @@ namespace KPVisionInspectionFramework
             else if (ProjectType == eProjectType.SORTER)    MainResultSorterWnd.ClearResult();
             else if (ProjectType == eProjectType.TRIM_FORM) MainResultTrimFormWnd.ClearResult();
             else if (ProjectType == eProjectType.BC_QCC)    MainResultCardManagerWnd.ClearResult();
+            else if (ProjectType == eProjectType.NAVIEN)    MainResultNavienWnd.ClearResult();
         }
 
         //LDH, 2019.04.02, Ethernet Receive Data 전달
@@ -232,16 +241,26 @@ namespace KPVisionInspectionFramework
             if (ProjectType == eProjectType.BC_QCC) MainResultCardManagerWnd.SetEthernetRecvData(_Value);
         }
 
+        //public void SetResultData(SendResultParameter _ResultParam)
+        //{
+        //    if (_ResultParam.ProjectItem == eProjectItem.NONE)                  MainResultNoneWnd.SetNoneResultData(_ResultParam);
+        //    else if (_ResultParam.ProjectItem == eProjectItem.SURFACE)          MainResultSorterWnd.SetSurfaceResultData(_ResultParam);
+        //    else if (_ResultParam.ProjectItem == eProjectItem.LEAD_TRIM_INSP)   MainResultTrimFormWnd.SetTrimResultData(_ResultParam);
+        //    else if (_ResultParam.ProjectItem == eProjectItem.LEAD_FORM_ALIGN)  MainResultTrimFormWnd.SetFormResultData(_ResultParam);
+        //    else if (_ResultParam.ProjectItem == eProjectItem.BC_IMG_SAVE)      MainResultCardManagerWnd.SetImageSaveResultData(_ResultParam);
+        //    else if (_ResultParam.ProjectItem == eProjectItem.BC_ID)            MainResultCardManagerWnd.SetQRCodeResultData(_ResultParam);
+        //    else if (_ResultParam.ProjectItem == eProjectItem.BC_ID_SECOND)     MainResultCardManagerWnd.SetSecondQRCodeResultData(_ResultParam);
+        //    else if (_ResultParam.ProjectItem == eProjectItem.BC_EXIST)         MainResultCardManagerWnd.SetExistResultData(_ResultParam);
+        //}
+
+        //LDH, 2019.05.13, ProjectItem -> ProjectType 으로 변경
         public void SetResultData(SendResultParameter _ResultParam)
         {
-            if (_ResultParam.ProjectItem == eProjectItem.NONE)                  MainResultNoneWnd.SetNoneResultData(_ResultParam);
-            else if (_ResultParam.ProjectItem == eProjectItem.SURFACE)          MainResultSorterWnd.SetSurfaceResultData(_ResultParam);
-            else if (_ResultParam.ProjectItem == eProjectItem.LEAD_TRIM_INSP)   MainResultTrimFormWnd.SetTrimResultData(_ResultParam);
-            else if (_ResultParam.ProjectItem == eProjectItem.LEAD_FORM_ALIGN)  MainResultTrimFormWnd.SetFormResultData(_ResultParam);
-            else if (_ResultParam.ProjectItem == eProjectItem.BC_IMG_SAVE)      MainResultCardManagerWnd.SetImageSaveResultData(_ResultParam);
-            else if (_ResultParam.ProjectItem == eProjectItem.BC_ID)            MainResultCardManagerWnd.SetQRCodeResultData(_ResultParam);
-            else if (_ResultParam.ProjectItem == eProjectItem.BC_ID_SECOND)     MainResultCardManagerWnd.SetSecondQRCodeResultData(_ResultParam);
-            else if (_ResultParam.ProjectItem == eProjectItem.BC_EXIST)         MainResultCardManagerWnd.SetExistResultData(_ResultParam);
+            if (ProjectType == eProjectType.NONE)           MainResultNoneWnd.SetNoneResultData(_ResultParam);
+            else if (ProjectType == eProjectType.SORTER)    MainResultSorterWnd.SetSurfaceResultData(_ResultParam);
+            else if (ProjectType == eProjectType.TRIM_FORM) MainResultTrimFormWnd.SetResult(_ResultParam);
+            else if (ProjectType == eProjectType.BC_QCC)    MainResultCardManagerWnd.SetResult(_ResultParam);
+            else if (ProjectType == eProjectType.NAVIEN)    MainResultNavienWnd.SetResult(_ResultParam);
         }
 
         /// <summary>
@@ -256,6 +275,7 @@ namespace KPVisionInspectionFramework
             if (ProjectType == eProjectType.NONE)           MainResultNoneWnd.SetAutoMode(_AutoModeFlag);
             else if (ProjectType == eProjectType.TRIM_FORM) MainResultTrimFormWnd.SetAutoMode(_AutoModeFlag);
             else if (ProjectType == eProjectType.BC_QCC)    MainResultCardManagerWnd.SetAutoMode(_AutoModeFlag);
+            else if (ProjectType == eProjectType.NAVIEN)    MainResultNavienWnd.SetAutoMode(_AutoModeFlag);
 
             return _Result;
         }

@@ -61,7 +61,7 @@ namespace InspectionSystemManager
 
         private void btnDrawCaliper_Click(object sender, EventArgs e)
         {
-            DrawCircleFindCaliper();
+            DrawEllipseFindCaliper();
         }
 
         private void rbSearchDirection_MouseUp(object sender, MouseEventArgs e)
@@ -71,7 +71,7 @@ namespace InspectionSystemManager
             SetSearchDirection(_Direction);
             graLabelSearchDirection.Text = _Direction.ToString();
             //ApplySettingValue();
-            DrawCircleFindCaliper();
+            DrawEllipseFindCaliper();
         }
 
         private void rbCaliperPolarityD_MouseUp(object sender, MouseEventArgs e)
@@ -80,47 +80,52 @@ namespace InspectionSystemManager
             int _Polarity = Convert.ToInt32(_RadioPolarity.Tag);
             SetPolarity(_Polarity);
             graLabelPolarity.Text = _Polarity.ToString();
-            DrawCircleFindCaliper();
+            DrawEllipseFindCaliper();
         }
 
         private void numUpDownCaliperNumber_ValueChanged(object sender, EventArgs e)
         {
-            DrawCircleFindCaliper();
+            DrawEllipseFindCaliper();
         }
 
         private void numUpDownSearchLength_ValueChanged(object sender, EventArgs e)
         {
-            DrawCircleFindCaliper();
+            DrawEllipseFindCaliper();
         }
 
         private void numUpDownProjectionLength_ValueChanged(object sender, EventArgs e)
         {
-            DrawCircleFindCaliper();
+            DrawEllipseFindCaliper();
         }
 
         private void numUpDownArcCenterX_ValueChanged(object sender, EventArgs e)
         {
-            DrawCircleFindCaliper();
+            DrawEllipseFindCaliper();
         }
 
         private void numUpDownArcCenterY_ValueChanged(object sender, EventArgs e)
         {
-            DrawCircleFindCaliper();
+            DrawEllipseFindCaliper();
         }
 
-        private void numUpDownArcRadius_ValueChanged(object sender, EventArgs e)
+        private void numUpDownArcRadiusX_ValueChanged(object sender, EventArgs e)
         {
-            DrawCircleFindCaliper();
+            DrawEllipseFindCaliper();
+        }
+
+        private void numUpDownArcRadiusY_ValueChanged(object sender, EventArgs e)
+        {
+            DrawEllipseFindCaliper();
         }
 
         private void numUpDownAngleStart_ValueChanged(object sender, EventArgs e)
         {
-            DrawCircleFindCaliper();
+            DrawEllipseFindCaliper();
         }
 
         private void numUpDownAngleSpan_ValueChanged(object sender, EventArgs e)
         {
-            DrawCircleFindCaliper();
+            DrawEllipseFindCaliper();
         }
         #endregion Control Event
 
@@ -166,6 +171,11 @@ namespace InspectionSystemManager
 
         public void SaveAlgoRecipe()
         {
+            if (textBoxCenterX.Text == "-") { MessageBox.Show("Check Ellipse CenterX"); return; }
+            else if(textBoxCenterY.Text == "-") { MessageBox.Show("Check Ellipse CenterY"); return; }
+            else if(textBoxRadiusX.Text == "-") { MessageBox.Show("Check Ellipse RadiusX"); return; }
+            else if(textBoxRadiusY.Text == "-") { MessageBox.Show("Check Ellipse RadiusY"); return; }
+
             CogEllipseAlgoRcp.CaliperNumber           = Convert.ToInt32(numUpDownCaliperNumber.Value);
             CogEllipseAlgoRcp.CaliperSearchLength     = Convert.ToDouble(numUpDownSearchLength.Value);
             CogEllipseAlgoRcp.CaliperProjectionLength = Convert.ToDouble(numUpDownProjectionLength.Value);
@@ -194,7 +204,7 @@ namespace InspectionSystemManager
             SetPolarity(Convert.ToInt32(_ePolarity));
         }
 
-        public void SetCircularArc(double _CenterX, double _CenterY, double _RadiusX, double _RadiusY, double _AngleSpan)
+        public void SetEllipticalArc(double _CenterX, double _CenterY, double _RadiusX, double _RadiusY, double _AngleSpan)
         {
             numUpDownArcCenterX.Value = Convert.ToDecimal(_CenterX);
             numUpDownArcCenterY.Value = Convert.ToDecimal(_CenterY);
@@ -270,7 +280,7 @@ namespace InspectionSystemManager
             }
         }
 
-        private void DrawCircleFindCaliper()
+        private void DrawEllipseFindCaliper()
         {
             if (!AlgoInitFlag) return;
 

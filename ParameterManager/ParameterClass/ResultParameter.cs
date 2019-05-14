@@ -509,5 +509,11 @@ namespace ParameterManager
     {
         public string ReadCode;
     }
+
+    public class SendEllipseResult
+    {
+        public double RadiusX;
+        public double RadiusY;
+    }
     #endregion Last Send Result Parameter
 }

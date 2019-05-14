@@ -36,6 +36,7 @@ namespace InspectionSystemManager
         private InspectionMultiPattern      InspMultiPatternProcess;
         private InspectionAutoPattern       InspAutoPatternProcess;
         private InspectionLeadTrim          InspLeadTrimProcess;
+        private InspectionEllipse           InspEllipseFindProcess;
 
         //검사 Algorithm Teaching UI
         private ucCogPattern            ucCogPatternWnd;
@@ -118,7 +119,6 @@ namespace InspectionSystemManager
             ucCogLeadTrimInspWnd = new ucCogLeadTrimInspection();
             ucCogEllipseFindWnd = new ucCogEllipseFind();
 
-
             if (_ProjectItem == eProjectItem.NONE)                  ucCogBlobReferWnd.Initialize(false);
             else if (_ProjectItem == eProjectItem.SURFACE)          ucCogBlobReferWnd.Initialize(false);
             else if (_ProjectItem == eProjectItem.LEAD_TRIM_INSP)   ucCogBlobReferWnd.Initialize(false);
@@ -127,6 +127,7 @@ namespace InspectionSystemManager
             else if (_ProjectItem == eProjectItem.BC_ID)            ucCogBlobReferWnd.Initialize(false);
             else if (_ProjectItem == eProjectItem.BC_ID_SECOND)     ucCogBlobReferWnd.Initialize(false);
             else if (_ProjectItem == eProjectItem.BC_EXIST)         ucCogBlobReferWnd.Initialize(false);
+            else if (_ProjectItem == eProjectItem.MEASURE)          ucCogBlobReferWnd.Initialize(false);
 
             InspPatternProcess = new InspectionPattern();
             InspAutoPatternProcess = new InspectionAutoPattern();
@@ -137,6 +138,7 @@ namespace InspectionSystemManager
             InspIDProcess = new InspectionID();
             InspLineFindProcess = new InspectionLineFind();
             InspLeadTrimProcess = new InspectionLeadTrim();
+            InspEllipseFindProcess = new InspectionEllipse();
 
             InspAreaSelected = -1;
             InspAlgoSelected = -1;
@@ -182,6 +184,7 @@ namespace InspectionSystemManager
             InspAutoPatternProcess.DeInitialize();
             InspIDProcess.DeInitialize();
             InspLineFindProcess.DeInitialize();
+            InspEllipseFindProcess.DeInitialize();
         }
 
         private void InitializeContextMenu()
@@ -924,6 +927,7 @@ namespace InspectionSystemManager
 				case eAlgoType.C_MULTI_PATTERN: ucCogMultiPatternWnd.SaveAlgoRecipe(); break;
                 case eAlgoType.C_AUTO_PATTERN:  ucCogAutoPatternWnd.SaveAlgoRecipe();  break;
                 case eAlgoType.C_LEAD_TRIM:     ucCogLeadTrimInspWnd.SaveAlgoRecipe(); break;
+                case eAlgoType.C_ELLIPSE:       ucCogEllipseFindWnd.SaveAlgoRecipe(); break;
             }
         }
 
@@ -1318,6 +1322,7 @@ namespace InspectionSystemManager
                 case eAlgoType.C_MULTI_PATTERN: panelTeaching.Controls.Add(ucCogMultiPatternWnd); ucCogMultiPatternWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY, ResolutionX, ResolutionY); break;
                 case eAlgoType.C_AUTO_PATTERN:  panelTeaching.Controls.Add(ucCogAutoPatternWnd);  ucCogAutoPatternWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY, ResolutionX, ResolutionY); break;
                 case eAlgoType.C_LEAD_TRIM:     panelTeaching.Controls.Add(ucCogLeadTrimInspWnd); ucCogLeadTrimInspWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY, ResolutionX, ResolutionY); break;
+                case eAlgoType.C_ELLIPSE:       panelTeaching.Controls.Add(ucCogEllipseFindWnd);  ucCogEllipseFindWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY, ResolutionX, ResolutionY); break;
             }
             if (panelTeaching.Controls.Count == 2) panelTeaching.Controls.RemoveAt(0);
             CurrentAlgoType = _AlgoType;

@@ -533,6 +533,7 @@ namespace ParameterManager
             else if (_AlgoType == eAlgoType.C_BLOB_REFER)    Algorithm = new CogBlobReferenceAlgo(_ResolutionX, _ResolutionY);
             else if (_AlgoType == eAlgoType.C_LEAD)          Algorithm = new CogLeadAlgo();
             else if (_AlgoType == eAlgoType.C_NEEDLE_FIND)   Algorithm = new CogNeedleFindAlgo();
+            else if (_AlgoType == eAlgoType.C_ELLIPSE)       Algorithm = new CogEllipseAlgo();
             else if (_AlgoType == eAlgoType.C_ID)            Algorithm = new CogBarCodeIDAlgo();
             else if (_AlgoType == eAlgoType.C_LINE_FIND)     Algorithm = new CogLineFindAlgo();
             else if (_AlgoType == eAlgoType.C_LEAD_TRIM)     Algorithm = new CogLeadTrimAlgo();

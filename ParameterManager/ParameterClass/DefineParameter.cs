@@ -10,12 +10,12 @@ namespace ParameterManager
     /// <summary>
     /// Project Type
     /// </summary>
-    public enum eProjectType { NONE = 0, SORTER, TRIM_FORM, BC_QCC, BC_BRO };
+    public enum eProjectType { NONE = 0, SORTER, TRIM_FORM, BC_QCC, BC_BRO, NAVIEN };
 
     /// <summary>
     /// Project Item
     /// </summary>
-    public enum eProjectItem { NONE = 0, SURFACE, LEAD_TRIM_INSP, LEAD_FORM_ALIGN, BC_IMG_SAVE, BC_ID, BC_EXIST, BC_ID_SECOND };
+    public enum eProjectItem { NONE = 0, SURFACE, LEAD_TRIM_INSP, LEAD_FORM_ALIGN, BC_IMG_SAVE, BC_ID, BC_EXIST, BC_ID_SECOND, MEASURE};
 
     /// <summary>
     /// Algorithm Type
@@ -50,7 +50,7 @@ namespace ParameterManager
     /// <summary>
     /// NG Type
     /// </summary>
-    public enum eNgType     { GOOD = 0, NONE, DUMMY, REF_NG, DEFECT, CRACK, RESIN, ID, EMPTY, LEAD_CNT, LEAD_BENT, NDL_CENTER, NDL_FIND, M_REF }
+    public enum eNgType     { GOOD = 0, NONE, DUMMY, REF_NG, DEFECT, CRACK, RESIN, ID, EMPTY, LEAD_CNT, LEAD_BENT, NDL_CENTER, NDL_FIND, M_REF, MEASURE }
 
     public enum eMorphologyMode { ERODE = 0, DILATE, OPEN, CLOSE, }
 

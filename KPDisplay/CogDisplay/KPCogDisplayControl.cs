@@ -33,6 +33,7 @@ namespace KPDisplay
         private  CogLineSegment staticGraphicVer = new CogLineSegment();
         private  CogLineSegment staticGraphicDistance = new CogLineSegment();
         private  CogCircle StaticCircleGraphic = new CogCircle();
+        private  CogEllipse StaticEllipseGraphic = new CogEllipse();
         private  CogPolygon StaticPolygonGraphic = new CogPolygon();
         
         private  CogLineSegment StaticArrow = new CogLineSegment();
@@ -40,7 +41,10 @@ namespace KPDisplay
         
         private  CogFindCircleTool CircleCaliperTool = new CogFindCircleTool();
         private  CogCircularArc InteractiveCircularArc = new CogCircularArc();
-        
+
+        private  CogFindEllipseTool EllipseCaliperTool = new CogFindEllipseTool();
+        private  CogEllipticalArc InteractiveEllipticalArc = new CogEllipticalArc();
+
         private  CogFindLineTool LineCaliperTool = new CogFindLineTool();
         private  CogLineSegment InteractiveLine = new CogLineSegment();
 
@@ -367,6 +371,17 @@ namespace KPDisplay
             kCogDisplay.StaticGraphics.Add(StaticCircleGraphic, _groupName);
         }
 
+        public void DrawStaticShape(CogEllipse _CogEllipse, string _groupName, CogColorConstants _color, int _LineSize = 2)
+        {
+            StaticEllipseGraphic = new CogEllipse();
+            StaticEllipseGraphic = _CogEllipse;
+            StaticEllipseGraphic.Color = _color;
+            StaticEllipseGraphic.LineWidthInScreenPixels = _LineSize;
+            StaticEllipseGraphic.GraphicDOFEnable = CogEllipseDOFConstants.All;
+            kCogDisplay.ClearDisplay(_groupName);
+            kCogDisplay.StaticGraphics.Add(StaticEllipseGraphic, _groupName);
+        }
+
         public void DrawStaticArrow(int _StartX, int _StartY, int _Length, double _Rotate, int _Tickness, string _GroupName, CogColorConstants _Color)
         {
             StaticArrow.Color = _Color;
@@ -491,6 +506,24 @@ namespace KPDisplay
             _Region = (CogGraphicCollection)_Record.SubRecords["InputImage"].SubRecords["CaliperRegions"].Content;
 
             kCogDisplay.InteractiveGraphics.Add(InteractiveCircularArc, "CircleArc", false);
+            foreach (ICogGraphic _ICogGra in _Region)
+                kCogDisplay.InteractiveGraphics.Add((ICogGraphicInteractive)_ICogGra, "", false);
+            GC.Collect();
+        }
+
+        public void DrawFindEllipseCaliper(CogFindEllipse _CogFindEllipse = null)
+        {
+            ICogRecord _Record;
+            CogGraphicCollection _Region;
+
+            EllipseCaliperTool.InputImage = (CogImage8Grey)kCogDisplay.Image;
+            EllipseCaliperTool.RunParams = _CogFindEllipse;
+
+            _Record = EllipseCaliperTool.CreateCurrentRecord();
+            InteractiveEllipticalArc = (CogEllipticalArc)_Record.SubRecords["InputImage"].SubRecords["ExpectedShapeSegment"].Content;
+            _Region = (CogGraphicCollection)_Record.SubRecords["InputImage"].SubRecords["CaliperRegions"].Content;
+
+            kCogDisplay.InteractiveGraphics.Add(InteractiveEllipticalArc, "EllipseArc", false);
             foreach (ICogGraphic _ICogGra in _Region)
                 kCogDisplay.InteractiveGraphics.Add((ICogGraphicInteractive)_ICogGra, "", false);
             GC.Collect();
@@ -875,6 +908,12 @@ namespace KPDisplay
                 {
                     LineCaliperTool.CreateCurrentRecord();
                     CogDisplayMouseUpEvent(LineCaliperTool);
+                }
+
+                else if (EllipseCaliperTool.InputImage != null)
+                {
+                    EllipseCaliperTool.CreateCurrentRecord();
+                    CogDisplayMouseUpEvent(EllipseCaliperTool);
                 }
             }
         }

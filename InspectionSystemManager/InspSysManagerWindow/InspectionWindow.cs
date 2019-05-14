@@ -154,6 +154,8 @@ namespace InspectionSystemManager
             InspNeedleCircleFindProc = new InspectionNeedleCircleFind();
             InspNeedleCircleFindProc.Initialize();
 
+            InspEllipseProc = new InspectionEllipse();
+
             InspLeadProc = new InspectionLead();
             InspLeadProc.Initialize();
 
@@ -1106,32 +1108,28 @@ namespace InspectionSystemManager
         {
             CogEllipseAlgo _CogEllipseAlgo = _Algorithm as CogEllipseAlgo;
             CogEllipseResult _CogEllipseResult = new CogEllipseResult();
-            
-            //CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "Needle Circle Find Algorithm Start", CLogManager.LOG_LEVEL.MID);
-            //bool _Result = InspNeedleCircleFindProc.Run(OriginImage, _CogEllipseAlgo, ref _CogEllipseResult, BenchMarkOffsetX, BenchMarkOffsetY);
 
-            //_CogNeedleFindResult.CenterXReal = (_CogNeedleFindResult.CenterX - (OriginImage.Width / 2)) * ResolutionX;
-            //_CogNeedleFindResult.CenterYReal = (_CogNeedleFindResult.CenterY - (OriginImage.Height / 2)) * ResolutionY;
-            //_CogNeedleFindResult.OriginXReal = (_CogNeedleFindResult.OriginX - (OriginImage.Width / 2)) * ResolutionX;
-            //_CogNeedleFindResult.OriginYReal = (_CogNeedleFindResult.OriginY - (OriginImage.Height / 2)) * ResolutionY;
-            //_CogNeedleFindResult.RadiusReal = _CogNeedleFindResult.Radius * ResolutionX;
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "Ellipse Find Algorithm Start", CLogManager.LOG_LEVEL.MID);
+            bool _Result = InspEllipseProc.Run(OriginImage, _InspRegion, _CogEllipseAlgo, ref _CogEllipseResult, BenchMarkOffsetX, BenchMarkOffsetY);
 
-            //if (_CogNeedleFindResult.RadiusReal + 0.2 > _CogNeedleFindAlgo.OriginRadius && _CogNeedleFindResult.RadiusReal - 0.2 < _CogNeedleFindAlgo.OriginRadius)
-            //    _CogNeedleFindResult.IsGood = true;
-            //else
-            //    _CogNeedleFindResult.IsGood = false;
+            _CogEllipseResult.CenterXReal = (_CogEllipseResult.CenterX - (OriginImage.Width / 2)) * ResolutionX;
+            _CogEllipseResult.CenterYReal = (_CogEllipseResult.CenterY - (OriginImage.Height / 2)) * ResolutionY;
+            _CogEllipseResult.OriginXReal = (_CogEllipseResult.OriginX - (OriginImage.Width / 2)) * ResolutionX;
+            _CogEllipseResult.OriginYReal = (_CogEllipseResult.OriginY - (OriginImage.Height / 2)) * ResolutionY;
+            _CogEllipseResult.RadiusXReal = _CogEllipseResult.RadiusX * ResolutionX;
+            _CogEllipseResult.RadiusYReal = _CogEllipseResult.RadiusY * ResolutionX;
 
-            //if (_CogNeedleFindAlgo.CaliperNumber - 2 >= _CogNeedleFindResult.PointFoundCount)
-            //    _CogNeedleFindResult.IsGood = false;
+            if (_CogEllipseAlgo.CaliperNumber - 2 >= _CogEllipseResult.PointFoundCount)
+                _CogEllipseResult.IsGood = false;
 
-            //CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format(" - Real Position X : {0}, Y : {1}", _CogNeedleFindResult.CenterXReal.ToString("F2"), _CogNeedleFindResult.CenterYReal.ToString("F2")), CLogManager.LOG_LEVEL.MID);
-            //CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format(" - Real Radius : {0}", _CogNeedleFindResult.RadiusReal.ToString("F2")), CLogManager.LOG_LEVEL.MID);
-            //CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "Needle Circle Find Algorithm End", CLogManager.LOG_LEVEL.MID);
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format(" - Real Position X : {0}, Y : {1}", _CogEllipseResult.CenterXReal.ToString("F2"), _CogEllipseResult.CenterYReal.ToString("F2")), CLogManager.LOG_LEVEL.MID);
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format(" - Real Radius X : {0}, Y : {1}", _CogEllipseResult.RadiusXReal.ToString("F2"), _CogEllipseResult.RadiusYReal.ToString("F2")), CLogManager.LOG_LEVEL.MID);
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "Ellipse Algorithm End", CLogManager.LOG_LEVEL.MID);
 
-            //AlgoResultParameter _AlgoResultParam = new AlgoResultParameter(eAlgoType.C_NEEDLE_FIND, _CogNeedleFindResult);
-            //_AlgoResultParam.OffsetX = _CogNeedleFindAlgo.OriginX - _CogNeedleFindResult.CenterX;
-            //_AlgoResultParam.OffsetY = _CogNeedleFindAlgo.OriginY - _CogNeedleFindResult.CenterY;
-            //AlgoResultParamList.Add(_AlgoResultParam);
+            AlgoResultParameter _AlgoResultParam = new AlgoResultParameter(eAlgoType.C_ELLIPSE, _CogEllipseResult);
+            _AlgoResultParam.OffsetX = _CogEllipseAlgo.OriginX - _CogEllipseResult.CenterX;
+            _AlgoResultParam.OffsetY = _CogEllipseAlgo.OriginY - _CogEllipseResult.CenterY;
+            AlgoResultParamList.Add(_AlgoResultParam);
 
             return _CogEllipseResult.IsGood;
         }
@@ -1186,6 +1184,7 @@ namespace InspectionSystemManager
                 else if (eAlgoType.C_BLOB == _AlgoType)         _IsGood = DisplayResultBlob(AlgoResultParamList[iLoopCount].ResultParam, iLoopCount);
                 else if (eAlgoType.C_LEAD == _AlgoType)         _IsGood = DisplayResultLeadMeasure(AlgoResultParamList[iLoopCount].ResultParam, iLoopCount);
                 else if (eAlgoType.C_NEEDLE_FIND == _AlgoType)  _IsGood = DisplayResultNeedleFind(AlgoResultParamList[iLoopCount].ResultParam, iLoopCount);
+                else if (eAlgoType.C_ELLIPSE == _AlgoType)      _IsGood = DisplayResultEllipseFind(AlgoResultParamList[iLoopCount].ResultParam, iLoopCount);
                 else if (eAlgoType.C_ID == _AlgoType)           _IsGood = DisplayResultBarCodeIDFind(AlgoResultParamList[iLoopCount].ResultParam, iLoopCount);
                 else if (eAlgoType.C_LINE_FIND == _AlgoType)    _IsGood = DisplayResultLineFind(AlgoResultParamList[iLoopCount].ResultParam, iLoopCount);
             }
@@ -1391,6 +1390,51 @@ namespace InspectionSystemManager
             return _CogNeedleFindResult.IsGood;
         }
 
+        private bool DisplayResultEllipseFind(Object _ResultParam, int _Index)
+        {
+            CogEllipseResult _CogEllipseResult = _ResultParam as CogEllipseResult;
+
+            CogEllipse _Ellipse = new CogEllipse();
+            CogPointMarker _CirclePoint = new CogPointMarker();
+
+            if (_CogEllipseResult != null)// && _CogNeedleFindResult.IsGood)
+            {
+                if (_CogEllipseResult.RadiusX > 0)
+                {
+                    _Ellipse.SetCenterXYRadiusXYRotation(_CogEllipseResult.CenterX, _CogEllipseResult.CenterY, _CogEllipseResult.RadiusX, _CogEllipseResult.RadiusY, 0);
+                    _CirclePoint.SetCenterRotationSize(_CogEllipseResult.CenterX, _CogEllipseResult.CenterY, 0, 1);
+                    ResultDisplay(_Ellipse, _CirclePoint, "Ellipse", _CogEllipseResult.IsGood);
+
+                    string _CenterPointName = string.Format("X = {0:F2}mm, Y = {1:F2}mm, XR = {2:F2}mm, YR = {3:F2}mm", _CogEllipseResult.CenterXReal, _CogEllipseResult.CenterYReal, _CogEllipseResult.RadiusXReal, _CogEllipseResult.RadiusYReal);
+                    ResultDisplayMessage(_CogEllipseResult.CenterX, _CogEllipseResult.CenterY + 150, _CenterPointName, _CogEllipseResult.IsGood, CogGraphicLabelAlignmentConstants.BaselineCenter);
+
+                    if (_CogEllipseResult.PointStatusInfo != null)
+                    {
+                        for (int iLoopCount = 0; iLoopCount < _CogEllipseResult.PointStatusInfo.Length; ++iLoopCount)
+                        {
+                            if (_CogEllipseResult.PointPosXInfo[iLoopCount] == 0 && _CogEllipseResult.PointPosYInfo[iLoopCount] == 0) continue;
+
+                            CogPointMarker _Point = new CogPointMarker();
+                            _Point.SetCenterRotationSize(_CogEllipseResult.PointPosXInfo[iLoopCount], _CogEllipseResult.PointPosYInfo[iLoopCount], 0, 1);
+
+                            string _PointName = string.Format("Point{0}", iLoopCount);
+                            if (true == _CogEllipseResult.PointStatusInfo[iLoopCount]) ResultDisplay(_Point, _PointName, CogColorConstants.Green);
+                            else ResultDisplay(_Point, _PointName, CogColorConstants.Red);
+                        }
+                    }
+                }
+            }
+
+            else
+            {
+                //LOG
+            }
+
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "InspectionWindow - DisplayResultEllipse Complete", CLogManager.LOG_LEVEL.MID);
+
+            return _CogEllipseResult.IsGood;
+        }
+
         private bool DisplayResultBarCodeIDFind(Object _ResultParam, int _Index)
         {
             CogBarCodeIDResult _CogBarCodeIDResult = _ResultParam as CogBarCodeIDResult;
@@ -1463,6 +1507,15 @@ namespace InspectionSystemManager
             else                    kpCogDisplayMain.DrawStaticShape(_Point, _Name + "_PointOrigin", CogColorConstants.Red);
         }
 
+        public void ResultDisplay(CogEllipse _Ellipse, CogPointMarker _Point, string _Name, bool _IsGood)
+        {
+            if (true == _IsGood) kpCogDisplayMain.DrawStaticShape(_Ellipse, "Ellipse", CogColorConstants.Green, 3);
+            else kpCogDisplayMain.DrawStaticShape(_Ellipse, "Ellipse", CogColorConstants.Red, 3);
+
+            if (true == _IsGood) kpCogDisplayMain.DrawStaticShape(_Point, _Name + "_PointOrigin", CogColorConstants.Green);
+            else kpCogDisplayMain.DrawStaticShape(_Point, _Name + "_PointOrigin", CogColorConstants.Red);
+        }
+
         public void ResultDisplay(CogRectangleAffine _Region, CogPointMarker _Point, string _Name, bool _IsGood)
         {
             if (true == _IsGood)    kpCogDisplayMain.DrawStaticShape(_Region, _Name + "_Rect", CogColorConstants.Green);
@@ -1514,6 +1567,7 @@ namespace InspectionSystemManager
             else if (ProjectItem == eProjectItem.BC_ID)             SendResParam = GetCardIDResultAnalysis();
             else if (ProjectItem == eProjectItem.BC_ID_SECOND)      SendResParam = GetCardIDResultAnalysis();
             else if (ProjectItem == eProjectItem.BC_EXIST)          SendResParam = GetCardExistResultAnalysis();
+            else                                                    SendResParam = GetResultAnalysis();
 
             return _Result;
         }

@@ -42,7 +42,10 @@
             this.rbSearchDirectionOut = new System.Windows.Forms.RadioButton();
             this.btnDrawCaliper = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.numUpDownArcRadiusY = new System.Windows.Forms.NumericUpDown();
+            this.gradientLabel8 = new CustomControl.GradientLabel();
             this.numUpDownAngleSpan = new System.Windows.Forms.NumericUpDown();
+            this.gradientLabel9 = new CustomControl.GradientLabel();
             this.numUpDownArcRadiusX = new System.Windows.Forms.NumericUpDown();
             this.gradientLabel5 = new CustomControl.GradientLabel();
             this.numUpDownArcCenterY = new System.Windows.Forms.NumericUpDown();
@@ -50,8 +53,12 @@
             this.numUpDownArcCenterX = new System.Windows.Forms.NumericUpDown();
             this.gradientLabel3 = new CustomControl.GradientLabel();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.textBoxRadiusY = new System.Windows.Forms.TextBox();
+            this.gradientLabel15 = new CustomControl.GradientLabel();
+            this.textBoxRadiusX = new System.Windows.Forms.TextBox();
             this.textBoxCenterY = new System.Windows.Forms.TextBox();
             this.textBoxCenterX = new System.Windows.Forms.TextBox();
+            this.gradientLabel12 = new CustomControl.GradientLabel();
             this.gradientLabel13 = new CustomControl.GradientLabel();
             this.gradientLabel14 = new CustomControl.GradientLabel();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -63,19 +70,13 @@
             this.gradientLabel10 = new CustomControl.GradientLabel();
             this.graLabelPolarity = new CustomControl.GradientLabel();
             this.labelTitle = new CustomControl.GradientLabel();
-            this.gradientLabel9 = new CustomControl.GradientLabel();
-            this.numUpDownArcRadiusY = new System.Windows.Forms.NumericUpDown();
-            this.gradientLabel8 = new CustomControl.GradientLabel();
-            this.textBoxRadiusX = new System.Windows.Forms.TextBox();
-            this.gradientLabel12 = new CustomControl.GradientLabel();
-            this.textBoxRadiusY = new System.Windows.Forms.TextBox();
-            this.gradientLabel15 = new CustomControl.GradientLabel();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownIgnoreNumber)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownProjectionLength)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownSearchLength)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownCaliperNumber)).BeginInit();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numUpDownArcRadiusY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownAngleSpan)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownArcRadiusX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownArcCenterY)).BeginInit();
@@ -83,14 +84,13 @@
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numUpDownArcRadiusY)).BeginInit();
             this.SuspendLayout();
             // 
             // btnSetting
             // 
             this.btnSetting.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnSetting.ForeColor = System.Drawing.Color.Black;
-            this.btnSetting.Location = new System.Drawing.Point(461, 314);
+            this.btnSetting.Location = new System.Drawing.Point(461, 317);
             this.btnSetting.Name = "btnSetting";
             this.btnSetting.Size = new System.Drawing.Size(117, 34);
             this.btnSetting.TabIndex = 51;
@@ -110,7 +110,7 @@
             this.groupBox1.Controls.Add(this.gradientLabel7);
             this.groupBox1.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
             this.groupBox1.ForeColor = System.Drawing.Color.White;
-            this.groupBox1.Location = new System.Drawing.Point(3, 30);
+            this.groupBox1.Location = new System.Drawing.Point(3, 33);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(301, 138);
             this.groupBox1.TabIndex = 52;
@@ -272,7 +272,7 @@
             // 
             this.rbSearchDirectionIn.Appearance = System.Windows.Forms.Appearance.Button;
             this.rbSearchDirectionIn.ForeColor = System.Drawing.Color.Black;
-            this.rbSearchDirectionIn.Location = new System.Drawing.Point(149, 23);
+            this.rbSearchDirectionIn.Location = new System.Drawing.Point(147, 25);
             this.rbSearchDirectionIn.Name = "rbSearchDirectionIn";
             this.rbSearchDirectionIn.Size = new System.Drawing.Size(56, 26);
             this.rbSearchDirectionIn.TabIndex = 67;
@@ -287,7 +287,7 @@
             this.rbSearchDirectionOut.Appearance = System.Windows.Forms.Appearance.Button;
             this.rbSearchDirectionOut.Checked = true;
             this.rbSearchDirectionOut.ForeColor = System.Drawing.Color.Black;
-            this.rbSearchDirectionOut.Location = new System.Drawing.Point(208, 23);
+            this.rbSearchDirectionOut.Location = new System.Drawing.Point(206, 25);
             this.rbSearchDirectionOut.Name = "rbSearchDirectionOut";
             this.rbSearchDirectionOut.Size = new System.Drawing.Size(56, 26);
             this.rbSearchDirectionOut.TabIndex = 66;
@@ -302,7 +302,7 @@
             // 
             this.btnDrawCaliper.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnDrawCaliper.ForeColor = System.Drawing.Color.Black;
-            this.btnDrawCaliper.Location = new System.Drawing.Point(344, 314);
+            this.btnDrawCaliper.Location = new System.Drawing.Point(344, 317);
             this.btnDrawCaliper.Name = "btnDrawCaliper";
             this.btnDrawCaliper.Size = new System.Drawing.Size(117, 34);
             this.btnDrawCaliper.TabIndex = 70;
@@ -324,12 +324,58 @@
             this.groupBox2.Controls.Add(this.gradientLabel3);
             this.groupBox2.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
             this.groupBox2.ForeColor = System.Drawing.Color.White;
-            this.groupBox2.Location = new System.Drawing.Point(3, 174);
+            this.groupBox2.Location = new System.Drawing.Point(3, 177);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(301, 167);
             this.groupBox2.TabIndex = 69;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = " Expected circular Arc ";
+            // 
+            // numUpDownArcRadiusY
+            // 
+            this.numUpDownArcRadiusY.DecimalPlaces = 2;
+            this.numUpDownArcRadiusY.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            131072});
+            this.numUpDownArcRadiusY.Location = new System.Drawing.Point(150, 106);
+            this.numUpDownArcRadiusY.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.numUpDownArcRadiusY.Minimum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            -2147483648});
+            this.numUpDownArcRadiusY.Name = "numUpDownArcRadiusY";
+            this.numUpDownArcRadiusY.Size = new System.Drawing.Size(140, 21);
+            this.numUpDownArcRadiusY.TabIndex = 73;
+            this.numUpDownArcRadiusY.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numUpDownArcRadiusY.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.numUpDownArcRadiusY.ValueChanged += new System.EventHandler(this.numUpDownArcRadiusY_ValueChanged);
+            // 
+            // gradientLabel8
+            // 
+            this.gradientLabel8.BackColor = System.Drawing.Color.SteelBlue;
+            this.gradientLabel8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.gradientLabel8.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel8.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel8.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel8.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel8.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel8.Location = new System.Drawing.Point(12, 105);
+            this.gradientLabel8.Name = "gradientLabel8";
+            this.gradientLabel8.Size = new System.Drawing.Size(131, 24);
+            this.gradientLabel8.TabIndex = 72;
+            this.gradientLabel8.Text = "Radius Y";
+            this.gradientLabel8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // numUpDownAngleSpan
             // 
@@ -361,6 +407,22 @@
             0});
             this.numUpDownAngleSpan.ValueChanged += new System.EventHandler(this.numUpDownAngleSpan_ValueChanged);
             // 
+            // gradientLabel9
+            // 
+            this.gradientLabel9.BackColor = System.Drawing.Color.SteelBlue;
+            this.gradientLabel9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.gradientLabel9.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel9.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel9.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel9.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel9.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel9.Location = new System.Drawing.Point(12, 133);
+            this.gradientLabel9.Name = "gradientLabel9";
+            this.gradientLabel9.Size = new System.Drawing.Size(131, 24);
+            this.gradientLabel9.TabIndex = 70;
+            this.gradientLabel9.Text = "Angle Span";
+            this.gradientLabel9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // numUpDownArcRadiusX
             // 
             this.numUpDownArcRadiusX.DecimalPlaces = 2;
@@ -389,7 +451,7 @@
             0,
             0,
             0});
-            this.numUpDownArcRadiusX.ValueChanged += new System.EventHandler(this.numUpDownArcRadius_ValueChanged);
+            this.numUpDownArcRadiusX.ValueChanged += new System.EventHandler(this.numUpDownArcRadiusX_ValueChanged);
             // 
             // gradientLabel5
             // 
@@ -511,12 +573,48 @@
             this.groupBox3.Controls.Add(this.gradientLabel14);
             this.groupBox3.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
             this.groupBox3.ForeColor = System.Drawing.Color.White;
-            this.groupBox3.Location = new System.Drawing.Point(309, 174);
+            this.groupBox3.Location = new System.Drawing.Point(309, 177);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(268, 136);
             this.groupBox3.TabIndex = 72;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = " Result Condition";
+            // 
+            // textBoxRadiusY
+            // 
+            this.textBoxRadiusY.Location = new System.Drawing.Point(149, 106);
+            this.textBoxRadiusY.Name = "textBoxRadiusY";
+            this.textBoxRadiusY.ReadOnly = true;
+            this.textBoxRadiusY.Size = new System.Drawing.Size(111, 21);
+            this.textBoxRadiusY.TabIndex = 70;
+            this.textBoxRadiusY.Text = "0";
+            this.textBoxRadiusY.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // gradientLabel15
+            // 
+            this.gradientLabel15.BackColor = System.Drawing.Color.SteelBlue;
+            this.gradientLabel15.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.gradientLabel15.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel15.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel15.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel15.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel15.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel15.Location = new System.Drawing.Point(12, 105);
+            this.gradientLabel15.Name = "gradientLabel15";
+            this.gradientLabel15.Size = new System.Drawing.Size(131, 24);
+            this.gradientLabel15.TabIndex = 69;
+            this.gradientLabel15.Text = "Radius Y";
+            this.gradientLabel15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // textBoxRadiusX
+            // 
+            this.textBoxRadiusX.Location = new System.Drawing.Point(149, 77);
+            this.textBoxRadiusX.Name = "textBoxRadiusX";
+            this.textBoxRadiusX.ReadOnly = true;
+            this.textBoxRadiusX.Size = new System.Drawing.Size(111, 21);
+            this.textBoxRadiusX.TabIndex = 68;
+            this.textBoxRadiusX.Text = "0";
+            this.textBoxRadiusX.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // textBoxCenterY
             // 
@@ -537,6 +635,22 @@
             this.textBoxCenterX.TabIndex = 68;
             this.textBoxCenterX.Text = "0";
             this.textBoxCenterX.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // gradientLabel12
+            // 
+            this.gradientLabel12.BackColor = System.Drawing.Color.SteelBlue;
+            this.gradientLabel12.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.gradientLabel12.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel12.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel12.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel12.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel12.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel12.Location = new System.Drawing.Point(12, 76);
+            this.gradientLabel12.Name = "gradientLabel12";
+            this.gradientLabel12.Size = new System.Drawing.Size(131, 24);
+            this.gradientLabel12.TabIndex = 66;
+            this.gradientLabel12.Text = "Radius X";
+            this.gradientLabel12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // gradientLabel13
             // 
@@ -578,7 +692,7 @@
             this.groupBox4.Controls.Add(this.graLabelSearchDirection);
             this.groupBox4.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
             this.groupBox4.ForeColor = System.Drawing.Color.White;
-            this.groupBox4.Location = new System.Drawing.Point(309, 30);
+            this.groupBox4.Location = new System.Drawing.Point(309, 33);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(268, 68);
             this.groupBox4.TabIndex = 73;
@@ -592,7 +706,7 @@
             this.gradientLabel6.ColorTop = System.Drawing.Color.Empty;
             this.gradientLabel6.ForeColor = System.Drawing.Color.White;
             this.gradientLabel6.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel6.Location = new System.Drawing.Point(12, 24);
+            this.gradientLabel6.Location = new System.Drawing.Point(10, 26);
             this.gradientLabel6.Name = "gradientLabel6";
             this.gradientLabel6.Size = new System.Drawing.Size(132, 24);
             this.gradientLabel6.TabIndex = 68;
@@ -618,7 +732,7 @@
             // 
             this.rbCaliperPolarityDarkToLight.Appearance = System.Windows.Forms.Appearance.Button;
             this.rbCaliperPolarityDarkToLight.ForeColor = System.Drawing.Color.Black;
-            this.rbCaliperPolarityDarkToLight.Location = new System.Drawing.Point(148, 23);
+            this.rbCaliperPolarityDarkToLight.Location = new System.Drawing.Point(147, 23);
             this.rbCaliperPolarityDarkToLight.Name = "rbCaliperPolarityDarkToLight";
             this.rbCaliperPolarityDarkToLight.Size = new System.Drawing.Size(56, 26);
             this.rbCaliperPolarityDarkToLight.TabIndex = 71;
@@ -652,7 +766,7 @@
             this.groupBox5.Controls.Add(this.graLabelPolarity);
             this.groupBox5.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
             this.groupBox5.ForeColor = System.Drawing.Color.White;
-            this.groupBox5.Location = new System.Drawing.Point(309, 104);
+            this.groupBox5.Location = new System.Drawing.Point(309, 107);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(268, 65);
             this.groupBox5.TabIndex = 74;
@@ -666,7 +780,7 @@
             this.gradientLabel10.ColorTop = System.Drawing.Color.Empty;
             this.gradientLabel10.ForeColor = System.Drawing.Color.White;
             this.gradientLabel10.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel10.Location = new System.Drawing.Point(10, 22);
+            this.gradientLabel10.Location = new System.Drawing.Point(10, 24);
             this.gradientLabel10.Name = "gradientLabel10";
             this.gradientLabel10.Size = new System.Drawing.Size(132, 24);
             this.gradientLabel10.TabIndex = 69;
@@ -703,119 +817,6 @@
             this.labelTitle.Text = " Ellipse Find Teaching Window";
             this.labelTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // gradientLabel9
-            // 
-            this.gradientLabel9.BackColor = System.Drawing.Color.SteelBlue;
-            this.gradientLabel9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.gradientLabel9.ColorBottom = System.Drawing.Color.Empty;
-            this.gradientLabel9.ColorTop = System.Drawing.Color.Empty;
-            this.gradientLabel9.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.gradientLabel9.ForeColor = System.Drawing.Color.White;
-            this.gradientLabel9.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel9.Location = new System.Drawing.Point(12, 133);
-            this.gradientLabel9.Name = "gradientLabel9";
-            this.gradientLabel9.Size = new System.Drawing.Size(131, 24);
-            this.gradientLabel9.TabIndex = 70;
-            this.gradientLabel9.Text = "Angle Span";
-            this.gradientLabel9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // numUpDownArcRadiusY
-            // 
-            this.numUpDownArcRadiusY.DecimalPlaces = 2;
-            this.numUpDownArcRadiusY.Increment = new decimal(new int[] {
-            5,
-            0,
-            0,
-            131072});
-            this.numUpDownArcRadiusY.Location = new System.Drawing.Point(150, 106);
-            this.numUpDownArcRadiusY.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            this.numUpDownArcRadiusY.Minimum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            -2147483648});
-            this.numUpDownArcRadiusY.Name = "numUpDownArcRadiusY";
-            this.numUpDownArcRadiusY.Size = new System.Drawing.Size(140, 21);
-            this.numUpDownArcRadiusY.TabIndex = 73;
-            this.numUpDownArcRadiusY.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.numUpDownArcRadiusY.Value = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-            // 
-            // gradientLabel8
-            // 
-            this.gradientLabel8.BackColor = System.Drawing.Color.SteelBlue;
-            this.gradientLabel8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.gradientLabel8.ColorBottom = System.Drawing.Color.Empty;
-            this.gradientLabel8.ColorTop = System.Drawing.Color.Empty;
-            this.gradientLabel8.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.gradientLabel8.ForeColor = System.Drawing.Color.White;
-            this.gradientLabel8.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel8.Location = new System.Drawing.Point(12, 105);
-            this.gradientLabel8.Name = "gradientLabel8";
-            this.gradientLabel8.Size = new System.Drawing.Size(131, 24);
-            this.gradientLabel8.TabIndex = 72;
-            this.gradientLabel8.Text = "Radius Y";
-            this.gradientLabel8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // textBoxRadiusX
-            // 
-            this.textBoxRadiusX.Location = new System.Drawing.Point(149, 77);
-            this.textBoxRadiusX.Name = "textBoxRadiusX";
-            this.textBoxRadiusX.ReadOnly = true;
-            this.textBoxRadiusX.Size = new System.Drawing.Size(111, 21);
-            this.textBoxRadiusX.TabIndex = 68;
-            this.textBoxRadiusX.Text = "0";
-            this.textBoxRadiusX.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // gradientLabel12
-            // 
-            this.gradientLabel12.BackColor = System.Drawing.Color.SteelBlue;
-            this.gradientLabel12.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.gradientLabel12.ColorBottom = System.Drawing.Color.Empty;
-            this.gradientLabel12.ColorTop = System.Drawing.Color.Empty;
-            this.gradientLabel12.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.gradientLabel12.ForeColor = System.Drawing.Color.White;
-            this.gradientLabel12.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel12.Location = new System.Drawing.Point(12, 76);
-            this.gradientLabel12.Name = "gradientLabel12";
-            this.gradientLabel12.Size = new System.Drawing.Size(131, 24);
-            this.gradientLabel12.TabIndex = 66;
-            this.gradientLabel12.Text = "Radius X";
-            this.gradientLabel12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // textBoxRadiusY
-            // 
-            this.textBoxRadiusY.Location = new System.Drawing.Point(149, 106);
-            this.textBoxRadiusY.Name = "textBoxRadiusY";
-            this.textBoxRadiusY.ReadOnly = true;
-            this.textBoxRadiusY.Size = new System.Drawing.Size(111, 21);
-            this.textBoxRadiusY.TabIndex = 70;
-            this.textBoxRadiusY.Text = "0";
-            this.textBoxRadiusY.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // gradientLabel15
-            // 
-            this.gradientLabel15.BackColor = System.Drawing.Color.SteelBlue;
-            this.gradientLabel15.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.gradientLabel15.ColorBottom = System.Drawing.Color.Empty;
-            this.gradientLabel15.ColorTop = System.Drawing.Color.Empty;
-            this.gradientLabel15.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.gradientLabel15.ForeColor = System.Drawing.Color.White;
-            this.gradientLabel15.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel15.Location = new System.Drawing.Point(12, 105);
-            this.gradientLabel15.Name = "gradientLabel15";
-            this.gradientLabel15.Size = new System.Drawing.Size(131, 24);
-            this.gradientLabel15.TabIndex = 69;
-            this.gradientLabel15.Text = "Radius Y";
-            this.gradientLabel15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // ucCogEllipseFind
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -837,6 +838,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownSearchLength)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownCaliperNumber)).EndInit();
             this.groupBox2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.numUpDownArcRadiusY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownAngleSpan)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownArcRadiusX)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownArcCenterY)).EndInit();
@@ -845,7 +847,6 @@
             this.groupBox3.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.numUpDownArcRadiusY)).EndInit();
             this.ResumeLayout(false);
 
         }

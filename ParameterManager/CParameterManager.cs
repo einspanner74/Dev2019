@@ -592,6 +592,7 @@ namespace ParameterManager
                 else if ((int)eAlgoType.C_LINE_FIND == _InspAlgoParamTemp.AlgoType)     GetLineFindInspectionParameter(_Node, ref _InspAlgoParamTemp);
                 else if ((int)eAlgoType.C_MULTI_PATTERN == _InspAlgoParamTemp.AlgoType) GetMultiPatternInspectionparameter(_Node, ref _InspAlgoParamTemp);
                 else if ((int)eAlgoType.C_LEAD_TRIM == _InspAlgoParamTemp.AlgoType)     GetLeadTrimInspectionParameter(_Node, ref _InspAlgoParamTemp);
+                else if ((int)eAlgoType.C_ELLIPSE == _InspAlgoParamTemp.AlgoType)       GetEllipseFindInspectionParameter(_Node, ref _InspAlgoParamTemp);
 
                 _InspAreaParam.InspAlgoParam.Add(_InspAlgoParamTemp);
             }
@@ -850,6 +851,35 @@ namespace ParameterManager
                 }
             }
             _InspParam.Algorithm = _CogNeedleFind;
+        }
+
+        private void GetEllipseFindInspectionParameter(XmlNode _Nodes, ref InspectionAlgorithmParameter _InspParam)
+        {
+            if (null == _Nodes) return;
+            CogEllipseAlgo _CogEllipseFind = new CogEllipseAlgo();
+            foreach (XmlNode _NodeChild in _Nodes)
+            {
+                if (null == _NodeChild) return;
+                switch (_NodeChild.Name)
+                {
+                    case "CaliperNumber": _CogEllipseFind.CaliperNumber = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "CaliperSearchLength": _CogEllipseFind.CaliperSearchLength = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "CaliperProjectionLength": _CogEllipseFind.CaliperProjectionLength = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "CaliperSearchDirection": _CogEllipseFind.CaliperSearchDirection = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "CaliperPolarity": _CogEllipseFind.CaliperPolarity = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "CaliperIgnoreNumber": _CogEllipseFind.CaliperIgnoreNumber = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "ArcCenterX": _CogEllipseFind.ArcCenterX = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "ArcCenterY": _CogEllipseFind.ArcCenterY = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "ArcRadiusX": _CogEllipseFind.ArcRadiusX = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "ArcRadiusY": _CogEllipseFind.ArcRadiusY = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "ArcAngleSpan": _CogEllipseFind.ArcAngleSpan = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "OriginX": _CogEllipseFind.OriginX = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "OriginY": _CogEllipseFind.OriginY = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "OriginRadiusX": _CogEllipseFind.OriginRadiusX = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "OriginRadiusY": _CogEllipseFind.OriginRadiusY = Convert.ToDouble(_NodeChild.InnerText); break;
+                }
+            }
+            _InspParam.Algorithm = _CogEllipseFind;
         }
 
         private void GetBarCodeIDInspectionParameter(XmlNode _Nodes, ref InspectionAlgorithmParameter _InspParam)
@@ -1127,6 +1157,7 @@ namespace ParameterManager
                                 else if (eAlgoType.C_BLOB_REFER == _AlgoType)    WriteBlobReferInspectionParameter(_ID, ISMCount, _XmlWriter, _InspAlgoParamTemp.Algorithm);
                                 else if (eAlgoType.C_LEAD == _AlgoType)          WriteLeadInspectionParameter(_ID, ISMCount, _XmlWriter, _InspAlgoParamTemp.Algorithm);
                                 else if (eAlgoType.C_NEEDLE_FIND == _AlgoType)   WriteNeedleFindInspectionParameter(_ID, ISMCount, _XmlWriter, _InspAlgoParamTemp.Algorithm);
+                                else if (eAlgoType.C_ELLIPSE == _AlgoType)       WriteEllipseInspectionParameter(_ID, ISMCount, _XmlWriter, _InspAlgoParamTemp.Algorithm);
                                 else if (eAlgoType.C_ID == _AlgoType)            WriteBarCodeIDInspectionParameter(_ID, ISMCount, _XmlWriter, _InspAlgoParamTemp.Algorithm);
                                 else if (eAlgoType.C_LINE_FIND == _AlgoType)     WriteLineFindInspectionParameter(_ID, ISMCount, _XmlWriter, _InspAlgoParamTemp.Algorithm);
                                 else if (eAlgoType.C_MULTI_PATTERN == _AlgoType) WriteMultiPatternInspectionParameter(_ID, ISMCount, _XmlWriter, _InspAlgoParamTemp.Algorithm);
@@ -1314,6 +1345,26 @@ namespace ParameterManager
             _XmlWriter.WriteElementString("OriginX", _CogNeedleFindAlgo.OriginX.ToString());
             _XmlWriter.WriteElementString("OriginY", _CogNeedleFindAlgo.OriginY.ToString());
             _XmlWriter.WriteElementString("OriginRadius", _CogNeedleFindAlgo.OriginRadius.ToString());
+        }
+
+        private void WriteEllipseInspectionParameter(int _ID, int _ISMCount, XmlTextWriter _XmlWriter, Object _InspAlgoParam)
+        {
+            var _CogEllipseAlgo = _InspAlgoParam as CogEllipseAlgo;
+            _XmlWriter.WriteElementString("CaliperNumber", _CogEllipseAlgo.CaliperNumber.ToString());
+            _XmlWriter.WriteElementString("CaliperSearchLength", _CogEllipseAlgo.CaliperSearchLength.ToString());
+            _XmlWriter.WriteElementString("CaliperProjectionLength", _CogEllipseAlgo.CaliperProjectionLength.ToString());
+            _XmlWriter.WriteElementString("CaliperSearchDirection", _CogEllipseAlgo.CaliperSearchDirection.ToString());
+            _XmlWriter.WriteElementString("CaliperPolarity", _CogEllipseAlgo.CaliperPolarity.ToString());
+            _XmlWriter.WriteElementString("CaliperIgnoreNumber", _CogEllipseAlgo.CaliperIgnoreNumber.ToString());
+            _XmlWriter.WriteElementString("ArcCenterX", _CogEllipseAlgo.ArcCenterX.ToString());
+            _XmlWriter.WriteElementString("ArcCenterY", _CogEllipseAlgo.ArcCenterY.ToString());
+            _XmlWriter.WriteElementString("ArcRadiusX", _CogEllipseAlgo.ArcRadiusX.ToString());
+            _XmlWriter.WriteElementString("ArcRadiusY", _CogEllipseAlgo.ArcRadiusY.ToString());
+            _XmlWriter.WriteElementString("ArcAngleSpan", _CogEllipseAlgo.ArcAngleSpan.ToString());
+            _XmlWriter.WriteElementString("OriginX", _CogEllipseAlgo.OriginX.ToString());
+            _XmlWriter.WriteElementString("OriginY", _CogEllipseAlgo.OriginY.ToString());
+            _XmlWriter.WriteElementString("OriginRadiusX", _CogEllipseAlgo.OriginRadiusX.ToString());
+            _XmlWriter.WriteElementString("OriginRadiusY", _CogEllipseAlgo.OriginRadiusY.ToString());
         }
 
         private void WriteBarCodeIDInspectionParameter(int _ID, int _ISMCount, XmlTextWriter _XmlWriter, Object _InspAlgoParam)
@@ -1866,6 +1917,33 @@ namespace ParameterManager
                         _Algorithm.OriginX          = _SrcAlgorithm.OriginX;
                         _Algorithm.OriginY          = _SrcAlgorithm.OriginY;
                         _Algorithm.OriginRadius     = _SrcAlgorithm.OriginRadius;
+
+                        _InspAlgoParam.Algorithm = _Algorithm;
+                        #endregion
+                    }
+
+                    else if (eAlgoType.C_ELLIPSE == _AlgoType)
+                    {
+                        #region Ellipse Algorithm Copy
+                        var _Algorithm = _InspAlgoParam.Algorithm as CogEllipseAlgo;
+                        var _SrcAlgorithm = _SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm as CogEllipseAlgo;
+
+                        _Algorithm = new CogEllipseAlgo();
+                        _Algorithm.CaliperNumber = _SrcAlgorithm.CaliperNumber;
+                        _Algorithm.CaliperSearchLength = _SrcAlgorithm.CaliperSearchLength;
+                        _Algorithm.CaliperProjectionLength = _SrcAlgorithm.CaliperProjectionLength;
+                        _Algorithm.CaliperSearchDirection = _SrcAlgorithm.CaliperSearchDirection;
+                        _Algorithm.CaliperPolarity = _SrcAlgorithm.CaliperPolarity;
+                        _Algorithm.CaliperIgnoreNumber = _SrcAlgorithm.CaliperIgnoreNumber;
+                        _Algorithm.ArcCenterX = _SrcAlgorithm.ArcCenterX;
+                        _Algorithm.ArcCenterY = _SrcAlgorithm.ArcCenterY;
+                        _Algorithm.ArcRadiusX = _SrcAlgorithm.ArcRadiusX;
+                        _Algorithm.ArcRadiusY = _SrcAlgorithm.ArcRadiusY;
+                        _Algorithm.ArcAngleSpan = _SrcAlgorithm.ArcAngleSpan;
+                        _Algorithm.OriginX = _SrcAlgorithm.OriginX;
+                        _Algorithm.OriginY = _SrcAlgorithm.OriginY;
+                        _Algorithm.OriginRadiusX = _SrcAlgorithm.OriginRadiusX;
+                        _Algorithm.OriginRadiusY = _SrcAlgorithm.OriginRadiusY;
 
                         _InspAlgoParam.Algorithm = _Algorithm;
                         #endregion

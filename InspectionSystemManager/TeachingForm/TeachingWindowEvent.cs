@@ -28,6 +28,8 @@ namespace InspectionSystemManager
             ucCogBlobReferWnd.GetHistogramValueEvent += new ucCogBlobReference.GetHistogramValueHandler(GetHistogramValueFunction);
             ucCogNeedleFindWnd.ApplyNeedleCircleFindValueEvent += new ucCogNeedleCircleFind.ApplyNeedleCircleFindValueHandler(ApplyNeedleCircleFindValueFunction);
             ucCogNeedleFindWnd.DrawNeedleCircleFindCaliperEvent += new ucCogNeedleCircleFind.DrawNeedleCircleFindCaliperHandler(DrawNeedleCircleFindCaliperFunction);
+            ucCogEllipseFindWnd.ApplyEllipseValueEvent += new ucCogEllipseFind.ApplyEllipseValueHandler(ApplyEllipseValueFunction);
+            ucCogEllipseFindWnd.DrawEllipseCaliperEvent += new ucCogEllipseFind.DrawEllipseCaliperHandler(DrawEllipseCaliperFunction);
             ucCogLeadInspWnd.ApplyLeadInspValueEvent += new ucCogLeadInspection.ApplyLeadInspValueHandler(ApplyLeadInspValueFunction);
             ucCogIDInspWnd.ApplyBarCodeIDInspValueEvent += new ucCogID.ApplyBarCodeIDInspValueHandler(ApplyBarCodeIDInspValueFunction);
             ucCogLineFindWnd.ApplyLineFindEvent += new ucCogLineFind.ApplyLineFindHandler(ApplyLineFindValueFunction);
@@ -56,6 +58,8 @@ namespace InspectionSystemManager
             ucCogBlobReferWnd.GetHistogramValueEvent -= new ucCogBlobReference.GetHistogramValueHandler(GetHistogramValueFunction);
             ucCogNeedleFindWnd.ApplyNeedleCircleFindValueEvent -= new ucCogNeedleCircleFind.ApplyNeedleCircleFindValueHandler(ApplyNeedleCircleFindValueFunction);
             ucCogNeedleFindWnd.DrawNeedleCircleFindCaliperEvent -= new ucCogNeedleCircleFind.DrawNeedleCircleFindCaliperHandler(DrawNeedleCircleFindCaliperFunction);
+            ucCogEllipseFindWnd.ApplyEllipseValueEvent -= new ucCogEllipseFind.ApplyEllipseValueHandler(ApplyEllipseValueFunction);
+            ucCogEllipseFindWnd.DrawEllipseCaliperEvent -= new ucCogEllipseFind.DrawEllipseCaliperHandler(DrawEllipseCaliperFunction);
             ucCogLeadInspWnd.ApplyLeadInspValueEvent -= new ucCogLeadInspection.ApplyLeadInspValueHandler(ApplyLeadInspValueFunction);
             ucCogIDInspWnd.ApplyBarCodeIDInspValueEvent -= new ucCogID.ApplyBarCodeIDInspValueHandler(ApplyBarCodeIDInspValueFunction);
             ucCogLineFindWnd.ApplyLineFindEvent -= new ucCogLineFind.ApplyLineFindHandler(ApplyLineFindValueFunction);
@@ -79,7 +83,7 @@ namespace InspectionSystemManager
         #region KPCogDisplay Control Event : KPCogDisplayControl -> TeachingWindow
         private void TeachDisplayMouseUpEvent(object _CaliperTool)
         {
-            if (CurrentAlgoType != eAlgoType.C_NEEDLE_FIND && CurrentAlgoType != eAlgoType.C_LINE_FIND) return;
+            if (CurrentAlgoType != eAlgoType.C_NEEDLE_FIND && CurrentAlgoType != eAlgoType.C_LINE_FIND && CurrentAlgoType != eAlgoType.C_ELLIPSE) return;
             if (CurrentTeachStep != eTeachStep.ALGO_SET)    return;
 
             if (CurrentAlgoType == eAlgoType.C_NEEDLE_FIND)
@@ -101,6 +105,27 @@ namespace InspectionSystemManager
 
                 ucCogNeedleFindWnd.SetCaliper(_CaliperNumber, _CaliperSearchLength, _CaliperProjectionLength, _CaliperSearchDir, _CaliperPolarity);
                 ucCogNeedleFindWnd.SetCircularArc(_CenterX, _CenterY, _Radius, _AngleStart, _AngleSpan);
+            }
+
+            else if (CurrentAlgoType == eAlgoType.C_ELLIPSE)
+            {
+                CogFindEllipseTool _EllipseCaliperTool = _CaliperTool as CogFindEllipseTool;
+
+                double _CenterX = 0, _CenterY = 0, _RadiusX = 0, _RadiusY = 0, _Rotation = 0, _AngleStart = 0, _AngleSpan = 0;
+                _EllipseCaliperTool.RunParams.ExpectedEllipticalArc.GetCenterRadiusXYRotationAngleStartAngleSpan(out _CenterX, out _CenterY, out _RadiusX, out _RadiusY, out _Rotation, out _AngleStart, out _AngleSpan);
+
+                int _CaliperNumber = 0;
+                double _CaliperSearchLength = 0, _CaliperProjectionLength = 0;
+                eSearchDirection _CaliperSearchDir = eSearchDirection.IN_WARD;
+                ePolarity _CaliperPolarity = ePolarity.DARK_TO_LIGHT;
+                _CaliperNumber = _EllipseCaliperTool.RunParams.NumCalipers;
+                _CaliperSearchLength = _EllipseCaliperTool.RunParams.CaliperSearchLength;
+                _CaliperProjectionLength = _EllipseCaliperTool.RunParams.CaliperProjectionLength;
+                _CaliperSearchDir = (eSearchDirection)_EllipseCaliperTool.RunParams.CaliperSearchDirection;
+                _CaliperPolarity = (ePolarity)_EllipseCaliperTool.RunParams.CaliperRunParams.Edge0Polarity;
+
+                ucCogEllipseFindWnd.SetCaliper(_CaliperNumber, _CaliperSearchLength, _CaliperProjectionLength, _CaliperSearchDir, _CaliperPolarity);
+                ucCogEllipseFindWnd.SetEllipticalArc(_CenterX, _CenterY, _RadiusX, _RadiusY, _AngleSpan);
             }
 
             else if (CurrentAlgoType == eAlgoType.C_LINE_FIND)
@@ -486,6 +511,56 @@ namespace InspectionSystemManager
             kpTeachDisplay.DrawFindCircleCaliper(_CogFindCircle);
         }
         #endregion Needle Circle Find Window Event : ucCogNeedleCircleFind -> TeachingWindow
+
+        #region Ellipse Find Window Event : ucCogEllipseFind -> TeachingWindow
+        private void ApplyEllipseValueFunction(CogEllipseAlgo _CogEllipseAlgo, ref CogEllipseResult _CogEllipseResult)
+        {
+            if (eTeachStep.ALGO_SET != CurrentTeachStep) { MessageBox.Show("Not select \"Algorithm Set\" button"); return; }
+            AlgorithmAreaDisplayRefresh();
+
+            bool _Result = InspEllipseFindProcess.Run(InspectionImage, AlgoRegionRectangle, _CogEllipseAlgo, ref _CogEllipseResult);
+
+            _CogEllipseResult.CenterXReal = (_CogEllipseResult.CenterX - (InspectionImage.Width / 2)) * ResolutionX;
+            _CogEllipseResult.CenterYReal = (_CogEllipseResult.CenterY - (InspectionImage.Height / 2)) * ResolutionY;
+            _CogEllipseResult.OriginXReal = (_CogEllipseResult.OriginX - (InspectionImage.Width / 2)) * ResolutionX;
+            _CogEllipseResult.OriginYReal = (_CogEllipseResult.OriginY - (InspectionImage.Height / 2)) * ResolutionY;
+            _CogEllipseResult.RadiusXReal = _CogEllipseResult.RadiusX * ResolutionX;
+            _CogEllipseResult.RadiusYReal = _CogEllipseResult.RadiusY * ResolutionY;
+
+            CogEllipse _CogEllipse = new CogEllipse();
+            if (_CogEllipseResult.RadiusX <= 0 || _CogEllipseResult.RadiusY <= 0) return;
+            _CogEllipse.SetCenterXYRadiusXYRotation(_CogEllipseResult.CenterX, _CogEllipseResult.CenterY, _CogEllipseResult.RadiusX, _CogEllipseResult.RadiusY, 0);
+            CogPointMarker _CogCenterPoint = new CogPointMarker();
+            _CogCenterPoint.SetCenterRotationSize(_CogEllipseResult.CenterX, _CogEllipseResult.CenterY, 0, 2);
+            kpTeachDisplay.DrawStaticShape(_CogEllipse, "Ellipse", CogColorConstants.Green, 3);
+            kpTeachDisplay.DrawStaticShape(_CogCenterPoint, "EllipsePoint", CogColorConstants.Green);
+
+            string _CenterName = string.Format("X = {0:F2}mm, Y = {1:F2}mm, XR = {2:F2}mm, YR = {3:F2}mm", _CogEllipseResult.CenterXReal, _CogEllipseResult.CenterYReal, _CogEllipseResult.RadiusXReal, _CogEllipseResult.RadiusYReal);
+            kpTeachDisplay.DrawText(_CenterName, _CogEllipseResult.CenterX, _CogEllipseResult.CenterY + 150, CogColorConstants.Green, 10, CogGraphicLabelAlignmentConstants.BaselineCenter);
+        }
+
+        private void DrawEllipseCaliperFunction(CogEllipseAlgo _CogEllipseAlgo)
+        {
+            if (eTeachStep.ALGO_SET != CurrentTeachStep) { MessageBox.Show("Not select \"Algorithm Set\" button"); return; }
+            AlgorithmAreaDisplayRefresh();
+
+            CogFindEllipse _CogEllipse = new CogFindEllipse();
+            _CogEllipse.NumCalipers = _CogEllipseAlgo.CaliperNumber;
+            _CogEllipse.CaliperSearchLength = _CogEllipseAlgo.CaliperSearchLength;
+            _CogEllipse.CaliperProjectionLength = _CogEllipseAlgo.CaliperProjectionLength;
+            _CogEllipse.NumToIgnore = _CogEllipseAlgo.CaliperIgnoreNumber;
+            _CogEllipse.CaliperSearchDirection = (CogFindEllipseSearchDirectionConstants)_CogEllipseAlgo.CaliperSearchDirection;
+            _CogEllipse.CaliperRunParams.Edge0Polarity = (CogCaliperPolarityConstants)_CogEllipseAlgo.CaliperPolarity;
+
+            _CogEllipse.ExpectedEllipticalArc.CenterX = _CogEllipseAlgo.ArcCenterX;
+            _CogEllipse.ExpectedEllipticalArc.CenterY = _CogEllipseAlgo.ArcCenterY;
+            _CogEllipse.ExpectedEllipticalArc.RadiusX = _CogEllipseAlgo.ArcRadiusX;
+            _CogEllipse.ExpectedEllipticalArc.RadiusY = _CogEllipseAlgo.ArcRadiusY;
+            _CogEllipse.ExpectedEllipticalArc.AngleSpan = _CogEllipseAlgo.ArcAngleSpan;
+
+            kpTeachDisplay.DrawFindEllipseCaliper(_CogEllipse);
+        }
+        #endregion Ellipse Find Window Event : ucCogEllipseFind -> TeachingWindow
 
         #region Lead Inspection Window Event : ucCogLeadInspection -> TeachingWindow
         private void ApplyLeadInspValueFunction(CogLeadAlgo _CogLeadAlgo, ref CogLeadResult _CogLeadResult, bool _IsDisplay = true)
