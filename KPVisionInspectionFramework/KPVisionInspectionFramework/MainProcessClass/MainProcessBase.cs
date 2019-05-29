@@ -102,6 +102,11 @@ namespace KPVisionInspectionFramework
             return true;
         }
 
+        public virtual bool StatusMode(int _ID, bool _Flag)
+        {
+            return true;
+        }
+
         public virtual bool DataRequest(int _ID)
         {
             return true;

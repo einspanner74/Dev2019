@@ -29,8 +29,8 @@ namespace KPVisionInspectionFramework
         private bool IsResizing = false;
         private Point LastPosition = new Point(0, 0);
 
-        public delegate void ReadLOTNumHandler(string LOTNum);
-        public event ReadLOTNumHandler ReadLOTNumEvent;
+        public delegate void SendDIOResultHandler(bool _LastResult);
+        public event SendDIOResultHandler SendDIOResultEvent;
 
         #region Initialize & DeInitialize
         public MainResultBase(string[] _LastRecipeName)
@@ -80,6 +80,7 @@ namespace KPVisionInspectionFramework
             {
                 MainResultNavienWnd = new ucMainResultNavien(LastRecipeName);
                 MainResultNavienWnd.ScreenshotEvent += new ucMainResultNavien.ScreenshotHandler(ScreenShotSetSize);
+                MainResultNavienWnd.DIOResultEvent += new ucMainResultNavien.DIOResultHandler(SendDIOResultEvent);
                 panelMain.Controls.Add(MainResultNavienWnd);
             }
 
@@ -111,6 +112,11 @@ namespace KPVisionInspectionFramework
             else if (ProjectType == eProjectType.BC_QCC)
             {
                 MainResultCardManagerWnd.ScreenshotEvent -= new ucMainResultCardManager.ScreenshotHandler(ScreenShotSetSize);
+            }
+
+            else if (ProjectType == eProjectType.NAVIEN)
+            {
+                MainResultNavienWnd.DIOResultEvent -= new ucMainResultNavien.DIOResultHandler(SendDIOResultEvent);
             }
 
             panelMain.Controls.Clear();

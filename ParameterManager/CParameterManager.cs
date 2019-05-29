@@ -745,7 +745,7 @@ namespace ParameterManager
                     case "BlobAreaMax":         _CogBlobRefer.BlobAreaMax = Convert.ToDouble(_NodeChild.InnerText); break;
                     case "Width":               _CogBlobRefer.Width = Convert.ToDouble(_NodeChild.InnerText); break;
                     case "WidthPos":            _CogBlobRefer.WidthPos = Convert.ToDouble(_NodeChild.InnerText); break;
-                    case "WidthNeg":            _CogBlobRefer.WidthPos = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "WidthNeg":            _CogBlobRefer.WidthNeg = Convert.ToDouble(_NodeChild.InnerText); break;
                     case "Height":              _CogBlobRefer.Height = Convert.ToDouble(_NodeChild.InnerText); break;
                     case "HeightPos":           _CogBlobRefer.HeightPos = Convert.ToDouble(_NodeChild.InnerText); break;
                     case "HeightNeg":           _CogBlobRefer.HeightNeg = Convert.ToDouble(_NodeChild.InnerText); break;
@@ -883,6 +883,9 @@ namespace ParameterManager
                     case "OriginY": _CogEllipseFind.OriginY = Convert.ToDouble(_NodeChild.InnerText); break;
                     case "OriginRadiusX": _CogEllipseFind.OriginRadiusX = Convert.ToDouble(_NodeChild.InnerText); break;
                     case "OriginRadiusY": _CogEllipseFind.OriginRadiusY = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "DiameterSize": _CogEllipseFind.DiameterSize = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "DiameterMinus": _CogEllipseFind.DiameterMinus = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "DiameterPlus": _CogEllipseFind.DiameterPlus = Convert.ToDouble(_NodeChild.InnerText); break;
                 }
             }
             _InspParam.Algorithm = _CogEllipseFind;
@@ -1373,6 +1376,9 @@ namespace ParameterManager
             _XmlWriter.WriteElementString("OriginY", _CogEllipseAlgo.OriginY.ToString());
             _XmlWriter.WriteElementString("OriginRadiusX", _CogEllipseAlgo.OriginRadiusX.ToString());
             _XmlWriter.WriteElementString("OriginRadiusY", _CogEllipseAlgo.OriginRadiusY.ToString());
+            _XmlWriter.WriteElementString("DiameterSize", _CogEllipseAlgo.DiameterSize.ToString());
+            _XmlWriter.WriteElementString("DiameterMinus", _CogEllipseAlgo.DiameterMinus.ToString());
+            _XmlWriter.WriteElementString("DiameterPlus", _CogEllipseAlgo.DiameterPlus.ToString());
         }
 
         private void WriteBarCodeIDInspectionParameter(int _ID, int _ISMCount, XmlTextWriter _XmlWriter, Object _InspAlgoParam)
@@ -1954,6 +1960,9 @@ namespace ParameterManager
                         _Algorithm.OriginY = _SrcAlgorithm.OriginY;
                         _Algorithm.OriginRadiusX = _SrcAlgorithm.OriginRadiusX;
                         _Algorithm.OriginRadiusY = _SrcAlgorithm.OriginRadiusY;
+                        _Algorithm.DiameterSize = _SrcAlgorithm.DiameterSize;
+                        _Algorithm.DiameterMinus = _SrcAlgorithm.DiameterMinus;
+                        _Algorithm.DiameterPlus = _SrcAlgorithm.DiameterPlus;
 
                         _InspAlgoParam.Algorithm = _Algorithm;
                         #endregion

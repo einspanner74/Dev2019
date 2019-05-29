@@ -536,7 +536,7 @@ namespace InspectionSystemManager
 
             CogEllipse _CogEllipse = new CogEllipse();
             if (_CogEllipseResult.RadiusX <= 0 || _CogEllipseResult.RadiusY <= 0) return;
-            _CogEllipse.SetCenterXYRadiusXYRotation(_CogEllipseResult.CenterX, _CogEllipseResult.CenterY, _CogEllipseResult.RadiusX, _CogEllipseResult.RadiusY, 0);
+            _CogEllipse.SetCenterXYRadiusXYRotation(_CogEllipseResult.CenterX, _CogEllipseResult.CenterY, _CogEllipseResult.RadiusX, _CogEllipseResult.RadiusY, _CogEllipseResult.Rotation);
             CogPointMarker _CogCenterPoint = new CogPointMarker();
             _CogCenterPoint.SetCenterRotationSize(_CogEllipseResult.CenterX, _CogEllipseResult.CenterY, 0, 2);
             kpTeachDisplay.DrawStaticShape(_CogEllipse, "Ellipse", CogColorConstants.Green, 3);

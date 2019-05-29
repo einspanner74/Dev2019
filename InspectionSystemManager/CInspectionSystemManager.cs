@@ -348,6 +348,8 @@ namespace InspectionSystemManager
 
                         if (!IsSimulationMode)  ImageGrabSnap();
                         else                    InspWnd.IsThreadInspectionProcessTrigger = true;
+
+                        Thread.Sleep(50);
                     }
 
                     Thread.Sleep(10);

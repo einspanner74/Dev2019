@@ -46,11 +46,11 @@ namespace CustomControl
         {
             if (_Control.InvokeRequired)
             {
-                _Control.Invoke(new MethodInvoker(delegate () { _Control.Text = _Text; _Control.ForeColor = _FontColor; }));
+                _Control.Invoke(new MethodInvoker(delegate () { _Control.Text = _Text; _Control.ForeColor = _FontColor; _Control.Refresh(); }));
             }
             else
             {
-                _Control.Text = _Text; _Control.ForeColor = _FontColor;
+                _Control.Text = _Text; _Control.ForeColor = _FontColor; _Control.Refresh();
             }
         }
 
@@ -58,13 +58,36 @@ namespace CustomControl
         {
             if (_Control.InvokeRequired)
             {
-                _Control.Invoke(new MethodInvoker(delegate () { _Control.ColorTop = _ColorTop; _Control.ColorBottom = _ColorBottom; }));
+                _Control.Invoke(new MethodInvoker(delegate () { _Control.ColorTop = _ColorTop; _Control.ColorBottom = _ColorBottom; _Control.Refresh(); }));
             }
             else
             {
-                _Control.ColorTop = _ColorTop; _Control.ColorBottom = _ColorBottom;
+                _Control.ColorTop = _ColorTop; _Control.ColorBottom = _ColorBottom; _Control.Refresh();
             }
-            _Control.Refresh();
+        }
+
+        public static void GridViewCellText(DataGridView _Control, int _Row, int _Cell, string _Data)
+        {
+            if (_Control.InvokeRequired)
+            {
+                _Control.Invoke(new MethodInvoker(delegate () { _Control.Rows[_Row].Cells[_Cell].Value = _Data; _Control.Refresh(); }));
+            }
+            else
+            {
+                _Control.Rows[_Row].Cells[_Cell].Value = _Data; _Control.Refresh();
+            }
+        }
+
+        public static void GridViewRowsColor(DataGridView _Control, int _Row, Color _BackColor, Color _ForeColor)
+        {
+            if (_Control.InvokeRequired)
+            {
+                _Control.Invoke(new MethodInvoker(delegate () { _Control.Rows[_Row].DefaultCellStyle.BackColor = _BackColor; _Control.Rows[_Row].DefaultCellStyle.ForeColor = _ForeColor; _Control.Refresh(); }));
+            }
+            else
+            {
+                _Control.Rows[_Row].DefaultCellStyle.BackColor = _BackColor; _Control.Rows[_Row].DefaultCellStyle.ForeColor = _ForeColor; _Control.Refresh();
+            }
         }
     }
 }

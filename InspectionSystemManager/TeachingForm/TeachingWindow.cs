@@ -289,7 +289,16 @@ namespace InspectionSystemManager
                     btnMapDataApplyInspectionArea.Visible = false;
                     btnMapDataAlgorithmSet.Visible = false;
                     break;
-
+                case eProjectType.NAVIEN:
+                    btnInspectionAreaAdd.Visible = false;
+                    btnInspectionAreaDel.Visible = false;
+                    btnInspectionAreaCopy.Visible = false;
+                    btnInspectionAlgoAdd.Visible = false;
+                    btnInspectionAlgoDel.Visible = false;
+                    btnShowAllArea.Visible = false;
+                    btnMapDataApplyInspectionArea.Visible = false;
+                    btnMapDataAlgorithmSet.Visible = false;
+                    break;
                 default:
                     break;
             }

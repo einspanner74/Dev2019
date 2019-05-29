@@ -42,8 +42,9 @@ namespace CustomControl
     {
         public void SaveGridViewAll(DataGridView SaveGridView, string SaveFilePath)
         {
-            FileStream GridViewStream = new FileStream(SaveFilePath, System.IO.FileMode.Create, System.IO.FileAccess.Write);
-            StreamWriter GridViewWriter = new StreamWriter(GridViewStream, System.Text.Encoding.Default);
+            //FileStream GridViewStream = new FileStream(SaveFilePath, System.IO.FileMode.Create, System.IO.FileAccess.Write);
+            //StreamWriter GridViewWriter = new StreamWriter(GridViewStream, System.Text.Encoding.Default);
+            StreamWriter GridViewWriter = new StreamWriter(SaveFilePath, true, System.Text.Encoding.Default);
 
             if (SaveGridView.Rows.Count == 0) return;
 
@@ -72,13 +73,45 @@ namespace CustomControl
 
             GridViewWriter.Flush();
             GridViewWriter.Close();
-            GridViewStream.Close();
+            //GridViewStream.Close();
         }
     }
 
-
     public class CSVManagerStringArr
     {
+        public void SaveStringArrAll(string[] _HeaderString, string[] _SaveString, string _SaveFilePath)
+        {
+            bool _HeaderWriteFlag = false;
+            if (false == File.Exists(_SaveFilePath)) { File.Create(_SaveFilePath).Close(); _HeaderWriteFlag = true; }
+
+            //FileStream StringArrStream = new FileStream(_SaveFilePath, System.IO.FileMode.Create, System.IO.FileAccess.Write);
+            //StreamWriter StringArrWriter = new StreamWriter(StringArrStream, System.Text.Encoding.Default);
+            StreamWriter StringArrWriter = new StreamWriter(_SaveFilePath, true, System.Text.Encoding.Default);
+
+            if (_HeaderWriteFlag)
+            {
+                for(int iLoopCount = 0; iLoopCount < _HeaderString.Count(); iLoopCount++)
+                {
+                    StringArrWriter.Write(_HeaderString[iLoopCount]);
+                    if (iLoopCount != _HeaderString.Length - 1) { StringArrWriter.Write(","); }
+                }
+                StringArrWriter.Write(StringArrWriter.NewLine);
+            }
+
+            if (_SaveString.Length == 0) return;
+            
+            for (int iLoopCount = 0; iLoopCount < _SaveString.Length; iLoopCount++)
+            {
+                StringArrWriter.Write(_SaveString[iLoopCount]);
+                if (iLoopCount != _SaveString.Length - 1) { StringArrWriter.Write(","); }
+            }
+            StringArrWriter.Write(StringArrWriter.NewLine);
+
+            StringArrWriter.Flush();
+            StringArrWriter.Close();
+            //StringArrStream.Close();
+        }
+
         public void SaveStringArrAll(string[,] SaveString, int ColumnCount, string SaveFilePath)
         {
             FileStream StringArrStream = new FileStream(SaveFilePath, System.IO.FileMode.Create, System.IO.FileAccess.Write);

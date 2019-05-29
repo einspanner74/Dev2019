@@ -85,104 +85,33 @@ namespace DIOControlManager
             OutCmdArray[OUT_LIVE]       = DIO_DEF.OUT_LIVE;
             OutCmdArray[OUT_READY]      = DIO_DEF.OUT_READY;
             OutCmdArray[OUT_COMPLETE]   = DIO_DEF.OUT_COMPLETE;
-            OutCmdArray[OUT_RESULT]     = DIO_DEF.OUT_RESULT_1;
+            OutCmdArray[OUT_RESULT]     = DIO_DEF.OUT_RESULT;
         }
     }
 
-    public class AirBlowCmd : DIOBaseCommand
+    public class NavienCmd : DIOBaseCommand
     {
-        //private static readonly int NONE = -1;
-        //public static readonly int IN_LIVE = 0;
-        public static readonly int IN_RESET = 0;
-        public static readonly int IN_RESET2 = 1;
+        public static readonly int IN_TRIGGER = 0;
 
-        //public static readonly int OUT_LIVE = 6;
-        public static readonly int OUT_AUTO = 0;
-        public static readonly int OUT_RESULT1 = 2;
-        public static readonly int OUT_RESULT2 = 3;
-        public static readonly int OUT_RESULT3 = 4;
-        public static readonly int OUT_COMPLETE = 1;
+        public static readonly int OUT_ERROR = 0;
+        public static readonly int OUT_READY = 1;
+        public static readonly int OUT_GOOD = 2;
 
-        public AirBlowCmd(int _IOCount)
-        {
-            IOCount = _IOCount;
-
-            InCmdArray = new int[IOCount];
-            for (int iLoopCount = 0; iLoopCount < IOCount; ++iLoopCount) InCmdArray[iLoopCount] = DIO_DEF.NONE;
-
-            //InCmdArray[IN_LIVE]    = DIO_DEF.IN_LIVE;
-            InCmdArray[IN_RESET]   = DIO_DEF.IN_RESET;
-            InCmdArray[IN_RESET2]  = DIO_DEF.IN_RESET_2;
-
-            OutCmdArray = new int[IOCount];
-            for (int iLoopCount = 0; iLoopCount < IOCount; ++iLoopCount) OutCmdArray[iLoopCount] = DIO_DEF.NONE;
-
-            //OutCmdArray[OUT_LIVE]  = DIO_DEF.OUT_LIVE;
-            OutCmdArray[OUT_AUTO]  = DIO_DEF.OUT_AUTO;
-            OutCmdArray[OUT_RESULT1]  = DIO_DEF.OUT_RESULT_1;
-            OutCmdArray[OUT_RESULT2]  = DIO_DEF.OUT_RESULT_2;
-            OutCmdArray[OUT_RESULT3]  = DIO_DEF.OUT_RESULT_3;
-            OutCmdArray[OUT_COMPLETE] = DIO_DEF.OUT_COMPLETE;
-        }
-    }
-
-    public class DispenserCmd : DIOBaseCommand
-    {
-        //public static readonly int NONE = -1;
-        public static readonly int IN_LIVE = 0;
-        
-        public static readonly int IN_RESET        = 4;
-        public static readonly int IN_TRIGGER      = 5;
-        public static readonly int IN_REQUEST      = 6;
-        
-        public static readonly int IN_RESET_2      = 8;
-        public static readonly int IN_TRIGGER_2    = 9;
-        public static readonly int IN_REQUEST_2    = 10;
-        public static readonly int IN_RESET_3      = 12;
-        public static readonly int IN_TRIGGER_3    = 13;
-        public static readonly int IN_REQUEST_3    = 14;
-        
-        public static readonly int OUT_LIVE = 0;
-        public static readonly int OUT_AUTO = 1;
-
-        public static readonly int OUT_READY        = 4;
-        public static readonly int OUT_COMPLETE     = 5;
-
-        public static readonly int OUT_READY_2      = 8;
-        public static readonly int OUT_COMPLETE_2   = 9;
-        public static readonly int OUT_READY_3      = 12;
-        public static readonly int OUT_COMPLETE_3   = 13;
-
-        public DispenserCmd(int _IOCount)
+        public NavienCmd(int _IOCount)
         {
             IOCount = _IOCount;
 
             InCmdArray = new int[IOCount];
             for (int iLoopCount = 0; iLoopCount < _IOCount; ++iLoopCount) InCmdArray[iLoopCount] = DIO_DEF.NONE;
 
-            InCmdArray[IN_LIVE]    = DIO_DEF.IN_LIVE;
-            InCmdArray[IN_RESET]   = DIO_DEF.IN_RESET;
             InCmdArray[IN_TRIGGER] = DIO_DEF.IN_TRG;
-            InCmdArray[IN_REQUEST] = DIO_DEF.IN_REQUEST;
-            InCmdArray[IN_RESET_2]   = DIO_DEF.IN_RESET_2;
-            InCmdArray[IN_TRIGGER_2] = DIO_DEF.IN_TRG_2;
-            InCmdArray[IN_REQUEST_2] = DIO_DEF.IN_REQUEST_2;
-            InCmdArray[IN_RESET_3]   = DIO_DEF.IN_RESET_3;
-            InCmdArray[IN_TRIGGER_3] = DIO_DEF.IN_TRG_3;
-            InCmdArray[IN_REQUEST_3] = DIO_DEF.IN_REQUEST_3;
-
 
             OutCmdArray = new int[IOCount];
-            for (int iLoopCount = 0; iLoopCount < IOCount; ++iLoopCount) OutCmdArray[iLoopCount] = DIO_DEF.NONE;
+            for (int iLoopCount = 0; iLoopCount < _IOCount; ++iLoopCount) OutCmdArray[iLoopCount] = DIO_DEF.NONE;
 
-            OutCmdArray[OUT_LIVE]     = DIO_DEF.OUT_LIVE;
-            OutCmdArray[OUT_AUTO]     = DIO_DEF.OUT_AUTO;
-            OutCmdArray[OUT_READY]    = DIO_DEF.OUT_READY;
-            OutCmdArray[OUT_COMPLETE]   = DIO_DEF.OUT_COMPLETE;
-            OutCmdArray[OUT_READY_2]    = DIO_DEF.OUT_READY_2;
-            OutCmdArray[OUT_COMPLETE_2] = DIO_DEF.OUT_COMPLETE_2;
-            OutCmdArray[OUT_READY_3]    = DIO_DEF.OUT_READY_3;
-            OutCmdArray[OUT_COMPLETE_3] = DIO_DEF.OUT_COMPLETE_3;
+            OutCmdArray[OUT_ERROR] = DIO_DEF.OUT_ERROR;
+            OutCmdArray[OUT_READY] = DIO_DEF.OUT_READY;
+            OutCmdArray[OUT_GOOD]  = DIO_DEF.OUT_GOOD;
         }
     }
 

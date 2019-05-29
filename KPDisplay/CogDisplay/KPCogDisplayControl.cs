@@ -329,7 +329,7 @@ namespace KPDisplay
         /// <param name="_cogPointMarker"></param>
         /// <param name="_groupName"></param>
         /// <param name="_color"></param>
-        public void DrawInterActiveShape(CogPointMarker _cogPointMarker, string _groupName, CogColorConstants _color, int _LineSize = 12)
+        public void DrawInterActiveShape(CogPointMarker _cogPointMarker, string _groupName, CogColorConstants _color, int _LineSize = 12, bool _ClearFlag = true)
         {
             InteractivePointMarker = new CogPointMarker();
             InteractivePointMarker = _cogPointMarker;
@@ -339,7 +339,7 @@ namespace KPDisplay
             InteractivePointMarker.SizeInScreenPixels = _LineSize;
             InteractivePointMarker.GraphicType = CogPointMarkerGraphicTypeConstants.Cross;
             InteractivePointMarker.GraphicDOFEnable = CogPointMarkerDOFConstants.All;
-            kCogDisplay.ClearDisplay(_groupName);
+            if(_ClearFlag) kCogDisplay.ClearDisplay(_groupName);
             kCogDisplay.InteractiveGraphics.Add(InteractivePointMarker, _groupName, true);
         }
 
@@ -372,14 +372,15 @@ namespace KPDisplay
             kCogDisplay.StaticGraphics.Add(StaticCircleGraphic, _groupName);
         }
 
-        public void DrawStaticShape(CogEllipse _CogEllipse, string _groupName, CogColorConstants _color, int _LineSize = 2)
+        public void DrawStaticShape(CogEllipse _CogEllipse, string _groupName, CogColorConstants _color, int _LineSize = 2, bool ClearFlag = true)
         {
             StaticEllipseGraphic = new CogEllipse();
             StaticEllipseGraphic = _CogEllipse;
+            StaticEllipseGraphic.Rotation = _CogEllipse.Rotation;
             StaticEllipseGraphic.Color = _color;
             StaticEllipseGraphic.LineWidthInScreenPixels = _LineSize;
             StaticEllipseGraphic.GraphicDOFEnable = CogEllipseDOFConstants.All;
-            kCogDisplay.ClearDisplay(_groupName);
+            if (ClearFlag == true) kCogDisplay.ClearDisplay(_groupName);
             kCogDisplay.StaticGraphics.Add(StaticEllipseGraphic, _groupName);
         }
 
@@ -611,6 +612,20 @@ namespace KPDisplay
             cogLabel.Alignment = _Align;
             cogLabel.SetXYText(_StartX, _StartY, _Message);
             kCogDisplay.StaticGraphics.Add(cogLabel, _GroupName);
+        }
+
+        public void DrawText(string _Message, double _StartX, double _StartY, CogColorConstants _TextColor, CogColorConstants _BackColor, int _FontSize = 20, CogGraphicLabelAlignmentConstants _Align = CogGraphicLabelAlignmentConstants.TopLeft)
+        {
+            System.Drawing.Font _Font = new System.Drawing.Font("나눔바른고딕", _FontSize, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+
+            CogGraphicLabel AlgoNumLabel = new CogGraphicLabel();
+
+            AlgoNumLabel.BackgroundColor = _BackColor;
+            AlgoNumLabel.Color = _TextColor;
+            AlgoNumLabel.Font = _Font;
+            AlgoNumLabel.Alignment = _Align;
+            AlgoNumLabel.SetXYText(_StartX, _StartY, _Message);
+            kCogDisplay.StaticGraphics.Add(AlgoNumLabel, "AlgoNumber");
         }
 
         #endregion Draw Shape Display Window

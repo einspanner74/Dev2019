@@ -303,30 +303,33 @@ namespace InspectionSystemManager
 
         public void SetSystemMode(eSysMode _SystemMode)
         {
-            if (_SystemMode == eSysMode.AUTO_MODE)
+            if (ProjectType != eProjectType.NAVIEN)
             {
-                btnInspection.Enabled = false;
-                btnOneShot.Enabled = false;
-                btnRecipe.Enabled = false;
-                btnRecipeSave.Enabled = false;
-                //btnRecipeSave.Enabled = false;
-                btnLive.Enabled = false;
-                btnImageLoad.Enabled = false;
-                //btnImageSave.Enabled = false;
-                //btnConfigSave.Enabled = false;
-            }
+                if (_SystemMode == eSysMode.AUTO_MODE)
+                {
+                    btnInspection.Enabled = false;
+                    btnOneShot.Enabled = false;
+                    btnRecipe.Enabled = false;
+                    btnRecipeSave.Enabled = false;
+                    //btnRecipeSave.Enabled = false;
+                    btnLive.Enabled = false;
+                    btnImageLoad.Enabled = false;
+                    //btnImageSave.Enabled = false;
+                    //btnConfigSave.Enabled = false;
+                }
 
-            else
-            {
-                btnInspection.Enabled = true;
-                btnOneShot.Enabled = true;
-                btnRecipe.Enabled = true;
-                btnRecipeSave.Enabled = true;
-                //btnRecipeSave.Enabled = true;
-                btnLive.Enabled = true;
-                btnImageLoad.Enabled = true;
-                //btnImageSave.Enabled = true;
-                //btnConfigSave.Enabled = true;
+                else
+                {
+                    btnInspection.Enabled = true;
+                    btnOneShot.Enabled = true;
+                    btnRecipe.Enabled = true;
+                    btnRecipeSave.Enabled = true;
+                    //btnRecipeSave.Enabled = true;
+                    btnLive.Enabled = true;
+                    btnImageLoad.Enabled = true;
+                    //btnImageSave.Enabled = true;
+                    //btnConfigSave.Enabled = true;
+                }
             }
         }
 
@@ -773,6 +776,9 @@ namespace InspectionSystemManager
         private bool Inspection()
         {
             bool _Result = false;
+
+            if (OriginImage.Height == 0) { _Result = false; return _Result; }
+
             IsInspectionComplete = false;
 
             do
@@ -815,6 +821,7 @@ namespace InspectionSystemManager
         private bool InspectionProcess()
         {
             bool _Result = true;
+
             System.Diagnostics.Stopwatch _ProcessWatch = new System.Diagnostics.Stopwatch();
             _ProcessWatch.Reset(); _ProcessWatch.Start();
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM {0} - InspectionProcess Start", ID + 1), CLogManager.LOG_LEVEL.LOW);
@@ -1035,6 +1042,9 @@ namespace InspectionSystemManager
             var _CogBlobReferAlgo = _Algorithm as CogBlobReferenceAlgo;
             CogBlobReferenceResult  _CogBlobReferResult = new CogBlobReferenceResult();
 
+            _CogBlobReferAlgo.ResolutionX = ResolutionX;
+            _CogBlobReferAlgo.ResolutionY = ResolutionY;
+
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "BlobReference Algorithm Start", CLogManager.LOG_LEVEL.MID);
             bool _Result = InspBlobReferProc.Run(OriginImage, _InspRegion, _CogBlobReferAlgo, ref _CogBlobReferResult, _NgAreaNumber);
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "BlobReference Algorithm Start End", CLogManager.LOG_LEVEL.MID);
@@ -1045,6 +1055,7 @@ namespace InspectionSystemManager
             AlgoResultParameter _AlgoResultParam = new AlgoResultParameter(eAlgoType.C_BLOB_REFER, _CogBlobReferResult);
             _AlgoResultParam.OffsetX = _CogBlobReferAlgo.OriginX - _CogBlobReferResult.OriginX[0];
             _AlgoResultParam.OffsetY = _CogBlobReferAlgo.OriginY - _CogBlobReferResult.OriginY[0];
+            _AlgoResultParam.NgAreaNumber = _NgAreaNumber;
             AlgoResultParamList.Add(_AlgoResultParam);
 
             return _CogBlobReferResult.IsGood;
@@ -1131,6 +1142,7 @@ namespace InspectionSystemManager
             AlgoResultParameter _AlgoResultParam = new AlgoResultParameter(eAlgoType.C_ELLIPSE, _CogEllipseResult);
             _AlgoResultParam.OffsetX = _CogEllipseAlgo.OriginX - _CogEllipseResult.CenterX;
             _AlgoResultParam.OffsetY = _CogEllipseAlgo.OriginY - _CogEllipseResult.CenterY;
+            _AlgoResultParam.NgAreaNumber = _NgAreaNumber;
             AlgoResultParamList.Add(_AlgoResultParam);
 
             return _CogEllipseResult.IsGood;
@@ -1278,6 +1290,8 @@ namespace InspectionSystemManager
                 ResultDisplayMessage(_BlobReferResult.BlobMinX[0], _BlobReferResult.BlobMinY[0] + 4, _Message, _IsGood);
             }
 
+            if (ProjectType == eProjectType.NAVIEN) DisplayAlgoNumber(_BlobReferResult.BlobCenterX[0], _BlobReferResult.BlobCenterY[0] - (_BlobReferResult.Height[0] / 2) - 200, _Index + 1);
+
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "InspectionWindow - DisplayResultBlobReference Complete", CLogManager.LOG_LEVEL.MID);
 
             return _IsGood;
@@ -1399,38 +1413,46 @@ namespace InspectionSystemManager
             CogEllipse _Ellipse = new CogEllipse();
             CogPointMarker _CirclePoint = new CogPointMarker();
 
-            if (_CogEllipseResult != null)// && _CogNeedleFindResult.IsGood)
+            if (_CogEllipseResult != null && _CogEllipseResult.IsGood)
             {
                 if (_CogEllipseResult.RadiusX > 0)
                 {
-                    _Ellipse.SetCenterXYRadiusXYRotation(_CogEllipseResult.CenterX, _CogEllipseResult.CenterY, _CogEllipseResult.RadiusX, _CogEllipseResult.RadiusY, 0);
-                    _CirclePoint.SetCenterRotationSize(_CogEllipseResult.CenterX, _CogEllipseResult.CenterY, 0, 1);
+                    _Ellipse.SetCenterXYRadiusXYRotation(_CogEllipseResult.CenterX, _CogEllipseResult.CenterY, _CogEllipseResult.RadiusX, _CogEllipseResult.RadiusY, _CogEllipseResult.Rotation);
+                    //_CirclePoint.SetCenterRotationSize(_CogEllipseResult.CenterX, _CogEllipseResult.CenterY, _CogEllipseResult.Rotation, 1);
                     ResultDisplay(_Ellipse, _CirclePoint, "Ellipse", _CogEllipseResult.IsGood);
 
-                    string _CenterPointName = string.Format("X = {0:F2}mm, Y = {1:F2}mm, XR = {2:F2}mm, YR = {3:F2}mm", _CogEllipseResult.CenterXReal, _CogEllipseResult.CenterYReal, _CogEllipseResult.RadiusXReal, _CogEllipseResult.RadiusYReal);
-                    ResultDisplayMessage(_CogEllipseResult.CenterX, _CogEllipseResult.CenterY + 150, _CenterPointName, _CogEllipseResult.IsGood, CogGraphicLabelAlignmentConstants.BaselineCenter);
+                    //LDH, 반지름 결과값 숨기기
+                    //string _CenterPointName = string.Format("XR = {0:F2}mm, YR = {1:F2}mm", _CogEllipseResult.RadiusXReal, _CogEllipseResult.RadiusYReal);
+                    //ResultDisplayMessage(_CogEllipseResult.CenterX, _CogEllipseResult.CenterY + 150, _CenterPointName, _CogEllipseResult.IsGood, CogGraphicLabelAlignmentConstants.BaselineCenter);
 
-                    if (_CogEllipseResult.PointStatusInfo != null)
-                    {
-                        for (int iLoopCount = 0; iLoopCount < _CogEllipseResult.PointStatusInfo.Length; ++iLoopCount)
-                        {
-                            if (_CogEllipseResult.PointPosXInfo[iLoopCount] == 0 && _CogEllipseResult.PointPosYInfo[iLoopCount] == 0) continue;
+                    //LDH, Caliper Point 숨기기
+                    //if (_CogEllipseResult.PointStatusInfo != null)
+                    //{
+                    //    for (int iLoopCount = 0; iLoopCount < _CogEllipseResult.PointStatusInfo.Length; ++iLoopCount)
+                    //    {
+                    //        if (_CogEllipseResult.PointPosXInfo[iLoopCount] == 0 && _CogEllipseResult.PointPosYInfo[iLoopCount] == 0) continue;
 
-                            CogPointMarker _Point = new CogPointMarker();
-                            _Point.SetCenterRotationSize(_CogEllipseResult.PointPosXInfo[iLoopCount], _CogEllipseResult.PointPosYInfo[iLoopCount], 0, 1);
+                    //        CogPointMarker _Point = new CogPointMarker();
+                    //        _Point.SetCenterRotationSize(_CogEllipseResult.PointPosXInfo[iLoopCount], _CogEllipseResult.PointPosYInfo[iLoopCount], 0, 1);
 
-                            string _PointName = string.Format("Point{0}", iLoopCount);
-                            if (true == _CogEllipseResult.PointStatusInfo[iLoopCount]) ResultDisplay(_Point, _PointName, CogColorConstants.Green);
-                            else ResultDisplay(_Point, _PointName, CogColorConstants.Red);
-                        }
-                    }
+                    //        string _PointName = string.Format("Point{0}", iLoopCount);
+                    //        if (true == _CogEllipseResult.PointStatusInfo[iLoopCount]) ResultDisplay(_Point, _PointName, CogColorConstants.Green);
+                    //        else ResultDisplay(_Point, _PointName, CogColorConstants.Red);
+                    //    }
+                    //}
                 }
             }
 
             else
             {
-                //LOG
+                CogRectangle _EllipseRect = new CogRectangle();
+
+                _EllipseRect.SetCenterWidthHeight(_CogEllipseResult.CenterX, _CogEllipseResult.CenterY, _CogEllipseResult.RadiusX * 2, _CogEllipseResult.RadiusY * 2);
+                _CirclePoint.SetCenterRotationSize(_CogEllipseResult.CenterX, _CogEllipseResult.CenterY, 0, 1);
+                ResultDisplay(_EllipseRect, _CirclePoint, "Ellipse", _CogEllipseResult.IsGood, false);
             }
+
+            if (ProjectType == eProjectType.NAVIEN) DisplayAlgoNumber(_CogEllipseResult.CenterX, _CogEllipseResult.CenterY - _CogEllipseResult.RadiusY - 200, _Index + 1);
 
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "InspectionWindow - DisplayResultEllipse Complete", CLogManager.LOG_LEVEL.MID);
 
@@ -1491,14 +1513,25 @@ namespace InspectionSystemManager
         }
 
         #region Display Result function
-        public void ResultDisplay(CogRectangle _Region, CogPointMarker _Point, string _Name, bool _IsGood)
+        public void ResultDisplay(CogRectangle _Region, CogPointMarker _Point, string _Name, bool _IsGood, bool _ClearFlag = true)
         {
-            if (true == _IsGood)    kpCogDisplayMain.DrawStaticShape(_Region, _Name + "_Rect", CogColorConstants.Green);
-            else                    kpCogDisplayMain.DrawStaticShape(_Region, _Name + "_Rect", CogColorConstants.Red);
+            if (_ClearFlag)
+            {
+                if (true == _IsGood) kpCogDisplayMain.DrawStaticShape(_Region, _Name + "_Rect", CogColorConstants.Green);
+                else kpCogDisplayMain.DrawStaticShape(_Region, _Name + "_Rect", CogColorConstants.Red);
 
-            if (true == _IsGood)    kpCogDisplayMain.DrawStaticShape(_Point, _Name + "_PointOrigin", CogColorConstants.Green);
-            else                    kpCogDisplayMain.DrawStaticShape(_Point, _Name + "_PointOrigin", CogColorConstants.Red);
-        }
+                if (true == _IsGood) kpCogDisplayMain.DrawStaticShape(_Point, _Name + "_PointOrigin", CogColorConstants.Green);
+                else kpCogDisplayMain.DrawStaticShape(_Point, _Name + "_PointOrigin", CogColorConstants.Red);
+            }
+            else
+            {
+                if (true == _IsGood) kpCogDisplayMain.DrawStaticShapeNotClear(_Region, _Name + "_Rect", CogColorConstants.Green);
+                else kpCogDisplayMain.DrawStaticShapeNotClear(_Region, _Name + "_Rect", CogColorConstants.Red);
+
+                if (true == _IsGood) kpCogDisplayMain.DrawStaticShape(_Point, _Name + "_PointOrigin", CogColorConstants.Green, 2, false);
+                else kpCogDisplayMain.DrawStaticShape(_Point, _Name + "_PointOrigin", CogColorConstants.Red, 2, false);
+            }
+        }      
 
         public void ResultDisplay(CogCircle _Circle, CogPointMarker _Point, string _Name, bool _IsGood)
         {
@@ -1511,7 +1544,7 @@ namespace InspectionSystemManager
 
         public void ResultDisplay(CogEllipse _Ellipse, CogPointMarker _Point, string _Name, bool _IsGood)
         {
-            if (true == _IsGood) kpCogDisplayMain.DrawStaticShape(_Ellipse, "Ellipse", CogColorConstants.Green, 3);
+            if (true == _IsGood) kpCogDisplayMain.DrawStaticShape(_Ellipse, "Ellipse", CogColorConstants.Green, 3, false);
             else kpCogDisplayMain.DrawStaticShape(_Ellipse, "Ellipse", CogColorConstants.Red, 3);
 
             if (true == _IsGood) kpCogDisplayMain.DrawStaticShape(_Point, _Name + "_PointOrigin", CogColorConstants.Green);
@@ -1552,6 +1585,11 @@ namespace InspectionSystemManager
         {
             if (_IsGood)    kpCogDisplayMain.DrawText("Result : Good", 50, 50, CogColorConstants.Green);
             else            kpCogDisplayMain.DrawText("Result : NG", 50, 50, CogColorConstants.Red);
+        }
+
+        private void DisplayAlgoNumber(double _StartX, double _StartY, int _AlgoNum)
+        {
+            kpCogDisplayMain.DrawText(_AlgoNum.ToString(), _StartX, _StartY, CogColorConstants.DarkRed, CogColorConstants.White, 12, CogGraphicLabelAlignmentConstants.TopCenter);
         }
         #endregion Display Result function
 

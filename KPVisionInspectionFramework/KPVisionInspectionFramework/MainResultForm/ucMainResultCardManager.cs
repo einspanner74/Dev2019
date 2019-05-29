@@ -399,7 +399,7 @@ namespace KPVisionInspectionFramework
 
                 if (LastResultFlag)
                 {
-                    string[] RecvData = gradientLabelEtherRecv1.Text.Split(';');
+                    string[] RecvData = gradientLabelEtherRecv3.Text.Split(';');
                     if (_Result.ReadCode != RecvData[0]) LastResultFlag = false;
                 }
             }
@@ -418,7 +418,7 @@ namespace KPVisionInspectionFramework
             if (AutoModeFlag)
             {
                 TotalCount[2]++;
-                if (LastResultFlag) GoodCount[21]++;
+                if (LastResultFlag) GoodCount[2]++;
                 else                NgCount[2]++;
 
                 Yield[2] = (double)GoodCount[2] / (double)TotalCount[2] * 100;
@@ -446,7 +446,7 @@ namespace KPVisionInspectionFramework
 
                 if (LastResultFlag)
                 {
-                    string[] RecvData = gradientLabelEtherRecv1.Text.Split(';');
+                    string[] RecvData = gradientLabelEtherRecv4.Text.Split(';');
                     if (_Result.ReadCode != RecvData[0]) LastResultFlag = false;
                 }
             }

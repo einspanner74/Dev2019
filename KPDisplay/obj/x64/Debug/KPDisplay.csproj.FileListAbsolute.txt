@@ -151,3 +151,4 @@ D:\VisionProgram\KPVisionInspectionProgram\KPDisplay\obj\x64\Debug\KPDisplay.KPC
 D:\VisionProgram\KPVisionInspectionProgram\KPDisplay\obj\x64\Debug\KPDisplay.csproj.GenerateResource.Cache
 D:\VisionProgram\KPVisionInspectionProgram\KPDisplay\obj\x64\Debug\KPDisplay.dll
 D:\VisionProgram\KPVisionInspectionProgram\KPDisplay\obj\x64\Debug\KPDisplay.pdb
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\KPDisplay\bin\Debug\Cognex.VisionPro.Core.xml

@@ -60,7 +60,7 @@ namespace KPVisionInspectionFramework
             UseRecipecount = _CurrentRecipe.Count();
 
             if (IsTotalRecipe) SetRecipeOption(1);
-            else                SetRecipeOption(UseRecipecount);
+            else               SetRecipeOption(UseRecipecount);
 
             CurrentRecipeName = new string[UseRecipecount];
 
@@ -265,6 +265,9 @@ namespace KPVisionInspectionFramework
 
             SelectedRecipeNum = 0;
             SelectedRecipeChange();
+
+            listBoxRecipe.SelectedItem = listBoxRecipe.Items[0];
+
             this.ShowDialog();
         }
         #endregion Control Event
@@ -411,11 +414,12 @@ namespace KPVisionInspectionFramework
         //LDH, 2019.01.16, Recipe 변경시 List에서 Recipe 선택
         private void listBoxRecipe_DoubleClick(object sender, EventArgs e)
         {
-            DialogResult _MsgBoxResult = MessageBox.Show(string.Format("{0}번 Recipe를 변경하시겠습니까?", SelectedRecipeNum + 1), "Recipe 변경", MessageBoxButtons.YesNo);
+            DialogResult _MsgBoxResult = DialogResult.Yes;
+
+            if (!IsTotalRecipe) _MsgBoxResult = MessageBox.Show(string.Format("{0}번 Recipe를 변경하시겠습니까?", SelectedRecipeNum + 1), "Recipe 변경", MessageBoxButtons.YesNo);
 
             if (_MsgBoxResult == DialogResult.Yes)
             {
-
                 bool _UseCheckFlag = false;
 
                 for (int iLoopCount = 0; iLoopCount < UseRecipecount; iLoopCount++)

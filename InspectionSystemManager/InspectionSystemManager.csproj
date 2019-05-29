@@ -83,9 +83,6 @@
     <Compile Include="Algorithm\InspectionClass\InspectionAutoPattern.cs" />
     <Compile Include="Algorithm\InspectionClass\InspectionLeadTrim.cs" />
     <Compile Include="Algorithm\InspectionClass\InspectionEllipse.cs" />
-    <Compile Include="InspectionWindowProcMeasure.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="InspSysManagerWindow\InspectionWindowProcCardManager.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -93,6 +90,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="InspSysManagerWindow\InspectionWindowProcDefault.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InspSysManagerWindow\InspectionWindowProcMeasure.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="InspSysManagerWindow\InspectionWindowProcSurface.cs">

@@ -177,8 +177,24 @@ namespace KPVisionInspectionFramework
                 MainLogoWnd.Initialize(this);
                 MainLogoWnd.Location = new Point(2250, 56);
             }
+
+            else if ((int)eProjectType.NAVIEN == ParamManager.SystemParam.ProjectType)
+            {
+                rbStop.Visible = false;
+                rbAlign.Visible = false;
+                rbEthernet.Visible = false;
+                rbSerial.Visible = false;
+                rbConfig.Visible = false;
+                rbMapData.Visible = false;
+                rbHistory.Visible = false;
+                rbFolder.Visible = false;
+                this.Size = new Size(1920, 1080);
+            }
+
+            UpdateRibbonRecipeName(ParamManager.SystemParam.LastRecipeName[0]);
+
             #endregion Ribbon Menu Setting
-            
+
             #region Log Window Initialize
             LogWnd = new CLogManager(ProjectName);
             CLogManager.LogSystemSetting(@"D:\VisionInspectionData\" + ProjectName + @"\Log\SystemLog");
@@ -197,6 +213,7 @@ namespace KPVisionInspectionFramework
             #region Result Window Initialize
             //Result Initialize
             ResultBaseWnd = new MainResultBase(ParamManager.SystemParam.LastRecipeName);
+            if ((eProjectType)ParamManager.SystemParam.ProjectType == eProjectType.NAVIEN) ResultBaseWnd.SendDIOResultEvent += new MainResultBase.SendDIOResultHandler(SendDIOResult);
             ResultBaseWnd.Initialize(this, ParamManager.SystemParam.ProjectType);
             ResultBaseWnd.SetWindowLocation(ParamManager.SystemParam.ResultWindowLocationX, ParamManager.SystemParam.ResultWindowLocationY);
             ResultBaseWnd.SetWindowSize(ParamManager.SystemParam.ResultWindowWidth, ParamManager.SystemParam.ResultWindowHeight);
@@ -228,6 +245,7 @@ namespace KPVisionInspectionFramework
             else if ((int)eProjectType.SORTER == ParamManager.SystemParam.ProjectType)      MainProcess = new MainProcessSorter();
             else if ((int)eProjectType.TRIM_FORM == ParamManager.SystemParam.ProjectType)   MainProcess = new MainProcessTrimForm();
             else if ((int)eProjectType.BC_QCC == ParamManager.SystemParam.ProjectType)      MainProcess = new MainProcessCardManager();
+            else if ((int)eProjectType.NAVIEN == ParamManager.SystemParam.ProjectType)      MainProcess = new MainProcessNavien();
             else                                                                            MainProcess = new MainProcessBase();
 
             MainProcess.MainProcessCommandEvent += new MainProcessBase.MainProcessCommandHandler(MainProcessCommandEventFunction);
@@ -399,10 +417,14 @@ namespace KPVisionInspectionFramework
             for (int iLoopCount = 0; iLoopCount < ParamManager.SystemParam.InspSystemManagerCount; ++iLoopCount)
                 InspSysManager[iLoopCount].SetSystemMode(eSysMode.AUTO_MODE);
 
-            rbStart.Enabled = false;
-            rbLight.Enabled = false;
-
             CParameterManager.SystemMode = eSysMode.AUTO_MODE;
+
+            if (eProjectType.NAVIEN != (eProjectType)ParamManager.SystemParam.ProjectType)
+            {
+                rbStart.Enabled = false;
+                rbLight.Enabled = false;
+            }
+
             MainProcess.AutoMode(true);
             ResultBaseWnd.SetAutoMode(true);
             CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "MainProcess AutoMode ON", CLogManager.LOG_LEVEL.MID);
@@ -478,7 +500,7 @@ namespace KPVisionInspectionFramework
         private void rbRecipe_Click(object sender, EventArgs e)
         {
             CParameterManager.SystemModeBackup = CParameterManager.SystemMode;
-            RecipeWnd.ShowDialog();
+            RecipeWnd.ShowDialogWindow();
             CParameterManager.SystemMode = CParameterManager.SystemModeBackup;
         }
 
@@ -683,7 +705,8 @@ namespace KPVisionInspectionFramework
 
         private void MainProcessTriggerOn(object _Value)
         {
-            if (CParameterManager.SystemMode != eSysMode.AUTO_MODE) return; 
+            if (CParameterManager.SystemMode != eSysMode.AUTO_MODE) return;
+
             int _ID = Convert.ToInt32(_Value);
             CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("Main : Trigger{0} On Event", _ID + 1));
             InspSysManager[_ID].TriggerOn();
@@ -771,6 +794,19 @@ namespace KPVisionInspectionFramework
             ParamManager.WriteSystemParameter();
 
             ResultBaseWnd.SetDataFolderPath(_DataPath);
+        }
+
+        private void SendDIOResult(bool _LastResult)
+        {
+            if (!ParamManager.SystemParam.IsSimulationMode)
+            {
+                MainProcess.StatusMode(NavienCmd.OUT_GOOD, false);
+                MainProcess.StatusMode(NavienCmd.OUT_READY, false);
+                MainProcess.StatusMode(NavienCmd.OUT_ERROR, false);
+
+                if (_LastResult) MainProcess.StatusMode(NavienCmd.OUT_GOOD, true);
+                else             MainProcess.StatusMode(NavienCmd.OUT_ERROR, true);
+            }
         }
         #endregion Main Process
     }

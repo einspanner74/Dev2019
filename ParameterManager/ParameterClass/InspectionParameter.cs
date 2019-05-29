@@ -319,6 +319,10 @@ namespace ParameterManager
         public double OriginRadiusX;
         public double OriginRadiusY;
 
+        public double DiameterSize;
+        public double DiameterMinus;
+        public double DiameterPlus;
+
         public CogEllipseAlgo()
         {
             CaliperNumber = 15;
@@ -338,6 +342,10 @@ namespace ParameterManager
             OriginY = 0;
             OriginRadiusX = 0;
             OriginRadiusY = 0;
+
+            DiameterSize = 5;
+            DiameterMinus = 0.5;
+            DiameterPlus = 0.5;
         }
     }
 

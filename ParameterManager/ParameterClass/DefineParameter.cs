@@ -79,31 +79,18 @@ namespace ParameterManager
         public const int OUT_LIVE = 0;
         public const int OUT_AUTO = 1;
         public const int OUT_ALARM = 2;
-
         public const int OUT_READY      = 3;
         public const int OUT_COMPLETE   = 4;
-        public const int OUT_READY_2    = 5;
-        public const int OUT_COMPLETE_2 = 6;
-        public const int OUT_READY_3    = 7;
-        public const int OUT_COMPLETE_3 = 8;
-
-        public const int OUT_RESULT_1   = 9;
-        public const int OUT_RESULT_2   = 10;
-        public const int OUT_RESULT_3   = 11;
+        public const int OUT_ERROR      = 5;
+        public const int OUT_GOOD       = 6;
+        public const int OUT_RESULT     = 9;
 
         public const int IN_LIVE        = 0;
         public const int IN_ALARM_OFF   = 1;
         public const int IN_MODE        = 2;
-
         public const int IN_RESET       = 3;
         public const int IN_TRG         = 4;
         public const int IN_REQUEST     = 5;
-        public const int IN_RESET_2     = 6;
-        public const int IN_TRG_2       = 7;
-        public const int IN_REQUEST_2   = 8;
-        public const int IN_RESET_3     = 9;
-        public const int IN_TRG_3       = 10;
-        public const int IN_REQUEST_3   = 11;
     }
 
     public static class SIGNAL

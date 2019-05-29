@@ -210,6 +210,11 @@ namespace ParameterManager
         public double RadiusXReal;
         public double RadiusYReal;
 
+        public double Rotation;
+
+        public double DiameterMinAlgo;
+        public double DiameterMaxAlgo;
+
         public int PointFoundCount;
 
         public double[] PointPosXInfo;
@@ -454,6 +459,10 @@ namespace ParameterManager
         public eNgType NgType;
 
         public object SendResult;
+
+        //LDH, 2019.05.15, ProjectItem Measure용
+        public object[] SendResultList;
+        public eAlgoType[] AlgoTypeList;
     }
 
     public class SendNoneResult
@@ -513,10 +522,21 @@ namespace ParameterManager
         public string ReadCode;
     }
 
-    public class SendEllipseResult
+    public class SendMeasureResult
     {
+        public int NGAreaNum;
+        public bool IsGoodAlgo;
+
+        public double[] CaliperPointX;
+        public double[] CaliperPointY;
+
+        //Ellipse
         public double RadiusX;
         public double RadiusY;
+        public double DiameterMinAlgo;
+        public double DiameterMaxAlgo;
+
+        public double MeasureData;
     }
     #endregion Last Send Result Parameter
 }

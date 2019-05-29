@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 using Cognex.VisionPro;
 using Cognex.VisionPro.Caliper;
+using Cognex.VisionPro.ImageProcessing;
+using Cognex.VisionPro.Blob;
 
 using ParameterManager;
 using LogMessageManager;
@@ -35,9 +37,89 @@ namespace InspectionSystemManager
         {
             bool _Result = true;
 
+            #region Caliper Center XY 구하기 -> Blob으로 Center 위치 Search
+            #region GetAutoThresholdValue
+            CogHistogramTool _HistoTool = new CogHistogramTool();
+            _HistoTool.InputImage = _SrcImage;
+            _HistoTool.Region = _InspRegion;
+            _HistoTool.Run();
+
+            int[] _HistoValue = _HistoTool.Result.GetHistogram();
+            double _TotSize = _InspRegion.Width * _InspRegion.Height;
+            double _ThresholdSum = 0;
+            int _ThresholdValue = 0;
+            for (int iLoopCount = 0; iLoopCount < 256; ++iLoopCount)  _ThresholdSum += iLoopCount * _HistoValue[iLoopCount];
+
+            double _ThresholdSum2 = 0;
+            double _WeightBack = 0, _WeightFore = 0, _VarMax = 0;
+            for (int iLoopCount = 0; iLoopCount < 256; ++iLoopCount)
+            {
+                _WeightBack += _HistoValue[iLoopCount];
+                if (0 == _WeightBack) continue;
+
+                _WeightFore = _TotSize - _WeightBack;
+                if (0 == _WeightFore) break;
+
+                _ThresholdSum2 += (double)(iLoopCount * _HistoValue[iLoopCount]);
+
+                double _MeanBack = _ThresholdSum2 / _WeightBack;
+                double _MeanFore = (_ThresholdSum - _ThresholdSum2) / _WeightFore;
+
+                double _VarBetween = _WeightBack * _WeightFore * Math.Pow((_MeanBack - _MeanFore), 2);
+
+                if (_VarBetween > _VarMax)
+                {
+                    _VarMax = _VarBetween;
+                    _ThresholdValue = iLoopCount;
+                }
+            }
+            #endregion
+
+            #region Blob Search
+            CogBlobTool _BlobTool = new CogBlobTool();
+            _BlobTool.InputImage = _SrcImage;
+            _BlobTool.Region = _InspRegion;
+            _BlobTool.RunParams.SegmentationParams.Mode = CogBlobSegmentationModeConstants.HardFixedThreshold;
+            _BlobTool.RunParams.SegmentationParams.Polarity = CogBlobSegmentationPolarityConstants.LightBlobs;
+            _BlobTool.RunParams.ConnectivityMode = CogBlobConnectivityModeConstants.GreyScale;
+            _BlobTool.RunParams.ConnectivityCleanup = CogBlobConnectivityCleanupConstants.Fill;
+            _BlobTool.RunParams.SegmentationParams.HardFixedThreshold = _ThresholdValue;
+            _BlobTool.RunParams.ConnectivityMinPixels = 10000;
+            _BlobTool.Run();
+
+            CogBlobResults _BlobResults = _BlobTool.Results;
+            double _MaxSize = 0;
+            double _CaliperCenterX = 0;
+            double _CaliperCenterY = 0;
+            if (_BlobResults.GetBlobs().Count > 0)
+            {
+                for (int iLoopCount = 0; iLoopCount < _BlobResults.GetBlobs().Count; ++iLoopCount)
+                {
+                    CogBlobResult _BlobResult = _BlobResults.GetBlobByID(iLoopCount);
+                    if (_BlobResult.Area > _MaxSize)
+                    {
+                        _MaxSize = _BlobResult.Area;
+                        _CaliperCenterX = _BlobResult.CenterOfMassX;
+                        _CaliperCenterY = _BlobResult.CenterOfMassY;
+                    }
+                }
+            }
+
+            else
+            {
+                _CaliperCenterX = _CogEllipseAlgo.ArcCenterX - _OffsetX;
+                _CaliperCenterY = _CogEllipseAlgo.ArcCenterY - _OffsetY;
+            }
+            //CogSerializer.SaveObjectToFile(_BlobTool, string.Format(@"D:\CircleBlob.vpp"));
+            #endregion
+            #endregion
+
             SetCaliperDirection(_CogEllipseAlgo.CaliperSearchDirection, _CogEllipseAlgo.CaliperPolarity);
             SetCaliper(_CogEllipseAlgo.CaliperNumber, _CogEllipseAlgo.CaliperSearchLength, _CogEllipseAlgo.CaliperProjectionLength, _CogEllipseAlgo.CaliperIgnoreNumber);
-            SetEllipticalArc(_CogEllipseAlgo.ArcCenterX - _OffsetX, _CogEllipseAlgo.ArcCenterY - _OffsetY, _CogEllipseAlgo.ArcRadiusX, _CogEllipseAlgo.ArcRadiusY, _CogEllipseAlgo.ArcAngleSpan);
+
+            //LJH 2019.05.23 Caliper Center 기준점 변경
+            //SetEllipticalArc(_CogEllipseAlgo.ArcCenterX - _OffsetX, _CogEllipseAlgo.ArcCenterY - _OffsetY, _CogEllipseAlgo.ArcRadiusX, _CogEllipseAlgo.ArcRadiusY, _CogEllipseAlgo.ArcAngleSpan);
+            SetEllipticalArc(_CaliperCenterX, _CaliperCenterY, _CogEllipseAlgo.ArcRadiusX, _CogEllipseAlgo.ArcRadiusY, _CogEllipseAlgo.ArcAngleSpan);
 
             if (true == Inspection(_SrcImage)) GetResult();
 
@@ -53,6 +135,7 @@ namespace InspectionSystemManager
                 _CogEllipseResult.RadiusY = _CogEllipseAlgo.ArcRadiusY;
                 _CogEllipseResult.OriginX = 0;
                 _CogEllipseResult.OriginY = 0;
+                _CogEllipseResult.Rotation = 0;
             }
 
             else
@@ -68,6 +151,7 @@ namespace InspectionSystemManager
                     _CogEllipseResult.RadiusY = FindEllipseResults.GetEllipse().RadiusY;
                     _CogEllipseResult.OriginX = FindEllipseResults.GetEllipse().CenterX;
                     _CogEllipseResult.OriginY = FindEllipseResults.GetEllipse().CenterY;
+                    _CogEllipseResult.Rotation = FindEllipseResults.GetEllipse().Rotation;
 
                     _CogEllipseResult.PointPosXInfo = new double[FindEllipseResults.Count];
                     _CogEllipseResult.PointPosYInfo = new double[FindEllipseResults.Count];
@@ -82,6 +166,9 @@ namespace InspectionSystemManager
                         _CogEllipseResult.PointStatusInfo[iLoopCount] = FindEllipseResults[iLoopCount].Used;
                     }
 
+                    _CogEllipseResult.DiameterMinAlgo = _CogEllipseAlgo.DiameterSize - _CogEllipseAlgo.DiameterMinus;
+                    _CogEllipseResult.DiameterMaxAlgo = _CogEllipseAlgo.DiameterSize + _CogEllipseAlgo.DiameterPlus;
+
                     CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format(" - Center X : {0}, Y : {1}", _CogEllipseResult.CenterX.ToString("F2"), _CogEllipseResult.CenterY.ToString("F2")), CLogManager.LOG_LEVEL.MID);
                     CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format(" - Radius X : {0}, Y : {1}", _CogEllipseResult.RadiusX.ToString("F2"), _CogEllipseResult.RadiusY.ToString("F2")), CLogManager.LOG_LEVEL.MID);
                 }
@@ -90,12 +177,13 @@ namespace InspectionSystemManager
                 {
                     CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, " - Ellipse Find Fail!!", CLogManager.LOG_LEVEL.MID);
 
-                    _CogEllipseResult.CenterX = 0;
-                    _CogEllipseResult.CenterY = 0;
-                    _CogEllipseResult.RadiusX = 0;
-                    _CogEllipseResult.RadiusY = 0;
+                    _CogEllipseResult.CenterX = _CogEllipseAlgo.ArcCenterX;
+                    _CogEllipseResult.CenterY = _CogEllipseAlgo.ArcCenterY;
+                    _CogEllipseResult.RadiusX = _CogEllipseAlgo.ArcRadiusX;
+                    _CogEllipseResult.RadiusY = _CogEllipseAlgo.ArcRadiusY;
                     _CogEllipseResult.OriginX = 0;
                     _CogEllipseResult.OriginY = 0;
+
                     _CogEllipseResult.IsGood = false;
                 }
             }
@@ -143,7 +231,8 @@ namespace InspectionSystemManager
             FindEllipseProc.RunParams.ExpectedEllipticalArc.CenterY = _CenterY;
             FindEllipseProc.RunParams.ExpectedEllipticalArc.RadiusX = _RadiusX;
             FindEllipseProc.RunParams.ExpectedEllipticalArc.RadiusY = _RadiusY;
-            FindEllipseProc.RunParams.ExpectedEllipticalArc.AngleSpan = _AngleSpan;
+            FindEllipseProc.RunParams.ExpectedEllipticalArc.AngleStart = 0;
+            FindEllipseProc.RunParams.ExpectedEllipticalArc.AngleSpan = 6.28319;
         }
 
         private void GetResult()
