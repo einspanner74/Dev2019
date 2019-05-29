@@ -238,6 +238,8 @@ namespace InspectionSystemManager
             else if (ProjectItem == eProjectItem.LEAD_FORM_ALIGN)
             {
                 ContextMenuAlgo.MenuItems.Add("기준 패턴 검사", new EventHandler(PatternFindAlgorithm));
+                ContextMenuAlgo.MenuItems.Add("기준 라인 검사", new EventHandler(LineFineAlgorithm));
+                ContextMenuAlgo.MenuItems.Add("Lead Form 검사", new EventHandler(BlobReferenceAlgorithm));
             }
 
             else if (ProjectItem == eProjectItem.BC_IMG_SAVE)
@@ -1284,7 +1286,9 @@ namespace InspectionSystemManager
 
                 else if (ProjectItem == eProjectItem.LEAD_FORM_ALIGN)
                 {
-                    if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_PATTERN) _Name = "기준 패턴 검사";      //"Pattern - Reference"
+                    if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_PATTERN)            _Name = "기준 패턴 검사";      //"Pattern - Reference"
+                    else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_LINE_FIND)     _Name = "제품 라인 검사";
+                    else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_BLOB_REFER)    _Name = "제품 검사";
                 }
 
                 else if (ProjectItem == eProjectItem.BC_IMG_SAVE)

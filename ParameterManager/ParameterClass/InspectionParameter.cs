@@ -144,7 +144,7 @@ namespace ParameterManager
         public double ResolutionX;
         public double ResolutionY;
 
-        public CogBlobReferenceAlgo(double _ResolutionX = 0, double _ResolutionY = 0)
+        public CogBlobReferenceAlgo(double _ResolutionX = 1, double _ResolutionY = 1)
         {
             ForeGround = 1;
             ThresholdMin = 80;
@@ -412,7 +412,7 @@ namespace ParameterManager
     /// </summary>
     public class CogLeadTrimAlgo
     {
-        public enum eAlgoMode   { BODY_CHECK = 0, CHIPOUT_CHECK, LEAD_MEASURE, SHOULDER_CHECK, LEADTIP_CHECK };
+        public enum eAlgoMode   { BODY_CHECK = 0, CHIPOUT_CHECK, LEAD_MEASURE, SHOULDER_CHECK, LEADTIP_CHECK, GATE_REMAIN };
 
         public bool             IsUseLeadBody;
         public RectangleD       BodyArea;
@@ -467,7 +467,16 @@ namespace ParameterManager
         public double           LeadTipBurrSpec;
 
 
-        public CogLeadTrimAlgo()
+        public bool             IsUseGateRemainingInspection;
+        public RectangleD       GateRemainingArea;
+        public int              GateRemainingForeground;
+        public int              GateRemainingThreshold;
+        public double           GateRemainingSpec;
+
+        public double           ResolutionX;
+        public double           ResolutionY;
+
+        public CogLeadTrimAlgo(double _ResolutionX = 1, double _ResolutionY = 1)
         {
             IsUseLeadBody = true;
             BodyArea = new RectangleD();
@@ -515,6 +524,47 @@ namespace ParameterManager
             LeadTipEdgeWidth = 36;
             LeadTipBurrThreshold = 200;
             LeadTipBurrSpec = 0.075;
+
+
+            IsUseGateRemainingInspection = true;
+            GateRemainingArea = new RectangleD();
+            GateRemainingForeground = 0;
+            GateRemainingThreshold = 200;
+            GateRemainingSpec = 0.2;
+
+            ResolutionX = _ResolutionX;
+            ResolutionY = _ResolutionY;
+        }
+    }
+
+    public class CogLeadFormAlgo
+    {
+        public enum eAlgoMode   { LEAD_ORG = 0, LEAD_ALIGN };
+
+        public int              LeadCount;
+
+        public bool             IsUseOrigin;
+        public RectangleD       OriginArea;
+
+        public bool             IsUseAlign;
+        public RectangleD       AlignArea;
+        public int              AlignThreshold;
+        public double           AlignPitchSpec;
+        public PointD[]         AlignPosition;
+
+
+        public CogLeadFormAlgo(double _ResolutionX = 1, double _ResolutionY = 1)
+        {
+            LeadCount = 20;
+
+            IsUseOrigin = true;
+            OriginArea = new RectangleD();
+
+            IsUseAlign = true;
+            AlignArea = new RectangleD();
+            AlignThreshold = 200;
+            AlignPitchSpec = 100;
+            AlignPosition = new PointD[LeadCount];
         }
     }
     #endregion Cog Algorithm Class
@@ -551,7 +601,7 @@ namespace ParameterManager
             else if (_AlgoType == eAlgoType.C_ELLIPSE)       Algorithm = new CogEllipseAlgo();
             else if (_AlgoType == eAlgoType.C_ID)            Algorithm = new CogBarCodeIDAlgo();
             else if (_AlgoType == eAlgoType.C_LINE_FIND)     Algorithm = new CogLineFindAlgo();
-            else if (_AlgoType == eAlgoType.C_LEAD_TRIM)     Algorithm = new CogLeadTrimAlgo();
+            else if (_AlgoType == eAlgoType.C_LEAD_TRIM)     Algorithm = new CogLeadTrimAlgo(_ResolutionX, _ResolutionY);
             else if (_AlgoType == eAlgoType.C_MULTI_PATTERN) Algorithm = new CogMultiPatternAlgo();
         }
     }

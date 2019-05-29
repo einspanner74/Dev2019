@@ -347,16 +347,23 @@ namespace ParameterManager
         public double[] LeadPitchBottomY;
         public double[] LeadCenterX;
         public double[] LeadCenterY;
-        public double[] LeadLength;
-        public double[] LeadPitchLength;
         public double[] LeadWidth;
+        public double[] LeadLength;
+        public bool[]   IsLeadLengthGood;
+        public double[] LeadPitchLength;
         public double[] LeadLengthStartX;
         public double[] LeadLengthStartY;
         public bool[] IsLeadBentGood;
 
+        //LengthResult 추가
+        public bool[] LeadLengthResult;
+
 
         public List<CogRectangle> ShoulderBurrDefectList;
+        public List<CogRectangle> ShoulderNickDefectList;
         public List<CogRectangle> LeadTipBurrDefectList;
+
+        public List<CogRectangle> GateRemainingNgList;
 
         public CogLeadTrimResult()
         {
@@ -371,7 +378,10 @@ namespace ParameterManager
             LeadBodyBaseLine = new CogLine();
 
             ShoulderBurrDefectList = new List<CogRectangle>();
+            ShoulderNickDefectList = new List<CogRectangle>();
             LeadTipBurrDefectList = new List<CogRectangle>();
+
+            GateRemainingNgList = new List<CogRectangle>();
         }
     }
 
@@ -425,6 +435,28 @@ namespace ParameterManager
         public CogRectangleAffine[] LeadTipLeftArea;
         public CogRectangleAffine[] LeadTipRightArea;
         public CogRectangleAffine[] LeadTipCenterArea;
+    }
+
+    public class CogLeadTrimGateRemainingResult : CogLeadBlobResult
+    {
+
+    }
+
+    public class CogLeadFormOriginResult : CogLeadBlobResult
+    {
+
+    }
+
+    public class CogLeadFormAlignResult : CogLeadBlobResult
+    {
+
+    }
+
+    public class CogLeadFormResult : Result
+    {
+        public string LastErrorMessge;
+
+        //Lead Form Search Parameter
     }
 
     public class CogLeadBlobResult
@@ -537,6 +569,11 @@ namespace ParameterManager
         public double DiameterMaxAlgo;
 
         public double MeasureData;
+    }
+
+    public class SendLeadTrimResult
+    {
+
     }
     #endregion Last Send Result Parameter
 }

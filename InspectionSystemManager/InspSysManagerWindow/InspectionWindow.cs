@@ -31,6 +31,8 @@ namespace InspectionSystemManager
         private InspectionMultiPattern      InspMultiPatternProc;
         private InspectionAutoPattern       InspAutoPatternProc;
         private InspectionEllipse           InspEllipseProc;
+        private InspectionLeadTrim          InspLeadTrimProc;
+
         private CCameraManager              CameraManager;
 
         private TeachingWindow      TeachWnd;
@@ -165,6 +167,9 @@ namespace InspectionSystemManager
 
             InspLineFindProc = new InspectionLineFind();
             InspLineFindProc.Initialize();
+
+            InspLeadTrimProc = new InspectionLeadTrim();
+            InspLeadTrimProc.Initialize();
 
             CameraManager = new CCameraManager();
 
@@ -912,6 +917,7 @@ namespace InspectionSystemManager
             BenchMarkOffsetX = 0;
             BenchMarkOffsetY = 0;
             BenchMarkOffsetT = 0;
+
             //double _BenchMarkOffsetX = 0, _BenchMarkOffsetY = 0;
 
             #region Buffer Area Calculate
@@ -949,6 +955,7 @@ namespace InspectionSystemManager
             else if (eAlgoType.C_ID == _AlgoType)           _Result = CogBarCodeIDAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
             else if (eAlgoType.C_LINE_FIND == _AlgoType)    _Result = CogLineFindAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
             else if (eAlgoType.C_MULTI_PATTERN == _AlgoType)_Result = CogMultiPatternAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
+            else if (eAlgoType.C_LEAD_TRIM == _AlgoType)    _Result = CogLeadTrimAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
 
             return _Result;
         }
@@ -1182,6 +1189,23 @@ namespace InspectionSystemManager
 
             return _CogLineFindResult.IsGood;
         }
+
+        private bool CogLeadTrimAlgorithmStep(Object _Algorithm, CogRectangle _InspRegion, int _NgAreaNumber)
+        {
+            CogLeadTrimAlgo     _CogLeadTrimAlgo = _Algorithm as CogLeadTrimAlgo;
+            CogLeadTrimResult   _CogLeadTrimResult = new CogLeadTrimResult();
+            _CogLeadTrimAlgo.ResolutionX = ResolutionX;
+            _CogLeadTrimAlgo.ResolutionY = ResolutionY;
+
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "CogLeadTrim Algorithm Start", CLogManager.LOG_LEVEL.MID);
+            bool _Result = InspLeadTrimProc.Run(OriginImage, _InspRegion, _CogLeadTrimAlgo, ref _CogLeadTrimResult);
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "CogLeadTrim Algorithm End", CLogManager.LOG_LEVEL.MID);
+
+            AlgoResultParameter _AlgoResultParam = new AlgoResultParameter(eAlgoType.C_LEAD_TRIM, _CogLeadTrimResult);
+            AlgoResultParamList.Add(_AlgoResultParam);
+
+            return _CogLeadTrimResult.IsGood;
+        }
         #endregion Algorithm 별 Inspection Step
 
         #region Algorithm 별 Display
@@ -1201,6 +1225,7 @@ namespace InspectionSystemManager
                 else if (eAlgoType.C_ELLIPSE == _AlgoType)      _IsGood = DisplayResultEllipseFind(AlgoResultParamList[iLoopCount].ResultParam, iLoopCount);
                 else if (eAlgoType.C_ID == _AlgoType)           _IsGood = DisplayResultBarCodeIDFind(AlgoResultParamList[iLoopCount].ResultParam, iLoopCount);
                 else if (eAlgoType.C_LINE_FIND == _AlgoType)    _IsGood = DisplayResultLineFind(AlgoResultParamList[iLoopCount].ResultParam, iLoopCount);
+                else if (eAlgoType.C_LEAD_TRIM == _AlgoType)    _IsGood = DisplayResultLeadTrim(AlgoResultParamList[iLoopCount].ResultParam, iLoopCount);
             }
 
             //LJH 2018.09.28 SendResultParam에서 결과값 가져오기
@@ -1498,6 +1523,118 @@ namespace InspectionSystemManager
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "InspectionWindow - DisplayResultLineFind Complete", CLogManager.LOG_LEVEL.MID);
 
             return _CogLineFindResult.IsGood;
+        }
+
+        private bool DisplayResultLeadTrim(Object _ResultParam, int _Index)
+        {
+            CogLeadTrimResult _LeadTrimResult = _ResultParam as CogLeadTrimResult;
+
+            #region Draw Lead Body check Display
+            CogPointMarker _LT = new CogPointMarker();
+            CogPointMarker _RT = new CogPointMarker();
+            CogPointMarker _LB = new CogPointMarker();
+            CogPointMarker _RB = new CogPointMarker();
+
+            _LT.SetCenterRotationSize(_LeadTrimResult.LeadBodyLeftTop.X, _LeadTrimResult.LeadBodyLeftTop.Y, 0, 2);
+            _RT.SetCenterRotationSize(_LeadTrimResult.LeadBodyRightTop.X, _LeadTrimResult.LeadBodyRightTop.Y, 0, 2);
+            _LB.SetCenterRotationSize(_LeadTrimResult.LeadBodyLeftBottom.X, _LeadTrimResult.LeadBodyLeftBottom.Y, 0, 2);
+            _RB.SetCenterRotationSize(_LeadTrimResult.LeadBodyRightBottom.X, _LeadTrimResult.LeadBodyRightBottom.Y, 0, 2);
+
+            kpCogDisplayMain.DrawStaticShape(_LT, "LT", CogColorConstants.Green, 50, true);
+            kpCogDisplayMain.DrawStaticShape(_RT, "RT", CogColorConstants.Green, 50, true);
+            kpCogDisplayMain.DrawStaticShape(_LB, "LB", CogColorConstants.Green, 50, true);
+            kpCogDisplayMain.DrawStaticShape(_RB, "RB", CogColorConstants.Green, 50, true);
+
+            CogRectangle _BodyRect = new CogRectangle();
+            if (_RT.X - _LT.X > 0 && _RB.Y - _RT.Y > 0)
+            {
+                _BodyRect.SetXYWidthHeight(_LT.X, _LT.Y, _RT.X - _LT.X, _RB.Y - _RT.Y);
+                kpCogDisplayMain.DrawStaticShape(_BodyRect, "BodyRect", CogColorConstants.Green);
+            }
+            #endregion
+
+            #region Draw Chip Out Inspection Display
+            for (int iLoopCount = 0; iLoopCount < _LeadTrimResult.ChipOutNgList.Count; ++iLoopCount)
+            {
+                CogRectangle _NgRegion = new CogRectangle(_LeadTrimResult.ChipOutNgList[iLoopCount]);
+
+                kpCogDisplayMain.DrawStaticShape(_NgRegion, "ChipOutDefect" + (iLoopCount + 1), CogColorConstants.Red);
+
+                CogPointMarker _Point = new CogPointMarker();
+                _Point.X = _NgRegion.CenterX;
+                _Point.Y = _NgRegion.CenterY;
+                kpCogDisplayMain.DrawStaticShape(_Point, "BlobSearchPoint", CogColorConstants.Red, 5);
+
+                string _RectSizeName = string.Format("W : {0:F2}mm, H : {1:F2}mm", _NgRegion.Width, _NgRegion.Height);
+                kpCogDisplayMain.DrawText("ChipOutDefectMessage", _RectSizeName, _NgRegion.CenterX + _NgRegion.Width / 2 + 100,
+                                        _NgRegion.CenterY + _NgRegion.Height / 2 + 100, CogColorConstants.Red, 8, CogGraphicLabelAlignmentConstants.BaselineCenter);
+            }
+            #endregion
+
+            #region Draw Lead Measurement Display
+            for (int iLoopCount = 0; iLoopCount < _LeadTrimResult.LeadCount; ++iLoopCount)
+            {
+                //Blob Boundary
+                //CogRectangleAffine _BlobRectAffine = new CogRectangleAffine();
+                //_BlobRectAffine.SetCenterLengthsRotationSkew(_LeadTrimResult.LeadCenterX[iLoopCount], _LeadTrimResult.LeadCenterY[iLoopCount], _LeadTrimResult.LeadWidth[iLoopCount], _LeadTrimResult.LeadLength[iLoopCount], _LeadTrimResult.Angle[iLoopCount], 0);
+                //kpTeachDisplay.DrawStaticShape(_BlobRectAffine, "BlobRectAffine" + (iLoopCount + 1), CogColorConstants.Green);
+
+                //kpTeachDisplay.DrawBlobResult(_LeadTrimResult.ResultGraphic[iLoopCount], "BlobRectGra" + (iLoopCount + 1));
+
+                CogPointMarker _PitchPoint = new CogPointMarker();
+                _PitchPoint.SetCenterRotationSize(_LeadTrimResult.LeadPitchTopX[iLoopCount], _LeadTrimResult.LeadPitchTopY[iLoopCount], 0, 1);
+                kpCogDisplayMain.DrawStaticShape(_PitchPoint, "PointStart" + (iLoopCount + 1), CogColorConstants.Yellow, 10);
+                _PitchPoint.SetCenterRotationSize(_LeadTrimResult.LeadPitchBottomX[iLoopCount], _LeadTrimResult.LeadPitchBottomY[iLoopCount], 0, 1);
+                kpCogDisplayMain.DrawStaticShape(_PitchPoint, "PointEnd" + (iLoopCount + 1), CogColorConstants.Orange, 10);
+
+                CogLineSegment _LeadLine = new CogLineSegment();
+                _LeadLine.SetStartEnd(_LeadTrimResult.LeadPitchTopX[iLoopCount], _LeadTrimResult.LeadPitchTopY[iLoopCount], _LeadTrimResult.LeadPitchBottomX[iLoopCount], _LeadTrimResult.LeadPitchBottomY[iLoopCount]);
+                kpCogDisplayMain.DrawStaticLine(_LeadLine, "CenterLine+_" + (iLoopCount + 1), CogColorConstants.Cyan);
+            }
+
+            #endregion
+
+            #region Draw Shoulder Inspection Display
+            for (int iLoopCount = 0; iLoopCount < _LeadTrimResult.ShoulderBurrDefectList.Count; ++iLoopCount)
+            {
+                CogRectangle _NgRegion = new CogRectangle(_LeadTrimResult.ShoulderBurrDefectList[iLoopCount]);
+                kpCogDisplayMain.DrawStaticShape(_NgRegion, "ShoulderBurr" + (iLoopCount + 1), CogColorConstants.Red);
+
+                string _RectSizeName = string.Format("W : {0:F2}mm, H : {1:F2}mm", _NgRegion.Width * ResolutionX, _NgRegion.Height * ResolutionY);
+                //string _RectSizeName = string.Format("[B]");// W : {0:F2}mm, H : {1:F2}mm", _NgRegion.Width, _NgRegion.Height);
+                kpCogDisplayMain.DrawText("ShoulderBurr" + iLoopCount, _RectSizeName, _NgRegion.CenterX + _NgRegion.Width / 2,
+                                        _NgRegion.CenterY + _NgRegion.Height / 2 + 100, CogColorConstants.Red, 8, CogGraphicLabelAlignmentConstants.BaselineCenter);
+            }
+
+            for (int iLoopCount = 0; iLoopCount < _LeadTrimResult.ShoulderNickDefectList.Count; ++iLoopCount)
+            {
+                CogRectangle _NgRegion = new CogRectangle(_LeadTrimResult.ShoulderNickDefectList[iLoopCount]);
+                kpCogDisplayMain.DrawStaticShape(_NgRegion, "ShoulderNick" + (iLoopCount + 1), CogColorConstants.Red);
+
+                string _RectSizeName = string.Format("W : {0:F2}mm, H : {1:F2}mm", _NgRegion.Width * ResolutionX, _NgRegion.Height * ResolutionY);
+                //string _RectSizeName = string.Format("[N]");
+                kpCogDisplayMain.DrawText("ShoulderNick" + iLoopCount, _RectSizeName, _NgRegion.CenterX + _NgRegion.Width / 2,
+                                          _NgRegion.CenterY + _NgRegion.Height / 2 + 100, CogColorConstants.Red, 8, CogGraphicLabelAlignmentConstants.BaselineCenter);
+            }
+            #endregion
+
+            #region Draw Lead Tip Inspection Display
+            for (int iLoopCount = 0; iLoopCount < _LeadTrimResult.LeadTipBurrDefectList.Count; ++iLoopCount)
+            {
+                CogRectangle _NgRegion = new CogRectangle(_LeadTrimResult.LeadTipBurrDefectList[iLoopCount]);
+                kpCogDisplayMain.DrawStaticShape(_NgRegion, "LeadTipBurr" + (iLoopCount + 1), CogColorConstants.Red);
+            }
+            #endregion
+
+            #region Draw Gate Reamining Display
+            for (int iLoopCount = 0; iLoopCount < _LeadTrimResult.GateRemainingNgList.Count; ++iLoopCount)
+            {
+                CogRectangle _NgRegion = new CogRectangle(_LeadTrimResult.GateRemainingNgList[iLoopCount]);
+                kpCogDisplayMain.DrawStaticShape(_NgRegion, "GateRemaining" + (iLoopCount + 1), CogColorConstants.Red);
+            }
+            #endregion
+
+            return _LeadTrimResult.IsGood;
         }
         #endregion Algorithm 별 Display
 

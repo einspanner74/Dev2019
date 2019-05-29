@@ -28,14 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle33 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle34 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle39 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle40 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle35 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle36 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle37 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle38 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.labelTitle = new CustomControl.GradientLabel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -127,9 +127,9 @@
             this.gradientLabel31 = new CustomControl.GradientLabel();
             this.gradientLabel27 = new CustomControl.GradientLabel();
             this.textBoxShoulderEdgeWidth = new System.Windows.Forms.TextBox();
-            this.hScrollBar2 = new System.Windows.Forms.HScrollBar();
+            this.hScrollShoulderNickThreshold = new System.Windows.Forms.HScrollBar();
             this.gradientLabel24 = new CustomControl.GradientLabel();
-            this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
+            this.hScrollShoulderBurrThreshold = new System.Windows.Forms.HScrollBar();
             this.gradientLabel21 = new CustomControl.GradientLabel();
             this.graLabelNickThresholdValue = new CustomControl.GradientLabel();
             this.graLabelBurrThresholdValue = new CustomControl.GradientLabel();
@@ -151,45 +151,27 @@
             this.gradientLabel34 = new CustomControl.GradientLabel();
             this.gradientLabel35 = new CustomControl.GradientLabel();
             this.textBoxLeadTipEdgeWidth = new System.Windows.Forms.TextBox();
-            this.hScrollBar4 = new System.Windows.Forms.HScrollBar();
+            this.hScrollLeadTipBurrThreshold = new System.Windows.Forms.HScrollBar();
             this.gradientLabel37 = new CustomControl.GradientLabel();
             this.graLabelLeadTipBurrThresholdValue = new CustomControl.GradientLabel();
             this.gradientLabel41 = new CustomControl.GradientLabel();
             this.textBoxLeadTipBurrSpec = new System.Windows.Forms.TextBox();
             this.gradientLabel42 = new CustomControl.GradientLabel();
             this.tabPage6 = new System.Windows.Forms.TabPage();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.btnShowAreaBottomLeft = new System.Windows.Forms.Button();
-            this.kpCogDisplayControl1 = new KPDisplay.KPCogDisplayControl();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
-            this.btnShowAreaBottomRight = new System.Windows.Forms.Button();
-            this.kpCogDisplayControl2 = new KPDisplay.KPCogDisplayControl();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.btnLeadBodyCheck = new System.Windows.Forms.Button();
-            this.numericUpDownFindCount = new System.Windows.Forms.NumericUpDown();
-            this.gradientLabel8 = new CustomControl.GradientLabel();
-            this.numericUpDownFindScore = new System.Windows.Forms.NumericUpDown();
-            this.gradientLabel9 = new CustomControl.GradientLabel();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.btnFindLeft = new System.Windows.Forms.Button();
-            this.btnPatternModifyLeft = new System.Windows.Forms.Button();
-            this.btnPatternAddLeft = new System.Windows.Forms.Button();
-            this.btnShowAreaTopLeft = new System.Windows.Forms.Button();
-            this.kpPatternDisplay = new KPDisplay.KPCogDisplayControl();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.btnFindRight = new System.Windows.Forms.Button();
-            this.btnPatternModifyRight = new System.Windows.Forms.Button();
-            this.btnPatternAddRight = new System.Windows.Forms.Button();
-            this.btnShowAreaTopRight = new System.Windows.Forms.Button();
-            this.kpPatternDisplay1 = new KPDisplay.KPCogDisplayControl();
+            this.hScrollGateRemainingThreshold = new System.Windows.Forms.HScrollBar();
+            this.gradientLabel39 = new CustomControl.GradientLabel();
+            this.gradientLabelGateRemainingThresholdValue = new CustomControl.GradientLabel();
+            this.gradientLabel43 = new CustomControl.GradientLabel();
+            this.textBoxGateRemainingSpec = new System.Windows.Forms.TextBox();
+            this.gradientLabel44 = new CustomControl.GradientLabel();
+            this.btnGateRemainingAreaCheck = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.gradientLabel8 = new CustomControl.GradientLabel();
+            this.btnGateRemainingAreaSet = new System.Windows.Forms.Button();
+            this.btnGateRemainingAreaShow = new System.Windows.Forms.Button();
+            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.gradientLabel9 = new CustomControl.GradientLabel();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox8.SuspendLayout();
@@ -210,13 +192,8 @@
             this.groupBox15.SuspendLayout();
             this.groupBox16.SuspendLayout();
             this.tabPage6.SuspendLayout();
-            this.groupBox4.SuspendLayout();
-            this.groupBox5.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFindCount)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFindScore)).BeginInit();
-            this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // labelTitle
@@ -231,7 +208,7 @@
             this.labelTitle.Name = "labelTitle";
             this.labelTitle.Size = new System.Drawing.Size(580, 28);
             this.labelTitle.TabIndex = 13;
-            this.labelTitle.Text = " Lead Inspection Teaching Window";
+            this.labelTitle.Text = " Lead Trim Inspection Teaching Window";
             this.labelTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // tabControl1
@@ -1117,17 +1094,17 @@
             this.QuickGridViewLeadSetting.AllowUserToDeleteRows = false;
             this.QuickGridViewLeadSetting.AllowUserToResizeColumns = false;
             this.QuickGridViewLeadSetting.AllowUserToResizeRows = false;
-            dataGridViewCellStyle33.BackColor = System.Drawing.Color.White;
-            this.QuickGridViewLeadSetting.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle33;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
+            this.QuickGridViewLeadSetting.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.QuickGridViewLeadSetting.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle34.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle34.BackColor = System.Drawing.Color.Gold;
-            dataGridViewCellStyle34.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle34.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle34.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle34.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle34.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.QuickGridViewLeadSetting.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle34;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Gold;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.QuickGridViewLeadSetting.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.QuickGridViewLeadSetting.ColumnHeadersHeight = 22;
             this.QuickGridViewLeadSetting.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.QuickGridViewLeadSetting.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -1135,28 +1112,28 @@
             this.gridLeadLength,
             this.gridLeadPitch,
             this.gridLeadWidth});
-            dataGridViewCellStyle39.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle39.BackColor = System.Drawing.Color.PowderBlue;
-            dataGridViewCellStyle39.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle39.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle39.NullValue = "0";
-            dataGridViewCellStyle39.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-            dataGridViewCellStyle39.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle39.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle39.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.QuickGridViewLeadSetting.DefaultCellStyle = dataGridViewCellStyle39;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.Color.PowderBlue;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle7.NullValue = "0";
+            dataGridViewCellStyle7.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.QuickGridViewLeadSetting.DefaultCellStyle = dataGridViewCellStyle7;
             this.QuickGridViewLeadSetting.EnableHeadersVisualStyles = false;
             this.QuickGridViewLeadSetting.Location = new System.Drawing.Point(12, 74);
             this.QuickGridViewLeadSetting.MultiSelect = false;
             this.QuickGridViewLeadSetting.Name = "QuickGridViewLeadSetting";
-            dataGridViewCellStyle40.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle40.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle40.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle40.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle40.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle40.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle40.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.QuickGridViewLeadSetting.RowHeadersDefaultCellStyle = dataGridViewCellStyle40;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.QuickGridViewLeadSetting.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
             this.QuickGridViewLeadSetting.RowHeadersVisible = false;
             this.QuickGridViewLeadSetting.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.QuickGridViewLeadSetting.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -1167,8 +1144,8 @@
             // 
             // gridLeadNum
             // 
-            dataGridViewCellStyle35.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.gridLeadNum.DefaultCellStyle = dataGridViewCellStyle35;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.gridLeadNum.DefaultCellStyle = dataGridViewCellStyle3;
             this.gridLeadNum.HeaderText = "Num";
             this.gridLeadNum.Name = "gridLeadNum";
             this.gridLeadNum.ReadOnly = true;
@@ -1178,8 +1155,8 @@
             // 
             // gridLeadLength
             // 
-            dataGridViewCellStyle36.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.gridLeadLength.DefaultCellStyle = dataGridViewCellStyle36;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.gridLeadLength.DefaultCellStyle = dataGridViewCellStyle4;
             this.gridLeadLength.HeaderText = "Lead Length";
             this.gridLeadLength.Name = "gridLeadLength";
             this.gridLeadLength.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -1188,8 +1165,8 @@
             // 
             // gridLeadPitch
             // 
-            dataGridViewCellStyle37.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.gridLeadPitch.DefaultCellStyle = dataGridViewCellStyle37;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.gridLeadPitch.DefaultCellStyle = dataGridViewCellStyle5;
             this.gridLeadPitch.HeaderText = "Lead Pitch";
             this.gridLeadPitch.Name = "gridLeadPitch";
             this.gridLeadPitch.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -1198,8 +1175,8 @@
             // 
             // gridLeadWidth
             // 
-            dataGridViewCellStyle38.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.gridLeadWidth.DefaultCellStyle = dataGridViewCellStyle38;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.gridLeadWidth.DefaultCellStyle = dataGridViewCellStyle6;
             this.gridLeadWidth.HeaderText = "Lead Width";
             this.gridLeadWidth.Name = "gridLeadWidth";
             this.gridLeadWidth.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -1457,9 +1434,9 @@
             this.groupBox12.Controls.Add(this.gradientLabel31);
             this.groupBox12.Controls.Add(this.gradientLabel27);
             this.groupBox12.Controls.Add(this.textBoxShoulderEdgeWidth);
-            this.groupBox12.Controls.Add(this.hScrollBar2);
+            this.groupBox12.Controls.Add(this.hScrollShoulderNickThreshold);
             this.groupBox12.Controls.Add(this.gradientLabel24);
-            this.groupBox12.Controls.Add(this.hScrollBar1);
+            this.groupBox12.Controls.Add(this.hScrollShoulderBurrThreshold);
             this.groupBox12.Controls.Add(this.gradientLabel21);
             this.groupBox12.Controls.Add(this.graLabelNickThresholdValue);
             this.groupBox12.Controls.Add(this.graLabelBurrThresholdValue);
@@ -1517,14 +1494,15 @@
             this.textBoxShoulderEdgeWidth.Text = "36";
             this.textBoxShoulderEdgeWidth.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // hScrollBar2
+            // hScrollShoulderNickThreshold
             // 
-            this.hScrollBar2.Location = new System.Drawing.Point(167, 121);
-            this.hScrollBar2.Maximum = 255;
-            this.hScrollBar2.Name = "hScrollBar2";
-            this.hScrollBar2.Size = new System.Drawing.Size(338, 26);
-            this.hScrollBar2.TabIndex = 105;
-            this.hScrollBar2.Value = 80;
+            this.hScrollShoulderNickThreshold.Location = new System.Drawing.Point(167, 121);
+            this.hScrollShoulderNickThreshold.Maximum = 255;
+            this.hScrollShoulderNickThreshold.Name = "hScrollShoulderNickThreshold";
+            this.hScrollShoulderNickThreshold.Size = new System.Drawing.Size(338, 26);
+            this.hScrollShoulderNickThreshold.TabIndex = 105;
+            this.hScrollShoulderNickThreshold.Value = 80;
+            this.hScrollShoulderNickThreshold.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollShoulderNickThreshold_Scroll);
             // 
             // gradientLabel24
             // 
@@ -1540,14 +1518,15 @@
             this.gradientLabel24.Text = "      Nick Threshold";
             this.gradientLabel24.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // hScrollBar1
+            // hScrollShoulderBurrThreshold
             // 
-            this.hScrollBar1.Location = new System.Drawing.Point(167, 54);
-            this.hScrollBar1.Maximum = 255;
-            this.hScrollBar1.Name = "hScrollBar1";
-            this.hScrollBar1.Size = new System.Drawing.Size(338, 26);
-            this.hScrollBar1.TabIndex = 103;
-            this.hScrollBar1.Value = 200;
+            this.hScrollShoulderBurrThreshold.Location = new System.Drawing.Point(167, 54);
+            this.hScrollShoulderBurrThreshold.Maximum = 255;
+            this.hScrollShoulderBurrThreshold.Name = "hScrollShoulderBurrThreshold";
+            this.hScrollShoulderBurrThreshold.Size = new System.Drawing.Size(338, 26);
+            this.hScrollShoulderBurrThreshold.TabIndex = 103;
+            this.hScrollShoulderBurrThreshold.Value = 200;
+            this.hScrollShoulderBurrThreshold.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollShoulderBurrThreshold_Scroll);
             // 
             // gradientLabel21
             // 
@@ -1787,7 +1766,7 @@
             this.groupBox16.Controls.Add(this.gradientLabel34);
             this.groupBox16.Controls.Add(this.gradientLabel35);
             this.groupBox16.Controls.Add(this.textBoxLeadTipEdgeWidth);
-            this.groupBox16.Controls.Add(this.hScrollBar4);
+            this.groupBox16.Controls.Add(this.hScrollLeadTipBurrThreshold);
             this.groupBox16.Controls.Add(this.gradientLabel37);
             this.groupBox16.Controls.Add(this.graLabelLeadTipBurrThresholdValue);
             this.groupBox16.Controls.Add(this.gradientLabel41);
@@ -1841,14 +1820,15 @@
             this.textBoxLeadTipEdgeWidth.Text = "36";
             this.textBoxLeadTipEdgeWidth.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // hScrollBar4
+            // hScrollLeadTipBurrThreshold
             // 
-            this.hScrollBar4.Location = new System.Drawing.Point(167, 54);
-            this.hScrollBar4.Maximum = 255;
-            this.hScrollBar4.Name = "hScrollBar4";
-            this.hScrollBar4.Size = new System.Drawing.Size(338, 26);
-            this.hScrollBar4.TabIndex = 103;
-            this.hScrollBar4.Value = 200;
+            this.hScrollLeadTipBurrThreshold.Location = new System.Drawing.Point(167, 54);
+            this.hScrollLeadTipBurrThreshold.Maximum = 255;
+            this.hScrollLeadTipBurrThreshold.Name = "hScrollLeadTipBurrThreshold";
+            this.hScrollLeadTipBurrThreshold.Size = new System.Drawing.Size(338, 26);
+            this.hScrollLeadTipBurrThreshold.TabIndex = 103;
+            this.hScrollLeadTipBurrThreshold.Value = 200;
+            this.hScrollLeadTipBurrThreshold.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollLeadTipBurrThreshold_Scroll);
             // 
             // gradientLabel37
             // 
@@ -1920,216 +1900,137 @@
             // tabPage6
             // 
             this.tabPage6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
-            this.tabPage6.Controls.Add(this.groupBox4);
-            this.tabPage6.Controls.Add(this.groupBox5);
-            this.tabPage6.Controls.Add(this.groupBox3);
-            this.tabPage6.Controls.Add(this.groupBox1);
             this.tabPage6.Controls.Add(this.groupBox2);
+            this.tabPage6.Controls.Add(this.btnGateRemainingAreaCheck);
+            this.tabPage6.Controls.Add(this.groupBox1);
+            this.tabPage6.Controls.Add(this.checkBox4);
+            this.tabPage6.Controls.Add(this.gradientLabel9);
             this.tabPage6.Location = new System.Drawing.Point(4, 23);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Size = new System.Drawing.Size(572, 298);
             this.tabPage6.TabIndex = 5;
             this.tabPage6.Text = "Gate Remaining";
             // 
-            // groupBox4
+            // groupBox2
             // 
-            this.groupBox4.Controls.Add(this.button1);
-            this.groupBox4.Controls.Add(this.button2);
-            this.groupBox4.Controls.Add(this.button3);
-            this.groupBox4.Controls.Add(this.btnShowAreaBottomLeft);
-            this.groupBox4.Controls.Add(this.kpCogDisplayControl1);
-            this.groupBox4.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
-            this.groupBox4.ForeColor = System.Drawing.Color.White;
-            this.groupBox4.Location = new System.Drawing.Point(289, 3);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(136, 206);
-            this.groupBox4.TabIndex = 87;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = " Bottom Left ";
+            this.groupBox2.Controls.Add(this.hScrollGateRemainingThreshold);
+            this.groupBox2.Controls.Add(this.gradientLabel39);
+            this.groupBox2.Controls.Add(this.gradientLabelGateRemainingThresholdValue);
+            this.groupBox2.Controls.Add(this.gradientLabel43);
+            this.groupBox2.Controls.Add(this.textBoxGateRemainingSpec);
+            this.groupBox2.Controls.Add(this.gradientLabel44);
+            this.groupBox2.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
+            this.groupBox2.ForeColor = System.Drawing.Color.White;
+            this.groupBox2.Location = new System.Drawing.Point(7, 104);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(559, 77);
+            this.groupBox2.TabIndex = 110;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = " Gate Remaining Setting ";
             // 
-            // button1
+            // hScrollGateRemainingThreshold
             // 
-            this.button1.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.button1.ForeColor = System.Drawing.Color.Black;
-            this.button1.Location = new System.Drawing.Point(70, 170);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(62, 30);
-            this.button1.TabIndex = 78;
-            this.button1.Tag = "0";
-            this.button1.Text = "Find";
-            this.button1.UseVisualStyleBackColor = true;
+            this.hScrollGateRemainingThreshold.Location = new System.Drawing.Point(167, 17);
+            this.hScrollGateRemainingThreshold.Maximum = 255;
+            this.hScrollGateRemainingThreshold.Name = "hScrollGateRemainingThreshold";
+            this.hScrollGateRemainingThreshold.Size = new System.Drawing.Size(338, 26);
+            this.hScrollGateRemainingThreshold.TabIndex = 103;
+            this.hScrollGateRemainingThreshold.Value = 200;
+            this.hScrollGateRemainingThreshold.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollGateRemainingThreshold_Scroll);
             // 
-            // button2
+            // gradientLabel39
             // 
-            this.button2.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.button2.ForeColor = System.Drawing.Color.Black;
-            this.button2.Location = new System.Drawing.Point(3, 170);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(62, 30);
-            this.button2.TabIndex = 77;
-            this.button2.Tag = "0";
-            this.button2.Text = "Modify";
-            this.button2.UseVisualStyleBackColor = true;
+            this.gradientLabel39.BackColor = System.Drawing.Color.SteelBlue;
+            this.gradientLabel39.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel39.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel39.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel39.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel39.Location = new System.Drawing.Point(12, 17);
+            this.gradientLabel39.Name = "gradientLabel39";
+            this.gradientLabel39.Size = new System.Drawing.Size(150, 24);
+            this.gradientLabel39.TabIndex = 102;
+            this.gradientLabel39.Text = "      Threshold";
+            this.gradientLabel39.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // button3
+            // gradientLabelGateRemainingThresholdValue
             // 
-            this.button3.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.button3.ForeColor = System.Drawing.Color.Black;
-            this.button3.Location = new System.Drawing.Point(70, 140);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(62, 30);
-            this.button3.TabIndex = 76;
-            this.button3.Tag = "0";
-            this.button3.Text = "Add";
-            this.button3.UseVisualStyleBackColor = true;
+            this.gradientLabelGateRemainingThresholdValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.gradientLabelGateRemainingThresholdValue.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabelGateRemainingThresholdValue.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabelGateRemainingThresholdValue.ForeColor = System.Drawing.Color.White;
+            this.gradientLabelGateRemainingThresholdValue.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabelGateRemainingThresholdValue.Location = new System.Drawing.Point(508, 19);
+            this.gradientLabelGateRemainingThresholdValue.Name = "gradientLabelGateRemainingThresholdValue";
+            this.gradientLabelGateRemainingThresholdValue.Size = new System.Drawing.Size(38, 24);
+            this.gradientLabelGateRemainingThresholdValue.TabIndex = 100;
+            this.gradientLabelGateRemainingThresholdValue.Text = "200";
+            this.gradientLabelGateRemainingThresholdValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // btnShowAreaBottomLeft
+            // gradientLabel43
             // 
-            this.btnShowAreaBottomLeft.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.btnShowAreaBottomLeft.ForeColor = System.Drawing.Color.Black;
-            this.btnShowAreaBottomLeft.Location = new System.Drawing.Point(3, 140);
-            this.btnShowAreaBottomLeft.Name = "btnShowAreaBottomLeft";
-            this.btnShowAreaBottomLeft.Size = new System.Drawing.Size(62, 30);
-            this.btnShowAreaBottomLeft.TabIndex = 75;
-            this.btnShowAreaBottomLeft.Tag = "0";
-            this.btnShowAreaBottomLeft.Text = "Area";
-            this.btnShowAreaBottomLeft.UseVisualStyleBackColor = true;
+            this.gradientLabel43.BackColor = System.Drawing.Color.SteelBlue;
+            this.gradientLabel43.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.gradientLabel43.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel43.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel43.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel43.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel43.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel43.Location = new System.Drawing.Point(12, 46);
+            this.gradientLabel43.Name = "gradientLabel43";
+            this.gradientLabel43.Size = new System.Drawing.Size(150, 24);
+            this.gradientLabel43.TabIndex = 98;
+            this.gradientLabel43.Text = "      Remaining Spec (+)";
+            this.gradientLabel43.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // kpCogDisplayControl1
+            // textBoxGateRemainingSpec
             // 
-            this.kpCogDisplayControl1.BackColor = System.Drawing.Color.White;
-            this.kpCogDisplayControl1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.kpCogDisplayControl1.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.kpCogDisplayControl1.Location = new System.Drawing.Point(5, 13);
-            this.kpCogDisplayControl1.Name = "kpCogDisplayControl1";
-            this.kpCogDisplayControl1.Size = new System.Drawing.Size(127, 127);
-            this.kpCogDisplayControl1.TabIndex = 13;
-            this.kpCogDisplayControl1.Tag = "0";
-            this.kpCogDisplayControl1.UseStatusBar = false;
+            this.textBoxGateRemainingSpec.Location = new System.Drawing.Point(167, 47);
+            this.textBoxGateRemainingSpec.Name = "textBoxGateRemainingSpec";
+            this.textBoxGateRemainingSpec.Size = new System.Drawing.Size(70, 21);
+            this.textBoxGateRemainingSpec.TabIndex = 97;
+            this.textBoxGateRemainingSpec.Text = "0.2";
+            this.textBoxGateRemainingSpec.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // groupBox5
+            // gradientLabel44
             // 
-            this.groupBox5.Controls.Add(this.button5);
-            this.groupBox5.Controls.Add(this.button6);
-            this.groupBox5.Controls.Add(this.button7);
-            this.groupBox5.Controls.Add(this.btnShowAreaBottomRight);
-            this.groupBox5.Controls.Add(this.kpCogDisplayControl2);
-            this.groupBox5.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
-            this.groupBox5.ForeColor = System.Drawing.Color.White;
-            this.groupBox5.Location = new System.Drawing.Point(431, 3);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(136, 206);
-            this.groupBox5.TabIndex = 89;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = " Bottom Right";
+            this.gradientLabel44.AutoSize = true;
+            this.gradientLabel44.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel44.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel44.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel44.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel44.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel44.Location = new System.Drawing.Point(239, 51);
+            this.gradientLabel44.Name = "gradientLabel44";
+            this.gradientLabel44.Size = new System.Drawing.Size(29, 14);
+            this.gradientLabel44.TabIndex = 96;
+            this.gradientLabel44.Text = "mm";
             // 
-            // button5
+            // btnGateRemainingAreaCheck
             // 
-            this.button5.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.button5.ForeColor = System.Drawing.Color.Black;
-            this.button5.Location = new System.Drawing.Point(70, 170);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(62, 30);
-            this.button5.TabIndex = 82;
-            this.button5.Tag = "1";
-            this.button5.Text = "Find";
-            this.button5.UseVisualStyleBackColor = true;
+            this.btnGateRemainingAreaCheck.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnGateRemainingAreaCheck.ForeColor = System.Drawing.Color.Black;
+            this.btnGateRemainingAreaCheck.Location = new System.Drawing.Point(500, 10);
+            this.btnGateRemainingAreaCheck.Name = "btnGateRemainingAreaCheck";
+            this.btnGateRemainingAreaCheck.Size = new System.Drawing.Size(66, 29);
+            this.btnGateRemainingAreaCheck.TabIndex = 101;
+            this.btnGateRemainingAreaCheck.Tag = "0";
+            this.btnGateRemainingAreaCheck.Text = "Check";
+            this.btnGateRemainingAreaCheck.UseVisualStyleBackColor = true;
+            this.btnGateRemainingAreaCheck.Click += new System.EventHandler(this.btnGateRemainingAreaCheck_Click);
             // 
-            // button6
+            // groupBox1
             // 
-            this.button6.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.button6.ForeColor = System.Drawing.Color.Black;
-            this.button6.Location = new System.Drawing.Point(5, 170);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(62, 30);
-            this.button6.TabIndex = 81;
-            this.button6.Tag = "1";
-            this.button6.Text = "Modify";
-            this.button6.UseVisualStyleBackColor = true;
-            // 
-            // button7
-            // 
-            this.button7.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.button7.ForeColor = System.Drawing.Color.Black;
-            this.button7.Location = new System.Drawing.Point(70, 140);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(62, 30);
-            this.button7.TabIndex = 80;
-            this.button7.Tag = "1";
-            this.button7.Text = "Add";
-            this.button7.UseVisualStyleBackColor = true;
-            // 
-            // btnShowAreaBottomRight
-            // 
-            this.btnShowAreaBottomRight.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.btnShowAreaBottomRight.ForeColor = System.Drawing.Color.Black;
-            this.btnShowAreaBottomRight.Location = new System.Drawing.Point(5, 140);
-            this.btnShowAreaBottomRight.Name = "btnShowAreaBottomRight";
-            this.btnShowAreaBottomRight.Size = new System.Drawing.Size(62, 30);
-            this.btnShowAreaBottomRight.TabIndex = 79;
-            this.btnShowAreaBottomRight.Tag = "1";
-            this.btnShowAreaBottomRight.Text = "Area";
-            this.btnShowAreaBottomRight.UseVisualStyleBackColor = true;
-            // 
-            // kpCogDisplayControl2
-            // 
-            this.kpCogDisplayControl2.BackColor = System.Drawing.Color.White;
-            this.kpCogDisplayControl2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.kpCogDisplayControl2.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.kpCogDisplayControl2.Location = new System.Drawing.Point(5, 13);
-            this.kpCogDisplayControl2.Name = "kpCogDisplayControl2";
-            this.kpCogDisplayControl2.Size = new System.Drawing.Size(127, 127);
-            this.kpCogDisplayControl2.TabIndex = 13;
-            this.kpCogDisplayControl2.Tag = "1";
-            this.kpCogDisplayControl2.UseStatusBar = false;
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.btnLeadBodyCheck);
-            this.groupBox3.Controls.Add(this.numericUpDownFindCount);
-            this.groupBox3.Controls.Add(this.gradientLabel8);
-            this.groupBox3.Controls.Add(this.numericUpDownFindScore);
-            this.groupBox3.Controls.Add(this.gradientLabel9);
-            this.groupBox3.Controls.Add(this.label5);
-            this.groupBox3.Controls.Add(this.label4);
-            this.groupBox3.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
-            this.groupBox3.ForeColor = System.Drawing.Color.White;
-            this.groupBox3.Location = new System.Drawing.Point(5, 215);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(562, 80);
-            this.groupBox3.TabIndex = 88;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = " Condition Setting ";
-            // 
-            // btnLeadBodyCheck
-            // 
-            this.btnLeadBodyCheck.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.btnLeadBodyCheck.ForeColor = System.Drawing.Color.Black;
-            this.btnLeadBodyCheck.Location = new System.Drawing.Point(490, 33);
-            this.btnLeadBodyCheck.Name = "btnLeadBodyCheck";
-            this.btnLeadBodyCheck.Size = new System.Drawing.Size(66, 36);
-            this.btnLeadBodyCheck.TabIndex = 79;
-            this.btnLeadBodyCheck.Tag = "0";
-            this.btnLeadBodyCheck.Text = "Check";
-            this.btnLeadBodyCheck.UseVisualStyleBackColor = true;
-            // 
-            // numericUpDownFindCount
-            // 
-            this.numericUpDownFindCount.Location = new System.Drawing.Point(139, 48);
-            this.numericUpDownFindCount.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDownFindCount.Name = "numericUpDownFindCount";
-            this.numericUpDownFindCount.Size = new System.Drawing.Size(101, 21);
-            this.numericUpDownFindCount.TabIndex = 63;
-            this.numericUpDownFindCount.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.numericUpDownFindCount.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.groupBox1.Controls.Add(this.gradientLabel8);
+            this.groupBox1.Controls.Add(this.btnGateRemainingAreaSet);
+            this.groupBox1.Controls.Add(this.btnGateRemainingAreaShow);
+            this.groupBox1.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
+            this.groupBox1.ForeColor = System.Drawing.Color.White;
+            this.groupBox1.Location = new System.Drawing.Point(7, 45);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(559, 53);
+            this.groupBox1.TabIndex = 104;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = " Gate Remaining Area Setting ";
             // 
             // gradientLabel8
             // 
@@ -2140,26 +2041,52 @@
             this.gradientLabel8.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gradientLabel8.ForeColor = System.Drawing.Color.White;
             this.gradientLabel8.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel8.Location = new System.Drawing.Point(8, 46);
+            this.gradientLabel8.Location = new System.Drawing.Point(12, 17);
             this.gradientLabel8.Name = "gradientLabel8";
-            this.gradientLabel8.Size = new System.Drawing.Size(124, 26);
-            this.gradientLabel8.TabIndex = 62;
-            this.gradientLabel8.Text = "Find Count";
+            this.gradientLabel8.Size = new System.Drawing.Size(149, 26);
+            this.gradientLabel8.TabIndex = 92;
+            this.gradientLabel8.Text = "Area Set";
             this.gradientLabel8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // numericUpDownFindScore
+            // btnGateRemainingAreaSet
             // 
-            this.numericUpDownFindScore.DecimalPlaces = 2;
-            this.numericUpDownFindScore.Location = new System.Drawing.Point(139, 18);
-            this.numericUpDownFindScore.Name = "numericUpDownFindScore";
-            this.numericUpDownFindScore.Size = new System.Drawing.Size(101, 21);
-            this.numericUpDownFindScore.TabIndex = 61;
-            this.numericUpDownFindScore.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.numericUpDownFindScore.Value = new decimal(new int[] {
-            50,
-            0,
-            0,
-            0});
+            this.btnGateRemainingAreaSet.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnGateRemainingAreaSet.ForeColor = System.Drawing.Color.Black;
+            this.btnGateRemainingAreaSet.Location = new System.Drawing.Point(234, 16);
+            this.btnGateRemainingAreaSet.Name = "btnGateRemainingAreaSet";
+            this.btnGateRemainingAreaSet.Size = new System.Drawing.Size(66, 29);
+            this.btnGateRemainingAreaSet.TabIndex = 91;
+            this.btnGateRemainingAreaSet.Tag = "0";
+            this.btnGateRemainingAreaSet.Text = "Set";
+            this.btnGateRemainingAreaSet.UseVisualStyleBackColor = true;
+            this.btnGateRemainingAreaSet.Click += new System.EventHandler(this.btnGateRemainingAreaSet_Click);
+            // 
+            // btnGateRemainingAreaShow
+            // 
+            this.btnGateRemainingAreaShow.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnGateRemainingAreaShow.ForeColor = System.Drawing.Color.Black;
+            this.btnGateRemainingAreaShow.Location = new System.Drawing.Point(167, 16);
+            this.btnGateRemainingAreaShow.Name = "btnGateRemainingAreaShow";
+            this.btnGateRemainingAreaShow.Size = new System.Drawing.Size(66, 29);
+            this.btnGateRemainingAreaShow.TabIndex = 90;
+            this.btnGateRemainingAreaShow.Tag = "0";
+            this.btnGateRemainingAreaShow.Text = "Show";
+            this.btnGateRemainingAreaShow.UseVisualStyleBackColor = true;
+            this.btnGateRemainingAreaShow.Click += new System.EventHandler(this.btnGateRemainingAreaShow_Click);
+            // 
+            // checkBox4
+            // 
+            this.checkBox4.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBox4.Checked = true;
+            this.checkBox4.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox4.ForeColor = System.Drawing.Color.Black;
+            this.checkBox4.Location = new System.Drawing.Point(174, 10);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Size = new System.Drawing.Size(133, 26);
+            this.checkBox4.TabIndex = 103;
+            this.checkBox4.Text = "Used";
+            this.checkBox4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.checkBox4.UseVisualStyleBackColor = true;
             // 
             // gradientLabel9
             // 
@@ -2170,186 +2097,12 @@
             this.gradientLabel9.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gradientLabel9.ForeColor = System.Drawing.Color.White;
             this.gradientLabel9.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel9.Location = new System.Drawing.Point(8, 16);
+            this.gradientLabel9.Location = new System.Drawing.Point(19, 10);
             this.gradientLabel9.Name = "gradientLabel9";
-            this.gradientLabel9.Size = new System.Drawing.Size(124, 26);
-            this.gradientLabel9.TabIndex = 60;
-            this.gradientLabel9.Text = "Find Score";
+            this.gradientLabel9.Size = new System.Drawing.Size(150, 26);
+            this.gradientLabel9.TabIndex = 102;
+            this.gradientLabel9.Text = "Use gate remaining";
             this.gradientLabel9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Location = new System.Drawing.Point(243, 54);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(21, 14);
-            this.label5.TabIndex = 74;
-            this.label5.Text = "ea";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(244, 24);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(18, 14);
-            this.label4.TabIndex = 75;
-            this.label4.Text = "%";
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.btnFindLeft);
-            this.groupBox1.Controls.Add(this.btnPatternModifyLeft);
-            this.groupBox1.Controls.Add(this.btnPatternAddLeft);
-            this.groupBox1.Controls.Add(this.btnShowAreaTopLeft);
-            this.groupBox1.Controls.Add(this.kpPatternDisplay);
-            this.groupBox1.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
-            this.groupBox1.ForeColor = System.Drawing.Color.White;
-            this.groupBox1.Location = new System.Drawing.Point(5, 3);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(136, 206);
-            this.groupBox1.TabIndex = 85;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = " Top Left ";
-            // 
-            // btnFindLeft
-            // 
-            this.btnFindLeft.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.btnFindLeft.ForeColor = System.Drawing.Color.Black;
-            this.btnFindLeft.Location = new System.Drawing.Point(70, 170);
-            this.btnFindLeft.Name = "btnFindLeft";
-            this.btnFindLeft.Size = new System.Drawing.Size(62, 30);
-            this.btnFindLeft.TabIndex = 78;
-            this.btnFindLeft.Tag = "0";
-            this.btnFindLeft.Text = "Find";
-            this.btnFindLeft.UseVisualStyleBackColor = true;
-            // 
-            // btnPatternModifyLeft
-            // 
-            this.btnPatternModifyLeft.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.btnPatternModifyLeft.ForeColor = System.Drawing.Color.Black;
-            this.btnPatternModifyLeft.Location = new System.Drawing.Point(3, 170);
-            this.btnPatternModifyLeft.Name = "btnPatternModifyLeft";
-            this.btnPatternModifyLeft.Size = new System.Drawing.Size(62, 30);
-            this.btnPatternModifyLeft.TabIndex = 77;
-            this.btnPatternModifyLeft.Tag = "0";
-            this.btnPatternModifyLeft.Text = "Modify";
-            this.btnPatternModifyLeft.UseVisualStyleBackColor = true;
-            // 
-            // btnPatternAddLeft
-            // 
-            this.btnPatternAddLeft.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.btnPatternAddLeft.ForeColor = System.Drawing.Color.Black;
-            this.btnPatternAddLeft.Location = new System.Drawing.Point(70, 140);
-            this.btnPatternAddLeft.Name = "btnPatternAddLeft";
-            this.btnPatternAddLeft.Size = new System.Drawing.Size(62, 30);
-            this.btnPatternAddLeft.TabIndex = 76;
-            this.btnPatternAddLeft.Tag = "0";
-            this.btnPatternAddLeft.Text = "Add";
-            this.btnPatternAddLeft.UseVisualStyleBackColor = true;
-            // 
-            // btnShowAreaTopLeft
-            // 
-            this.btnShowAreaTopLeft.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.btnShowAreaTopLeft.ForeColor = System.Drawing.Color.Black;
-            this.btnShowAreaTopLeft.Location = new System.Drawing.Point(3, 140);
-            this.btnShowAreaTopLeft.Name = "btnShowAreaTopLeft";
-            this.btnShowAreaTopLeft.Size = new System.Drawing.Size(62, 30);
-            this.btnShowAreaTopLeft.TabIndex = 75;
-            this.btnShowAreaTopLeft.Tag = "0";
-            this.btnShowAreaTopLeft.Text = "Area";
-            this.btnShowAreaTopLeft.UseVisualStyleBackColor = true;
-            // 
-            // kpPatternDisplay
-            // 
-            this.kpPatternDisplay.BackColor = System.Drawing.Color.White;
-            this.kpPatternDisplay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.kpPatternDisplay.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.kpPatternDisplay.Location = new System.Drawing.Point(5, 13);
-            this.kpPatternDisplay.Name = "kpPatternDisplay";
-            this.kpPatternDisplay.Size = new System.Drawing.Size(127, 127);
-            this.kpPatternDisplay.TabIndex = 13;
-            this.kpPatternDisplay.Tag = "0";
-            this.kpPatternDisplay.UseStatusBar = false;
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.btnFindRight);
-            this.groupBox2.Controls.Add(this.btnPatternModifyRight);
-            this.groupBox2.Controls.Add(this.btnPatternAddRight);
-            this.groupBox2.Controls.Add(this.btnShowAreaTopRight);
-            this.groupBox2.Controls.Add(this.kpPatternDisplay1);
-            this.groupBox2.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
-            this.groupBox2.ForeColor = System.Drawing.Color.White;
-            this.groupBox2.Location = new System.Drawing.Point(147, 3);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(136, 206);
-            this.groupBox2.TabIndex = 86;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = " Top Right ";
-            // 
-            // btnFindRight
-            // 
-            this.btnFindRight.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.btnFindRight.ForeColor = System.Drawing.Color.Black;
-            this.btnFindRight.Location = new System.Drawing.Point(70, 170);
-            this.btnFindRight.Name = "btnFindRight";
-            this.btnFindRight.Size = new System.Drawing.Size(62, 30);
-            this.btnFindRight.TabIndex = 82;
-            this.btnFindRight.Tag = "1";
-            this.btnFindRight.Text = "Find";
-            this.btnFindRight.UseVisualStyleBackColor = true;
-            // 
-            // btnPatternModifyRight
-            // 
-            this.btnPatternModifyRight.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.btnPatternModifyRight.ForeColor = System.Drawing.Color.Black;
-            this.btnPatternModifyRight.Location = new System.Drawing.Point(5, 170);
-            this.btnPatternModifyRight.Name = "btnPatternModifyRight";
-            this.btnPatternModifyRight.Size = new System.Drawing.Size(62, 30);
-            this.btnPatternModifyRight.TabIndex = 81;
-            this.btnPatternModifyRight.Tag = "1";
-            this.btnPatternModifyRight.Text = "Modify";
-            this.btnPatternModifyRight.UseVisualStyleBackColor = true;
-            // 
-            // btnPatternAddRight
-            // 
-            this.btnPatternAddRight.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.btnPatternAddRight.ForeColor = System.Drawing.Color.Black;
-            this.btnPatternAddRight.Location = new System.Drawing.Point(70, 140);
-            this.btnPatternAddRight.Name = "btnPatternAddRight";
-            this.btnPatternAddRight.Size = new System.Drawing.Size(62, 30);
-            this.btnPatternAddRight.TabIndex = 80;
-            this.btnPatternAddRight.Tag = "1";
-            this.btnPatternAddRight.Text = "Add";
-            this.btnPatternAddRight.UseVisualStyleBackColor = true;
-            // 
-            // btnShowAreaTopRight
-            // 
-            this.btnShowAreaTopRight.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.btnShowAreaTopRight.ForeColor = System.Drawing.Color.Black;
-            this.btnShowAreaTopRight.Location = new System.Drawing.Point(5, 140);
-            this.btnShowAreaTopRight.Name = "btnShowAreaTopRight";
-            this.btnShowAreaTopRight.Size = new System.Drawing.Size(62, 30);
-            this.btnShowAreaTopRight.TabIndex = 79;
-            this.btnShowAreaTopRight.Tag = "1";
-            this.btnShowAreaTopRight.Text = "Area";
-            this.btnShowAreaTopRight.UseVisualStyleBackColor = true;
-            // 
-            // kpPatternDisplay1
-            // 
-            this.kpPatternDisplay1.BackColor = System.Drawing.Color.White;
-            this.kpPatternDisplay1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.kpPatternDisplay1.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.kpPatternDisplay1.Location = new System.Drawing.Point(5, 13);
-            this.kpPatternDisplay1.Name = "kpPatternDisplay1";
-            this.kpPatternDisplay1.Size = new System.Drawing.Size(127, 127);
-            this.kpPatternDisplay1.TabIndex = 13;
-            this.kpPatternDisplay1.Tag = "1";
-            this.kpPatternDisplay1.UseStatusBar = false;
             // 
             // ucCogLeadTrimInspection
             // 
@@ -2386,14 +2139,9 @@
             this.groupBox16.ResumeLayout(false);
             this.groupBox16.PerformLayout();
             this.tabPage6.ResumeLayout(false);
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox5.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFindCount)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFindScore)).EndInit();
-            this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -2416,38 +2164,6 @@
         private System.Windows.Forms.GroupBox gbBodyAreaSetting;
         private System.Windows.Forms.Button btnLeadBodyAreaSet;
         private System.Windows.Forms.Button btnLeadBodyAreaShow;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button btnShowAreaBottomLeft;
-        private KPDisplay.KPCogDisplayControl kpCogDisplayControl1;
-        private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button btnShowAreaBottomRight;
-        private KPDisplay.KPCogDisplayControl kpCogDisplayControl2;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.Button btnLeadBodyCheck;
-        private System.Windows.Forms.NumericUpDown numericUpDownFindCount;
-        private CustomControl.GradientLabel gradientLabel8;
-        private System.Windows.Forms.NumericUpDown numericUpDownFindScore;
-        private CustomControl.GradientLabel gradientLabel9;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button btnFindLeft;
-        private System.Windows.Forms.Button btnPatternModifyLeft;
-        private System.Windows.Forms.Button btnPatternAddLeft;
-        private System.Windows.Forms.Button btnShowAreaTopLeft;
-        private KPDisplay.KPCogDisplayControl kpPatternDisplay;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Button btnFindRight;
-        private System.Windows.Forms.Button btnPatternModifyRight;
-        private System.Windows.Forms.Button btnPatternAddRight;
-        private System.Windows.Forms.Button btnShowAreaTopRight;
-        private KPDisplay.KPCogDisplayControl kpPatternDisplay1;
         private System.Windows.Forms.Button btnMaskingClear;
         private CustomControl.GradientLabel gradientLabel4;
         private CustomControl.GradientLabel gradientLabel3;
@@ -2527,9 +2243,9 @@
         private System.Windows.Forms.TextBox textBoxShoulderNickSpec;
         private CustomControl.GradientLabel graLabelNickThresholdValue;
         private CustomControl.GradientLabel graLabelBurrThresholdValue;
-        private System.Windows.Forms.HScrollBar hScrollBar2;
+        private System.Windows.Forms.HScrollBar hScrollShoulderNickThreshold;
         private CustomControl.GradientLabel gradientLabel24;
-        private System.Windows.Forms.HScrollBar hScrollBar1;
+        private System.Windows.Forms.HScrollBar hScrollShoulderBurrThreshold;
         private CustomControl.GradientLabel gradientLabel21;
         private CustomControl.GradientLabel gradientLabel25;
         private System.Windows.Forms.TextBox textBox2;
@@ -2548,11 +2264,25 @@
         private CustomControl.GradientLabel gradientLabel34;
         private CustomControl.GradientLabel gradientLabel35;
         private System.Windows.Forms.TextBox textBoxLeadTipEdgeWidth;
-        private System.Windows.Forms.HScrollBar hScrollBar4;
+        private System.Windows.Forms.HScrollBar hScrollLeadTipBurrThreshold;
         private CustomControl.GradientLabel gradientLabel37;
         private CustomControl.GradientLabel graLabelLeadTipBurrThresholdValue;
         private CustomControl.GradientLabel gradientLabel41;
         private System.Windows.Forms.TextBox textBoxLeadTipBurrSpec;
         private CustomControl.GradientLabel gradientLabel42;
+        private System.Windows.Forms.Button btnGateRemainingAreaCheck;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private CustomControl.GradientLabel gradientLabel8;
+        private System.Windows.Forms.Button btnGateRemainingAreaSet;
+        private System.Windows.Forms.Button btnGateRemainingAreaShow;
+        private System.Windows.Forms.CheckBox checkBox4;
+        private CustomControl.GradientLabel gradientLabel9;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.HScrollBar hScrollGateRemainingThreshold;
+        private CustomControl.GradientLabel gradientLabel39;
+        private CustomControl.GradientLabel gradientLabelGateRemainingThresholdValue;
+        private CustomControl.GradientLabel gradientLabel43;
+        private System.Windows.Forms.TextBox textBoxGateRemainingSpec;
+        private CustomControl.GradientLabel gradientLabel44;
     }
 }

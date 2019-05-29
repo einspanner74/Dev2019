@@ -1015,6 +1015,18 @@ namespace ParameterManager
                     case "LeadTipEdgeWidth":        _CogLeadTrim.LeadTipEdgeWidth = Convert.ToInt32(_NodeChild.InnerText); break;
                     case "LeadTipBurrThreshold":    _CogLeadTrim.LeadTipBurrThreshold = Convert.ToInt32(_NodeChild.InnerText); break;
                     case "LeadTipBurrSpec":         _CogLeadTrim.LeadTipBurrSpec = Convert.ToDouble(_NodeChild.InnerText); break;
+
+                    //Gate Remaining Inspection Paramter
+                    case "IsUseGateRemainingInspection":    _CogLeadTrim.IsUseGateRemainingInspection = Convert.ToBoolean(_NodeChild.InnerText); break;
+                    case "GateRemainingAreaCenterX":        _CogLeadTrim.GateRemainingArea.CenterX = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "GateRemainingAreaCenterY":        _CogLeadTrim.GateRemainingArea.CenterY = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "GateRemainingAreaWidth":          _CogLeadTrim.GateRemainingArea.Width = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "GateRemainingAreaHeight":         _CogLeadTrim.GateRemainingArea.Height = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "GateRemainingForeground":         _CogLeadTrim.GateRemainingForeground = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "GateRemainingThreshold":          _CogLeadTrim.GateRemainingThreshold = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "GateRemainingSpec":               _CogLeadTrim.GateRemainingSpec = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "ResolutionX":                     _CogLeadTrim.ResolutionX = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "ResolutionY":                     _CogLeadTrim.ResolutionY = Convert.ToDouble(_NodeChild.InnerText); break;
                 }
             }
             _InspParam.Algorithm = _CogLeadTrim;
@@ -1518,6 +1530,19 @@ namespace ParameterManager
             _XmlWriter.WriteElementString("LeadTipEdgeWidth", _CogLeadTrimAlgo.LeadTipEdgeWidth.ToString());
             _XmlWriter.WriteElementString("LeadTipBurrThreshold", _CogLeadTrimAlgo.LeadTipBurrThreshold.ToString());
             _XmlWriter.WriteElementString("LeadTipBurrSpec", _CogLeadTrimAlgo.LeadTipBurrSpec.ToString());
+
+
+            _XmlWriter.WriteElementString("IsUseGateRemainingInspection", _CogLeadTrimAlgo.IsUseGateRemainingInspection.ToString());
+            _XmlWriter.WriteElementString("GateRemainingAreaCenterX", _CogLeadTrimAlgo.GateRemainingArea.CenterX.ToString());
+            _XmlWriter.WriteElementString("GateRemainingAreaCenterY", _CogLeadTrimAlgo.GateRemainingArea.CenterY.ToString());
+            _XmlWriter.WriteElementString("GateRemainingAreaWidth", _CogLeadTrimAlgo.GateRemainingArea.Width.ToString());
+            _XmlWriter.WriteElementString("GateRemainingAreaHeight", _CogLeadTrimAlgo.GateRemainingArea.Height.ToString());
+            _XmlWriter.WriteElementString("GateRemainingForeground", _CogLeadTrimAlgo.GateRemainingForeground.ToString());
+            _XmlWriter.WriteElementString("GateRemainingThreshold", _CogLeadTrimAlgo.GateRemainingThreshold.ToString());
+            _XmlWriter.WriteElementString("GateRemainingSpec", _CogLeadTrimAlgo.GateRemainingSpec.ToString());
+
+            _XmlWriter.WriteElementString("ResolutionX", _CogLeadTrimAlgo.ResolutionX.ToString());
+            _XmlWriter.WriteElementString("ResolutionY", _CogLeadTrimAlgo.ResolutionY.ToString());
         }
         #endregion Read & Write InspectionParameter
 
@@ -2130,6 +2155,18 @@ namespace ParameterManager
                         _Algorithm.LeadTipBurrThreshold = _SrcAlgorithm.LeadTipBurrThreshold;
                         _Algorithm.LeadTipBurrSpec = _SrcAlgorithm.LeadTipBurrSpec;
 
+
+                        _Algorithm.IsUseGateRemainingInspection = _SrcAlgorithm.IsUseGateRemainingInspection;
+                        _Algorithm.GateRemainingArea.CenterX = _SrcAlgorithm.GateRemainingArea.CenterX;
+                        _Algorithm.GateRemainingArea.CenterY = _SrcAlgorithm.GateRemainingArea.CenterY;
+                        _Algorithm.GateRemainingArea.Width = _SrcAlgorithm.GateRemainingArea.Width;
+                        _Algorithm.GateRemainingArea.Height = _SrcAlgorithm.GateRemainingArea.Height;
+                        _Algorithm.GateRemainingForeground = _SrcAlgorithm.GateRemainingForeground;
+                        _Algorithm.GateRemainingThreshold = _SrcAlgorithm.GateRemainingThreshold;
+                        _Algorithm.GateRemainingSpec = _SrcAlgorithm.GateRemainingSpec;
+
+                        _Algorithm.ResolutionX = _SrcAlgorithm.ResolutionX;
+                        _Algorithm.ResolutionY = _SrcAlgorithm.ResolutionY;
 
                         _InspAlgoParam.Algorithm = _Algorithm;
                     }

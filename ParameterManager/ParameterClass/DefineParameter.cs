@@ -50,7 +50,7 @@ namespace ParameterManager
     /// <summary>
     /// NG Type
     /// </summary>
-    public enum eNgType     { GOOD = 0, NONE, DUMMY, REF_NG, DEFECT, CRACK, RESIN, ID, EMPTY, LEAD_CNT, LEAD_BENT, NDL_CENTER, NDL_FIND, M_REF, MEASURE }
+    public enum eNgType     { GOOD = 0, NONE, DUMMY, REF_NG, DEFECT, CRACK, RESIN, ID, EMPTY, LEAD_CNT, LEAD_BENT, NDL_CENTER, NDL_FIND, M_REF, MEASURE, CHIP_OUT, LEAD_LENGTH, SHD_BURR, SHD_NICK, TIP_BURR, GATE_ERR }
 
     public enum eMorphologyMode { ERODE = 0, DILATE, OPEN, CLOSE, }
 

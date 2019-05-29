@@ -185,6 +185,12 @@
     <Compile Include="Algorithm\ucCogLeadTrimInspection.Designer.cs">
       <DependentUpon>ucCogLeadTrimInspection.cs</DependentUpon>
     </Compile>
+    <Compile Include="Algorithm\ucCogLeadFormInspection.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Algorithm\ucCogLeadFormInspection.Designer.cs">
+      <DependentUpon>ucCogLeadFormInspection.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CameraManager\CameraManager.csproj">
@@ -228,6 +234,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Algorithm\ucCogEllipseFind.resx">
       <DependentUpon>ucCogEllipseFind.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Algorithm\ucCogLeadFormInspection.resx">
+      <DependentUpon>ucCogLeadFormInspection.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Algorithm\ucCogLeadInspection.resx">
       <DependentUpon>ucCogLeadInspection.cs</DependentUpon>

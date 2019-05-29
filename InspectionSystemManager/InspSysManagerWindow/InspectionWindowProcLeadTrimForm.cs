@@ -23,10 +23,24 @@ namespace InspectionSystemManager
             _SendResParam.IsGood = true;
             _SendResParam.ProjectItem = ProjectItem;
 
-            SendLeadResult _SendResult = new SendLeadResult();
+            SendLeadTrimResult _SendResult = new SendLeadTrimResult();
             for (int iLoopCount = 0; iLoopCount < AlgoResultParamList.Count; ++iLoopCount)
             {
+                if (eAlgoType.C_LINE_FIND == AlgoResultParamList[iLoopCount].ResultAlgoType)
+                {
+                    var _AlgoResultParam = AlgoResultParamList[iLoopCount].ResultParam as CogLineFindResult;
 
+                    //_SendResult.BodyReferenceX = (_AlgoResultParam.StartX + _AlgoResultParam.EndX) / 2;
+                    //_SendResult.BodyReferenceY = (_AlgoResultParam.StartY + _AlgoResultParam.EndY) / 2;
+                }
+
+                else if (eAlgoType.C_LEAD_TRIM == AlgoResultParamList[iLoopCount].ResultAlgoType)
+                {
+                    var _AlgoResultParam = AlgoResultParamList[iLoopCount].ResultParam as CogLeadTrimResult;
+                    //_SendResult.IsLeadBendGood = _AlgoResultParam.IsGood;
+
+                    _SendResParam.IsGood = _AlgoResultParam.IsGood;
+                }
             }
 
             return _SendResParam;

@@ -803,6 +803,7 @@ namespace InspectionSystemManager
                 case CogLeadTrimAlgo.eAlgoMode.LEAD_MEASURE:    LeadMeasurement(_InspRegion, _InspAlgo, ref _InspResult);       break;
                 case CogLeadTrimAlgo.eAlgoMode.SHOULDER_CHECK:  ShoulderInspection(_InspRegion, _InspAlgo, ref _InspResult);    break;
                 case CogLeadTrimAlgo.eAlgoMode.LEADTIP_CHECK:   LeadTipInspection(_InspRegion, _InspAlgo, ref _InspResult);     break;
+                case CogLeadTrimAlgo.eAlgoMode.GATE_REMAIN:     GateRemainingInspection(_InspRegion, _InspAlgo, ref _InspResult); break;
             }
         }
 
@@ -921,6 +922,7 @@ namespace InspectionSystemManager
                 CogLeadTrimResult _LeadTrimResult = new CogLeadTrimResult();
                 _LeadTrimResult = InspLeadTrimProcess.GetLeadTrimResult();
 
+                #region Draw Shoulder Inspection Display
                 for (int iLoopCount = 0; iLoopCount < _LeadTrimResult.ShoulderBurrDefectList.Count; ++iLoopCount)
                 {
                     CogRectangle _NgRegion = new CogRectangle(_LeadTrimResult.ShoulderBurrDefectList[iLoopCount]);
@@ -929,7 +931,25 @@ namespace InspectionSystemManager
                     //string _RectSizeName = string.Format("W : {0:F2}mm, H : {1:F2}mm", _NgRegion.Width, _NgRegion.Height);
                     //kpTeachDisplay.DrawText("ShoulderBurr", _RectSizeName, _NgRegion.CenterX + _NgRegion.Width / 2 + 100,
                     //                        _NgRegion.CenterY + _NgRegion.Height / 2 + 100, CogColorConstants.Red, 8, CogGraphicLabelAlignmentConstants.BaselineCenter);
+
+                    string _RectSizeName = string.Format("[B]");// W : {0:F2}mm, H : {1:F2}mm", _NgRegion.Width, _NgRegion.Height);
+                    kpTeachDisplay.DrawText("ShoulderBurr" + iLoopCount, _RectSizeName, _NgRegion.CenterX + _NgRegion.Width / 2 + 100,
+                                            _NgRegion.CenterY + _NgRegion.Height / 2 + 100, CogColorConstants.Red, 8, CogGraphicLabelAlignmentConstants.BaselineCenter);
                 }
+
+                for (int iLoopCount = 0; iLoopCount < _LeadTrimResult.ShoulderNickDefectList.Count; ++iLoopCount)
+                {
+                    CogRectangle _NgRegion = new CogRectangle(_LeadTrimResult.ShoulderNickDefectList[iLoopCount]);
+                    kpTeachDisplay.DrawStaticShape(_NgRegion, "ShoulderNick" + (iLoopCount + 1), CogColorConstants.Orange);
+
+                    //string _RectSizeName = string.Format("W : {0:F2}mm, H : {1:F2}mm", _NgRegion.Width, _NgRegion.Height);
+                    //kpTeachDisplay.DrawText("ShoulderBurr", _RectSizeName, _NgRegion.CenterX + _NgRegion.Width / 2 + 100,
+                    //                        _NgRegion.CenterY + _NgRegion.Height / 2 + 100, CogColorConstants.Red, 8, CogGraphicLabelAlignmentConstants.BaselineCenter);
+                    string _RectSizeName = string.Format("[N]");
+                    kpTeachDisplay.DrawText("ShoulderNick" + iLoopCount, _RectSizeName, _NgRegion.CenterX + _NgRegion.Width / 2 + 100,
+                                              _NgRegion.CenterY + _NgRegion.Height / 2 + 100, CogColorConstants.Orange, 8, CogGraphicLabelAlignmentConstants.BaselineCenter);
+                }
+                #endregion
             }
         }
 
@@ -942,11 +962,32 @@ namespace InspectionSystemManager
                 CogLeadTrimResult _LeadTrimResult = new CogLeadTrimResult();
                 _LeadTrimResult = InspLeadTrimProcess.GetLeadTrimResult();
 
+                #region Draw Lead Tip Inspection Display
                 for (int iLoopCount = 0; iLoopCount < _LeadTrimResult.LeadTipBurrDefectList.Count; ++iLoopCount)
                 {
                     CogRectangle _NgRegion = new CogRectangle(_LeadTrimResult.LeadTipBurrDefectList[iLoopCount]);
                     kpTeachDisplay.DrawStaticShape(_NgRegion, "LeadTipBurr" + (iLoopCount + 1), CogColorConstants.Red);
                 }
+                #endregion
+            }
+        }
+
+        private void GateRemainingInspection(CogRectangle _InspRegion, CogLeadTrimAlgo _InspAlgo, ref CogLeadTrimResult _InspResult)
+        {
+            bool _Result = InspLeadTrimProcess.GateReminingInspection(InspectionImage, _InspRegion, _InspAlgo);
+
+            if (true == _Result)
+            {
+                CogLeadTrimResult _LeadTrimResult = new CogLeadTrimResult();
+                _LeadTrimResult = InspLeadTrimProcess.GetLeadTrimResult();
+
+                #region Draw Gate Reamining Display
+                for (int iLoopCount = 0; iLoopCount < _LeadTrimResult.GateRemainingNgList.Count; ++iLoopCount)
+                {
+                    CogRectangle _NgRegion = new CogRectangle(_LeadTrimResult.GateRemainingNgList[iLoopCount]);
+                    kpTeachDisplay.DrawStaticShape(_NgRegion, "GateRemaining" + (iLoopCount + 1), CogColorConstants.Red);
+                }
+                #endregion
             }
         }
         #endregion
