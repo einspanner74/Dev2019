@@ -101,19 +101,35 @@ namespace KPDisplay
         public void ClearDisplay(string[] _ExceptGroupName)
         {
             bool _Flag = false;
-            CogStringCollection _CollectionString = this.StaticGraphics.ZOrderGroups;
-            for (int iLoopCount = 0; iLoopCount < _CollectionString.Count; ++iLoopCount)
+            CogStringCollection _CollectionStringStatic = this.StaticGraphics.ZOrderGroups;
+            for (int iLoopCount = 0; iLoopCount < _CollectionStringStatic.Count; ++iLoopCount)
             {
                 _Flag = false;
                 for (int jLoopCount = 0; jLoopCount < _ExceptGroupName.Length; ++jLoopCount)
                 {
-                    if (_CollectionString[iLoopCount] == _ExceptGroupName[jLoopCount])
+                    if (_CollectionStringStatic[iLoopCount] == _ExceptGroupName[jLoopCount])
                         _Flag = true;
                 }
 
                 if (false == _Flag)
                 {
-                    this.StaticGraphics.Remove(_CollectionString[iLoopCount]);
+                    this.StaticGraphics.Remove(_CollectionStringStatic[iLoopCount]);
+                }
+            }
+
+            CogStringCollection _CollectionStringInter = this.InteractiveGraphics.ZOrderGroups;
+            for (int iLoopCount = 0; iLoopCount < _CollectionStringInter.Count; ++iLoopCount)
+            {
+                _Flag = false;
+                for (int jLoopCount = 0; jLoopCount < _ExceptGroupName.Length; ++jLoopCount)
+                {
+                    if (_CollectionStringInter[iLoopCount] == _ExceptGroupName[jLoopCount])
+                        _Flag = true;
+                }
+
+                if (false == _Flag)
+                {
+                    this.InteractiveGraphics.Remove(_CollectionStringInter[iLoopCount]);
                 }
             }
         }

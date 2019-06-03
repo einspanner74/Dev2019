@@ -37,7 +37,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.labelTitle = new CustomControl.GradientLabel();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabControlLeadTrim = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.chUseLeadBody = new System.Windows.Forms.CheckBox();
             this.gradientLabel1 = new CustomControl.GradientLabel();
@@ -172,7 +172,7 @@
             this.btnGateRemainingAreaShow = new System.Windows.Forms.Button();
             this.checkBox4 = new System.Windows.Forms.CheckBox();
             this.gradientLabel9 = new CustomControl.GradientLabel();
-            this.tabControl1.SuspendLayout();
+            this.tabControlLeadTrim.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox8.SuspendLayout();
             this.groupBox6.SuspendLayout();
@@ -211,20 +211,21 @@
             this.labelTitle.Text = " Lead Trim Inspection Teaching Window";
             this.labelTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // tabControl1
+            // tabControlLeadTrim
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Controls.Add(this.tabPage4);
-            this.tabControl1.Controls.Add(this.tabPage5);
-            this.tabControl1.Controls.Add(this.tabPage6);
-            this.tabControl1.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
-            this.tabControl1.Location = new System.Drawing.Point(2, 30);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(580, 325);
-            this.tabControl1.TabIndex = 14;
+            this.tabControlLeadTrim.Controls.Add(this.tabPage1);
+            this.tabControlLeadTrim.Controls.Add(this.tabPage2);
+            this.tabControlLeadTrim.Controls.Add(this.tabPage3);
+            this.tabControlLeadTrim.Controls.Add(this.tabPage4);
+            this.tabControlLeadTrim.Controls.Add(this.tabPage5);
+            this.tabControlLeadTrim.Controls.Add(this.tabPage6);
+            this.tabControlLeadTrim.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
+            this.tabControlLeadTrim.Location = new System.Drawing.Point(2, 30);
+            this.tabControlLeadTrim.Name = "tabControlLeadTrim";
+            this.tabControlLeadTrim.SelectedIndex = 0;
+            this.tabControlLeadTrim.Size = new System.Drawing.Size(580, 325);
+            this.tabControlLeadTrim.TabIndex = 14;
+            this.tabControlLeadTrim.SelectedIndexChanged += new System.EventHandler(this.tabControlLeadBody_SelectedIndexChanged);
             // 
             // tabPage1
             // 
@@ -2109,11 +2110,11 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
-            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.tabControlLeadTrim);
             this.Controls.Add(this.labelTitle);
             this.Name = "ucCogLeadTrimInspection";
             this.Size = new System.Drawing.Size(583, 358);
-            this.tabControl1.ResumeLayout(false);
+            this.tabControlLeadTrim.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
@@ -2149,7 +2150,7 @@
         #endregion
 
         private CustomControl.GradientLabel labelTitle;
-        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabControl tabControlLeadTrim;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage3;

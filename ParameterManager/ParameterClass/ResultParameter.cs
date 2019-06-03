@@ -353,7 +353,7 @@ namespace ParameterManager
         public double[] LeadPitchLength;
         public double[] LeadLengthStartX;
         public double[] LeadLengthStartY;
-        public bool[] IsLeadBentGood;
+        public bool[]   IsLeadBentGood;
 
         //LengthResult 추가
         public bool[] LeadLengthResult;
@@ -367,6 +367,9 @@ namespace ParameterManager
 
         public CogLeadTrimResult()
         {
+            IsGood = true;
+            NgType = eNgType.GOOD;
+
             LeadBodyOriginX = 0;
             LeadBodyOriginY = 0;
 
@@ -573,7 +576,15 @@ namespace ParameterManager
 
     public class SendLeadTrimResult
     {
+        public int      LeadCount;
 
+        public double[] LeadLength;
+        public double[] LeadLengthReal;
+        public bool[]   IsLeadLengthGood;
+
+        public double[] LeadPitch;
+        public double[] LeadPitchReal;
+        public bool[]   IsLeadPitchGood;
     }
     #endregion Last Send Result Parameter
 }

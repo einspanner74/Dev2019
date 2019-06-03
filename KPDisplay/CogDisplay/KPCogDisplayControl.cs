@@ -752,6 +752,7 @@ namespace KPDisplay
         public void SetDisplayZoom(double _Value)
         {
             if (kCogDisplay == null) return;
+            if (_Value <= 0) _Value = 0.01;
             kCogDisplay.Zoom = _Value;
         }
 

@@ -626,6 +626,20 @@ namespace InspectionSystemManager
                 kpCogDisplayMain.SetDisplayZoom(_Zoom);
             }
         }
+
+        private void labelZoomPlus_Click(object sender, EventArgs e)
+        {
+            double _Zoom = kpCogDisplayMain.GetDisplayZoom() * 100;
+            _Zoom = Math.Truncate(_Zoom) + 1;
+            kpCogDisplayMain.SetDisplayZoom(_Zoom / 100);
+        }
+
+        private void labelZoomMinus_Click(object sender, EventArgs e)
+        {
+            double _Zoom = kpCogDisplayMain.GetDisplayZoom() * 100;
+            _Zoom = Math.Ceiling(_Zoom) - 1;
+            kpCogDisplayMain.SetDisplayZoom(_Zoom / 100);
+        }
         #endregion Control Event
 
         #region Set Image Display Control
@@ -1589,7 +1603,10 @@ namespace InspectionSystemManager
 
                 CogLineSegment _LeadLine = new CogLineSegment();
                 _LeadLine.SetStartEnd(_LeadTrimResult.LeadPitchTopX[iLoopCount], _LeadTrimResult.LeadPitchTopY[iLoopCount], _LeadTrimResult.LeadPitchBottomX[iLoopCount], _LeadTrimResult.LeadPitchBottomY[iLoopCount]);
-                kpCogDisplayMain.DrawStaticLine(_LeadLine, "CenterLine+_" + (iLoopCount + 1), CogColorConstants.Cyan);
+                if (_LeadTrimResult.IsLeadLengthGood[iLoopCount])
+                    kpCogDisplayMain.DrawStaticLine(_LeadLine, "CenterLine+_" + (iLoopCount + 1), CogColorConstants.Cyan);
+                else
+                    kpCogDisplayMain.DrawStaticLine(_LeadLine, "CenterLine+_" + (iLoopCount + 1), CogColorConstants.Red);
             }
 
             #endregion

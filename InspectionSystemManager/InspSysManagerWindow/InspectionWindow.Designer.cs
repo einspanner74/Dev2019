@@ -46,6 +46,8 @@
             this.labelTitle = new System.Windows.Forms.Label();
             this.labelStatus = new System.Windows.Forms.Label();
             this.panelMenuHide = new System.Windows.Forms.Panel();
+            this.labelZoomPlus = new System.Windows.Forms.Label();
+            this.labelZoomMinus = new System.Windows.Forms.Label();
             this.panelMain.SuspendLayout();
             this.panelMenu.SuspendLayout();
             this.SuspendLayout();
@@ -373,18 +375,6 @@
             this.labelTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.labelTitle_MouseDown);
             this.labelTitle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.labelTitle_MouseMove);
             // 
-            // panelMenuHide
-            // 
-            this.panelMenuHide.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
-            this.panelMenuHide.BackgroundImage = global::InspectionSystemManager.Properties.Resources.Arrow_Up;
-            this.panelMenuHide.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.panelMenuHide.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelMenuHide.Location = new System.Drawing.Point(164, 8);
-            this.panelMenuHide.Name = "panelMenuHide";
-            this.panelMenuHide.Size = new System.Drawing.Size(12, 14);
-            this.panelMenuHide.TabIndex = 3;
-            this.panelMenuHide.Click += new System.EventHandler(this.panelMenuHide_Click);
-            // 
             // labelStatus
             // 
             this.labelStatus.AutoSize = true;
@@ -397,12 +387,50 @@
             this.labelStatus.TabIndex = 4;
             this.labelStatus.Text = "(Live)";
             // 
+            // panelMenuHide
+            // 
+            this.panelMenuHide.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
+            this.panelMenuHide.BackgroundImage = global::InspectionSystemManager.Properties.Resources.Arrow_Up;
+            this.panelMenuHide.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panelMenuHide.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelMenuHide.Location = new System.Drawing.Point(164, 8);
+            this.panelMenuHide.Name = "panelMenuHide";
+            this.panelMenuHide.Size = new System.Drawing.Size(12, 14);
+            this.panelMenuHide.TabIndex = 3;
+            this.panelMenuHide.Click += new System.EventHandler(this.panelMenuHide_Click);
+            // 
+            // labelZoomPlus
+            // 
+            this.labelZoomPlus.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.labelZoomPlus.ForeColor = System.Drawing.Color.White;
+            this.labelZoomPlus.Location = new System.Drawing.Point(233, 8);
+            this.labelZoomPlus.Name = "labelZoomPlus";
+            this.labelZoomPlus.Size = new System.Drawing.Size(15, 15);
+            this.labelZoomPlus.TabIndex = 7;
+            this.labelZoomPlus.Text = "+";
+            this.labelZoomPlus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelZoomPlus.Click += new System.EventHandler(this.labelZoomPlus_Click);
+            // 
+            // labelZoomMinus
+            // 
+            this.labelZoomMinus.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.labelZoomMinus.ForeColor = System.Drawing.Color.White;
+            this.labelZoomMinus.Location = new System.Drawing.Point(252, 8);
+            this.labelZoomMinus.Name = "labelZoomMinus";
+            this.labelZoomMinus.Size = new System.Drawing.Size(15, 15);
+            this.labelZoomMinus.TabIndex = 8;
+            this.labelZoomMinus.Text = "-";
+            this.labelZoomMinus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelZoomMinus.Click += new System.EventHandler(this.labelZoomMinus_Click);
+            // 
             // InspectionWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(38)))), ((int)(((byte)(38)))));
             this.ClientSize = new System.Drawing.Size(624, 623);
+            this.Controls.Add(this.labelZoomMinus);
+            this.Controls.Add(this.labelZoomPlus);
             this.Controls.Add(this.labelStatus);
             this.Controls.Add(this.panelMenuHide);
             this.Controls.Add(this.panelMain);
@@ -448,5 +476,7 @@
         private System.Windows.Forms.Panel panelMenuHide;
         private System.Windows.Forms.Label labelStatus;
         private CustomControl.ImageButton btnImageResultDisplay;
+        private System.Windows.Forms.Label labelZoomPlus;
+        private System.Windows.Forms.Label labelZoomMinus;
     }
 }

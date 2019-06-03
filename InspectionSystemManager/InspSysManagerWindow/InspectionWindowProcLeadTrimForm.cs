@@ -37,8 +37,16 @@ namespace InspectionSystemManager
                 else if (eAlgoType.C_LEAD_TRIM == AlgoResultParamList[iLoopCount].ResultAlgoType)
                 {
                     var _AlgoResultParam = AlgoResultParamList[iLoopCount].ResultParam as CogLeadTrimResult;
-                    //_SendResult.IsLeadBendGood = _AlgoResultParam.IsGood;
 
+                    _SendResult.LeadCount = _AlgoResultParam.LeadCount;
+                    _SendResult.LeadLengthReal = _AlgoResultParam.LeadLength;
+                    _SendResult.IsLeadLengthGood = _AlgoResultParam.IsLeadLengthGood;
+
+                    _SendResult.LeadPitchReal = _AlgoResultParam.LeadPitchLength;
+                    _SendResult.IsLeadPitchGood = _AlgoResultParam.IsLeadBentGood;
+
+                    _SendResParam.SendResult = _SendResult;
+                    _SendResParam.NgType = _AlgoResultParam.NgType;
                     _SendResParam.IsGood = _AlgoResultParam.IsGood;
                 }
             }

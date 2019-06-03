@@ -41,6 +41,8 @@ namespace InspectionSystemManager
         private double BodyCenterOffsetX = 0;
         private double BodyCenterOffsetY = 0;
 
+        public delegate void ResetDisplayHandler();
+        public event ResetDisplayHandler ResetDisplayEvent;
 
         public delegate CogRectangle GetRegionHandler();
         public event GetRegionHandler GetRegionEvent;
@@ -332,6 +334,8 @@ namespace InspectionSystemManager
 
         private void btnBodyAreaCheck_Click(object sender, EventArgs e)
         {
+            
+
             CogRectangle _InspRegion = new CogRectangle();
             _InspRegion.SetCenterWidthHeight(BodyArea.CenterX, BodyArea.CenterY, BodyArea.Width, BodyArea.Height);
 
@@ -475,13 +479,15 @@ namespace InspectionSystemManager
 
         private void SetGridViewLeadMeasurementValue(CogLeadTrimResult _Result)
         {
+            if (_Result == null || _Result.LeadLength == null) return;
             InitializeQuickGridView(_Result.LeadLength.Length);
 
             for (int iLoopCount = 0; iLoopCount < _Result.LeadLength.Length; ++iLoopCount)
             {
-                QuickGridViewLeadSetting[1, iLoopCount].Value = _Result.LeadLength[iLoopCount].ToString("F4");
-                QuickGridViewLeadSetting[3, iLoopCount].Value = _Result.LeadWidth[iLoopCount].ToString("F4");
-                if (iLoopCount > 0) QuickGridViewLeadSetting[2, iLoopCount].Value = _Result.LeadPitchLength[iLoopCount - 1].ToString("F4");
+                QuickGridViewLeadSetting[1, iLoopCount].Value = _Result.LeadLength[iLoopCount].ToString("F4") + " mm";
+                QuickGridViewLeadSetting[3, iLoopCount].Value = _Result.LeadWidth[iLoopCount].ToString("F4") + " mm";
+                //if (iLoopCount > 0) QuickGridViewLeadSetting[2, iLoopCount].Value = _Result.LeadPitchLength[iLoopCount - 1].ToString("F4");
+                if (iLoopCount < _Result.LeadLength.Length - 1) QuickGridViewLeadSetting[2, iLoopCount].Value = _Result.LeadPitchLength[iLoopCount].ToString("F4") + "mm";
 
                 if (iLoopCount % 2 == 0)
                 {
@@ -639,5 +645,11 @@ namespace InspectionSystemManager
             gradientLabelGateRemainingThresholdValue.Text = hScrollGateRemainingThreshold.Value.ToString();
         }
         #endregion
+
+        private void tabControlLeadBody_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var _ResetDisplayEvent = ResetDisplayEvent;
+            _ResetDisplayEvent?.Invoke();
+        }
     }
 }

@@ -43,6 +43,7 @@ namespace InspectionSystemManager
             ucCogAutoPatternWnd.ReferenceActionEvent += new ucCogAutoPattern.ReferenceActionHandler(ReferenceActionFunction);
             ucCogAutoPatternWnd.ApplyAutoPatternFindValueEvent += new ucCogAutoPattern.ApplyAutoPatternFindValueHandler(ApplyAutoPatternFindValueFunction);
 
+            ucCogLeadTrimInspWnd.ResetDisplayEvent += new ucCogLeadTrimInspection.ResetDisplayHandler(ResetDisplayFunction);
             ucCogLeadTrimInspWnd.GetRegionEvent += new ucCogLeadTrimInspection.GetRegionHandler(GetRegionFunction);
             ucCogLeadTrimInspWnd.DrawRegionEvent += new ucCogLeadTrimInspection.DrawRegionHandler(DrawRegionFunction);
             ucCogLeadTrimInspWnd.DrawMaskingRegionEven += new ucCogLeadTrimInspection.DrawMaskingRegionHandler(DrawMaskingRegionFunction);
@@ -73,6 +74,7 @@ namespace InspectionSystemManager
             ucCogAutoPatternWnd.ReferenceActionEvent -= new ucCogAutoPattern.ReferenceActionHandler(ReferenceActionFunction);
             ucCogAutoPatternWnd.ApplyAutoPatternFindValueEvent -= new ucCogAutoPattern.ApplyAutoPatternFindValueHandler(ApplyAutoPatternFindValueFunction);
 
+            ucCogLeadTrimInspWnd.ResetDisplayEvent -= new ucCogLeadTrimInspection.ResetDisplayHandler(ResetDisplayFunction);
             ucCogLeadTrimInspWnd.GetRegionEvent -= new ucCogLeadTrimInspection.GetRegionHandler(GetRegionFunction);
             ucCogLeadTrimInspWnd.DrawRegionEvent -= new ucCogLeadTrimInspection.DrawRegionHandler(DrawRegionFunction);
             ucCogLeadTrimInspWnd.DrawMaskingRegionEven -= new ucCogLeadTrimInspection.DrawMaskingRegionHandler(DrawMaskingRegionFunction);
@@ -758,6 +760,12 @@ namespace InspectionSystemManager
         #endregion Line Find Window Event : ucCogLineFind -> TeachingWindow
 
         #region Lead Trim Inspection Window Event : ucCogLeadTrimInspection -> TeachingWindow
+        private void ResetDisplayFunction()
+        {
+            string[] _ExceptGroupName = new string[3] { "InspRegion", "AlgoRegion", "Message" };
+            kpTeachDisplay.ClearDisplay(_ExceptGroupName);
+        }
+
         private CogRectangle GetRegionFunction()
         {
             return kpTeachDisplay.GetInterActiveRectangle();
@@ -809,6 +817,7 @@ namespace InspectionSystemManager
 
         private void LeadBodyCheck(CogRectangle _InspRegion, CogLeadTrimAlgo _InspAlgo, ref CogLeadTrimResult _InspResult)
         {
+            InspLeadTrimProcess.ClearLeadTrimResult();
             bool _Result = InspLeadTrimProcess.LeadBodySearch(InspectionImage, _InspRegion, _InspAlgo);
 
             if (true == _Result)
@@ -838,14 +847,18 @@ namespace InspectionSystemManager
                 kpTeachDisplay.DrawStaticShape(_RB, "RB", CogColorConstants.Green, 50, true);
 
                 CogRectangle _BodyRect = new CogRectangle();
-                _BodyRect.SetXYWidthHeight(_LT.X, _LT.Y, _RT.X - _LT.X, _RB.Y - _RT.Y);
-                kpTeachDisplay.DrawStaticShape(_BodyRect, "BodyRect", CogColorConstants.Green);
+                if (_RT.X - _LT.X > 0 && _RB.Y - _RT.Y > 0)
+                {
+                    _BodyRect.SetXYWidthHeight(_LT.X, _LT.Y, _RT.X - _LT.X, _RB.Y - _RT.Y);
+                    kpTeachDisplay.DrawStaticShape(_BodyRect, "BodyRect", CogColorConstants.Green);
+                }
                 #endregion
             }
         }
 
         private void ChipOutInspection(CogRectangle _InspRegion, CogLeadTrimAlgo _InspAlgo, ref CogLeadTrimResult _InspResult)
         {
+            InspLeadTrimProcess.ClearLeadTrimResult();
             bool _Result = InspLeadTrimProcess.MoldChipOutInspection(InspectionImage, _InspRegion, _InspAlgo);
 
             if (true == _Result)
@@ -876,6 +889,7 @@ namespace InspectionSystemManager
 
         private void LeadMeasurement(CogRectangle _InspRegion, CogLeadTrimAlgo _InspAlgo, ref CogLeadTrimResult _InspResult)
         {
+            InspLeadTrimProcess.ClearLeadTrimResult();
             bool _Result = InspLeadTrimProcess.LeadMeasurement(InspectionImage, _InspRegion, _InspAlgo);
 
             if (true == _Result)
@@ -915,6 +929,7 @@ namespace InspectionSystemManager
 
         private void ShoulderInspection(CogRectangle _InspRegion, CogLeadTrimAlgo _InspAlgo, ref CogLeadTrimResult _InspResult)
         {
+            InspLeadTrimProcess.ClearLeadTrimResult();
             bool _Result = InspLeadTrimProcess.ShoulderInspection(InspectionImage, _InspRegion, _InspAlgo);
 
             if (true == _Result)
@@ -955,6 +970,7 @@ namespace InspectionSystemManager
 
         private void LeadTipInspection(CogRectangle _InspRegion, CogLeadTrimAlgo _InspAlgo, ref CogLeadTrimResult _InspResult)
         {
+            InspLeadTrimProcess.ClearLeadTrimResult();
             bool _Result = InspLeadTrimProcess.LeadTipInspection(InspectionImage, _InspRegion, _InspAlgo);
 
             if (true == _Result)
@@ -974,6 +990,7 @@ namespace InspectionSystemManager
 
         private void GateRemainingInspection(CogRectangle _InspRegion, CogLeadTrimAlgo _InspAlgo, ref CogLeadTrimResult _InspResult)
         {
+            InspLeadTrimProcess.ClearLeadTrimResult();
             bool _Result = InspLeadTrimProcess.GateReminingInspection(InspectionImage, _InspRegion, _InspAlgo);
 
             if (true == _Result)
