@@ -26,9 +26,9 @@ namespace EthernetServerManager
         private CEtherentServerManager ServerSock;
         private Queue<string> CmdQueue = new Queue<string>();
 
-        private string IPAddress = "127.1.1.3";
+        private string IPAddress = "192.168.0.30";
         private int PortNumber = 5000;
-        private string ClientIPAddress = "127.0.0.0";
+        private string ClientIPAddress = "192.168.0.3";
 
         private bool IsConnected = false;
         //private Timer ConnectCheckTimer;

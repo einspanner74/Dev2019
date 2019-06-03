@@ -86,7 +86,7 @@ namespace DIOControlManager
             ALIVE_CHECK_TIME = 500;
 
             if (ProjectType == eProjectType.NONE)               DioBaseCmd = new DefaultCmd(IOCnt);
-            else if (ProjectType == eProjectType.TRIM_FORM)     DioBaseCmd = new TrimFormCmd();
+            else if (ProjectType == eProjectType.TRIM_FORM)     DioBaseCmd = new TrimFormCmd(IOCnt);
             else if (ProjectType == eProjectType.BC_QCC)        DioBaseCmd = new CardManagerCmd();
             else if (ProjectType == eProjectType.NAVIEN)        DioBaseCmd = new NavienCmd(IOCnt);
         }
@@ -405,7 +405,7 @@ namespace DIOControlManager
 
         private void btnRequest_Click(object sender, EventArgs e)
         {
-            int _Bitcommand = DioBaseCmd.InputBitCheck(DefaultCmd.IN_RESET);
+            int _Bitcommand = DioBaseCmd.InputBitCheck(TrimFormCmd.IN_REQUEST);
             if (_Bitcommand == DIO_DEF.NONE) return;
 
             var _InputChangedEvent = InputChangedEvent;
@@ -547,7 +547,7 @@ namespace DIOControlManager
             if (VisionAliveSignalCount >= ALIVE_SIGNAL_TIME)
             {
                 VisionAliveSignalFlag = !VisionAliveSignalFlag;
-                SetOutputSignal(DIO_DEF.OUT_LIVE, VisionAliveSignalFlag);
+                //SetOutputSignal(DIO_DEF.OUT_LIVE, VisionAliveSignalFlag);
                 VisionAliveSignalCount = 0;
             }
         }

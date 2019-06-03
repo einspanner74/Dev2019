@@ -778,11 +778,11 @@ namespace KPVisionInspectionFramework
 
         private void InspectionComplete(object _Value, int _ID)
         {
-            //if ((eProjectType)ParamManager.SystemParam.ProjectType != eProjectType.BLOWER)
-            //{
-            //    bool _Flag = Convert.ToBoolean(_Value);
-            //    MainProcess.InspectionComplete(_ID, _Flag);
-            //}
+            if ((eProjectType)ParamManager.SystemParam.ProjectType == eProjectType.TRIM_FORM)
+            {
+                bool _Flag = Convert.ToBoolean(_Value);
+                MainProcess.InspectionComplete(_ID, _Flag);
+            }
         }
 
         private void SetDataFolderPath(string[] _DataPath)

@@ -83,6 +83,8 @@ namespace ParameterManager
         public const int OUT_COMPLETE   = 4;
         public const int OUT_ERROR      = 5;
         public const int OUT_GOOD       = 6;
+        public const int OUT_READY_2    = 7;
+        public const int OUT_COMPLETE_2 = 8;
         public const int OUT_RESULT     = 9;
 
         public const int IN_LIVE        = 0;
@@ -91,6 +93,9 @@ namespace ParameterManager
         public const int IN_RESET       = 3;
         public const int IN_TRG         = 4;
         public const int IN_REQUEST     = 5;
+        public const int IN_RESET_2     = 6;
+        public const int IN_TRG_2       = 7;
+        public const int IN_REQUEST_2   = 8;
     }
 
     public static class SIGNAL
