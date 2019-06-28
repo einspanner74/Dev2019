@@ -353,6 +353,8 @@ namespace KPVisionInspectionFramework
             {
                 TrimTotalCount++;
                 TrimGoodCount++;
+                if (TrimTotalCount == 0 || TrimGoodCount == 0) { TrimTotalCount = 0; TrimGoodCount = 0; TrimNgCount = 0; }
+
                 TrimYield = (double)TrimGoodCount / (double)TrimTotalCount * 100;
                 SegmentValueInvoke(SevenSegTrimTotal, TrimTotalCount.ToString());
                 SegmentValueInvoke(SevenSegTrimGood, TrimGoodCount.ToString());
@@ -367,6 +369,9 @@ namespace KPVisionInspectionFramework
             {
                 TrimTotalCount++;
                 TrimNgCount++;
+                if (TrimTotalCount == 0 || TrimNgCount == 0) { TrimTotalCount = 0; TrimGoodCount = 0; TrimNgCount = 0; }
+
+
                 TrimYield = (double)TrimGoodCount / (double)TrimTotalCount * 100;
                 SegmentValueInvoke(SevenSegTrimTotal, TrimTotalCount.ToString());
                 SegmentValueInvoke(SevenSegTrimNg, TrimNgCount.ToString());
@@ -444,6 +449,8 @@ namespace KPVisionInspectionFramework
             {
                 FormTotalCount++;
                 FormGoodCount++;
+                if (FormTotalCount == 0 || FormGoodCount == 0) { FormTotalCount = 0; FormGoodCount = 0; FormNgCount = 0; }
+
                 FormYield = (double)FormGoodCount / (double)FormTotalCount * 100;
                 SegmentValueInvoke(SevenSegFormTotal, FormTotalCount.ToString());
                 SegmentValueInvoke(SevenSegFormGood, FormGoodCount.ToString());
@@ -458,6 +465,8 @@ namespace KPVisionInspectionFramework
             {
                 FormTotalCount++;
                 FormNgCount++;
+                if (FormTotalCount == 0 || FormNgCount == 0) { FormTotalCount = 0; FormGoodCount = 0; FormNgCount = 0; }
+
                 FormYield = (double)FormGoodCount / (double)FormTotalCount * 100;
                 SegmentValueInvoke(SevenSegFormTotal, FormTotalCount.ToString());
                 SegmentValueInvoke(SevenSegFormNg, FormNgCount.ToString());
