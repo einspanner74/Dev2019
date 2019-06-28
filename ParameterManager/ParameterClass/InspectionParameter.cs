@@ -414,6 +414,7 @@ namespace ParameterManager
     {
         public enum eAlgoMode   { BODY_CHECK = 0, CHIPOUT_CHECK, LEAD_MEASURE, SHOULDER_CHECK, LEADTIP_CHECK, GATE_REMAIN };
 
+
         public bool             IsUseLeadBody;
         public RectangleD       BodyArea;
         public CenterPoint      BodyCenterOrigin;
@@ -427,6 +428,7 @@ namespace ParameterManager
         public RectangleD       ChipOutArea;
         public int              ChipOutForeground;
         public int              ChipOutThreshold;
+        public double           ChipOutSpec;
         public double           ChipOutBlobAreaMin;
         public double           ChipOutBlobAreaMax;
         public double           ChipOutWidthMin;
@@ -440,6 +442,7 @@ namespace ParameterManager
         public int              LeadCount;
         public int              LeadForeground;
         public int              LeadThreshold;
+        public double           LeadSkewSpec;
         public double           LeadPitchSpec;
         public double           LeadLengthSpec;
         public double[]         LeadPitchArray;
@@ -486,6 +489,7 @@ namespace ParameterManager
             ChipOutArea = new RectangleD();
             ChipOutForeground = 1;
             ChipOutThreshold = 200;
+            ChipOutSpec = 0.4;
             ChipOutBlobAreaMin = 1000;
             ChipOutBlobAreaMax = 9000000;
             ChipOutWidthMin = 5;
@@ -545,13 +549,16 @@ namespace ParameterManager
 
         public bool             IsUseOrigin;
         public RectangleD       OriginArea;
-
+                                                                                                                                                 
         public bool             IsUseAlign;
         public RectangleD       AlignArea;
         public int              AlignThreshold;
+        public double           AlignSkewSpec;
         public double           AlignPitchSpec;
-        public PointD[]         AlignPosition;
+        public PointD[]         AlignPositionArray;
 
+        public double           ResolutionX;
+        public double           ResolutionY;
 
         public CogLeadFormAlgo(double _ResolutionX = 1, double _ResolutionY = 1)
         {
@@ -563,8 +570,12 @@ namespace ParameterManager
             IsUseAlign = true;
             AlignArea = new RectangleD();
             AlignThreshold = 200;
-            AlignPitchSpec = 100;
-            AlignPosition = new PointD[LeadCount];
+            AlignSkewSpec = 0.050;
+            AlignPitchSpec = 0.100;
+            AlignPositionArray = new PointD[LeadCount];
+
+            ResolutionX = _ResolutionX;
+            ResolutionY = _ResolutionY;
         }
     }
     #endregion Cog Algorithm Class
@@ -602,6 +613,7 @@ namespace ParameterManager
             else if (_AlgoType == eAlgoType.C_ID)            Algorithm = new CogBarCodeIDAlgo();
             else if (_AlgoType == eAlgoType.C_LINE_FIND)     Algorithm = new CogLineFindAlgo();
             else if (_AlgoType == eAlgoType.C_LEAD_TRIM)     Algorithm = new CogLeadTrimAlgo(_ResolutionX, _ResolutionY);
+            else if (_AlgoType == eAlgoType.C_LEAD_FORM)     Algorithm = new CogLeadFormAlgo(_ResolutionX, _ResolutionY);
             else if (_AlgoType == eAlgoType.C_MULTI_PATTERN) Algorithm = new CogMultiPatternAlgo();
         }
     }

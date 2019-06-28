@@ -36,6 +36,8 @@
             this.btnPathSearch2 = new System.Windows.Forms.Button();
             this.labelPath2 = new System.Windows.Forms.Label();
             this.textBoxPath2 = new System.Windows.Forms.TextBox();
+            this.panelPath2 = new System.Windows.Forms.Panel();
+            this.panelPath2.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnConfirm
@@ -103,7 +105,7 @@
             // 
             this.btnPathSearch2.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnPathSearch2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnPathSearch2.Location = new System.Drawing.Point(685, 68);
+            this.btnPathSearch2.Location = new System.Drawing.Point(681, 4);
             this.btnPathSearch2.Name = "btnPathSearch2";
             this.btnPathSearch2.Size = new System.Drawing.Size(31, 24);
             this.btnPathSearch2.TabIndex = 28;
@@ -117,7 +119,7 @@
             this.labelPath2.BackColor = System.Drawing.Color.Black;
             this.labelPath2.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.labelPath2.ForeColor = System.Drawing.Color.White;
-            this.labelPath2.Location = new System.Drawing.Point(6, 68);
+            this.labelPath2.Location = new System.Drawing.Point(2, 4);
             this.labelPath2.Name = "labelPath2";
             this.labelPath2.Size = new System.Drawing.Size(107, 26);
             this.labelPath2.TabIndex = 27;
@@ -128,10 +130,20 @@
             // 
             this.textBoxPath2.Enabled = false;
             this.textBoxPath2.Font = new System.Drawing.Font("나눔바른고딕", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.textBoxPath2.Location = new System.Drawing.Point(119, 68);
+            this.textBoxPath2.Location = new System.Drawing.Point(115, 4);
             this.textBoxPath2.Name = "textBoxPath2";
             this.textBoxPath2.Size = new System.Drawing.Size(564, 26);
             this.textBoxPath2.TabIndex = 26;
+            // 
+            // panelPath2
+            // 
+            this.panelPath2.Controls.Add(this.btnPathSearch2);
+            this.panelPath2.Controls.Add(this.labelPath2);
+            this.panelPath2.Controls.Add(this.textBoxPath2);
+            this.panelPath2.Location = new System.Drawing.Point(4, 64);
+            this.panelPath2.Name = "panelPath2";
+            this.panelPath2.Size = new System.Drawing.Size(718, 36);
+            this.panelPath2.TabIndex = 29;
             // 
             // FolderPathWindow
             // 
@@ -139,9 +151,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(80)))), ((int)(((byte)(120)))));
             this.ClientSize = new System.Drawing.Size(723, 138);
-            this.Controls.Add(this.btnPathSearch2);
-            this.Controls.Add(this.labelPath2);
-            this.Controls.Add(this.textBoxPath2);
+            this.Controls.Add(this.panelPath2);
             this.Controls.Add(this.btnPathSearch1);
             this.Controls.Add(this.labelPath1);
             this.Controls.Add(this.btnConfirm);
@@ -152,6 +162,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "RecipeNewName";
             this.TopMost = true;
+            this.panelPath2.ResumeLayout(false);
+            this.panelPath2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -166,5 +178,6 @@
         private System.Windows.Forms.Button btnPathSearch2;
         private System.Windows.Forms.Label labelPath2;
         private System.Windows.Forms.TextBox textBoxPath2;
+        private System.Windows.Forms.Panel panelPath2;
     }
 }

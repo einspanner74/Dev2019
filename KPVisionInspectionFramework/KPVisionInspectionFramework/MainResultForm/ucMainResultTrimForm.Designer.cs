@@ -28,20 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle85 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle86 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle90 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle91 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle87 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle88 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle89 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle92 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle93 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle97 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle98 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle94 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle95 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle96 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panelMain = new System.Windows.Forms.Panel();
             this.QuickGridViewLeadFormResult = new CustomControl.QuickDataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -51,25 +51,25 @@
             this.gridLeadNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gridLeadLength = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gridLeadPitch = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gradientLabel1 = new CustomControl.GradientLabel();
+            this.gradientLabelFormYield = new CustomControl.GradientLabel();
             this.SevenSegFormYield = new DmitryBrant.CustomControls.SevenSegmentArray();
             this.label2 = new System.Windows.Forms.Label();
-            this.gradientLabelYield = new CustomControl.GradientLabel();
+            this.gradientLabelTrimYield = new CustomControl.GradientLabel();
             this.SevenSegTrimYield = new DmitryBrant.CustomControls.SevenSegmentArray();
             this.label1 = new System.Windows.Forms.Label();
-            this.gradientLabel5 = new CustomControl.GradientLabel();
-            this.gradientLabel8 = new CustomControl.GradientLabel();
+            this.gradientLabelFormTotalCount = new CustomControl.GradientLabel();
+            this.gradientLabelFormNgCount = new CustomControl.GradientLabel();
             this.SevenSegFormTotal = new DmitryBrant.CustomControls.SevenSegmentArray();
-            this.gradientLabel9 = new CustomControl.GradientLabel();
+            this.gradientLabelFormGoodCount = new CustomControl.GradientLabel();
             this.SevenSegFormNg = new DmitryBrant.CustomControls.SevenSegmentArray();
             this.SevenSegFormGood = new DmitryBrant.CustomControls.SevenSegmentArray();
             this.gradientLabel10 = new CustomControl.GradientLabel();
             this.gradientLabel11 = new CustomControl.GradientLabel();
-            this.gradientLabelFromResult = new CustomControl.GradientLabel();
-            this.gradientLabelTotalCount = new CustomControl.GradientLabel();
-            this.gradientLabelNgCount = new CustomControl.GradientLabel();
+            this.gradientLabelFormResult = new CustomControl.GradientLabel();
+            this.gradientLabelTrimTotalCount = new CustomControl.GradientLabel();
+            this.gradientLabelTrimNgCount = new CustomControl.GradientLabel();
             this.SevenSegTrimTotal = new DmitryBrant.CustomControls.SevenSegmentArray();
-            this.gradientLabelGoodCount = new CustomControl.GradientLabel();
+            this.gradientLabelTrimGoodCount = new CustomControl.GradientLabel();
             this.SevenSegTrimNg = new DmitryBrant.CustomControls.SevenSegmentArray();
             this.SevenSegTrimGood = new DmitryBrant.CustomControls.SevenSegmentArray();
             this.button1 = new System.Windows.Forms.Button();
@@ -86,25 +86,25 @@
             // 
             this.panelMain.Controls.Add(this.QuickGridViewLeadFormResult);
             this.panelMain.Controls.Add(this.QuickGridViewLeadTrimResult);
-            this.panelMain.Controls.Add(this.gradientLabel1);
+            this.panelMain.Controls.Add(this.gradientLabelFormYield);
             this.panelMain.Controls.Add(this.SevenSegFormYield);
             this.panelMain.Controls.Add(this.label2);
-            this.panelMain.Controls.Add(this.gradientLabelYield);
+            this.panelMain.Controls.Add(this.gradientLabelTrimYield);
             this.panelMain.Controls.Add(this.SevenSegTrimYield);
             this.panelMain.Controls.Add(this.label1);
-            this.panelMain.Controls.Add(this.gradientLabel5);
-            this.panelMain.Controls.Add(this.gradientLabel8);
+            this.panelMain.Controls.Add(this.gradientLabelFormTotalCount);
+            this.panelMain.Controls.Add(this.gradientLabelFormNgCount);
             this.panelMain.Controls.Add(this.SevenSegFormTotal);
-            this.panelMain.Controls.Add(this.gradientLabel9);
+            this.panelMain.Controls.Add(this.gradientLabelFormGoodCount);
             this.panelMain.Controls.Add(this.SevenSegFormNg);
             this.panelMain.Controls.Add(this.SevenSegFormGood);
             this.panelMain.Controls.Add(this.gradientLabel10);
             this.panelMain.Controls.Add(this.gradientLabel11);
-            this.panelMain.Controls.Add(this.gradientLabelFromResult);
-            this.panelMain.Controls.Add(this.gradientLabelTotalCount);
-            this.panelMain.Controls.Add(this.gradientLabelNgCount);
+            this.panelMain.Controls.Add(this.gradientLabelFormResult);
+            this.panelMain.Controls.Add(this.gradientLabelTrimTotalCount);
+            this.panelMain.Controls.Add(this.gradientLabelTrimNgCount);
             this.panelMain.Controls.Add(this.SevenSegTrimTotal);
-            this.panelMain.Controls.Add(this.gradientLabelGoodCount);
+            this.panelMain.Controls.Add(this.gradientLabelTrimGoodCount);
             this.panelMain.Controls.Add(this.SevenSegTrimNg);
             this.panelMain.Controls.Add(this.SevenSegTrimGood);
             this.panelMain.Controls.Add(this.button1);
@@ -124,45 +124,45 @@
             this.QuickGridViewLeadFormResult.AllowUserToDeleteRows = false;
             this.QuickGridViewLeadFormResult.AllowUserToResizeColumns = false;
             this.QuickGridViewLeadFormResult.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
-            this.QuickGridViewLeadFormResult.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle85.BackColor = System.Drawing.Color.White;
+            this.QuickGridViewLeadFormResult.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle85;
             this.QuickGridViewLeadFormResult.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Gold;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("나눔바른고딕", 8.249999F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.QuickGridViewLeadFormResult.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle86.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle86.BackColor = System.Drawing.Color.Gold;
+            dataGridViewCellStyle86.Font = new System.Drawing.Font("나눔바른고딕", 8.249999F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle86.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle86.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle86.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle86.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.QuickGridViewLeadFormResult.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle86;
             this.QuickGridViewLeadFormResult.ColumnHeadersHeight = 22;
             this.QuickGridViewLeadFormResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.QuickGridViewLeadFormResult.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn1,
             this.gridLeadPositionX,
             this.gridLeadPositionY});
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.PowderBlue;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("나눔바른고딕", 8.249999F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Navy;
-            dataGridViewCellStyle6.NullValue = "0";
-            dataGridViewCellStyle6.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.QuickGridViewLeadFormResult.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle90.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle90.BackColor = System.Drawing.Color.PowderBlue;
+            dataGridViewCellStyle90.Font = new System.Drawing.Font("나눔바른고딕", 8.249999F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle90.ForeColor = System.Drawing.Color.Navy;
+            dataGridViewCellStyle90.NullValue = "0";
+            dataGridViewCellStyle90.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            dataGridViewCellStyle90.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle90.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle90.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.QuickGridViewLeadFormResult.DefaultCellStyle = dataGridViewCellStyle90;
             this.QuickGridViewLeadFormResult.EnableHeadersVisualStyles = false;
             this.QuickGridViewLeadFormResult.Location = new System.Drawing.Point(2, 618);
             this.QuickGridViewLeadFormResult.MultiSelect = false;
             this.QuickGridViewLeadFormResult.Name = "QuickGridViewLeadFormResult";
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("나눔바른고딕", 8.249999F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.QuickGridViewLeadFormResult.RowHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle91.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle91.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle91.Font = new System.Drawing.Font("나눔바른고딕", 8.249999F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle91.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle91.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle91.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle91.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.QuickGridViewLeadFormResult.RowHeadersDefaultCellStyle = dataGridViewCellStyle91;
             this.QuickGridViewLeadFormResult.RowHeadersVisible = false;
             this.QuickGridViewLeadFormResult.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.QuickGridViewLeadFormResult.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -173,8 +173,8 @@
             // 
             // dataGridViewTextBoxColumn1
             // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle87.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle87;
             this.dataGridViewTextBoxColumn1.HeaderText = "Num";
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             this.dataGridViewTextBoxColumn1.ReadOnly = true;
@@ -184,8 +184,8 @@
             // 
             // gridLeadPositionX
             // 
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.gridLeadPositionX.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle88.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.gridLeadPositionX.DefaultCellStyle = dataGridViewCellStyle88;
             this.gridLeadPositionX.HeaderText = "Lead Position X";
             this.gridLeadPositionX.Name = "gridLeadPositionX";
             this.gridLeadPositionX.ReadOnly = true;
@@ -195,8 +195,8 @@
             // 
             // gridLeadPositionY
             // 
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.gridLeadPositionY.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle89.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.gridLeadPositionY.DefaultCellStyle = dataGridViewCellStyle89;
             this.gridLeadPositionY.HeaderText = "Lead Position Y";
             this.gridLeadPositionY.Name = "gridLeadPositionY";
             this.gridLeadPositionY.ReadOnly = true;
@@ -209,45 +209,45 @@
             this.QuickGridViewLeadTrimResult.AllowUserToDeleteRows = false;
             this.QuickGridViewLeadTrimResult.AllowUserToResizeColumns = false;
             this.QuickGridViewLeadTrimResult.AllowUserToResizeRows = false;
-            dataGridViewCellStyle8.BackColor = System.Drawing.Color.White;
-            this.QuickGridViewLeadTrimResult.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle92.BackColor = System.Drawing.Color.White;
+            this.QuickGridViewLeadTrimResult.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle92;
             this.QuickGridViewLeadTrimResult.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle9.BackColor = System.Drawing.Color.Gold;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("나눔바른고딕", 8.249999F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.QuickGridViewLeadTrimResult.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle93.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle93.BackColor = System.Drawing.Color.Gold;
+            dataGridViewCellStyle93.Font = new System.Drawing.Font("나눔바른고딕", 8.249999F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle93.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle93.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle93.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle93.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.QuickGridViewLeadTrimResult.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle93;
             this.QuickGridViewLeadTrimResult.ColumnHeadersHeight = 22;
             this.QuickGridViewLeadTrimResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.QuickGridViewLeadTrimResult.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.gridLeadNum,
             this.gridLeadLength,
             this.gridLeadPitch});
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle13.BackColor = System.Drawing.Color.PowderBlue;
-            dataGridViewCellStyle13.Font = new System.Drawing.Font("나눔바른고딕", 8.249999F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle13.ForeColor = System.Drawing.Color.Navy;
-            dataGridViewCellStyle13.NullValue = "0";
-            dataGridViewCellStyle13.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.QuickGridViewLeadTrimResult.DefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle97.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle97.BackColor = System.Drawing.Color.PowderBlue;
+            dataGridViewCellStyle97.Font = new System.Drawing.Font("나눔바른고딕", 8.249999F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle97.ForeColor = System.Drawing.Color.Navy;
+            dataGridViewCellStyle97.NullValue = "0";
+            dataGridViewCellStyle97.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            dataGridViewCellStyle97.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle97.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle97.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.QuickGridViewLeadTrimResult.DefaultCellStyle = dataGridViewCellStyle97;
             this.QuickGridViewLeadTrimResult.EnableHeadersVisualStyles = false;
             this.QuickGridViewLeadTrimResult.Location = new System.Drawing.Point(3, 202);
             this.QuickGridViewLeadTrimResult.MultiSelect = false;
             this.QuickGridViewLeadTrimResult.Name = "QuickGridViewLeadTrimResult";
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle14.Font = new System.Drawing.Font("나눔바른고딕", 8.249999F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.QuickGridViewLeadTrimResult.RowHeadersDefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle98.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle98.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle98.Font = new System.Drawing.Font("나눔바른고딕", 8.249999F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle98.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle98.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle98.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle98.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.QuickGridViewLeadTrimResult.RowHeadersDefaultCellStyle = dataGridViewCellStyle98;
             this.QuickGridViewLeadTrimResult.RowHeadersVisible = false;
             this.QuickGridViewLeadTrimResult.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.QuickGridViewLeadTrimResult.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -258,8 +258,8 @@
             // 
             // gridLeadNum
             // 
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.gridLeadNum.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle94.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.gridLeadNum.DefaultCellStyle = dataGridViewCellStyle94;
             this.gridLeadNum.HeaderText = "Num";
             this.gridLeadNum.Name = "gridLeadNum";
             this.gridLeadNum.ReadOnly = true;
@@ -269,8 +269,8 @@
             // 
             // gridLeadLength
             // 
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.gridLeadLength.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle95.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.gridLeadLength.DefaultCellStyle = dataGridViewCellStyle95;
             this.gridLeadLength.HeaderText = "Lead Length";
             this.gridLeadLength.Name = "gridLeadLength";
             this.gridLeadLength.ReadOnly = true;
@@ -280,8 +280,8 @@
             // 
             // gridLeadPitch
             // 
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.gridLeadPitch.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle96.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.gridLeadPitch.DefaultCellStyle = dataGridViewCellStyle96;
             this.gridLeadPitch.HeaderText = "Lead Pitch";
             this.gridLeadPitch.Name = "gridLeadPitch";
             this.gridLeadPitch.ReadOnly = true;
@@ -289,20 +289,20 @@
             this.gridLeadPitch.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.gridLeadPitch.Width = 160;
             // 
-            // gradientLabel1
+            // gradientLabelFormYield
             // 
-            this.gradientLabel1.BackColor = System.Drawing.Color.White;
-            this.gradientLabel1.ColorBottom = System.Drawing.Color.LemonChiffon;
-            this.gradientLabel1.ColorTop = System.Drawing.Color.Gold;
-            this.gradientLabel1.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
-            this.gradientLabel1.ForeColor = System.Drawing.Color.Black;
-            this.gradientLabel1.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
-            this.gradientLabel1.Location = new System.Drawing.Point(3, 587);
-            this.gradientLabel1.Name = "gradientLabel1";
-            this.gradientLabel1.Size = new System.Drawing.Size(94, 24);
-            this.gradientLabel1.TabIndex = 68;
-            this.gradientLabel1.Text = "Yield";
-            this.gradientLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.gradientLabelFormYield.BackColor = System.Drawing.Color.White;
+            this.gradientLabelFormYield.ColorBottom = System.Drawing.Color.LemonChiffon;
+            this.gradientLabelFormYield.ColorTop = System.Drawing.Color.Gold;
+            this.gradientLabelFormYield.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
+            this.gradientLabelFormYield.ForeColor = System.Drawing.Color.Black;
+            this.gradientLabelFormYield.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
+            this.gradientLabelFormYield.Location = new System.Drawing.Point(3, 587);
+            this.gradientLabelFormYield.Name = "gradientLabelFormYield";
+            this.gradientLabelFormYield.Size = new System.Drawing.Size(94, 24);
+            this.gradientLabelFormYield.TabIndex = 68;
+            this.gradientLabelFormYield.Text = "Yield";
+            this.gradientLabelFormYield.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // SevenSegFormYield
             // 
@@ -332,20 +332,20 @@
             this.label2.Text = "%";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // gradientLabelYield
+            // gradientLabelTrimYield
             // 
-            this.gradientLabelYield.BackColor = System.Drawing.Color.White;
-            this.gradientLabelYield.ColorBottom = System.Drawing.Color.LemonChiffon;
-            this.gradientLabelYield.ColorTop = System.Drawing.Color.Gold;
-            this.gradientLabelYield.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
-            this.gradientLabelYield.ForeColor = System.Drawing.Color.Black;
-            this.gradientLabelYield.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
-            this.gradientLabelYield.Location = new System.Drawing.Point(3, 171);
-            this.gradientLabelYield.Name = "gradientLabelYield";
-            this.gradientLabelYield.Size = new System.Drawing.Size(94, 24);
-            this.gradientLabelYield.TabIndex = 65;
-            this.gradientLabelYield.Text = "Yield";
-            this.gradientLabelYield.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.gradientLabelTrimYield.BackColor = System.Drawing.Color.White;
+            this.gradientLabelTrimYield.ColorBottom = System.Drawing.Color.LemonChiffon;
+            this.gradientLabelTrimYield.ColorTop = System.Drawing.Color.Gold;
+            this.gradientLabelTrimYield.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
+            this.gradientLabelTrimYield.ForeColor = System.Drawing.Color.Black;
+            this.gradientLabelTrimYield.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
+            this.gradientLabelTrimYield.Location = new System.Drawing.Point(3, 171);
+            this.gradientLabelTrimYield.Name = "gradientLabelTrimYield";
+            this.gradientLabelTrimYield.Size = new System.Drawing.Size(94, 24);
+            this.gradientLabelTrimYield.TabIndex = 65;
+            this.gradientLabelTrimYield.Text = "Yield";
+            this.gradientLabelTrimYield.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // SevenSegTrimYield
             // 
@@ -375,35 +375,37 @@
             this.label1.Text = "%";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // gradientLabel5
+            // gradientLabelFormTotalCount
             // 
-            this.gradientLabel5.BackColor = System.Drawing.Color.White;
-            this.gradientLabel5.ColorBottom = System.Drawing.Color.LightGray;
-            this.gradientLabel5.ColorTop = System.Drawing.Color.DimGray;
-            this.gradientLabel5.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
-            this.gradientLabel5.ForeColor = System.Drawing.Color.White;
-            this.gradientLabel5.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
-            this.gradientLabel5.Location = new System.Drawing.Point(3, 506);
-            this.gradientLabel5.Name = "gradientLabel5";
-            this.gradientLabel5.Size = new System.Drawing.Size(94, 24);
-            this.gradientLabel5.TabIndex = 60;
-            this.gradientLabel5.Text = "Total";
-            this.gradientLabel5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.gradientLabelFormTotalCount.BackColor = System.Drawing.Color.White;
+            this.gradientLabelFormTotalCount.ColorBottom = System.Drawing.Color.LightGray;
+            this.gradientLabelFormTotalCount.ColorTop = System.Drawing.Color.DimGray;
+            this.gradientLabelFormTotalCount.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
+            this.gradientLabelFormTotalCount.ForeColor = System.Drawing.Color.White;
+            this.gradientLabelFormTotalCount.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
+            this.gradientLabelFormTotalCount.Location = new System.Drawing.Point(3, 506);
+            this.gradientLabelFormTotalCount.Name = "gradientLabelFormTotalCount";
+            this.gradientLabelFormTotalCount.Size = new System.Drawing.Size(94, 24);
+            this.gradientLabelFormTotalCount.TabIndex = 60;
+            this.gradientLabelFormTotalCount.Text = "Total";
+            this.gradientLabelFormTotalCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.gradientLabelFormTotalCount.DoubleClick += new System.EventHandler(this.gradientLabelFormTotalCount_DoubleClick);
             // 
-            // gradientLabel8
+            // gradientLabelFormNgCount
             // 
-            this.gradientLabel8.BackColor = System.Drawing.Color.White;
-            this.gradientLabel8.ColorBottom = System.Drawing.Color.LightCoral;
-            this.gradientLabel8.ColorTop = System.Drawing.Color.DarkRed;
-            this.gradientLabel8.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
-            this.gradientLabel8.ForeColor = System.Drawing.Color.White;
-            this.gradientLabel8.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
-            this.gradientLabel8.Location = new System.Drawing.Point(3, 560);
-            this.gradientLabel8.Name = "gradientLabel8";
-            this.gradientLabel8.Size = new System.Drawing.Size(94, 24);
-            this.gradientLabel8.TabIndex = 62;
-            this.gradientLabel8.Text = "NG";
-            this.gradientLabel8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.gradientLabelFormNgCount.BackColor = System.Drawing.Color.White;
+            this.gradientLabelFormNgCount.ColorBottom = System.Drawing.Color.LightCoral;
+            this.gradientLabelFormNgCount.ColorTop = System.Drawing.Color.DarkRed;
+            this.gradientLabelFormNgCount.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
+            this.gradientLabelFormNgCount.ForeColor = System.Drawing.Color.White;
+            this.gradientLabelFormNgCount.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
+            this.gradientLabelFormNgCount.Location = new System.Drawing.Point(3, 560);
+            this.gradientLabelFormNgCount.Name = "gradientLabelFormNgCount";
+            this.gradientLabelFormNgCount.Size = new System.Drawing.Size(94, 24);
+            this.gradientLabelFormNgCount.TabIndex = 62;
+            this.gradientLabelFormNgCount.Text = "NG";
+            this.gradientLabelFormNgCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.gradientLabelFormNgCount.DoubleClick += new System.EventHandler(this.gradientLabelFormNgCount_DoubleClick);
             // 
             // SevenSegFormTotal
             // 
@@ -422,20 +424,21 @@
             this.SevenSegFormTotal.TabStop = false;
             this.SevenSegFormTotal.Value = "000000";
             // 
-            // gradientLabel9
+            // gradientLabelFormGoodCount
             // 
-            this.gradientLabel9.BackColor = System.Drawing.Color.White;
-            this.gradientLabel9.ColorBottom = System.Drawing.Color.LightGreen;
-            this.gradientLabel9.ColorTop = System.Drawing.Color.Green;
-            this.gradientLabel9.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
-            this.gradientLabel9.ForeColor = System.Drawing.Color.White;
-            this.gradientLabel9.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
-            this.gradientLabel9.Location = new System.Drawing.Point(3, 533);
-            this.gradientLabel9.Name = "gradientLabel9";
-            this.gradientLabel9.Size = new System.Drawing.Size(94, 24);
-            this.gradientLabel9.TabIndex = 63;
-            this.gradientLabel9.Text = "Good";
-            this.gradientLabel9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.gradientLabelFormGoodCount.BackColor = System.Drawing.Color.White;
+            this.gradientLabelFormGoodCount.ColorBottom = System.Drawing.Color.LightGreen;
+            this.gradientLabelFormGoodCount.ColorTop = System.Drawing.Color.Green;
+            this.gradientLabelFormGoodCount.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
+            this.gradientLabelFormGoodCount.ForeColor = System.Drawing.Color.White;
+            this.gradientLabelFormGoodCount.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
+            this.gradientLabelFormGoodCount.Location = new System.Drawing.Point(3, 533);
+            this.gradientLabelFormGoodCount.Name = "gradientLabelFormGoodCount";
+            this.gradientLabelFormGoodCount.Size = new System.Drawing.Size(94, 24);
+            this.gradientLabelFormGoodCount.TabIndex = 63;
+            this.gradientLabelFormGoodCount.Text = "Good";
+            this.gradientLabelFormGoodCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.gradientLabelFormGoodCount.DoubleClick += new System.EventHandler(this.gradientLabelFormGoodCount_DoubleClick);
             // 
             // SevenSegFormNg
             // 
@@ -501,50 +504,52 @@
             this.gradientLabel11.Text = " Lead Forming Result ";
             this.gradientLabel11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // gradientLabelFromResult
+            // gradientLabelFormResult
             // 
-            this.gradientLabelFromResult.BackColor = System.Drawing.Color.DarkGreen;
-            this.gradientLabelFromResult.ColorBottom = System.Drawing.Color.White;
-            this.gradientLabelFromResult.ColorTop = System.Drawing.Color.White;
-            this.gradientLabelFromResult.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gradientLabelFromResult.ForeColor = System.Drawing.Color.Lime;
-            this.gradientLabelFromResult.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
-            this.gradientLabelFromResult.Location = new System.Drawing.Point(103, 450);
-            this.gradientLabelFromResult.Name = "gradientLabelFromResult";
-            this.gradientLabelFromResult.Size = new System.Drawing.Size(275, 51);
-            this.gradientLabelFromResult.TabIndex = 53;
-            this.gradientLabelFromResult.Text = "-";
-            this.gradientLabelFromResult.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.gradientLabelFormResult.BackColor = System.Drawing.Color.DarkGreen;
+            this.gradientLabelFormResult.ColorBottom = System.Drawing.Color.White;
+            this.gradientLabelFormResult.ColorTop = System.Drawing.Color.White;
+            this.gradientLabelFormResult.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gradientLabelFormResult.ForeColor = System.Drawing.Color.Lime;
+            this.gradientLabelFormResult.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
+            this.gradientLabelFormResult.Location = new System.Drawing.Point(103, 450);
+            this.gradientLabelFormResult.Name = "gradientLabelFormResult";
+            this.gradientLabelFormResult.Size = new System.Drawing.Size(275, 51);
+            this.gradientLabelFormResult.TabIndex = 53;
+            this.gradientLabelFormResult.Text = "-";
+            this.gradientLabelFormResult.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // gradientLabelTotalCount
+            // gradientLabelTrimTotalCount
             // 
-            this.gradientLabelTotalCount.BackColor = System.Drawing.Color.White;
-            this.gradientLabelTotalCount.ColorBottom = System.Drawing.Color.LightGray;
-            this.gradientLabelTotalCount.ColorTop = System.Drawing.Color.DimGray;
-            this.gradientLabelTotalCount.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
-            this.gradientLabelTotalCount.ForeColor = System.Drawing.Color.White;
-            this.gradientLabelTotalCount.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
-            this.gradientLabelTotalCount.Location = new System.Drawing.Point(3, 90);
-            this.gradientLabelTotalCount.Name = "gradientLabelTotalCount";
-            this.gradientLabelTotalCount.Size = new System.Drawing.Size(94, 24);
-            this.gradientLabelTotalCount.TabIndex = 40;
-            this.gradientLabelTotalCount.Text = "Total";
-            this.gradientLabelTotalCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.gradientLabelTrimTotalCount.BackColor = System.Drawing.Color.White;
+            this.gradientLabelTrimTotalCount.ColorBottom = System.Drawing.Color.LightGray;
+            this.gradientLabelTrimTotalCount.ColorTop = System.Drawing.Color.DimGray;
+            this.gradientLabelTrimTotalCount.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
+            this.gradientLabelTrimTotalCount.ForeColor = System.Drawing.Color.White;
+            this.gradientLabelTrimTotalCount.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
+            this.gradientLabelTrimTotalCount.Location = new System.Drawing.Point(3, 90);
+            this.gradientLabelTrimTotalCount.Name = "gradientLabelTrimTotalCount";
+            this.gradientLabelTrimTotalCount.Size = new System.Drawing.Size(94, 24);
+            this.gradientLabelTrimTotalCount.TabIndex = 40;
+            this.gradientLabelTrimTotalCount.Text = "Total";
+            this.gradientLabelTrimTotalCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.gradientLabelTrimTotalCount.DoubleClick += new System.EventHandler(this.gradientLabelTrimTotalCount_DoubleClick);
             // 
-            // gradientLabelNgCount
+            // gradientLabelTrimNgCount
             // 
-            this.gradientLabelNgCount.BackColor = System.Drawing.Color.White;
-            this.gradientLabelNgCount.ColorBottom = System.Drawing.Color.LightCoral;
-            this.gradientLabelNgCount.ColorTop = System.Drawing.Color.DarkRed;
-            this.gradientLabelNgCount.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
-            this.gradientLabelNgCount.ForeColor = System.Drawing.Color.White;
-            this.gradientLabelNgCount.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
-            this.gradientLabelNgCount.Location = new System.Drawing.Point(3, 144);
-            this.gradientLabelNgCount.Name = "gradientLabelNgCount";
-            this.gradientLabelNgCount.Size = new System.Drawing.Size(94, 24);
-            this.gradientLabelNgCount.TabIndex = 42;
-            this.gradientLabelNgCount.Text = "NG";
-            this.gradientLabelNgCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.gradientLabelTrimNgCount.BackColor = System.Drawing.Color.White;
+            this.gradientLabelTrimNgCount.ColorBottom = System.Drawing.Color.LightCoral;
+            this.gradientLabelTrimNgCount.ColorTop = System.Drawing.Color.DarkRed;
+            this.gradientLabelTrimNgCount.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
+            this.gradientLabelTrimNgCount.ForeColor = System.Drawing.Color.White;
+            this.gradientLabelTrimNgCount.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
+            this.gradientLabelTrimNgCount.Location = new System.Drawing.Point(3, 144);
+            this.gradientLabelTrimNgCount.Name = "gradientLabelTrimNgCount";
+            this.gradientLabelTrimNgCount.Size = new System.Drawing.Size(94, 24);
+            this.gradientLabelTrimNgCount.TabIndex = 42;
+            this.gradientLabelTrimNgCount.Text = "NG";
+            this.gradientLabelTrimNgCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.gradientLabelTrimNgCount.DoubleClick += new System.EventHandler(this.gradientLabelTrimNgCount_DoubleClick);
             // 
             // SevenSegTrimTotal
             // 
@@ -563,20 +568,21 @@
             this.SevenSegTrimTotal.TabStop = false;
             this.SevenSegTrimTotal.Value = "000000";
             // 
-            // gradientLabelGoodCount
+            // gradientLabelTrimGoodCount
             // 
-            this.gradientLabelGoodCount.BackColor = System.Drawing.Color.White;
-            this.gradientLabelGoodCount.ColorBottom = System.Drawing.Color.LightGreen;
-            this.gradientLabelGoodCount.ColorTop = System.Drawing.Color.Green;
-            this.gradientLabelGoodCount.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
-            this.gradientLabelGoodCount.ForeColor = System.Drawing.Color.White;
-            this.gradientLabelGoodCount.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
-            this.gradientLabelGoodCount.Location = new System.Drawing.Point(3, 117);
-            this.gradientLabelGoodCount.Name = "gradientLabelGoodCount";
-            this.gradientLabelGoodCount.Size = new System.Drawing.Size(94, 24);
-            this.gradientLabelGoodCount.TabIndex = 43;
-            this.gradientLabelGoodCount.Text = "Good";
-            this.gradientLabelGoodCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.gradientLabelTrimGoodCount.BackColor = System.Drawing.Color.White;
+            this.gradientLabelTrimGoodCount.ColorBottom = System.Drawing.Color.LightGreen;
+            this.gradientLabelTrimGoodCount.ColorTop = System.Drawing.Color.Green;
+            this.gradientLabelTrimGoodCount.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
+            this.gradientLabelTrimGoodCount.ForeColor = System.Drawing.Color.White;
+            this.gradientLabelTrimGoodCount.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
+            this.gradientLabelTrimGoodCount.Location = new System.Drawing.Point(3, 117);
+            this.gradientLabelTrimGoodCount.Name = "gradientLabelTrimGoodCount";
+            this.gradientLabelTrimGoodCount.Size = new System.Drawing.Size(94, 24);
+            this.gradientLabelTrimGoodCount.TabIndex = 43;
+            this.gradientLabelTrimGoodCount.Text = "Good";
+            this.gradientLabelTrimGoodCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.gradientLabelTrimGoodCount.DoubleClick += new System.EventHandler(this.gradientLabelTrimGoodCount_DoubleClick);
             // 
             // SevenSegTrimNg
             // 
@@ -694,10 +700,10 @@
         #endregion
 
         private System.Windows.Forms.Panel panelMain;
-        private CustomControl.GradientLabel gradientLabelTotalCount;
-        private CustomControl.GradientLabel gradientLabelNgCount;
+        private CustomControl.GradientLabel gradientLabelTrimTotalCount;
+        private CustomControl.GradientLabel gradientLabelTrimNgCount;
         private DmitryBrant.CustomControls.SevenSegmentArray SevenSegTrimTotal;
-        private CustomControl.GradientLabel gradientLabelGoodCount;
+        private CustomControl.GradientLabel gradientLabelTrimGoodCount;
         private DmitryBrant.CustomControls.SevenSegmentArray SevenSegTrimNg;
         private DmitryBrant.CustomControls.SevenSegmentArray SevenSegTrimGood;
         private System.Windows.Forms.Button button1;
@@ -705,21 +711,21 @@
         private CustomControl.GradientLabel gradientLabel7;
         private CustomControl.GradientLabel gradientLabel4;
         private CustomControl.GradientLabel gradientLabelTrimResult;
-        private CustomControl.GradientLabel gradientLabel5;
-        private CustomControl.GradientLabel gradientLabel8;
+        private CustomControl.GradientLabel gradientLabelFormTotalCount;
+        private CustomControl.GradientLabel gradientLabelFormNgCount;
         private DmitryBrant.CustomControls.SevenSegmentArray SevenSegFormTotal;
-        private CustomControl.GradientLabel gradientLabel9;
+        private CustomControl.GradientLabel gradientLabelFormGoodCount;
         private DmitryBrant.CustomControls.SevenSegmentArray SevenSegFormNg;
         private DmitryBrant.CustomControls.SevenSegmentArray SevenSegFormGood;
         private CustomControl.GradientLabel gradientLabel10;
         private CustomControl.GradientLabel gradientLabel11;
-        private CustomControl.GradientLabel gradientLabelFromResult;
+        private CustomControl.GradientLabel gradientLabelFormResult;
         private CustomControl.QuickDataGridView QuickGridViewLeadFormResult;
         private CustomControl.QuickDataGridView QuickGridViewLeadTrimResult;
-        private CustomControl.GradientLabel gradientLabel1;
+        private CustomControl.GradientLabel gradientLabelFormYield;
         private DmitryBrant.CustomControls.SevenSegmentArray SevenSegFormYield;
         private System.Windows.Forms.Label label2;
-        private CustomControl.GradientLabel gradientLabelYield;
+        private CustomControl.GradientLabel gradientLabelTrimYield;
         private DmitryBrant.CustomControls.SevenSegmentArray SevenSegTrimYield;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridViewTextBoxColumn gridLeadNum;

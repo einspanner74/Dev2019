@@ -31,6 +31,9 @@ namespace KPVisionInspectionFramework
         private short WaitingPeriod = 50;
         private short WaitingLimitTime = 5000;
 
+        string LOTNum = "";
+        string CarModel = "";
+
         #region Initialize & DeInitialize
         public MainProcessTrimForm()
         {
@@ -179,7 +182,7 @@ namespace KPVisionInspectionFramework
             }
 
             if (_CompleteCmdBit >= 0) DIOWnd.SetOutputSignal((short)_CompleteCmdBit, false);
-            if (_ReadyCmdBit >= 0) DIOWnd.SetOutputSignal((short)_ReadyCmdBit, false);
+            if (_ReadyCmdBit >= 0) DIOWnd.SetOutputSignal((short)_ReadyCmdBit, true,1000);
 
             return _Result;
         }
@@ -188,50 +191,82 @@ namespace KPVisionInspectionFramework
         {
             bool _Result = true;
 
+            string _VisionString, _ResultString;
+            _VisionString = String.Format("V{0}", _ResultParam.ID + 1);
+
+            if (_ResultParam.IsGood) _ResultString = "OK";
+            else _ResultString = "NG";
+
+            string LeadStatus = "";
+            string MoldStatus = "";
+
             if (_ResultParam.ProjectItem == eProjectItem.LEAD_TRIM_INSP)
             {
-                string _VisionString, _ResultString;
-                _VisionString = String.Format("V{0}", _ResultParam.ID + 1);
-
-                if (_ResultParam.IsGood) _ResultString = "OK";
-                else _ResultString = "NG";
-
                 var _SendResult = _ResultParam.SendResult as SendLeadTrimResult;
 
-                if (_SendResult == null)
+                //LDH, 2019.06.21, NG Type 우선순위에 따라 순차적으로 지정
+                if (_SendResult != null)
                 {
-                    _SendResult = new SendLeadTrimResult();
-                    _ResultString = "NG";
-                }
+                    for (int iLoopCount = 0; iLoopCount < _SendResult.EachLeadStatusArray.Count(); iLoopCount++)
+                    {
+                        List<eLeadStatus> _ListTemp = _SendResult.EachLeadStatusArray[iLoopCount].NgTypeList;
 
-                string _ResultDataString = string.Format("{0},{1},00000,00000", _VisionString, _ResultString);
-                EthernetServWnd.SendResultData(_ResultDataString, true);
-                AckStructs[_ResultParam.ID].Initialize();
+                        if      (_ListTemp.Contains(eLeadStatus.SHLD_NICK))         { LeadStatus = LeadStatus + ((int)eLeadStatus.SHLD_NICK).ToString(); continue; }
+                        else if (_ListTemp.Contains(eLeadStatus.SHLD_BURR))         { LeadStatus = LeadStatus + ((int)eLeadStatus.SHLD_BURR).ToString(); continue; }
+                        else if (_ListTemp.Contains(eLeadStatus.TIP_BURR))          { LeadStatus = LeadStatus + ((int)eLeadStatus.TIP_BURR).ToString(); continue; }
+                        else if (_ListTemp.Contains(eLeadStatus.LEAD_LENGTH))       { LeadStatus = LeadStatus + ((int)eLeadStatus.LEAD_LENGTH).ToString(); continue; }
+                        else if (_ListTemp.Contains(eLeadStatus.LEAD_SKEW_DISABLE)) { LeadStatus = LeadStatus + ((int)eLeadStatus.LEAD_SKEW_DISABLE).ToString(); continue; }
+                        else if (_ListTemp.Contains(eLeadStatus.LEAD_SKEW_ENABLE))  { LeadStatus = LeadStatus + ((int)eLeadStatus.LEAD_SKEW_ENABLE).ToString(); continue; }
+                        else                                                        { LeadStatus = LeadStatus + ((int)eLeadStatus.GOOD).ToString(); continue; }                    
+                    }
+
+                    switch(_ResultParam.NgType)
+                    {
+                        case eNgType.GOOD:     MoldStatus = "0"; break;
+                        case eNgType.CHIP_OUT: MoldStatus = "1"; break;
+                        case eNgType.GATE_ERR: MoldStatus = "2"; break;
+                        case eNgType.LEAD_CNT: MoldStatus = "3"; break;
+                        case eNgType.EMPTY:    MoldStatus = "4"; break;
+                    }
+                }
+                else
+                {
+                    LeadStatus = "00000000000000000000";
+                    _ResultString = "NG";
+                }                                
             }
 
             else if (_ResultParam.ProjectItem == eProjectItem.LEAD_FORM_ALIGN)
-            {
-                string _VisionString, _ResultString;
-                _VisionString = String.Format("V{0}", _ResultParam.ID + 1);
+            {               
+                var _SendResult = _ResultParam.SendResult as SendLeadFormResult;
 
-                if (_ResultParam.IsGood) _ResultString = "OK";
-                else _ResultString = "NG";
-
-                var _SendResult = _ResultParam.SendResult as SendLeadResult;
-
-                if (_SendResult == null)
+                if (_SendResult != null)
                 {
-                    _SendResult = new SendLeadResult();
+                    for (int iLoopCount = 0; iLoopCount < _SendResult.EachLeadStatusArray.Count(); iLoopCount++)
+                    {
+                        List<eLeadStatus> _ListTemp = _SendResult.EachLeadStatusArray[iLoopCount].NgTypeList;
+
+                        if      (_ListTemp.Contains(eLeadStatus.LEAD_SKEW_DISABLE)) { LeadStatus = LeadStatus + ((int)eLeadStatus.LEAD_SKEW_DISABLE).ToString(); continue; }
+                        else if (_ListTemp.Contains(eLeadStatus.LEAD_SKEW_ENABLE))  { LeadStatus = LeadStatus + ((int)eLeadStatus.LEAD_SKEW_ENABLE).ToString(); continue; }
+                        else                                                        { LeadStatus = LeadStatus + ((int)eLeadStatus.GOOD).ToString(); continue; }
+                    }
+
+                    switch (_ResultParam.NgType)
+                    {
+                        case eNgType.GOOD:     MoldStatus = "0"; break;
+                        case eNgType.LEAD_CNT: MoldStatus = "3"; break;
+                    }
+                }
+                else
+                {
+                    LeadStatus = "00000000000000000000";
                     _ResultString = "NG";
                 }
-
-                //LDH, 2019.05.30, TILab 프로토콜 생성
-                //보낼 데이터가 있으면 아래 살려서 ChangeResult 사용
-                //string[] _DataStringAlign = ChangeResult(_SendResult.AlignX, _SendResult.AlignY);
-                string _ResultDataString = string.Format("{0},{1},00000,00000", _VisionString, _ResultString);
-                EthernetServWnd.SendResultData(_ResultDataString, true);
-                AckStructs[_ResultParam.ID].Initialize();
             }
+
+            string _ResultDataString = string.Format("{0},{1},{2},{3},{4}", _VisionString, _ResultString, LeadStatus, MoldStatus, LOTNum);
+            EthernetServWnd.SendResultData(_ResultDataString, true);
+            AckStructs[_ResultParam.ID].Initialize();
 
             return _Result;
         }
@@ -256,8 +291,18 @@ namespace KPVisionInspectionFramework
         /// <param name="_RecvMessage"></param>
         private bool ReceiveStringEventFunction(string[] _RecvMessage, int _PortNum)
         {
-            if (_RecvMessage[0] == "V1") AckStructs[0].AckComplete = true;
-            else if (_RecvMessage[0] == "V2") AckStructs[1].AckComplete = true;
+            if (_RecvMessage[0] == "V1")
+            {
+                AckStructs[0].AckComplete = true;                
+                LOTChange(_RecvMessage);
+                TriggerOn(0);
+            }
+            else if (_RecvMessage[0] == "V2")
+            {
+                AckStructs[1].AckComplete = true;
+                LOTChange(_RecvMessage);
+                TriggerOn(1);
+            }
 
             return true;
         }
@@ -308,6 +353,13 @@ namespace KPVisionInspectionFramework
             DIOWnd.SetOutputSignal((short)_CompleteCmdBit, _Flag);
 
             return _Result;
+        }
+
+        private void LOTChange(string[] _RecvMessage)
+        {
+            LOTNum = _RecvMessage[1];
+            CarModel = _RecvMessage[2];
+            OnMainProcessCommand(eMainProcCmd.RECV_DATA, _RecvMessage);
         }
         #endregion Communication Event Function
 

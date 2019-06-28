@@ -36,6 +36,7 @@ namespace InspectionSystemManager
         private InspectionMultiPattern      InspMultiPatternProcess;
         private InspectionAutoPattern       InspAutoPatternProcess;
         private InspectionLeadTrim          InspLeadTrimProcess;
+        private InspectionLeadForm          InspLeadFormProcess;
         private InspectionEllipse           InspEllipseFindProcess;
 
         //검사 Algorithm Teaching UI
@@ -49,6 +50,7 @@ namespace InspectionSystemManager
         private ucCogMultiPattern       ucCogMultiPatternWnd;
         private ucCogAutoPattern        ucCogAutoPatternWnd;
         private ucCogLeadTrimInspection ucCogLeadTrimInspWnd;
+        private ucCogLeadFormInspection ucCogLeadFormInspWnd;
         private ucCogEllipseFind        ucCogEllipseFindWnd;
 
         private ContextMenu     ContextMenuAlgo;
@@ -119,6 +121,7 @@ namespace InspectionSystemManager
             ucCogMultiPatternWnd = new ucCogMultiPattern();
             ucCogAutoPatternWnd = new ucCogAutoPattern();
             ucCogLeadTrimInspWnd = new ucCogLeadTrimInspection();
+            ucCogLeadFormInspWnd = new ucCogLeadFormInspection();
             ucCogEllipseFindWnd = new ucCogEllipseFind();
 
             if (_ProjectItem == eProjectItem.NONE)                  ucCogBlobReferWnd.Initialize(false);
@@ -140,6 +143,7 @@ namespace InspectionSystemManager
             InspIDProcess = new InspectionID();
             InspLineFindProcess = new InspectionLineFind();
             InspLeadTrimProcess = new InspectionLeadTrim();
+            InspLeadFormProcess = new InspectionLeadForm();
             InspEllipseFindProcess = new InspectionEllipse();
 
             InspAreaSelected = -1;
@@ -203,6 +207,7 @@ namespace InspectionSystemManager
             ucCogMultiPatternWnd.Dispose();
             ucCogAutoPatternWnd.Dispose();
             ucCogLeadTrimInspWnd.Dispose();
+            ucCogLeadFormInspWnd.Dispose();
 
             InspBlobReferProcess.DeInitialize();
             InspNeedleCircleFindProcess.DeInitialize();
@@ -239,7 +244,7 @@ namespace InspectionSystemManager
             {
                 ContextMenuAlgo.MenuItems.Add("기준 패턴 검사", new EventHandler(PatternFindAlgorithm));
                 ContextMenuAlgo.MenuItems.Add("기준 라인 검사", new EventHandler(LineFineAlgorithm));
-                ContextMenuAlgo.MenuItems.Add("Lead Form 검사", new EventHandler(BlobReferenceAlgorithm));
+                ContextMenuAlgo.MenuItems.Add("Lead Form 검사", new EventHandler(LeadFormInspectionAlgorithm));
             }
 
             else if (ProjectItem == eProjectItem.BC_IMG_SAVE)
@@ -450,6 +455,14 @@ namespace InspectionSystemManager
             InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam.Add(_InspAlgoParam);
             UpdateInspectionAlgoList(InspAreaSelected, true);
             UpdateAlgoResultListAddAlgorithm(eAlgoType.C_LEAD_TRIM);
+        }
+
+        private void LeadFormInspectionAlgorithm(object sender, EventArgs e)
+        {
+            InspectionAlgorithmParameter _InspAlgoParam = new InspectionAlgorithmParameter(eAlgoType.C_LEAD_FORM, ResolutionX, ResolutionY);
+            InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam.Add(_InspAlgoParam);
+            UpdateInspectionAlgoList(InspAreaSelected, true);
+            UpdateAlgoResultListAddAlgorithm(eAlgoType.C_LEAD_FORM);
         }
         #endregion Conext Menu Function
 
@@ -968,6 +981,7 @@ namespace InspectionSystemManager
 				case eAlgoType.C_MULTI_PATTERN: ucCogMultiPatternWnd.SaveAlgoRecipe(); break;
                 case eAlgoType.C_AUTO_PATTERN:  ucCogAutoPatternWnd.SaveAlgoRecipe();  break;
                 case eAlgoType.C_LEAD_TRIM:     ucCogLeadTrimInspWnd.SaveAlgoRecipe(); break;
+                case eAlgoType.C_LEAD_FORM:     ucCogLeadFormInspWnd.SaveAlgoRecipe(); break;
                 case eAlgoType.C_ELLIPSE:       ucCogEllipseFindWnd.SaveAlgoRecipe(); break;
             }
         }
@@ -1032,6 +1046,9 @@ namespace InspectionSystemManager
         {
             btnAlgorithmIndexMoveUp.Visible = !btnAlgorithmIndexMoveUp.Visible;
             btnAlgorithmIndexMoveDown.Visible = !btnAlgorithmIndexMoveDown.Visible;
+
+            btnInspectionAlgoAdd.Visible = !btnInspectionAlgoAdd.Visible;
+            btnInspectionAlgoDel.Visible = !btnInspectionAlgoDel.Visible;
         }
 
         private void btnMapDataApplyInspectionArea_Click(object sender, EventArgs e)
@@ -1289,6 +1306,7 @@ namespace InspectionSystemManager
                     if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_PATTERN)            _Name = "기준 패턴 검사";      //"Pattern - Reference"
                     else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_LINE_FIND)     _Name = "제품 라인 검사";
                     else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_BLOB_REFER)    _Name = "제품 검사";
+                    else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_LEAD_FORM)     _Name = "Lead Forming 검사";
                 }
 
                 else if (ProjectItem == eProjectItem.BC_IMG_SAVE)
@@ -1365,6 +1383,7 @@ namespace InspectionSystemManager
                 case eAlgoType.C_MULTI_PATTERN: panelTeaching.Controls.Add(ucCogMultiPatternWnd); ucCogMultiPatternWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY, ResolutionX, ResolutionY); break;
                 case eAlgoType.C_AUTO_PATTERN:  panelTeaching.Controls.Add(ucCogAutoPatternWnd);  ucCogAutoPatternWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY, ResolutionX, ResolutionY); break;
                 case eAlgoType.C_LEAD_TRIM:     panelTeaching.Controls.Add(ucCogLeadTrimInspWnd); ucCogLeadTrimInspWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY, ResolutionX, ResolutionY); break;
+                case eAlgoType.C_LEAD_FORM:     panelTeaching.Controls.Add(ucCogLeadFormInspWnd); ucCogLeadFormInspWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY, ResolutionX, ResolutionY); break;
                 case eAlgoType.C_ELLIPSE:       panelTeaching.Controls.Add(ucCogEllipseFindWnd);  ucCogEllipseFindWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY, ResolutionX, ResolutionY); break;
             }
             if (panelTeaching.Controls.Count == 2) panelTeaching.Controls.RemoveAt(0);

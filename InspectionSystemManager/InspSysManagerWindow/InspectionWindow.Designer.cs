@@ -31,6 +31,12 @@
             this.panelMain = new System.Windows.Forms.Panel();
             this.kpCogDisplayMain = new KPDisplay.KPCogDisplayControl();
             this.panelMenu = new System.Windows.Forms.Panel();
+            this.labelTitle = new System.Windows.Forms.Label();
+            this.labelStatus = new System.Windows.Forms.Label();
+            this.labelZoomPlus = new System.Windows.Forms.Label();
+            this.labelZoomMinus = new System.Windows.Forms.Label();
+            this.panelMenuHide = new System.Windows.Forms.Panel();
+            this.btnQuickInspection = new CustomControl.ImageButton();
             this.btnImageResultDisplay = new CustomControl.ImageButton();
             this.btnCrossBar = new CustomControl.ImageButton();
             this.btnImageAutoSave = new CustomControl.ImageButton();
@@ -43,11 +49,6 @@
             this.btnOneShot = new CustomControl.ImageButton();
             this.btnInspection = new CustomControl.ImageButton();
             this.btnLive = new CustomControl.ImageButton();
-            this.labelTitle = new System.Windows.Forms.Label();
-            this.labelStatus = new System.Windows.Forms.Label();
-            this.panelMenuHide = new System.Windows.Forms.Panel();
-            this.labelZoomPlus = new System.Windows.Forms.Label();
-            this.labelZoomMinus = new System.Windows.Forms.Label();
             this.panelMain.SuspendLayout();
             this.panelMenu.SuspendLayout();
             this.SuspendLayout();
@@ -94,6 +95,93 @@
             this.panelMenu.Name = "panelMenu";
             this.panelMenu.Size = new System.Drawing.Size(616, 38);
             this.panelMenu.TabIndex = 0;
+            // 
+            // labelTitle
+            // 
+            this.labelTitle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
+            this.labelTitle.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.labelTitle.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.labelTitle.Location = new System.Drawing.Point(0, 0);
+            this.labelTitle.Name = "labelTitle";
+            this.labelTitle.Size = new System.Drawing.Size(624, 30);
+            this.labelTitle.TabIndex = 1;
+            this.labelTitle.Text = " Vision# Inspection window";
+            this.labelTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelTitle.Paint += new System.Windows.Forms.PaintEventHandler(this.labelTitle_Paint);
+            this.labelTitle.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.labelTitle_MouseDoubleClick);
+            this.labelTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.labelTitle_MouseDown);
+            this.labelTitle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.labelTitle_MouseMove);
+            // 
+            // labelStatus
+            // 
+            this.labelStatus.AutoSize = true;
+            this.labelStatus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
+            this.labelStatus.Font = new System.Drawing.Font("나눔바른고딕", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelStatus.ForeColor = System.Drawing.Color.White;
+            this.labelStatus.Location = new System.Drawing.Point(188, 9);
+            this.labelStatus.Name = "labelStatus";
+            this.labelStatus.Size = new System.Drawing.Size(43, 15);
+            this.labelStatus.TabIndex = 4;
+            this.labelStatus.Text = "(Live)";
+            // 
+            // labelZoomPlus
+            // 
+            this.labelZoomPlus.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.labelZoomPlus.ForeColor = System.Drawing.Color.White;
+            this.labelZoomPlus.Location = new System.Drawing.Point(233, 8);
+            this.labelZoomPlus.Name = "labelZoomPlus";
+            this.labelZoomPlus.Size = new System.Drawing.Size(15, 15);
+            this.labelZoomPlus.TabIndex = 7;
+            this.labelZoomPlus.Text = "+";
+            this.labelZoomPlus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelZoomPlus.Click += new System.EventHandler(this.labelZoomPlus_Click);
+            // 
+            // labelZoomMinus
+            // 
+            this.labelZoomMinus.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.labelZoomMinus.ForeColor = System.Drawing.Color.White;
+            this.labelZoomMinus.Location = new System.Drawing.Point(252, 8);
+            this.labelZoomMinus.Name = "labelZoomMinus";
+            this.labelZoomMinus.Size = new System.Drawing.Size(15, 15);
+            this.labelZoomMinus.TabIndex = 8;
+            this.labelZoomMinus.Text = "-";
+            this.labelZoomMinus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelZoomMinus.Click += new System.EventHandler(this.labelZoomMinus_Click);
+            // 
+            // panelMenuHide
+            // 
+            this.panelMenuHide.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
+            this.panelMenuHide.BackgroundImage = global::InspectionSystemManager.Properties.Resources.Arrow_Up;
+            this.panelMenuHide.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panelMenuHide.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelMenuHide.Location = new System.Drawing.Point(164, 8);
+            this.panelMenuHide.Name = "panelMenuHide";
+            this.panelMenuHide.Size = new System.Drawing.Size(12, 14);
+            this.panelMenuHide.TabIndex = 3;
+            this.panelMenuHide.Click += new System.EventHandler(this.panelMenuHide_Click);
+            // 
+            // btnQuickInspection
+            // 
+            this.btnQuickInspection.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
+            this.btnQuickInspection.BackgroundImage = global::InspectionSystemManager.Properties.Resources.QuickInsp;
+            this.btnQuickInspection.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnQuickInspection.ButtonImage = global::InspectionSystemManager.Properties.Resources.QuickInsp;
+            this.btnQuickInspection.ButtonImageDiable = null;
+            this.btnQuickInspection.ButtonImageDown = global::InspectionSystemManager.Properties.Resources.QuickInspDown;
+            this.btnQuickInspection.ButtonImageOver = global::InspectionSystemManager.Properties.Resources.QuickInspOver;
+            this.btnQuickInspection.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.btnQuickInspection.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.btnQuickInspection.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.btnQuickInspection.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.btnQuickInspection.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnQuickInspection.ForeColor = System.Drawing.Color.White;
+            this.btnQuickInspection.Location = new System.Drawing.Point(274, 5);
+            this.btnQuickInspection.Name = "btnQuickInspection";
+            this.btnQuickInspection.Size = new System.Drawing.Size(24, 24);
+            this.btnQuickInspection.TabIndex = 18;
+            this.btnQuickInspection.UseVisualStyleBackColor = false;
+            this.btnQuickInspection.Visible = false;
+            this.btnQuickInspection.Click += new System.EventHandler(this.btnQuickInspection_Click);
             // 
             // btnImageResultDisplay
             // 
@@ -359,76 +447,13 @@
             this.btnLive.UseVisualStyleBackColor = false;
             this.btnLive.Click += new System.EventHandler(this.btnLive_Click);
             // 
-            // labelTitle
-            // 
-            this.labelTitle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
-            this.labelTitle.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.labelTitle.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.labelTitle.Location = new System.Drawing.Point(0, 0);
-            this.labelTitle.Name = "labelTitle";
-            this.labelTitle.Size = new System.Drawing.Size(624, 30);
-            this.labelTitle.TabIndex = 1;
-            this.labelTitle.Text = " Vision# Inspection window";
-            this.labelTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.labelTitle.Paint += new System.Windows.Forms.PaintEventHandler(this.labelTitle_Paint);
-            this.labelTitle.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.labelTitle_MouseDoubleClick);
-            this.labelTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.labelTitle_MouseDown);
-            this.labelTitle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.labelTitle_MouseMove);
-            // 
-            // labelStatus
-            // 
-            this.labelStatus.AutoSize = true;
-            this.labelStatus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
-            this.labelStatus.Font = new System.Drawing.Font("나눔바른고딕", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelStatus.ForeColor = System.Drawing.Color.White;
-            this.labelStatus.Location = new System.Drawing.Point(188, 9);
-            this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(43, 15);
-            this.labelStatus.TabIndex = 4;
-            this.labelStatus.Text = "(Live)";
-            // 
-            // panelMenuHide
-            // 
-            this.panelMenuHide.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
-            this.panelMenuHide.BackgroundImage = global::InspectionSystemManager.Properties.Resources.Arrow_Up;
-            this.panelMenuHide.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.panelMenuHide.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelMenuHide.Location = new System.Drawing.Point(164, 8);
-            this.panelMenuHide.Name = "panelMenuHide";
-            this.panelMenuHide.Size = new System.Drawing.Size(12, 14);
-            this.panelMenuHide.TabIndex = 3;
-            this.panelMenuHide.Click += new System.EventHandler(this.panelMenuHide_Click);
-            // 
-            // labelZoomPlus
-            // 
-            this.labelZoomPlus.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.labelZoomPlus.ForeColor = System.Drawing.Color.White;
-            this.labelZoomPlus.Location = new System.Drawing.Point(233, 8);
-            this.labelZoomPlus.Name = "labelZoomPlus";
-            this.labelZoomPlus.Size = new System.Drawing.Size(15, 15);
-            this.labelZoomPlus.TabIndex = 7;
-            this.labelZoomPlus.Text = "+";
-            this.labelZoomPlus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.labelZoomPlus.Click += new System.EventHandler(this.labelZoomPlus_Click);
-            // 
-            // labelZoomMinus
-            // 
-            this.labelZoomMinus.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.labelZoomMinus.ForeColor = System.Drawing.Color.White;
-            this.labelZoomMinus.Location = new System.Drawing.Point(252, 8);
-            this.labelZoomMinus.Name = "labelZoomMinus";
-            this.labelZoomMinus.Size = new System.Drawing.Size(15, 15);
-            this.labelZoomMinus.TabIndex = 8;
-            this.labelZoomMinus.Text = "-";
-            this.labelZoomMinus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.labelZoomMinus.Click += new System.EventHandler(this.labelZoomMinus_Click);
-            // 
             // InspectionWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(38)))), ((int)(((byte)(38)))));
             this.ClientSize = new System.Drawing.Size(624, 623);
+            this.Controls.Add(this.btnQuickInspection);
             this.Controls.Add(this.labelZoomMinus);
             this.Controls.Add(this.labelZoomPlus);
             this.Controls.Add(this.labelStatus);
@@ -478,5 +503,6 @@
         private CustomControl.ImageButton btnImageResultDisplay;
         private System.Windows.Forms.Label labelZoomPlus;
         private System.Windows.Forms.Label labelZoomMinus;
+        private CustomControl.ImageButton btnQuickInspection;
     }
 }

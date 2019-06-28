@@ -48,6 +48,10 @@ namespace InspectionSystemManager
             ucCogLeadTrimInspWnd.DrawRegionEvent += new ucCogLeadTrimInspection.DrawRegionHandler(DrawRegionFunction);
             ucCogLeadTrimInspWnd.DrawMaskingRegionEven += new ucCogLeadTrimInspection.DrawMaskingRegionHandler(DrawMaskingRegionFunction);
             ucCogLeadTrimInspWnd.ApplyLeadTrimValueEvent += new ucCogLeadTrimInspection.ApplyLeadTrimValueHandler(ApplyLeadTrimValueFunction);
+
+            ucCogLeadFormInspWnd.GetRegionEvent += new ucCogLeadFormInspection.GetRegionHandler(GetRegionFunction);
+            ucCogLeadFormInspWnd.DrawRegionEvent += new ucCogLeadFormInspection.DrawRegionHandler(DrawRegionFunction);
+            ucCogLeadFormInspWnd.ApplyLeadFormValueEvent += new ucCogLeadFormInspection.ApplyLeadFormValueHandler(ApplyLeadFormValueFunction);
         }
 
         private void DeInitializeEvent()
@@ -79,6 +83,10 @@ namespace InspectionSystemManager
             ucCogLeadTrimInspWnd.DrawRegionEvent -= new ucCogLeadTrimInspection.DrawRegionHandler(DrawRegionFunction);
             ucCogLeadTrimInspWnd.DrawMaskingRegionEven -= new ucCogLeadTrimInspection.DrawMaskingRegionHandler(DrawMaskingRegionFunction);
             ucCogLeadTrimInspWnd.ApplyLeadTrimValueEvent -= new ucCogLeadTrimInspection.ApplyLeadTrimValueHandler(ApplyLeadTrimValueFunction);
+
+            ucCogLeadFormInspWnd.GetRegionEvent -= new ucCogLeadFormInspection.GetRegionHandler(GetRegionFunction);
+            ucCogLeadFormInspWnd.DrawRegionEvent -= new ucCogLeadFormInspection.DrawRegionHandler(DrawRegionFunction);
+            ucCogLeadFormInspWnd.ApplyLeadFormValueEvent -= new ucCogLeadFormInspection.ApplyLeadFormValueHandler(ApplyLeadFormValueFunction);
         }
         #endregion InitializeEvent & DeInitializeEvent
 
@@ -817,7 +825,7 @@ namespace InspectionSystemManager
 
         private void LeadBodyCheck(CogRectangle _InspRegion, CogLeadTrimAlgo _InspAlgo, ref CogLeadTrimResult _InspResult)
         {
-            InspLeadTrimProcess.ClearLeadTrimResult();
+            InspLeadTrimProcess.ClearLeadTrimResult(_InspAlgo.LeadCount);
             bool _Result = InspLeadTrimProcess.LeadBodySearch(InspectionImage, _InspRegion, _InspAlgo);
 
             if (true == _Result)
@@ -858,7 +866,7 @@ namespace InspectionSystemManager
 
         private void ChipOutInspection(CogRectangle _InspRegion, CogLeadTrimAlgo _InspAlgo, ref CogLeadTrimResult _InspResult)
         {
-            InspLeadTrimProcess.ClearLeadTrimResult();
+            InspLeadTrimProcess.ClearLeadTrimResult(_InspAlgo.LeadCount);
             bool _Result = InspLeadTrimProcess.MoldChipOutInspection(InspectionImage, _InspRegion, _InspAlgo);
 
             if (true == _Result)
@@ -889,7 +897,7 @@ namespace InspectionSystemManager
 
         private void LeadMeasurement(CogRectangle _InspRegion, CogLeadTrimAlgo _InspAlgo, ref CogLeadTrimResult _InspResult)
         {
-            InspLeadTrimProcess.ClearLeadTrimResult();
+            InspLeadTrimProcess.ClearLeadTrimResult(_InspAlgo.LeadCount);
             bool _Result = InspLeadTrimProcess.LeadMeasurement(InspectionImage, _InspRegion, _InspAlgo);
 
             if (true == _Result)
@@ -929,7 +937,7 @@ namespace InspectionSystemManager
 
         private void ShoulderInspection(CogRectangle _InspRegion, CogLeadTrimAlgo _InspAlgo, ref CogLeadTrimResult _InspResult)
         {
-            InspLeadTrimProcess.ClearLeadTrimResult();
+            InspLeadTrimProcess.ClearLeadTrimResult(_InspAlgo.LeadCount);
             bool _Result = InspLeadTrimProcess.ShoulderInspection(InspectionImage, _InspRegion, _InspAlgo);
 
             if (true == _Result)
@@ -970,7 +978,7 @@ namespace InspectionSystemManager
 
         private void LeadTipInspection(CogRectangle _InspRegion, CogLeadTrimAlgo _InspAlgo, ref CogLeadTrimResult _InspResult)
         {
-            InspLeadTrimProcess.ClearLeadTrimResult();
+            InspLeadTrimProcess.ClearLeadTrimResult(_InspAlgo.LeadCount);
             bool _Result = InspLeadTrimProcess.LeadTipInspection(InspectionImage, _InspRegion, _InspAlgo);
 
             if (true == _Result)
@@ -990,7 +998,7 @@ namespace InspectionSystemManager
 
         private void GateRemainingInspection(CogRectangle _InspRegion, CogLeadTrimAlgo _InspAlgo, ref CogLeadTrimResult _InspResult)
         {
-            InspLeadTrimProcess.ClearLeadTrimResult();
+            InspLeadTrimProcess.ClearLeadTrimResult(_InspAlgo.LeadCount);
             bool _Result = InspLeadTrimProcess.GateReminingInspection(InspectionImage, _InspRegion, _InspAlgo);
 
             if (true == _Result)
@@ -1003,6 +1011,78 @@ namespace InspectionSystemManager
                 {
                     CogRectangle _NgRegion = new CogRectangle(_LeadTrimResult.GateRemainingNgList[iLoopCount]);
                     kpTeachDisplay.DrawStaticShape(_NgRegion, "GateRemaining" + (iLoopCount + 1), CogColorConstants.Red);
+                }
+                #endregion
+            }
+        }
+        #endregion
+
+        #region Lead Form Inspection Window Event : ucCogLeadFormInspection -> TeachingWindow
+        private void ApplyLeadFormValueFunction(CogLeadFormAlgo.eAlgoMode _Mode, CogRectangle _InspRegion, CogLeadFormAlgo _InspAlgo, ref CogLeadFormResult _InspResult)
+        {
+            string[] _ExceptGroupName = new string[3] { "InspRegion", "AlgoRegion", "Message" };
+            kpTeachDisplay.ClearDisplay(_ExceptGroupName);
+
+            switch (_Mode)
+            {
+                case CogLeadFormAlgo.eAlgoMode.LEAD_ALIGN: LeadAlign(_InspRegion, _InspAlgo, ref _InspResult); break;
+            }
+        }
+
+        private void LeadAlign(CogRectangle _InspRegion, CogLeadFormAlgo _InspAlgo, ref CogLeadFormResult _InspResult)
+        {
+            InspLeadFormProcess.ClearLeadFormResult(_InspAlgo.LeadCount);
+            bool _Result = InspLeadFormProcess.LeadAlignSE(InspectionImage, _InspRegion, _InspAlgo);
+            //bool _Result = InspLeadFormProcess.LeadAlign(InspectionImage, _InspRegion, _InspAlgo);
+
+            if (true == _Result)
+            {
+                CogLeadFormResult _LeadFormResult = new CogLeadFormResult();
+                _LeadFormResult = InspLeadFormProcess.GetLeadFormResult();
+
+                _InspResult.LeadCount = _LeadFormResult.LeadCount;
+                _InspResult.AlignResultDataList = _LeadFormResult.AlignResultDataList;
+
+                #region Draw Lead Align Position
+                for (int iLoopCount = 0; iLoopCount < _InspResult.AlignResultDataList.Count; ++iLoopCount)
+                {
+                    CogRectangle _LeadRect = new CogRectangle();
+                    double _CenterX = _InspResult.AlignResultDataList[iLoopCount].CenterX;
+                    double _CenterY = _InspResult.AlignResultDataList[iLoopCount].CenterY;
+                    double _Width = _InspResult.AlignResultDataList[iLoopCount].Width;
+                    double _Height = _InspResult.AlignResultDataList[iLoopCount].Height;
+                    _LeadRect.SetCenterWidthHeight(_CenterX, _CenterY, _Width, _Height);
+                    kpTeachDisplay.DrawStaticShape(_LeadRect, "LeadRect" + (iLoopCount + 1), CogColorConstants.Green);
+
+                    CogPointMarker _Point = new CogPointMarker();
+                    _Point.SetCenterRotationSize(_CenterX, _CenterY, 0, 2);
+                    kpTeachDisplay.DrawStaticShape(_Point, "LeadPoint" + (iLoopCount + 1), CogColorConstants.Green);
+                }
+                #endregion
+            }
+
+            else
+            {
+                CogLeadFormResult _LeadFormResult = new CogLeadFormResult();
+                _LeadFormResult = InspLeadFormProcess.GetLeadFormResult();
+
+                _InspResult.LeadCount = _LeadFormResult.LeadCount;
+                _InspResult.AlignResultDataList = _LeadFormResult.AlignResultDataList;
+
+                #region Draw Lead Align Position
+                for (int iLoopCount = 0; iLoopCount < _InspResult.AlignResultDataList.Count; ++iLoopCount)
+                {
+                    CogRectangle _LeadRect = new CogRectangle();
+                    double _CenterX = _InspResult.AlignResultDataList[iLoopCount].CenterX;
+                    double _CenterY = _InspResult.AlignResultDataList[iLoopCount].CenterY;
+                    double _Width = _InspResult.AlignResultDataList[iLoopCount].Width;
+                    double _Height = _InspResult.AlignResultDataList[iLoopCount].Height;
+                    _LeadRect.SetCenterWidthHeight(_CenterX, _CenterY, _Width, _Height);
+                    kpTeachDisplay.DrawStaticShape(_LeadRect, "LeadRect" + (iLoopCount + 1), CogColorConstants.Green);
+
+                    CogPointMarker _Point = new CogPointMarker();
+                    _Point.SetCenterRotationSize(_CenterX, _CenterY, 0, 2);
+                    kpTeachDisplay.DrawStaticShape(_Point, "LeadPoint" + (iLoopCount + 1), CogColorConstants.Green);
                 }
                 #endregion
             }

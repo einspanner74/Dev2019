@@ -337,17 +337,20 @@ namespace DIOControlManager
 
         public void DeInitialize()
         {
-            IsInitialize = false;
+            if (true == IsInitialize)
+            {
+                IsInitialize = false;
 
-            if (ThreadInputIOCheck != null)      { IsThreadInputIOCheckExit = true; Thread.Sleep(100); ThreadInputIOCheck.Abort(); ThreadInputIOCheck = null; }
-            if (ThreadOutputIOCheck != null)     { IsThreadOutputIOCheckExit = true; Thread.Sleep(100); ThreadOutputIOCheck.Abort(); ThreadOutputIOCheck = null; }
-            if (ThreadVisionAliveSignal != null) { IsThreadVisionAliveSignalExit = true; Thread.Sleep(100); ThreadVisionAliveSignal.Abort(); ThreadVisionAliveSignal = null; }
-            if (ThreadInputAliveCheck != null)   { IsThreadInputAliveCheckExit = true; Thread.Sleep(100); ThreadInputAliveCheck.Abort(); ThreadInputAliveCheck = null; }
-            if (ThreadSignalToggle != null)      { IsThreadSignalToggleExit = true; Thread.Sleep(100); ThreadSignalToggle.Abort(); ThreadSignalToggle = null; }
+                if (ThreadInputIOCheck != null)      { IsThreadInputIOCheckExit = true; Thread.Sleep(100); ThreadInputIOCheck.Abort(); ThreadInputIOCheck = null; }
+                if (ThreadOutputIOCheck != null)     { IsThreadOutputIOCheckExit = true; Thread.Sleep(100); ThreadOutputIOCheck.Abort(); ThreadOutputIOCheck = null; }
+                if (ThreadVisionAliveSignal != null) { IsThreadVisionAliveSignalExit = true; Thread.Sleep(100); ThreadVisionAliveSignal.Abort(); ThreadVisionAliveSignal = null; }
+                if (ThreadInputAliveCheck != null)   { IsThreadInputAliveCheckExit = true; Thread.Sleep(100); ThreadInputAliveCheck.Abort(); ThreadInputAliveCheck = null; }
+                if (ThreadSignalToggle != null)      { IsThreadSignalToggleExit = true; Thread.Sleep(100); ThreadSignalToggle.Abort(); ThreadSignalToggle = null; }
 
-            DioNamingWnd.ChangeNameEvent -= new DIONamingWindow.ChangeNameHandler(ChangeNameEventFunction);
-            WriteIOInfoFile();
-            DigitalIO.DeInitialize();
+                DioNamingWnd.ChangeNameEvent -= new DIONamingWindow.ChangeNameHandler(ChangeNameEventFunction);
+                WriteIOInfoFile();
+                DigitalIO.DeInitialize();
+            }
         }
 
         private bool InitializeIOBoard()

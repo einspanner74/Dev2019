@@ -26,9 +26,9 @@ namespace EthernetServerManager
         private CEtherentServerManager ServerSock;
         private Queue<string> CmdQueue = new Queue<string>();
 
-        private string IPAddress = "192.168.0.30";
-        private int PortNumber = 5000;
-        private string ClientIPAddress = "192.168.0.3";
+        private string IPAddress = "192.168.0.1";
+        private int PortNumber = 5050;
+        private string ClientIPAddress = "192.168.0.2";
 
         private bool IsConnected = false;
         //private Timer ConnectCheckTimer;
@@ -331,7 +331,7 @@ namespace EthernetServerManager
         private string[] ParsingProtocol(string _SendProtocol)
         {
             string _Protocol = _SendProtocol;
-            char[] _Separators = { '>', ';' };
+            char[] _Separators = { '>', ';', ',' };
 
             int _EtxIndex = _SendProtocol.LastIndexOf(CEtherentServerManager.ETX);
             if (_EtxIndex != -1) _Protocol = _SendProtocol.Insert(_EtxIndex, ";");

@@ -31,6 +31,11 @@ namespace InspectionSystemManager
         private RectangleD       LeadTipInspArea = new RectangleD();
         private RectangleD       GateRemainingArea = new RectangleD();
 
+        private double[]         LeadLengthArray;
+        private double[]         LeadPitchArray;
+        private double[]         LeadLengthArrayNew;
+        private double[]         LeadPitchArrayNew;
+
         private double ResolutionX = 0.005;
         private double ResolutionY = 0.005;
         private double BenchMarkOffsetX = 0;
@@ -94,6 +99,7 @@ namespace InspectionSystemManager
             CogLeadTrimAlgoRcp.ChipOutArea.Height = ChipOutArea.Height;
             CogLeadTrimAlgoRcp.ChipOutForeground = 1;
             CogLeadTrimAlgoRcp.ChipOutThreshold = Convert.ToInt32(graLabelChipOutThresholdValue.Text);
+            CogLeadTrimAlgoRcp.ChipOutSpec = Convert.ToDouble(textBoxChipOutSpec.Text);
             CogLeadTrimAlgoRcp.ChipOutBlobAreaMin = Convert.ToDouble(textBoxChipOutBlobAreaMin.Text);
             CogLeadTrimAlgoRcp.ChipOutBlobAreaMax = Convert.ToDouble(textBoxChipOutBlobAreaMax.Text);
             CogLeadTrimAlgoRcp.ChipOutWidthMin = Convert.ToDouble(textBoxChipOutWidthSizeMin.Text);
@@ -107,16 +113,21 @@ namespace InspectionSystemManager
             CogLeadTrimAlgoRcp.LeadMeasurementArea.Width = LeadMeasureArea.Width;
             CogLeadTrimAlgoRcp.LeadMeasurementArea.Height = LeadMeasureArea.Height;
 
+
             CogLeadTrimAlgoRcp.LeadCount = Convert.ToInt32(textBoxLeadCount.Text);
-            CogLeadTrimAlgoRcp.LeadLengthArray = new double[CogLeadTrimAlgoRcp.LeadCount];
-            CogLeadTrimAlgoRcp.LeadPitchArray = new double[CogLeadTrimAlgoRcp.LeadCount - 1];
-            CogLeadTrimAlgoRcp.LeadWidthArray = new double[CogLeadTrimAlgoRcp.LeadCount];
-            for (int iLoopCount = 0; iLoopCount < QuickGridViewLeadSetting.Rows.Count; ++iLoopCount)
-            {
-                CogLeadTrimAlgoRcp.LeadLengthArray[iLoopCount] = Convert.ToDouble(QuickGridViewLeadSetting[1, iLoopCount].Value);
-                CogLeadTrimAlgoRcp.LeadWidthArray[iLoopCount] = Convert.ToDouble(QuickGridViewLeadSetting[3, iLoopCount].Value);
-                if (iLoopCount > 0) CogLeadTrimAlgoRcp.LeadPitchArray[iLoopCount - 1] = Convert.ToDouble(QuickGridViewLeadSetting[2, iLoopCount].Value);
-            }
+            CogLeadTrimAlgoRcp.LeadLengthSpec = Convert.ToDouble(textBoxLeadLengthSpec.Text);
+            CogLeadTrimAlgoRcp.LeadSkewSpec = Convert.ToDouble(textBoxLeadSkewSpec.Text);
+            CogLeadTrimAlgoRcp.LeadPitchSpec = Convert.ToDouble(textBoxLeadPitchSpec.Text);
+
+            //CogLeadTrimAlgoRcp.LeadLengthArray = new double[CogLeadTrimAlgoRcp.LeadCount];
+            //CogLeadTrimAlgoRcp.LeadPitchArray = new double[CogLeadTrimAlgoRcp.LeadCount - 1];
+            //CogLeadTrimAlgoRcp.LeadWidthArray = new double[CogLeadTrimAlgoRcp.LeadCount];
+            //for (int iLoopCount = 0; iLoopCount < QuickGridViewLeadSetting.Rows.Count; ++iLoopCount)
+            //{
+            //    CogLeadTrimAlgoRcp.LeadLengthArray[iLoopCount] = Convert.ToDouble(QuickGridViewLeadSetting[1, iLoopCount].Value);
+            //    //CogLeadTrimAlgoRcp.LeadWidthArray[iLoopCount] = Convert.ToDouble(QuickGridViewLeadSetting[3, iLoopCount].Value);
+            //    if (iLoopCount > 0) CogLeadTrimAlgoRcp.LeadPitchArray[iLoopCount - 1] = Convert.ToDouble(QuickGridViewLeadSetting[2, iLoopCount - 1].Value);
+            //}
 
 
             CogLeadTrimAlgoRcp.ShoulderInspArea.CenterX = ShoulderInspArea.CenterX;
@@ -182,6 +193,7 @@ namespace InspectionSystemManager
             ChipOutArea.SetCenterWidthHeight(CogLeadTrimAlgoRcp.ChipOutArea.CenterX, CogLeadTrimAlgoRcp.ChipOutArea.CenterY, CogLeadTrimAlgoRcp.ChipOutArea.Width, CogLeadTrimAlgoRcp.ChipOutArea.Height);
             graLabelChipOutThresholdValue.Text = CogLeadTrimAlgoRcp.ChipOutThreshold.ToString();
             hScrollBarChipOutThreshold.Value = CogLeadTrimAlgoRcp.ChipOutThreshold;
+            textBoxChipOutSpec.Text = CogLeadTrimAlgoRcp.ChipOutSpec.ToString();
             textBoxChipOutBlobAreaMin.Text = CogLeadTrimAlgoRcp.ChipOutBlobAreaMin.ToString();
             textBoxChipOutBlobAreaMax.Text = CogLeadTrimAlgoRcp.ChipOutBlobAreaMax.ToString();
             textBoxChipOutWidthSizeMin.Text = CogLeadTrimAlgoRcp.ChipOutWidthMin.ToString();
@@ -194,28 +206,39 @@ namespace InspectionSystemManager
             LeadMeasureArea.SetCenterWidthHeight(CogLeadTrimAlgoRcp.LeadMeasurementArea.CenterX, CogLeadTrimAlgoRcp.LeadMeasurementArea.CenterY, CogLeadTrimAlgoRcp.LeadMeasurementArea.Width, CogLeadTrimAlgoRcp.LeadMeasurementArea.Height);
             textBoxLeadCount.Text = CogLeadTrimAlgoRcp.LeadCount.ToString();
             textBoxLeadLengthSpec.Text = CogLeadTrimAlgoRcp.LeadLengthSpec.ToString();
+            textBoxLeadSkewSpec.Text = CogLeadTrimAlgoRcp.LeadSkewSpec.ToString();
             textBoxLeadPitchSpec.Text = CogLeadTrimAlgoRcp.LeadPitchSpec.ToString();
 
             InitializeQuickGridView(CogLeadTrimAlgoRcp.LeadCount);
             for (int iLoopCount = 0; iLoopCount < CogLeadTrimAlgoRcp.LeadLengthArray.Length; ++iLoopCount)
             {
                 QuickGridViewLeadSetting[1, iLoopCount].Value = CogLeadTrimAlgoRcp.LeadLengthArray[iLoopCount].ToString("F4");
-                QuickGridViewLeadSetting[3, iLoopCount].Value = CogLeadTrimAlgoRcp.LeadWidthArray[iLoopCount].ToString("F4");
-                if (iLoopCount > 0) QuickGridViewLeadSetting[2, iLoopCount].Value = CogLeadTrimAlgoRcp.LeadPitchArray[iLoopCount - 1].ToString("F4");
+                //QuickGridViewLeadSetting[3, iLoopCount].Value = CogLeadTrimAlgoRcp.LeadWidthArray[iLoopCount].ToString("F4");
+                if (iLoopCount > 0) QuickGridViewLeadSetting[2, iLoopCount - 1].Value = CogLeadTrimAlgoRcp.LeadPitchArray[iLoopCount - 1].ToString("F4");
 
                 if (iLoopCount % 2 == 0)
                 {
                     QuickGridViewLeadSetting[1, iLoopCount].Style.BackColor = Color.DarkCyan;
                     QuickGridViewLeadSetting[2, iLoopCount].Style.BackColor = Color.DarkCyan;
-                    QuickGridViewLeadSetting[3, iLoopCount].Style.BackColor = Color.DarkCyan;
+                    //QuickGridViewLeadSetting[3, iLoopCount].Style.BackColor = Color.DarkCyan;
                 }
                 else
                 {
                     QuickGridViewLeadSetting[1, iLoopCount].Style.BackColor = Color.CadetBlue;
                     QuickGridViewLeadSetting[2, iLoopCount].Style.BackColor = Color.CadetBlue;
-                    QuickGridViewLeadSetting[3, iLoopCount].Style.BackColor = Color.CadetBlue;
+                    //QuickGridViewLeadSetting[3, iLoopCount].Style.BackColor = Color.CadetBlue;
                 }
             }
+
+            LeadLengthArray = new double[CogLeadTrimAlgoRcp.LeadLengthArray.Length];
+            LeadLengthArrayNew = new double[CogLeadTrimAlgoRcp.LeadLengthArray.Length];
+            for (int iLoopCount = 0; iLoopCount < CogLeadTrimAlgoRcp.LeadLengthArray.Length; ++iLoopCount)
+                LeadLengthArray[iLoopCount] = CogLeadTrimAlgoRcp.LeadLengthArray[iLoopCount];
+
+            LeadPitchArray = new double[CogLeadTrimAlgoRcp.LeadPitchArray.Length];
+            LeadPitchArrayNew = new double[CogLeadTrimAlgoRcp.LeadPitchArray.Length];
+            for (int iLoopCount = 0; iLoopCount < CogLeadTrimAlgoRcp.LeadPitchArray.Length; ++iLoopCount)
+                LeadPitchArray[iLoopCount] = CogLeadTrimAlgoRcp.LeadPitchArray[iLoopCount];
 
 
             //Shoulder Burr / Nick Inspection 
@@ -244,9 +267,71 @@ namespace InspectionSystemManager
         }
         #endregion
 
+        #region Control Default Event
+        private void tabControlLeadBody_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            #region TabControl Buttion initialize
+            TabControl _TabControl = sender as TabControl;
+            switch (_TabControl.SelectedTab.Text)
+            {
+                case " Lead Body":
+                    btnLeadBodyAreaShow.Enabled = true;
+                    btnLeadBodyAreaSet.Enabled = false;
+                    btnMaskingShow.Enabled = true;
+                    btnMaskingAdd.Enabled = false;
+                    btnMaskingSet.Enabled = false;
+                    btnMaskingUndo.Enabled = false;
+                    btnMaskingRedo.Enabled = false;
+                    btnMaskingClear.Enabled = false;
+                    break;
+
+                case " Mold ChipOut":
+                    btnChipOutAreaShow.Enabled = true;
+                    btnChipOutAreaSet.Enabled = false;
+                    break;
+
+                case " Bent/Length ":
+                    btnLeadLengthAreaShow.Enabled = true;
+                    btnLeadLengthAreaSet.Enabled = false;
+                    break;
+
+                case "Shoulder Burr/Nick":
+                    btnShoulderAreaShow.Enabled = true;
+                    btnShoulderAreaSet.Enabled = false;
+                    break;
+
+                case "Tip Burr":
+                    btnLeadTipAreaShow.Enabled = true;
+                    btnLeadTipAreaSet.Enabled = false;
+                    break;
+
+                case "Gate Remaining":
+                    btnGateRemainingAreaShow.Enabled = true;
+                    btnGateRemainingAreaSet.Enabled = false;
+                    break;
+            }
+            #endregion
+
+            var _ResetDisplayEvent = ResetDisplayEvent;
+            _ResetDisplayEvent?.Invoke();
+        }
+        #endregion
+
         #region Lead Body Button Event
         private void btnLeadBodyAreaShow_Click(object sender, EventArgs e)
         {
+            #region Button Status Set
+            btnLeadBodyAreaShow.Enabled = true;
+            btnLeadBodyAreaSet.Enabled = true;
+
+            btnMaskingShow.Enabled = true;
+            btnMaskingAdd.Enabled = false;
+            btnMaskingSet.Enabled = false;
+            btnMaskingUndo.Enabled = false;
+            btnMaskingRedo.Enabled = false;
+            btnMaskingClear.Enabled = false;
+            #endregion
+
             CogRectangle _Region = new CogRectangle();
             _Region.SetCenterWidthHeight(BodyArea.CenterX, BodyArea.CenterY, BodyArea.Width, BodyArea.Height);
 
@@ -256,6 +341,17 @@ namespace InspectionSystemManager
 
         private void btnLeadBodyAreaSet_Click(object sender, EventArgs e)
         {
+            #region Button Status Set
+            btnLeadBodyAreaShow.Enabled = true;
+            btnLeadBodyAreaSet.Enabled = false;
+            btnMaskingShow.Enabled = true;
+            btnMaskingAdd.Enabled = false;
+            btnMaskingSet.Enabled = false;
+            btnMaskingUndo.Enabled = false;
+            btnMaskingRedo.Enabled = false;
+            btnMaskingClear.Enabled = false;
+            #endregion
+
             var _GetRegionEvent = GetRegionEvent;
             CogRectangle _Region = GetRegionEvent?.Invoke();
 
@@ -268,12 +364,35 @@ namespace InspectionSystemManager
 
         private void btnMaskingShow_Click(object sender, EventArgs e)
         {
+            #region Button Status Set
+            btnLeadBodyAreaShow.Enabled = true;
+            btnLeadBodyAreaSet.Enabled = false;
+            btnMaskingShow.Enabled = true;
+            btnMaskingAdd.Enabled = true;
+            btnMaskingSet.Enabled = true;
+            btnMaskingUndo.Enabled = true;
+            btnMaskingRedo.Enabled = true;
+            btnMaskingClear.Enabled = true;
+            #endregion
+
             var _DrawMaskingRegionEven = DrawMaskingRegionEven;
             _DrawMaskingRegionEven?.Invoke(BodyMaskingAreaList);
         }
 
         private void btnMaskingAdd_Click(object sender, EventArgs e)
         {
+            #region Button Status Set
+            btnLeadBodyAreaShow.Enabled = true;
+            btnLeadBodyAreaSet.Enabled = false;
+
+            btnMaskingShow.Enabled = true;
+            btnMaskingAdd.Enabled = true;
+            btnMaskingSet.Enabled = true;
+            btnMaskingUndo.Enabled = true;
+            btnMaskingRedo.Enabled = true;
+            btnMaskingClear.Enabled = true;
+            #endregion
+
             CogRectangle _Region = new CogRectangle();
             _Region.SetCenterWidthHeight(500, 500, 500, 500);
 
@@ -377,6 +496,11 @@ namespace InspectionSystemManager
 
         private void btnChipOutAreaShow_Click(object sender, EventArgs e)
         {
+            #region Button Status Set
+            btnChipOutAreaShow.Enabled = true;
+            btnChipOutAreaSet.Enabled = true;
+            #endregion
+
             CogRectangle _Region = new CogRectangle();
             _Region.SetCenterWidthHeight(ChipOutArea.CenterX, ChipOutArea.CenterY, ChipOutArea.Width, ChipOutArea.Height);
 
@@ -386,6 +510,11 @@ namespace InspectionSystemManager
 
         private void btnChipOutAreaSet_Click(object sender, EventArgs e)
         {
+            #region Button Status Set
+            btnChipOutAreaShow.Enabled = true;
+            btnChipOutAreaSet.Enabled = false;
+            #endregion
+
             var _GetRegionEvent = GetRegionEvent;
             CogRectangle _Region = GetRegionEvent?.Invoke();
 
@@ -410,6 +539,7 @@ namespace InspectionSystemManager
             _LeadTrimAlgoDest.ChipOutWidthMax = Convert.ToDouble(textBoxChipOutWidthSizeMax.Text);
             _LeadTrimAlgoDest.ChipOutHeightMin = Convert.ToDouble(textBoxChipOutHeightSizeMin.Text);
             _LeadTrimAlgoDest.ChipOutHeightMax = Convert.ToDouble(textBoxChipOutHeightSizeMax.Text);
+            _LeadTrimAlgoDest.ChipOutSpec = Convert.ToDouble(textBoxChipOutSpec.Text);
 
             var _ApplyLeadTrimValueEvent = ApplyLeadTrimValueEvent;
             _ApplyLeadTrimValueEvent?.Invoke(CogLeadTrimAlgo.eAlgoMode.CHIPOUT_CHECK, _InspRegion, _LeadTrimAlgoDest, ref _CogLeadTrimResult);
@@ -420,6 +550,11 @@ namespace InspectionSystemManager
         #region Lead Bent Length Button Event
         private void btnLeadLengthAreaShow_Click(object sender, EventArgs e)
         {
+            #region Button Status Set
+            btnLeadLengthAreaShow.Enabled = true;
+            btnLeadLengthAreaSet.Enabled = true;
+            #endregion
+
             CogRectangle _Region = new CogRectangle();
             _Region.SetCenterWidthHeight(LeadMeasureArea.CenterX, LeadMeasureArea.CenterY, LeadMeasureArea.Width, LeadMeasureArea.Height);
 
@@ -429,6 +564,11 @@ namespace InspectionSystemManager
 
         private void btnLeadLengthAreaSet_Click(object sender, EventArgs e)
         {
+            #region Button Status Set
+            btnLeadLengthAreaShow.Enabled = true;
+            btnLeadLengthAreaSet.Enabled = false;
+            #endregion
+
             var _GetRegionEvent = GetRegionEvent;
             CogRectangle _Region = GetRegionEvent?.Invoke();
 
@@ -451,7 +591,12 @@ namespace InspectionSystemManager
 
             //CogLeadTrimAlgoRcp.LeadCount = _CogLeadTrimResult.LeadCount;
             textBoxLeadCount.Text = _CogLeadTrimResult.LeadCount.ToString();
-            SetGridViewLeadMeasurementValue(_CogLeadTrimResult);
+
+
+            SetLeadMeasurementValue(_CogLeadTrimResult);
+            SetGridViewLeadMeasurementValue(LeadLengthArrayNew, LeadPitchArrayNew);
+            //SetGridViewLeadMeasurementValue(_CogLeadTrimResult);
+            
         }
 
         private void InitializeQuickGridView(int _RowCount)
@@ -460,11 +605,11 @@ namespace InspectionSystemManager
             for (int iLoopCount = 0; iLoopCount < _RowCount; ++iLoopCount)
             {
                 DataGridViewRow _GridRow = new DataGridViewRow();
-                DataGridViewCell[] _GridCell = new DataGridViewCell[4];
+                DataGridViewCell[] _GridCell = new DataGridViewCell[3];
                 _GridCell[0] = gridLeadNum.CellTemplate.Clone() as DataGridViewCell;
                 _GridCell[1] = gridLeadLength.CellTemplate.Clone() as DataGridViewCell;
                 _GridCell[2] = gridLeadPitch.CellTemplate.Clone() as DataGridViewCell;
-                _GridCell[3] = gridLeadWidth.CellTemplate.Clone() as DataGridViewCell;
+                //_GridCell[3] = gridLeadWidth.CellTemplate.Clone() as DataGridViewCell;
 
                 _GridCell[0].Value = (iLoopCount + 1);
                 _GridCell[0].Style.BackColor = Color.DarkGreen;
@@ -484,30 +629,66 @@ namespace InspectionSystemManager
 
             for (int iLoopCount = 0; iLoopCount < _Result.LeadLength.Length; ++iLoopCount)
             {
-                QuickGridViewLeadSetting[1, iLoopCount].Value = _Result.LeadLength[iLoopCount].ToString("F4") + " mm";
-                QuickGridViewLeadSetting[3, iLoopCount].Value = _Result.LeadWidth[iLoopCount].ToString("F4") + " mm";
+                QuickGridViewLeadSetting[1, iLoopCount].Value = _Result.LeadLength[iLoopCount].ToString("F4");
+                //QuickGridViewLeadSetting[3, iLoopCount].Value = _Result.LeadWidth[iLoopCount].ToString("F4");
                 //if (iLoopCount > 0) QuickGridViewLeadSetting[2, iLoopCount].Value = _Result.LeadPitchLength[iLoopCount - 1].ToString("F4");
-                if (iLoopCount < _Result.LeadLength.Length - 1) QuickGridViewLeadSetting[2, iLoopCount].Value = _Result.LeadPitchLength[iLoopCount].ToString("F4") + "mm";
+                if (iLoopCount < _Result.LeadLength.Length - 1) QuickGridViewLeadSetting[2, iLoopCount].Value = _Result.LeadPitchLength[iLoopCount].ToString("F4");
 
                 if (iLoopCount % 2 == 0)
                 {
                     QuickGridViewLeadSetting[1, iLoopCount].Style.BackColor = Color.DarkCyan;
                     QuickGridViewLeadSetting[2, iLoopCount].Style.BackColor = Color.DarkCyan;
-                    QuickGridViewLeadSetting[3, iLoopCount].Style.BackColor = Color.DarkCyan;
+                    //QuickGridViewLeadSetting[3, iLoopCount].Style.BackColor = Color.DarkCyan;
                 }
                 else
                 {
                     QuickGridViewLeadSetting[1, iLoopCount].Style.BackColor = Color.CadetBlue;
                     QuickGridViewLeadSetting[2, iLoopCount].Style.BackColor = Color.CadetBlue;
-                    QuickGridViewLeadSetting[3, iLoopCount].Style.BackColor = Color.CadetBlue;
+                    //QuickGridViewLeadSetting[3, iLoopCount].Style.BackColor = Color.CadetBlue;
                 }
             }
+        }
+
+        private void SetGridViewLeadMeasurementValue(double[] _LengthArray, double[] _PitchArray)
+        {
+            for  (int iLoopCount = 0; iLoopCount < _LengthArray.Length; ++iLoopCount)
+            {
+                QuickGridViewLeadSetting[1, iLoopCount].Value = _LengthArray[iLoopCount].ToString("F4");
+                if (iLoopCount < _LengthArray.Length - 1) QuickGridViewLeadSetting[2, iLoopCount].Value = _PitchArray[iLoopCount].ToString("F4");
+
+                if (iLoopCount % 2 == 0)
+                {
+                    QuickGridViewLeadSetting[1, iLoopCount].Style.BackColor = Color.DarkCyan;
+                    QuickGridViewLeadSetting[2, iLoopCount].Style.BackColor = Color.DarkCyan;
+                }
+                else
+                {
+                    QuickGridViewLeadSetting[1, iLoopCount].Style.BackColor = Color.CadetBlue;
+                    QuickGridViewLeadSetting[2, iLoopCount].Style.BackColor = Color.CadetBlue;
+                }
+            }
+        }
+
+        private void SetLeadMeasurementValue(CogLeadTrimResult _Result)
+        {
+            LeadLengthArrayNew = new double[_Result.LeadLength.Length];
+            for (int iLoopCount = 0; iLoopCount < _Result.LeadLength.Length; ++iLoopCount)
+                LeadLengthArrayNew[iLoopCount] = _Result.LeadLength[iLoopCount];
+
+            LeadPitchArrayNew = new double[_Result.LeadPitchLength.Length];
+            for (int iLoopCount = 0; iLoopCount < _Result.LeadPitchLength.Length; ++iLoopCount)
+                LeadPitchArrayNew[iLoopCount] = _Result.LeadPitchLength[iLoopCount];
         }
         #endregion
 
         #region Shoulder Nick / Burr Button Event
         private void btnShoulderAreaShow_Click(object sender, EventArgs e)
         {
+            #region Button Status Set
+            btnShoulderAreaShow.Enabled = true;
+            btnShoulderAreaSet.Enabled = true;
+            #endregion
+
             CogRectangle _Region = new CogRectangle();
             _Region.SetCenterWidthHeight(ShoulderInspArea.CenterX, ShoulderInspArea.CenterY, ShoulderInspArea.Width, ShoulderInspArea.Height);
 
@@ -517,6 +698,11 @@ namespace InspectionSystemManager
 
         private void btnShoulderAreaSet_Click(object sender, EventArgs e)
         {
+            #region Button Status Set
+            btnShoulderAreaShow.Enabled = true;
+            btnShoulderAreaSet.Enabled = false;
+            #endregion
+
             var _GetRegionEvent = GetRegionEvent;
             CogRectangle _Region = GetRegionEvent?.Invoke();
 
@@ -536,7 +722,8 @@ namespace InspectionSystemManager
             CogLeadTrimAlgo _ShoulderAlgoDest = new CogLeadTrimAlgo(ResolutionX, ResolutionY);
             _ShoulderAlgoDest.LeadCount = CogLeadTrimAlgoRcp.LeadCount;
             _ShoulderAlgoDest.ShoulderForeground = CogLeadTrimAlgoRcp.ShoulderForeground;
-            _ShoulderAlgoDest.ShoulderThreshold = CogLeadTrimAlgoRcp.ShoulderThreshold;
+            //_ShoulderAlgoDest.ShoulderThreshold = CogLeadTrimAlgoRcp.ShoulderThreshold;
+            _ShoulderAlgoDest.ShoulderThreshold = Convert.ToInt32(graLabelBurrThresholdValue.Text);
             _ShoulderAlgoDest.LeadEdgeWidth = Convert.ToInt32(textBoxShoulderEdgeWidth.Text);
             _ShoulderAlgoDest.ShoulderBurrThreshold = Convert.ToInt32(graLabelBurrThresholdValue.Text);
             _ShoulderAlgoDest.ShoulderNickThreshold = Convert.ToInt32(graLabelNickThresholdValue.Text);
@@ -561,6 +748,11 @@ namespace InspectionSystemManager
         #region Lead Tip Burr Button Event
         private void btnLeadTipAreaShow_Click(object sender, EventArgs e)
         {
+            #region Button Status Set
+            btnLeadTipAreaShow.Enabled = true;
+            btnLeadTipAreaSet.Enabled = true;
+            #endregion 
+
             CogRectangle _Region = new CogRectangle();
             _Region.SetCenterWidthHeight(LeadTipInspArea.CenterX, LeadTipInspArea.CenterY, LeadTipInspArea.Width, LeadTipInspArea.Height);
 
@@ -570,6 +762,11 @@ namespace InspectionSystemManager
 
         private void btnLeadTipAreaSet_Click(object sender, EventArgs e)
         {
+            #region Button Status Set
+            btnLeadTipAreaShow.Enabled = true;
+            btnLeadTipAreaSet.Enabled = false;
+            #endregion 
+
             var _GetRegionEvent = GetRegionEvent;
             CogRectangle _Region = GetRegionEvent?.Invoke();
 
@@ -590,7 +787,8 @@ namespace InspectionSystemManager
             _LeadTipAlgoDest.LeadCount = CogLeadTrimAlgoRcp.LeadCount;
             _LeadTipAlgoDest.LeadTipEdgeWidth = Convert.ToInt32(textBoxLeadTipEdgeWidth.Text);
             _LeadTipAlgoDest.LeadTipForeground = CogLeadTrimAlgoRcp.LeadTipForeground;
-            _LeadTipAlgoDest.LeadTipThreshold = CogLeadTrimAlgoRcp.LeadTipThreshold;
+            //_LeadTipAlgoDest.LeadTipThreshold = CogLeadTrimAlgoRcp.LeadTipThreshold;
+            _LeadTipAlgoDest.LeadTipThreshold = Convert.ToInt32(graLabelLeadTipBurrThresholdValue.Text);
             _LeadTipAlgoDest.LeadTipBurrThreshold = Convert.ToInt32(graLabelLeadTipBurrThresholdValue.Text);
             _LeadTipAlgoDest.LeadTipBurrSpec = Convert.ToDouble(textBoxLeadTipBurrSpec.Text);
             
@@ -606,6 +804,11 @@ namespace InspectionSystemManager
         #region Gate Remaining Button event
         private void btnGateRemainingAreaShow_Click(object sender, EventArgs e)
         {
+            #region Button Status Set
+            btnGateRemainingAreaShow.Enabled = true;
+            btnGateRemainingAreaSet.Enabled = true;
+            #endregion
+
             CogRectangle _Region = new CogRectangle();
             _Region.SetCenterWidthHeight(GateRemainingArea.CenterX, GateRemainingArea.CenterY, GateRemainingArea.Width, GateRemainingArea.Height);
 
@@ -615,6 +818,11 @@ namespace InspectionSystemManager
 
         private void btnGateRemainingAreaSet_Click(object sender, EventArgs e)
         {
+            #region Button Status Set
+            btnGateRemainingAreaShow.Enabled = true;
+            btnGateRemainingAreaSet.Enabled = false;
+            #endregion
+
             var _GetRegionEvent = GetRegionEvent;
             CogRectangle _Region = GetRegionEvent?.Invoke();
 
@@ -646,10 +854,29 @@ namespace InspectionSystemManager
         }
         #endregion
 
-        private void tabControlLeadBody_SelectedIndexChanged(object sender, EventArgs e)
+        private void btnNowLeadValueShow_Click(object sender, EventArgs e)
         {
-            var _ResetDisplayEvent = ResetDisplayEvent;
-            _ResetDisplayEvent?.Invoke();
+            SetGridViewLeadMeasurementValue(LeadLengthArray, LeadPitchArray);
+        }
+
+        private void btnNewLeadValueShow_Click(object sender, EventArgs e)
+        {
+            SetGridViewLeadMeasurementValue(LeadLengthArrayNew, LeadPitchArrayNew);
+        }
+
+        private void btnNewLeadValueSave_Click(object sender, EventArgs e)
+        {
+            DialogResult dlgResult = MessageBox.Show(new Form { TopMost = true }, "현재 Lead Length/Bent 사이즈를 저장 하시겠습니까? ", "Exit Program", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button2);
+            if (DialogResult.Yes != dlgResult) { return; }
+
+            CogLeadTrimAlgoRcp.LeadLengthArray = new double[CogLeadTrimAlgoRcp.LeadCount];
+            CogLeadTrimAlgoRcp.LeadPitchArray = new double[CogLeadTrimAlgoRcp.LeadCount - 1];
+            for (int iLoopCount = 0; iLoopCount < QuickGridViewLeadSetting.Rows.Count; ++iLoopCount)
+            {
+                CogLeadTrimAlgoRcp.LeadLengthArray[iLoopCount] = Convert.ToDouble(QuickGridViewLeadSetting[1, iLoopCount].Value);
+                if (iLoopCount > 0)
+                    CogLeadTrimAlgoRcp.LeadPitchArray[iLoopCount - 1] = Convert.ToDouble(QuickGridViewLeadSetting[2, iLoopCount - 1].Value);
+            }
         }
     }
 }

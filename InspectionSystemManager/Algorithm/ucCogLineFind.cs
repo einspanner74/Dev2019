@@ -189,6 +189,9 @@ namespace InspectionSystemManager
             _CogLineFindAlgoRcp.CaliperLineEndX = Convert.ToDouble(numUpDownEndX.Value);
             _CogLineFindAlgoRcp.CaliperLineEndY = Convert.ToDouble(numUpDownEndY.Value);
 
+            _CogLineFindAlgoRcp.ContrastThreshold = Convert.ToInt32(numUpDownContrastThreshold.Value);
+            _CogLineFindAlgoRcp.FilterHalfSizePixels = Convert.ToInt32(numUpDownFilterHalfSizePixels.Value);
+
             var _ApplyLineFindEvent = ApplyLineFindEvent;
             _ApplyLineFindEvent?.Invoke(_CogLineFindAlgoRcp, ref _CogLineFindResult);
         }

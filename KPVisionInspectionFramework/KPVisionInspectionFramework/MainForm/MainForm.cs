@@ -161,7 +161,8 @@ namespace KPVisionInspectionFramework
                 rbAlign.Visible = false;
                 rbSerial.Visible = false;
                 rbConfig.Visible = false;
-                rbFolder.Visible = false;
+                rbRecipe.Visible = false;
+                rbMapData.Visible = false;
                 this.Size = new Size(1280, 1024);
             }
 
@@ -219,7 +220,8 @@ namespace KPVisionInspectionFramework
             ResultBaseWnd.SetWindowSize(ParamManager.SystemParam.ResultWindowWidth, ParamManager.SystemParam.ResultWindowHeight);
             ResultBaseWnd.ClearResultData();
 
-            if((eProjectType)ParamManager.SystemParam.ProjectType == eProjectType.BC_QCC) ResultBaseWnd.SetDataFolderPath(ParamManager.SystemParam.DataFolderPath);
+            if ((eProjectType)ParamManager.SystemParam.ProjectType == eProjectType.BC_QCC) ResultBaseWnd.SetDataFolderPath(ParamManager.SystemParam.DataFolderPath);
+            if ((eProjectType)ParamManager.SystemParam.ProjectType == eProjectType.TRIM_FORM) ResultBaseWnd.SetDataFolderPath(ParamManager.SystemParam.DataFolderPath);
             #endregion Result Window Initialize
 
             #region Light Window Initialize
@@ -233,7 +235,7 @@ namespace KPVisionInspectionFramework
             #endregion History Window Initialize
 
             #region FolderPath Window Initialize
-            FolderPathWnd = new FolderPathWindow(ParamManager.SystemParam.IsSimulationMode);
+            FolderPathWnd = new FolderPathWindow(ParamManager.SystemParam.ProjectType);
             FolderPathWnd.SetDataPathEvent += new FolderPathWindow.SetDataPathHandler(SetDataFolderPath);
             #endregion FolderPath Window Initialize
 
@@ -259,7 +261,7 @@ namespace KPVisionInspectionFramework
             {
                 InspSysManager[iLoopCount] = new CInspectionSystemManager(iLoopCount, KPVisionInspectionFramework.LanguageResource.Vision + (iLoopCount + 1), ParamManager.SystemParam.IsSimulationMode);
                 InspSysManager[iLoopCount].InspSysManagerEvent += new CInspectionSystemManager.InspSysManagerHandler(InspectionSystemManagerEventFunction);
-                InspSysManager[iLoopCount].Initialize(this, ParamManager.SystemParam.ProjectType, ParamManager.InspSysManagerParam[iLoopCount], ParamManager.InspParam[iLoopCount], ParamManager.SystemParam.LastRecipeName[iLoopCount]);
+                InspSysManager[iLoopCount].Initialize(this, ParamManager.SystemParam.ProjectType, ParamManager.InspSysManagerParam[iLoopCount], ParamManager.InspParam[iLoopCount], ParamManager.SystemParam.LastRecipeName[iLoopCount], ParamManager.SystemParam.DataFolderPath[iLoopCount]);
 
                 //MapData 사용 여부 Check
                 if ((int)eProjectType.NONE == ParamManager.SystemParam.ProjectType || (int)eProjectType.SORTER == ParamManager.SystemParam.ProjectType)
@@ -687,7 +689,11 @@ namespace KPVisionInspectionFramework
 
         private void UpdateRibbonRecipeName(string _RecipeName)
         {
-            rbLabelCurrentRecipe.Text = "Recipe : " + _RecipeName + " ";
+            if ((eProjectType)ParamManager.SystemParam.ProjectType == eProjectType.TRIM_FORM)
+            {
+                rbLabelCurrentRecipe.Text = _RecipeName + " ";
+            }
+            else rbLabelCurrentRecipe.Text = "Recipe : " + _RecipeName + " ";
         }
         #endregion Sub Window Events
 
@@ -749,7 +755,14 @@ namespace KPVisionInspectionFramework
                     case "00": MainProcess.SendSerialData(eMainProcCmd.ACK_COMPLETE, _ReceiveData.PortNumber.ToString()); break;
                 }
             }
+            else if(eProjectType.TRIM_FORM == (eProjectType)ParamManager.SystemParam.ProjectType)
+            {
+                string[] _SerialNum = _Value as string[];
 
+                if (ResultBaseWnd != null) ResultBaseWnd.SetLOTNum(_SerialNum);
+
+                UpdateRibbonRecipeName(_SerialNum[1]);
+            }
             else
             {
                 string[] _ReceiveData = _Value as string[];
@@ -787,7 +800,7 @@ namespace KPVisionInspectionFramework
 
         private void SetDataFolderPath(string[] _DataPath)
         {
-            for(int iLoopCount = 0; iLoopCount < ParamManager.SystemParam.DataFolderPath.Count(); iLoopCount++)
+            for(int iLoopCount = 0; iLoopCount < _DataPath.Count(); iLoopCount++)
             {
                 ParamManager.SystemParam.DataFolderPath[iLoopCount] = _DataPath[iLoopCount];
             }            

@@ -27,22 +27,18 @@ namespace InspectionSystemManager
         private CogBlobResult           BlobResult;
         //private CogBlobReferenceResult  InspBlobReferResults;
         private CogLeadTrimResult       InspLeadTrimResults;
+        private CogLine                 LeadBodyBaseLine = new CogLine();
 
         #region Initialize & Deinitialize
         public InspectionLeadTrim()
         {
-            BlobProc = new CogBlob();
+            
             BlobResults = new CogBlobResults();
             BlobResult = new CogBlobResult();
             //InspBlobReferResults = new CogBlobReferenceResult();
             InspLeadTrimResults = new CogLeadTrimResult();
 
-            BlobProc.SegmentationParams.Mode = CogBlobSegmentationModeConstants.HardFixedThreshold;
-            BlobProc.SegmentationParams.Polarity = CogBlobSegmentationPolarityConstants.LightBlobs;
-            BlobProc.SegmentationParams.HardFixedThreshold = 100;
-            BlobProc.ConnectivityMode = CogBlobConnectivityModeConstants.GreyScale;
-            BlobProc.ConnectivityCleanup = CogBlobConnectivityCleanupConstants.Fill;
-            BlobProc.ConnectivityMinPixels = 10;
+            InitializeBlobProcessor();
         }
 
         public void Initialize()
@@ -54,21 +50,24 @@ namespace InspectionSystemManager
         {
 
         }
+
+        private void InitializeBlobProcessor()
+        {
+            BlobProc = new CogBlob();
+            BlobProc.SegmentationParams.Mode = CogBlobSegmentationModeConstants.HardFixedThreshold;
+            BlobProc.SegmentationParams.Polarity = CogBlobSegmentationPolarityConstants.LightBlobs;
+            BlobProc.SegmentationParams.HardFixedThreshold = 100;
+            BlobProc.ConnectivityMode = CogBlobConnectivityModeConstants.GreyScale;
+            BlobProc.ConnectivityCleanup = CogBlobConnectivityCleanupConstants.Fill;
+            BlobProc.ConnectivityMinPixels = 10;
+        }
         #endregion
 
         public bool Run(CogImage8Grey _SrcImage, CogRectangle _InspRegion, CogLeadTrimAlgo _CogLeadTrimAlgo, ref CogLeadTrimResult _CogLeadTrimResult, int _NgNumber = 0)
         {
             bool _Result = false;
 
-            //LeadTrimResult.NgType = eNgType.GOOD;
-            //LeadTrimResult.IsGood = true;
-            //
-            //LeadTrimResult.ShoulderBurrDefectList.Clear();
-            //LeadTrimResult.ShoulderNickDefectList.Clear();
-            //LeadTrimResult.LeadTipBurrDefectList.Clear();
-            //LeadTrimResult.GateRemainingNgList.Clear();
-
-            ClearLeadTrimResult();
+            ClearLeadTrimResult(_CogLeadTrimAlgo.LeadCount);
 
             CogRectangle _LeadBodyArea = new CogRectangle();
             CogRectangle _MoldChipArea = new CogRectangle();
@@ -87,12 +86,12 @@ namespace InspectionSystemManager
             do
             {
                 //Lead body search
-                if (false == LeadBodySearch(_SrcImage, _LeadBodyArea, _CogLeadTrimAlgo))        break;
-                if (false == MoldChipOutInspection(_SrcImage, _MoldChipArea, _CogLeadTrimAlgo)) break;
-                if (false == LeadMeasurement(_SrcImage, _LeadLengthArea, _CogLeadTrimAlgo))     break;
-                if (false == ShoulderInspection(_SrcImage, _ShoulderArea, _CogLeadTrimAlgo))    break;
-                if (false == LeadTipInspection(_SrcImage, _LeadTipArea, _CogLeadTrimAlgo))      break;
-                if (false == GateReminingInspection(_SrcImage, _GateArea, _CogLeadTrimAlgo))    break;
+                if (false == LeadBodySearch(_SrcImage, _LeadBodyArea, _CogLeadTrimAlgo, true))        break;
+                if (false == MoldChipOutInspection(_SrcImage, _MoldChipArea, _CogLeadTrimAlgo, true)) break;
+                if (false == LeadMeasurement(_SrcImage, _LeadLengthArea, _CogLeadTrimAlgo, true))     break;
+                if (false == ShoulderInspection(_SrcImage, _ShoulderArea, _CogLeadTrimAlgo, true))    break;
+                if (false == LeadTipInspection(_SrcImage, _LeadTipArea, _CogLeadTrimAlgo, true))      break;
+                if (false == GateReminingInspection(_SrcImage, _GateArea, _CogLeadTrimAlgo, true))    break;
 
                 _Result = true;
             } while (false);
@@ -102,12 +101,15 @@ namespace InspectionSystemManager
             return _Result;
         }
 
-        public void ClearLeadTrimResult()
+        public void ClearLeadTrimResult(int _LeadCount)
         {
             LeadTrimResult = new CogLeadTrimResult();
+            LeadTrimResult.EachLeadStatusArray = new EachLeadStatus[_LeadCount];
+            for (int iLoopCount = 0; iLoopCount < _LeadCount; ++iLoopCount)
+                LeadTrimResult.EachLeadStatusArray[iLoopCount] = new EachLeadStatus();
         }
 
-        public bool LeadBodySearch(CogImage8Grey _SrcImage, CogRectangle _InspRegion, CogLeadTrimAlgo _CogLeadTrimAlgo)
+        public bool LeadBodySearch(CogImage8Grey _SrcImage, CogRectangle _InspRegion, CogLeadTrimAlgo _CogLeadTrimAlgo, bool _InInspProcess = false)
         {
             if (LeadTrimResult.IsGood != true) return true;
 
@@ -123,30 +125,38 @@ namespace InspectionSystemManager
             
             try
             {
-                int _Index = 0;
-                double _BlobAreaMaxmize = 0;
-
-                SetHardFixedThreshold(100);
-                SetConnectivityMinimum(100000);
-                SetPolarity(false);
-
                 System.Diagnostics.Stopwatch _ProcessWatch = new System.Diagnostics.Stopwatch();
                 _ProcessWatch.Reset(); _ProcessWatch.Start();
 
+                int _Index = 0;
+                double _BlobAreaMaxmize = 0;
+
+                InitializeBlobProcessor();
+
+                SetHardFixedThreshold(180);
+                SetConnectivityMinimum(100000);
+                SetPolarity(false);
+
+
                 #region Step1. Lead 전체의 Center를 구해서 masking 위치를 따라가게 한다.
                 //Step1. Lead 전체의 Center를 구해서 masking 위치를 따라가게 한다.
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "LeadBodySearch - BlobProc.Start", CLogManager.LOG_LEVEL.MID);
+
+                
                 BlobResults = BlobProc.Execute(_SrcImage, _InspRegion);
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "LeadBodySearch - BlobProc.End", CLogManager.LOG_LEVEL.MID);
                 //CogLeadTrimShoulderResult _CogShoulderResult = GetShoulderResult(BlobResults);
                 GetResult(true);
 
                 CogLeadTrimResult _CogBlobReferResultTemp = new CogLeadTrimResult();
                 _CogBlobReferResultTemp = GetResults();
                 
-                if (_CogBlobReferResultTemp.BlobCount <= 0)
+                if (_CogBlobReferResultTemp.BlobCount <= 0)// && _CogBlobReferResultTemp.BlobArea[0] > 6000000)
                 {
                     //Blob이 없는 경우 제품 자체가 없는걸로 인식
                     LeadTrimResult.NgType = eNgType.EMPTY;
                     LeadTrimResult.IsGood = false;
+                    LeadTrimResult.SearchArea.SetCenterWidthHeight(_InspRegion.CenterX, _InspRegion.CenterY, _InspRegion.Width, _InspRegion.Height);
                     return false;
                 }
 
@@ -157,6 +167,15 @@ namespace InspectionSystemManager
                         _BlobAreaMaxmize = _CogBlobReferResultTemp.BlobArea[iLoopCount];
                         _Index = iLoopCount;
                     }
+                }
+
+                if (_BlobAreaMaxmize < 6000000)
+                {
+                    //Blob이 없는 경우 제품 자체가 없는걸로 인식
+                    LeadTrimResult.NgType = eNgType.EMPTY;
+                    LeadTrimResult.IsGood = false;
+                    LeadTrimResult.SearchArea.SetCenterWidthHeight(_InspRegion.CenterX, _InspRegion.CenterY, _InspRegion.Width, _InspRegion.Height);
+                    return false;
                 }
 
                 if (_CogLeadTrimAlgo.BodyCenterOrigin.X == 0 && _CogLeadTrimAlgo.BodyCenterOrigin.Y == 0)
@@ -226,6 +245,8 @@ namespace InspectionSystemManager
 
                     _CogCopyImage = (CogImage8Grey)_CogCopyRegionTool.OutputImage;
                 }
+
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "LeadBodySearch - Masking End", CLogManager.LOG_LEVEL.MID);
                 #endregion
 
                 #region Step3. Lead Pure Body Find
@@ -241,6 +262,7 @@ namespace InspectionSystemManager
                     //Blob이 없는 경우 제품 자체가 없는걸로 인식
                     LeadTrimResult.NgType = eNgType.EMPTY;
                     LeadTrimResult.IsGood = false;
+                    LeadTrimResult.SearchArea.SetCenterWidthHeight(_InspRegion.CenterX, _InspRegion.CenterY, _InspRegion.Width, _InspRegion.Height);
                     return false;
                 }
 
@@ -266,6 +288,7 @@ namespace InspectionSystemManager
                 CogLine _CogLine = new CogLine();
                 _CogLine.SetFromStartXYEndXY(LeadTrimResult.LeadBodyLeftTop.X, LeadTrimResult.LeadBodyLeftTop.Y, LeadTrimResult.LeadBodyRightTop.X, LeadTrimResult.LeadBodyRightTop.Y);
                 LeadTrimResult.LeadBodyBaseLine = _CogLine;
+                LeadBodyBaseLine = _CogLine;
                 #endregion
 
                 _ProcessWatch.Stop();
@@ -278,7 +301,7 @@ namespace InspectionSystemManager
                 //_CogImageFile.Append(_SrcImage);
                 //_CogImageFile.Close();
                 //
-                //_CogImageFile.Open(@"D:\Mask.jpg", CogImageFileModeConstants.Write);
+                //_CogImageFile.Open(@"D:\Mask.bmp", CogImageFileModeConstants.Write);
                 //_CogImageFile.Append(_CogCopyImage);
                 //_CogImageFile.Close();
                 #endregion
@@ -289,14 +312,17 @@ namespace InspectionSystemManager
                 CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "LeadBodySearch - Inspection Exception : " + ex.ToString(), CLogManager.LOG_LEVEL.LOW);
                 LeadTrimResult.NgType = eNgType.EMPTY;
                 LeadTrimResult.IsGood = false;
+                LeadTrimResult.SearchArea.SetCenterWidthHeight(_InspRegion.CenterX, _InspRegion.CenterY, _InspRegion.Width, _InspRegion.Height);
                 _Result = false;
             }
 
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "LeadBodySearch - End", CLogManager.LOG_LEVEL.MID);
+
+            if (false == _InInspProcess) _Result = true;
             return _Result;
         }
 
-        public bool MoldChipOutInspection(CogImage8Grey _SrcImage, CogRectangle _InspRegion, CogLeadTrimAlgo _CogLeadTrimAlgo)
+        public bool MoldChipOutInspection(CogImage8Grey _SrcImage, CogRectangle _InspRegion, CogLeadTrimAlgo _CogLeadTrimAlgo, bool _InInspProcess = false)
         {
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "MoldChipOutInspection - Start", CLogManager.LOG_LEVEL.MID);
 
@@ -370,9 +396,12 @@ namespace InspectionSystemManager
                 {
                     double _Width = _CogChipOutResult.BlobMaxX[iLoopCount] - _CogChipOutResult.BlobMinX[iLoopCount];
                     double _Height = _CogChipOutResult.BlobMaxY[iLoopCount] - _CogChipOutResult.BlobMinY[iLoopCount];
+                    double _RealWidth = _Width * _CogLeadTrimAlgo.ResolutionX;
+                    double _RealHeight = _Height * _CogLeadTrimAlgo.ResolutionY;
 
-                    if ((_CogLeadTrimAlgo.ChipOutWidthMax > _Width && _CogLeadTrimAlgo.ChipOutWidthMin < _Width) &&
-                        (_CogLeadTrimAlgo.ChipOutHeightMax > _Height && _CogLeadTrimAlgo.ChipOutHeightMin < _Height))
+                    //if ((_CogLeadTrimAlgo.ChipOutWidthMax > _Width && _CogLeadTrimAlgo.ChipOutWidthMin < _Width) &&
+                        //(_CogLeadTrimAlgo.ChipOutHeightMax > _Height && _CogLeadTrimAlgo.ChipOutHeightMin < _Height))
+                    if (_RealWidth > _CogLeadTrimAlgo.ChipOutSpec && _RealHeight > _CogLeadTrimAlgo.ChipOutSpec)
                     {
                         CogRectangle _DefectArea = new CogRectangle();
                         _DefectArea.SetXYWidthHeight(_CogChipOutResult.BlobMinX[iLoopCount], _CogChipOutResult.BlobMinY[iLoopCount], _Width, _Height);
@@ -398,10 +427,12 @@ namespace InspectionSystemManager
             }
 
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "MoldChipOutInspection - End", CLogManager.LOG_LEVEL.MID);
+
+            if (false == _InInspProcess) _Result = true;
             return _Result;
         }
 
-        public bool LeadMeasurement(CogImage8Grey _SrcImage, CogRectangle _InspRegion, CogLeadTrimAlgo _CogLeadTrimAlgo)
+        public bool LeadMeasurement(CogImage8Grey _SrcImage, CogRectangle _InspRegion, CogLeadTrimAlgo _CogLeadTrimAlgo, bool _InInspProcess = false)
         {
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "LeadMeasurement - Start", CLogManager.LOG_LEVEL.MID);
 
@@ -446,6 +477,14 @@ namespace InspectionSystemManager
                 LeadTrimResult.Angle = new double[_CogLeadTrimResult.BlobCount];
                 LeadTrimResult.LeadLengthResult = new bool[_CogLeadTrimResult.BlobCount];
                 LeadTrimResult.IsLeadLengthGood = new bool[_CogLeadTrimResult.BlobCount];
+
+                if (LeadTrimResult.LeadCount != _CogLeadTrimAlgo.LeadCount)
+                {
+                    LeadTrimResult.IsGood = false;
+                    LeadTrimResult.NgType = eNgType.LEAD_CNT;
+                    LeadTrimResult.SearchArea.SetCenterWidthHeight(_InspRegion.CenterX, _InspRegion.CenterY, _InspRegion.Width, _InspRegion.Height);
+                    return false;
+                }
 
                 for (int iLoopCount = 0; iLoopCount < _CogLeadTrimResult.BlobCount; ++iLoopCount)
                 {
@@ -494,13 +533,65 @@ namespace InspectionSystemManager
                     LeadTrimResult.LeadLength[iLoopCount] = _CogLeadTrimResult.PrincipalWidth[iLoopCount] * _CogLeadTrimAlgo.ResolutionY;
                     #endregion
 
+                    #region Pitch 구하기
+                    if (iLoopCount > 0)
+                    {
+                        LeadTrimResult.LeadPitchLength[iLoopCount - 1] = (LeadTrimResult.LeadPitchTopX[iLoopCount] - LeadTrimResult.LeadPitchTopX[iLoopCount - 1]) * _CogLeadTrimAlgo.ResolutionX;
+
+                        //Pitch Spec에서 완전히 벗어났는지 확인
+                        if (LeadTrimResult.LeadPitchLength[iLoopCount - 1] > (_CogLeadTrimAlgo.LeadPitchArray[iLoopCount - 1] - _CogLeadTrimAlgo.LeadPitchSpec) &&
+                            LeadTrimResult.LeadPitchLength[iLoopCount - 1] < (_CogLeadTrimAlgo.LeadPitchArray[iLoopCount - 1] + _CogLeadTrimAlgo.LeadPitchSpec))
+                        {
+                            //Align Skew 가능 범위에 들어와 있는지 확인
+                            //Skew 범위 안쪽이면 Skew 여부에 상관없이 GOOD
+                            if (LeadTrimResult.LeadPitchLength[iLoopCount - 1] > (_CogLeadTrimAlgo.LeadPitchArray[iLoopCount - 1] - _CogLeadTrimAlgo.LeadSkewSpec) &&
+                                LeadTrimResult.LeadPitchLength[iLoopCount - 1] < (_CogLeadTrimAlgo.LeadPitchArray[iLoopCount - 1] + _CogLeadTrimAlgo.LeadSkewSpec))
+                            {
+                                //if (LeadTrimResult.NgType == eNgType.GOOD)
+                                LeadTrimResult.IsLeadBentGood[iLoopCount - 1] = true;
+                                LeadTrimResult.EachLeadStatusArray[iLoopCount - 1].SetSkewResult(eLeadStatus.GOOD);
+                            }
+
+                            //Skew 범위 < Position < Pitch Err 범위
+                            //불량 판정 & Skew 가능 에러로 전달
+                            else
+                            {
+                                LeadTrimResult.IsLeadBentGood[iLoopCount - 1] = false;
+                                LeadTrimResult.IsGood = false;
+
+                                LeadTrimResult.EachLeadStatusArray[iLoopCount - 1].SetSkewResult(eLeadStatus.LEAD_SKEW_ENABLE);
+
+                                //불량이 발생해도 계속 진행 하도록 설정 _Result = false -> true;
+                                //_Result = false;
+                                _Result = true;
+                            }
+                                
+                        }
+
+                        //완전히 벗어나면 Skew 불가능 에러
+                        else
+                        {
+                            LeadTrimResult.IsLeadBentGood[iLoopCount - 1] = false;
+                            LeadTrimResult.IsGood = false;
+
+                            LeadTrimResult.EachLeadStatusArray[iLoopCount - 1].SetSkewResult(eLeadStatus.LEAD_SKEW_DISABLE);
+
+                            //불량이 발생해도 계속 진행 하도록 설정 _Result = false -> true;
+                            //_Result = false;
+                            _Result = true;
+                        }
+                    }
+
+                    #endregion
+
                     #region Length 구하기
                     CogLine _CogLeadLine = new CogLine();
                     _CogLeadLine.SetFromStartXYEndXY(LeadTrimResult.LeadPitchTopX[iLoopCount], LeadTrimResult.LeadPitchTopX[iLoopCount], LeadTrimResult.LeadPitchBottomX[iLoopCount], LeadTrimResult.LeadPitchBottomY[iLoopCount]);
 
                     CogIntersectLineLineTool _CogIntersect = new CogIntersectLineLineTool();
                     _CogIntersect.InputImage = _SrcImage;
-                    _CogIntersect.LineA = LeadTrimResult.LeadBodyBaseLine;
+                    //_CogIntersect.LineA = LeadTrimResult.LeadBodyBaseLine;
+                    _CogIntersect.LineA = LeadBodyBaseLine;
                     _CogIntersect.LineB = _CogLeadLine;
                     _CogIntersect.Run();
 
@@ -516,39 +607,25 @@ namespace InspectionSystemManager
                         LeadTrimResult.LeadLength[iLoopCount] < (_CogLeadTrimAlgo.LeadLengthArray[iLoopCount] + _CogLeadTrimAlgo.LeadLengthSpec))
                     {
                         LeadTrimResult.IsLeadLengthGood[iLoopCount] = true;
+                        LeadTrimResult.EachLeadStatusArray[iLoopCount].SetSkewResult(eLeadStatus.GOOD);
                     }
 
                     else
                     {
                         LeadTrimResult.IsLeadLengthGood[iLoopCount] = false;
                         LeadTrimResult.IsGood = false;
-                        LeadTrimResult.NgType = eNgType.LEAD_LENGTH;
-                        _Result = false;
+
+                        //LeadTrimResult.SkewResult[iLoopCount].Status = eTrimSkewStatus.GOOD;
+                        //LeadTrimResult.SkewResult[iLoopCount].NgType = eTrimSkewNgType.LEAD_LENGTH;
+                        //LeadTrimResult.SkewResult[iLoopCount].SetSkewResult(eTrimSkewStatus.GOOD, eTrimSkewNgType.LEAD_LENGTH);
+                        LeadTrimResult.EachLeadStatusArray[iLoopCount].SetSkewResult(eLeadStatus.LEAD_LENGTH);
+
+                        //불량이 발생해도 계속 진행 하도록 설정 _Result = false -> true;
+                        //_Result = false;
+                        _Result = true;
                     }
 
                     #endregion 
-
-                    #region Pitch 구하기
-                    if (iLoopCount > 0)
-                    {
-                        LeadTrimResult.LeadPitchLength[iLoopCount - 1] = (LeadTrimResult.LeadPitchTopX[iLoopCount] - LeadTrimResult.LeadPitchTopX[iLoopCount - 1]) * _CogLeadTrimAlgo.ResolutionX;
-
-                        if (LeadTrimResult.LeadPitchLength[iLoopCount - 1] > (_CogLeadTrimAlgo.LeadPitchArray[iLoopCount - 1] - _CogLeadTrimAlgo.LeadPitchSpec) &&
-                            LeadTrimResult.LeadPitchLength[iLoopCount - 1] < (_CogLeadTrimAlgo.LeadPitchArray[iLoopCount - 1] + _CogLeadTrimAlgo.LeadPitchSpec))
-                        {
-                            LeadTrimResult.IsLeadBentGood[iLoopCount - 1] = true;
-                        }
-
-                        else
-                        {
-                            LeadTrimResult.IsLeadBentGood[iLoopCount - 1] = false;
-                            LeadTrimResult.IsGood = false;
-                            LeadTrimResult.NgType = eNgType.LEAD_BENT;
-                            _Result = false;
-                        }
-                    }
-                        
-                    #endregion
 
                     #region Lead Wdith 구하기
                     //Width는 그대로 사용
@@ -568,10 +645,13 @@ namespace InspectionSystemManager
             }
 
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "LeadMeasurement - End", CLogManager.LOG_LEVEL.MID);
+
+            if (false == _InInspProcess) _Result = true;
+
             return _Result;
         }
 
-        public bool ShoulderInspection(CogImage8Grey _SrcImage, CogRectangle _InspRegion, CogLeadTrimAlgo _CogLeadTrimAlgo)
+        public bool ShoulderInspection(CogImage8Grey _SrcImage, CogRectangle _InspRegion, CogLeadTrimAlgo _CogLeadTrimAlgo, bool _InInspProcess = false)
         {
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "ShoulderInspection - Start", CLogManager.LOG_LEVEL.MID);
 
@@ -670,7 +750,14 @@ namespace InspectionSystemManager
                         LeadBurrCheck(_SrcImage, _ShoulderResult.LeadRightArea[iLoopCount], _CogLeadTrimAlgo);
                         LeadNickCheck(_SrcImage, _ShoulderResult.LeadCenterArea[iLoopCount], _CogLeadTrimAlgo);
 
-                        if (LeadTrimResult.NgType != eNgType.GOOD) { LeadTrimResult.IsGood = false; _Result = false; }
+                        //if (LeadTrimResult.NgType != eNgType.GOOD)
+                        //{
+                        //    LeadTrimResult.IsGood = false;
+                        //
+                        //    //불량이 발생해도 계속 진행 하도록 설정 _Result = false -> true;
+                        //    //_Result = false;
+                        //    _Result = true;
+                        //}
 
                         #region Blob 설정값 저장하여 확인하기 위해서 / 주석 처리
                         //CogBlobMeasure _BlobMeasure = new CogBlobMeasure();
@@ -719,6 +806,9 @@ namespace InspectionSystemManager
             }
 
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "ShoulderInspection - End", CLogManager.LOG_LEVEL.MID);
+
+            if (false == _InInspProcess) _Result = true;
+
             return _Result;
         }
 
@@ -736,13 +826,16 @@ namespace InspectionSystemManager
             double _CX, _CY, _W, _H;
 
             #region Lead 왼쪽, 오른쪽, Lead 영역 추출
+            //Burr or nick이 발생할경우 오히려 rotation 값에 오차가 발생함
+            
             //Lead의 왼쪽 영역 추출 : Lead Shoulder Burr 검사
             _Left = new CogRectangleAffine();
             _CX = _LeadCaliperResult[0].Edge0.PositionX - 10;
             _CY = _LeadArea.CenterY;
             _W = 20;
             _H = _LeadArea.SideYLength + 10;
-            _Left.SetCenterLengthsRotationSkew(_CX, _CY, _W, _H, _Rotation, 0);
+            //_Left.SetCenterLengthsRotationSkew(_CX, _CY, _W, _H, _Rotation, 0);
+            _Left.SetCenterLengthsRotationSkew(_CX, _CY, _W, _H, 0, 0);
 
             //Lead의 오른쪽 영역 추출 : Lead Shoulder Burr 검사
             _Right = new CogRectangleAffine();
@@ -750,7 +843,8 @@ namespace InspectionSystemManager
             _CY = _LeadArea.CenterY;
             _W = 20;
             _H = _LeadArea.SideYLength + 10;
-            _Right.SetCenterLengthsRotationSkew(_CX, _CY, _W, _H, _Rotation, 0);
+            //_Right.SetCenterLengthsRotationSkew(_CX, _CY, _W, _H, _Rotation, 0);
+            _Right.SetCenterLengthsRotationSkew(_CX, _CY, _W, _H, 0, 0);
 
             //Lead 영역 추출 : Lead Shoulder nick 검사
             _Center = new CogRectangleAffine();
@@ -758,7 +852,8 @@ namespace InspectionSystemManager
             _CY = _LeadArea.CenterY;
             _W = _LeadCaliperResult[0].Width;
             _H = _LeadArea.SideYLength + 10;
-            _Center.SetCenterLengthsRotationSkew(_CX, _CY, _W, _H, _Rotation, 0);
+            //_Center.SetCenterLengthsRotationSkew(_CX, _CY, _W, _H, _Rotation, 0);
+            _Center.SetCenterLengthsRotationSkew(_CX, _CY, _W, _H, 0, 0);
             #endregion
         }
 
@@ -786,8 +881,13 @@ namespace InspectionSystemManager
                     _DefectArea = new CogRectangle();
                     _DefectArea.SetCenterWidthHeight(_LeadBurrResult.BlobCenterX[iLoopCount], _LeadBurrResult.BlobCenterY[iLoopCount], _LeadBurrResult.Width[iLoopCount], _LeadBurrResult.Height[iLoopCount]);
 
-                    LeadTrimResult.NgType = eNgType.SHD_BURR;
                     LeadTrimResult.ShoulderBurrDefectList.Add(_DefectArea);
+
+                    //LeadTrimResult.SkewResult[iLoopCount].Status = eTrimSkewStatus.GOOD;
+                    //LeadTrimResult.SkewResult[iLoopCount].NgType = eTrimSkewNgType.SHLD_BURR;
+                    //LeadTrimResult.SkewResult[iLoopCount].SetSkewResult(eTrimSkewStatus.GOOD, eTrimSkewNgType.SHLD_BURR);
+                    LeadTrimResult.IsGood = false;
+                    LeadTrimResult.EachLeadStatusArray[iLoopCount].SetSkewResult(eLeadStatus.SHLD_BURR);
                 }
             }
         }
@@ -816,14 +916,19 @@ namespace InspectionSystemManager
                     _DefectArea = new CogRectangle();
                     _DefectArea.SetCenterWidthHeight(_LeadNickResult.BlobCenterX[iLoopCount], _LeadNickResult.BlobCenterY[iLoopCount], _LeadNickResult.Width[iLoopCount], _LeadNickResult.Height[iLoopCount]);
 
-                    LeadTrimResult.NgType = eNgType.SHD_NICK;
                     //LeadTrimResult.ShoulderBurrDefectList.Add(_DefectArea);
                     LeadTrimResult.ShoulderNickDefectList.Add(_DefectArea);
+
+                    //LeadTrimResult.SkewResult[iLoopCount].Status = eTrimSkewStatus.GOOD;
+                    //LeadTrimResult.SkewResult[iLoopCount].NgType = eTrimSkewNgType.SHLD_NICK;
+                    //LeadTrimResult.SkewResult[iLoopCount].SetSkewResult(eTrimSkewStatus.GOOD, eTrimSkewNgType.SHLD_NICK);
+                    LeadTrimResult.IsGood = false;
+                    LeadTrimResult.EachLeadStatusArray[iLoopCount].SetSkewResult(eLeadStatus.SHLD_NICK);
                 }
             }
         }
 
-        public bool LeadTipInspection(CogImage8Grey _SrcImage, CogRectangle _InspRegion, CogLeadTrimAlgo _CogLeadTrimAlgo)
+        public bool LeadTipInspection(CogImage8Grey _SrcImage, CogRectangle _InspRegion, CogLeadTrimAlgo _CogLeadTrimAlgo, bool _InInspProcess = false)
         {
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "LeadTipInspection - Start", CLogManager.LOG_LEVEL.MID);
 
@@ -842,7 +947,7 @@ namespace InspectionSystemManager
 
                 #region  Lead Tip 영역 추출
                 SetConnectivityMinimum(2000);
-                SetHardFixedThreshold(_CogLeadTrimAlgo.ShoulderThreshold);
+                SetHardFixedThreshold(_CogLeadTrimAlgo.LeadTipThreshold);
                 SetPolarity(Convert.ToBoolean(_CogLeadTrimAlgo.ShoulderForeground));
                 BlobResults = BlobProc.Execute(_SrcImage, _InspRegion);
                 CogLeadTrimLeadTipResult _LeadTipResult = GetLeadTipResult(BlobResults);
@@ -890,6 +995,8 @@ namespace InspectionSystemManager
                 //Caliper로 측정하여 검사영역 나누기
                 #region Caliper Tool Setting
                 CogCaliperTool _LeadCaliper = new CogCaliperTool();
+                _LeadCaliper.RunParams.ContrastThreshold = 5;
+                _LeadCaliper.RunParams.FilterHalfSizeInPixels = 4;
                 _LeadCaliper.RunParams.EdgeMode = CogCaliperEdgeModeConstants.Pair;
                 _LeadCaliper.RunParams.Edge0Polarity = CogCaliperPolarityConstants.LightToDark;
                 _LeadCaliper.RunParams.Edge0Position = _CogLeadTrimAlgo.LeadTipEdgeWidth / 2 * (-1);
@@ -915,13 +1022,20 @@ namespace InspectionSystemManager
                         _LeadTipResult.LeadEdgeRight[iLoopCount]  = _LeadCaliper.Results[0].Edge1.PositionX;
 
                         //Lead 왼쪽, 오른쪽, Lead 영역 추출
-                        GetLeadSectionArea(_LeadCaliper.Results, _LeadTipArea[iLoopCount], _LeadTipRotation[iLoopCount],
+                            GetLeadSectionArea(_LeadCaliper.Results, _LeadTipArea[iLoopCount], _LeadTipRotation[iLoopCount],
                                            ref _LeadTipResult.LeadTipLeftArea[iLoopCount], ref _LeadTipResult.LeadTipRightArea[iLoopCount], ref _LeadTipResult.LeadTipCenterArea[iLoopCount]);
 
                         LeadTipBurrCheck(_SrcImage, _LeadTipResult.LeadTipLeftArea[iLoopCount], _CogLeadTrimAlgo);
                         LeadTipBurrCheck(_SrcImage, _LeadTipResult.LeadTipRightArea[iLoopCount], _CogLeadTrimAlgo);
 
-                        if (LeadTrimResult.NgType != eNgType.GOOD) { LeadTrimResult.IsGood = false; _Result = false; }
+                        //if (LeadTrimResult.NgType != eNgType.GOOD)
+                        //{
+                        //    LeadTrimResult.IsGood = false;
+                        //
+                        //    //불량이 발생해도 계속 진행 하도록 설정 _Result = false -> true;
+                        //    //_Result = false;
+                        //    _Result = true;
+                        //}
 
                         #region Blob 설정값 저장하여 확인하기 위해서 / 주석 처리
                         //CogBlobMeasure _BlobMeasure = new CogBlobMeasure();
@@ -958,6 +1072,8 @@ namespace InspectionSystemManager
             }
 
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "LeadTipInspection - End", CLogManager.LOG_LEVEL.MID);
+
+            if (false == _InInspProcess) _Result = true;
             return _Result;
         }
 
@@ -965,7 +1081,7 @@ namespace InspectionSystemManager
         {
             SetPolarity(false);
             SetConnectivityMinimum(50);
-            SetHardFixedThreshold(_CogLeadTrimAlgo.ShoulderBurrThreshold);
+            SetHardFixedThreshold(_CogLeadTrimAlgo.LeadTipBurrThreshold);
             SetMorphology(CogBlobMorphologyConstants.ErodeHorizontal);
             SetMorphology(CogBlobMorphologyConstants.DilateHorizontal);
 
@@ -985,13 +1101,15 @@ namespace InspectionSystemManager
                     _DefectArea = new CogRectangle();
                     _DefectArea.SetCenterWidthHeight(_LeadTipBurrResult.BlobCenterX[iLoopCount], _LeadTipBurrResult.BlobCenterY[iLoopCount], _LeadTipBurrResult.Width[iLoopCount], _LeadTipBurrResult.Height[iLoopCount]);
 
-                    LeadTrimResult.NgType = eNgType.TIP_BURR;
                     LeadTrimResult.LeadTipBurrDefectList.Add(_DefectArea);
+
+                    LeadTrimResult.IsGood = false;
+                    LeadTrimResult.EachLeadStatusArray[iLoopCount].SetSkewResult(eLeadStatus.TIP_BURR);
                 }
             }
         }
 
-        public bool GateReminingInspection(CogImage8Grey _SrcImage, CogRectangle _InspRegion, CogLeadTrimAlgo _CogLeadTrimAlgo)
+        public bool GateReminingInspection(CogImage8Grey _SrcImage, CogRectangle _InspRegion, CogLeadTrimAlgo _CogLeadTrimAlgo, bool _InInspProcess = false)
         {
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "GateRemainingInspection - Start", CLogManager.LOG_LEVEL.MID);
 
@@ -1033,7 +1151,7 @@ namespace InspectionSystemManager
                         LeadTrimResult.NgType = eNgType.GATE_ERR;
                         LeadTrimResult.IsGood = false;
                         LeadTrimResult.GateRemainingNgList.Add(_DefectArea);
-                        _Result = false;
+                        _Result = true;
                     }
                 }
 

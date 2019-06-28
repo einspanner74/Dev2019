@@ -336,7 +336,14 @@ namespace KPVisionInspectionFramework
         //LDH, 2019.03.20, 저장 Data Foler 지정 함수
         public void SetDataFolderPath(string[] _FolderPath)
         {
-            MainResultCardManagerWnd.SetDataFolderPath(_FolderPath);
+            if (ProjectType == eProjectType.TRIM_FORM) MainResultTrimFormWnd.SetDataFolderPath(_FolderPath);
+            else if (ProjectType == eProjectType.BC_QCC) MainResultCardManagerWnd.SetDataFolderPath(_FolderPath);
+        }
+
+        //LDH, 2019.06.18, LOTNum 지정함수
+        public void SetLOTNum(string[] _LOTNum)
+        {
+            if (ProjectType == eProjectType.TRIM_FORM) MainResultTrimFormWnd.SetLOTNum(_LOTNum);
         }
     }
 }

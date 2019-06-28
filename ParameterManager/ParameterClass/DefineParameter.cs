@@ -50,7 +50,7 @@ namespace ParameterManager
     /// <summary>
     /// NG Type
     /// </summary>
-    public enum eNgType     { GOOD = 0, NONE, DUMMY, REF_NG, DEFECT, CRACK, RESIN, ID, EMPTY, LEAD_CNT, LEAD_BENT, NDL_CENTER, NDL_FIND, M_REF, MEASURE, CHIP_OUT, LEAD_LENGTH, SHD_BURR, SHD_NICK, TIP_BURR, GATE_ERR }
+    public enum eNgType     { GOOD = 0, NONE, DUMMY, REF_NG, DEFECT, CRACK, RESIN, ID, EMPTY, LEAD_CNT, LEAD_BENT, NDL_CENTER, NDL_FIND, M_REF, MEASURE, CHIP_OUT, GATE_ERR }
 
     public enum eMorphologyMode { ERODE = 0, DILATE, OPEN, CLOSE, }
 
@@ -71,6 +71,8 @@ namespace ParameterManager
     public enum eSaveMode           { ALL = 0, ONLY_NG };
 
     public enum eLanguage           { KR = 0, EN };
+    
+    public enum eLeadStatus         { GOOD = 0, LEAD_SKEW_ENABLE, LEAD_SKEW_DISABLE, LEAD_LENGTH, SHLD_BURR, SHLD_NICK, TIP_BURR };
 
     public static class DIO_DEF
     {

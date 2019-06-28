@@ -32,11 +32,14 @@ namespace InspectionSystemManager
         private InspectionAutoPattern       InspAutoPatternProc;
         private InspectionEllipse           InspEllipseProc;
         private InspectionLeadTrim          InspLeadTrimProc;
+        private InspectionLeadForm          InspLeadFormProc;
 
         private CCameraManager              CameraManager;
 
-        private TeachingWindow      TeachWnd;
-        private ImageDeleteWindow   ImageDeleteWnd;
+        private TeachingWindow          TeachWnd;
+        private ImageDeleteWindow       ImageDeleteWnd;
+        private ManualInspectionWindow  ManualInspWnd;
+
         private InspectionParameter InspParam = new InspectionParameter();
         private MapDataParameter    MapDataParam = new MapDataParameter();
         public AreaResultParameterList  AreaResultParamList = new AreaResultParameterList();
@@ -127,9 +130,13 @@ namespace InspectionSystemManager
             InspMenuToolTip.SetToolTip(btnCrossBar, InspectionSystemManager.LanguageResource.ToolTip_CrossBar);
             InspMenuToolTip.SetToolTip(btnImageResultDisplay, InspectionSystemManager.LanguageResource.ToolTip_ResultDisplay);
             #endregion
+
+#if _DEBUG
+            btnQuickInspection.Visible = true;
+#endif
         }
 
-        public void Initialize(Object _OwnerForm, int _ID, InspectionParameter _InspParam, eProjectType _ProjectType, eProjectItem _ProjectItem, string _FormName,string _RecipeName, bool _IsSimulationMode)
+        public void Initialize(Object _OwnerForm, int _ID, InspectionParameter _InspParam, eProjectType _ProjectType, eProjectItem _ProjectItem, string _FormName, string _RecipeName, bool _IsSimulationMode, string _FolderPath)
         {
             ID = _ID;
             ProjectItem = _ProjectItem;
@@ -171,6 +178,9 @@ namespace InspectionSystemManager
             InspLeadTrimProc = new InspectionLeadTrim();
             InspLeadTrimProc.Initialize();
 
+            InspLeadFormProc = new InspectionLeadForm();
+            InspLeadFormProc.Initialize();
+
             CameraManager = new CCameraManager();
 
             AreaResultParamList = new AreaResultParameterList();
@@ -193,22 +203,33 @@ namespace InspectionSystemManager
             ThreadImageSave.Start();
 
             TeachWnd = new TeachingWindow();
-            ImageDeleteWnd = new ImageDeleteWindow(this.labelTitle.Text);
+
+            ManualInspWnd = new ManualInspectionWindow();
+            ManualInspWnd.ImageLoadEvent += new ManualInspectionWindow.ImageLoadHandler(ManualInspectionImageLoad);
+            ManualInspWnd.ImageInspectionEvent += new ManualInspectionWindow.ImageInspectionHandler(ManualInspection);
+
 
             if (eProjectType.SORTER == _ProjectType)
             {
+                ImageDeleteWnd = new ImageDeleteWindow(this.labelTitle.Text);
+
                 btnImageResultDisplay.Visible = true;
                 IsResultDisplay = false;
             }
 
             else if (eProjectType.TRIM_FORM == _ProjectType)
             {
+                if(_FolderPath == "") ImageDeleteWnd = new ImageDeleteWindow(this.labelTitle.Text);
+                else                  ImageDeleteWnd = new ImageDeleteWindow(_FolderPath, true);
+
                 btnImageResultDisplay.Visible = false;
                 IsResultDisplay = true;
             }
 
             else if (eProjectType.BC_QCC == _ProjectType)
             {
+                ImageDeleteWnd = new ImageDeleteWindow(this.labelTitle.Text);
+
                 btnImageResultDisplay.Visible = false;
                 IsResultDisplay = true;
             }
@@ -268,6 +289,9 @@ namespace InspectionSystemManager
             ImageDeleteWnd.DeInitialize();
 			CameraManager.DeInitialilze();
             CameraManager.ImageGrabEvent -= new CCameraManager.ImageGrabHandler(SetDisplayGrabImage);
+
+            ManualInspWnd.ImageLoadEvent -= new ManualInspectionWindow.ImageLoadHandler(ManualInspectionImageLoad);
+            ManualInspWnd.ImageInspectionEvent -= new ManualInspectionWindow.ImageInspectionHandler(ManualInspection);
 
             if (ThreadInspectionProcess != null) { IsThreadInspectionProcessExit = true; Thread.Sleep(200); ThreadInspectionProcess.Abort(); ThreadInspectionProcess = null; }
             if (ThreadLiveCheck != null) { IsThreadLiveCheckExit = true; Thread.Sleep(200); ThreadLiveCheck.Abort(); ThreadLiveCheck = null; }
@@ -627,6 +651,11 @@ namespace InspectionSystemManager
             }
         }
 
+        private void btnQuickInspection_Click(object sender, EventArgs e)
+        {
+            ManualInspWnd.ShowManualInspectionWindow();
+        }
+
         private void labelZoomPlus_Click(object sender, EventArgs e)
         {
             double _Zoom = kpCogDisplayMain.GetDisplayZoom() * 100;
@@ -749,6 +778,28 @@ namespace InspectionSystemManager
 
             return _Result;
         }
+
+        private void ManualInspectionImageLoad(string _ImageFileFullPath)
+        {
+            try
+            {
+                OriginImageFileTool.Operator.Open(_ImageFileFullPath, CogImageFileModeConstants.Read);
+                OriginImageFileTool.Run();
+                OriginImage = (CogImage8Grey)OriginImageFileTool.OutputImage;
+
+                SetDisplayImage(OriginImage);
+
+                kpCogDisplayMain.SetDisplayZoom(DisplayZoomValue);
+                kpCogDisplayMain.SetDisplayPanX(DisplayPanXValue);
+                kpCogDisplayMain.SetDisplayPanY(DisplayPanYValue);
+            }
+
+            catch (System.Exception ex)
+            {
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "InspectionWindow - Manual Inspection Image Load Exception : " + ex.ToString(), CLogManager.LOG_LEVEL.LOW);
+                MessageBox.Show(new Form { TopMost = true }, "Could not open image file.");
+            }
+        }
         #endregion Image Load & Save
 
         #region Call Teaching  Window & Parameter Set
@@ -774,6 +825,14 @@ namespace InspectionSystemManager
         #endregion Call Teaching  Window & Parameter Set
 
         #region Inspection Process
+        private void ManualInspection()
+        {
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM{0} Manual Inspection Run", ID + 1), CLogManager.LOG_LEVEL.LOW);
+            CParameterManager.SystemMode = eSysMode.ONESHOT_MODE;
+            ContinuesGrabStop();
+            Inspection();
+        }
+
         public void GrabAndInspection()
         {
             InspectionWindowEvent(eIWCMD.LIGHT_CONTROL, true, ID);
@@ -807,7 +866,8 @@ namespace InspectionSystemManager
                 if (false == InspectionProcess()) break;
                 if (false == InpsectionResultAnalysis()) break;
                 if (false == InspectionDataSet()) break; //send랑 순서바꾼거 확인해보기
-                if (false == InspectionDataSend()) break;
+                if (ProjectType != eProjectType.TRIM_FORM)
+                    if (false == InspectionDataSend()) break;
                 if (false == InspectionResultDsiplay()) break;
                 if (false == InspectionComplete(true)) break;
 				IsThreadImageSaveTrigger = true;
@@ -970,6 +1030,7 @@ namespace InspectionSystemManager
             else if (eAlgoType.C_LINE_FIND == _AlgoType)    _Result = CogLineFindAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
             else if (eAlgoType.C_MULTI_PATTERN == _AlgoType)_Result = CogMultiPatternAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
             else if (eAlgoType.C_LEAD_TRIM == _AlgoType)    _Result = CogLeadTrimAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
+            else if (eAlgoType.C_LEAD_FORM == _AlgoType)    _Result = CogLeadFormAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
 
             return _Result;
         }
@@ -1199,7 +1260,7 @@ namespace InspectionSystemManager
             }
 
             AlgoResultParameter _AlgoResultParam = new AlgoResultParameter(eAlgoType.C_LINE_FIND, _CogLineFindResult);
-            AlgoResultParamList.Add(_AlgoResultParam);
+            AlgoResultParamList.Add(_AlgoResultParam);              
 
             return _CogLineFindResult.IsGood;
         }
@@ -1219,6 +1280,23 @@ namespace InspectionSystemManager
             AlgoResultParamList.Add(_AlgoResultParam);
 
             return _CogLeadTrimResult.IsGood;
+        }
+
+        private bool CogLeadFormAlgorithmStep(Object _Algorithm, CogRectangle _InspRegion, int _NgAreaNumber)
+        {
+            CogLeadFormAlgo     _CogLeadFormAlgo = _Algorithm as CogLeadFormAlgo;
+            CogLeadFormResult   _CogLeadFormResult = new CogLeadFormResult();
+            _CogLeadFormAlgo.ResolutionX = ResolutionX;
+            _CogLeadFormAlgo.ResolutionY = ResolutionY;
+
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "CogLeadForm Algorithm Start", CLogManager.LOG_LEVEL.MID);
+            bool _Result = InspLeadFormProc.Run(OriginImage, _InspRegion, _CogLeadFormAlgo, ref _CogLeadFormResult);
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "CogLeadForm Algorithm End", CLogManager.LOG_LEVEL.MID);
+
+            AlgoResultParameter _AlgoResultParam = new AlgoResultParameter(eAlgoType.C_LEAD_FORM, _CogLeadFormResult);
+            AlgoResultParamList.Add(_AlgoResultParam);
+
+            return _CogLeadFormResult.IsGood;
         }
         #endregion Algorithm 별 Inspection Step
 
@@ -1240,6 +1318,7 @@ namespace InspectionSystemManager
                 else if (eAlgoType.C_ID == _AlgoType)           _IsGood = DisplayResultBarCodeIDFind(AlgoResultParamList[iLoopCount].ResultParam, iLoopCount);
                 else if (eAlgoType.C_LINE_FIND == _AlgoType)    _IsGood = DisplayResultLineFind(AlgoResultParamList[iLoopCount].ResultParam, iLoopCount);
                 else if (eAlgoType.C_LEAD_TRIM == _AlgoType)    _IsGood = DisplayResultLeadTrim(AlgoResultParamList[iLoopCount].ResultParam, iLoopCount);
+                else if (eAlgoType.C_LEAD_FORM == _AlgoType)    _IsGood = DisplayResultLeadForm(AlgoResultParamList[iLoopCount].ResultParam, iLoopCount);
             }
 
             //LJH 2018.09.28 SendResultParam에서 결과값 가져오기
@@ -1543,6 +1622,15 @@ namespace InspectionSystemManager
         {
             CogLeadTrimResult _LeadTrimResult = _ResultParam as CogLeadTrimResult;
 
+            #region Draw Lead Empty & Count Check Display
+            if (_LeadTrimResult.NgType == eNgType.LEAD_CNT || _LeadTrimResult.NgType == eNgType.EMPTY)
+            {
+                CogRectangle _SearchArea = new CogRectangle();
+                _SearchArea.SetCenterWidthHeight(_LeadTrimResult.SearchArea.CenterX, _LeadTrimResult.SearchArea.CenterY, _LeadTrimResult.SearchArea.Width, _LeadTrimResult.SearchArea.Height);
+                kpCogDisplayMain.DrawStaticShape(_SearchArea, "NGArea", CogColorConstants.Red);
+            }
+            #endregion
+
             #region Draw Lead Body check Display
             CogPointMarker _LT = new CogPointMarker();
             CogPointMarker _RT = new CogPointMarker();
@@ -1554,10 +1642,10 @@ namespace InspectionSystemManager
             _LB.SetCenterRotationSize(_LeadTrimResult.LeadBodyLeftBottom.X, _LeadTrimResult.LeadBodyLeftBottom.Y, 0, 2);
             _RB.SetCenterRotationSize(_LeadTrimResult.LeadBodyRightBottom.X, _LeadTrimResult.LeadBodyRightBottom.Y, 0, 2);
 
-            kpCogDisplayMain.DrawStaticShape(_LT, "LT", CogColorConstants.Green, 50, true);
-            kpCogDisplayMain.DrawStaticShape(_RT, "RT", CogColorConstants.Green, 50, true);
-            kpCogDisplayMain.DrawStaticShape(_LB, "LB", CogColorConstants.Green, 50, true);
-            kpCogDisplayMain.DrawStaticShape(_RB, "RB", CogColorConstants.Green, 50, true);
+            if (_LT.X != 0 && _LT.Y != 0) kpCogDisplayMain.DrawStaticShape(_LT, "LT", CogColorConstants.Green, 50, true);
+            if (_RT.X != 0 && _RT.Y != 0) kpCogDisplayMain.DrawStaticShape(_RT, "RT", CogColorConstants.Green, 50, true);
+            if (_LB.X != 0 && _LB.Y != 0) kpCogDisplayMain.DrawStaticShape(_LB, "LB", CogColorConstants.Green, 50, true);
+            if (_RB.X != 0 && _RB.Y != 0) kpCogDisplayMain.DrawStaticShape(_RB, "RB", CogColorConstants.Green, 50, true);
 
             CogRectangle _BodyRect = new CogRectangle();
             if (_RT.X - _LT.X > 0 && _RB.Y - _RT.Y > 0)
@@ -1588,25 +1676,46 @@ namespace InspectionSystemManager
             #region Draw Lead Measurement Display
             for (int iLoopCount = 0; iLoopCount < _LeadTrimResult.LeadCount; ++iLoopCount)
             {
-                //Blob Boundary
-                //CogRectangleAffine _BlobRectAffine = new CogRectangleAffine();
-                //_BlobRectAffine.SetCenterLengthsRotationSkew(_LeadTrimResult.LeadCenterX[iLoopCount], _LeadTrimResult.LeadCenterY[iLoopCount], _LeadTrimResult.LeadWidth[iLoopCount], _LeadTrimResult.LeadLength[iLoopCount], _LeadTrimResult.Angle[iLoopCount], 0);
-                //kpTeachDisplay.DrawStaticShape(_BlobRectAffine, "BlobRectAffine" + (iLoopCount + 1), CogColorConstants.Green);
-
-                //kpTeachDisplay.DrawBlobResult(_LeadTrimResult.ResultGraphic[iLoopCount], "BlobRectGra" + (iLoopCount + 1));
-
                 CogPointMarker _PitchPoint = new CogPointMarker();
                 _PitchPoint.SetCenterRotationSize(_LeadTrimResult.LeadPitchTopX[iLoopCount], _LeadTrimResult.LeadPitchTopY[iLoopCount], 0, 1);
-                kpCogDisplayMain.DrawStaticShape(_PitchPoint, "PointStart" + (iLoopCount + 1), CogColorConstants.Yellow, 10);
+                kpCogDisplayMain.DrawStaticShape(_PitchPoint, "PointStart" + (iLoopCount + 1), CogColorConstants.Orange, 10);
                 _PitchPoint.SetCenterRotationSize(_LeadTrimResult.LeadPitchBottomX[iLoopCount], _LeadTrimResult.LeadPitchBottomY[iLoopCount], 0, 1);
                 kpCogDisplayMain.DrawStaticShape(_PitchPoint, "PointEnd" + (iLoopCount + 1), CogColorConstants.Orange, 10);
 
                 CogLineSegment _LeadLine = new CogLineSegment();
                 _LeadLine.SetStartEnd(_LeadTrimResult.LeadPitchTopX[iLoopCount], _LeadTrimResult.LeadPitchTopY[iLoopCount], _LeadTrimResult.LeadPitchBottomX[iLoopCount], _LeadTrimResult.LeadPitchBottomY[iLoopCount]);
                 if (_LeadTrimResult.IsLeadLengthGood[iLoopCount])
+                {
                     kpCogDisplayMain.DrawStaticLine(_LeadLine, "CenterLine+_" + (iLoopCount + 1), CogColorConstants.Cyan);
+                }   
+                    
                 else
+                {
                     kpCogDisplayMain.DrawStaticLine(_LeadLine, "CenterLine+_" + (iLoopCount + 1), CogColorConstants.Red);
+
+                    if (_LeadTrimResult.LeadLength[iLoopCount] / ResolutionY > 0 && _LeadTrimResult.LeadWidth[iLoopCount] / ResolutionX > 0)
+                    {
+                        CogRectangleAffine _BlobRectAffine = new CogRectangleAffine();
+                        _BlobRectAffine.SetCenterLengthsRotationSkew(
+                            _LeadTrimResult.LeadCenterX[iLoopCount], (_LeadTrimResult.LeadPitchTopY[iLoopCount] + _LeadTrimResult.LeadPitchBottomY[iLoopCount]) / 2,
+                            _LeadTrimResult.LeadLength[iLoopCount] / ResolutionY, _LeadTrimResult.LeadWidth[iLoopCount] / ResolutionX, _LeadTrimResult.Angle[iLoopCount], 0);
+
+                        kpCogDisplayMain.DrawStaticShape(_BlobRectAffine, "BlobRectAffine" + (iLoopCount + 1), CogColorConstants.Red);
+                    }
+                    //kpCogDisplayMain.DrawBlobResult(_LeadTrimResult.ResultGraphic[iLoopCount], "BlobRectGra" + (iLoopCount + 1));
+                }
+            }
+
+            for (int iLoopCount = 0; iLoopCount < _LeadTrimResult.LeadCount - 1; ++iLoopCount)
+            {
+                if (_LeadTrimResult.IsLeadBentGood[iLoopCount] == false)
+                {
+                    CogLineSegment _LeadLine = new CogLineSegment();
+                    _LeadLine.SetStartEnd(_LeadTrimResult.LeadPitchTopX[iLoopCount], _LeadTrimResult.LeadPitchTopY[iLoopCount + 1],
+                                          _LeadTrimResult.LeadPitchTopX[iLoopCount + 1], _LeadTrimResult.LeadPitchTopY[iLoopCount + 1]);
+
+                    kpCogDisplayMain.DrawStaticLine(_LeadLine, "BentLine+_" + (iLoopCount), CogColorConstants.Red);
+                }
             }
 
             #endregion
@@ -1626,12 +1735,12 @@ namespace InspectionSystemManager
             for (int iLoopCount = 0; iLoopCount < _LeadTrimResult.ShoulderNickDefectList.Count; ++iLoopCount)
             {
                 CogRectangle _NgRegion = new CogRectangle(_LeadTrimResult.ShoulderNickDefectList[iLoopCount]);
-                kpCogDisplayMain.DrawStaticShape(_NgRegion, "ShoulderNick" + (iLoopCount + 1), CogColorConstants.Red);
+                kpCogDisplayMain.DrawStaticShape(_NgRegion, "ShoulderNick" + (iLoopCount + 1), CogColorConstants.Orange);
 
                 string _RectSizeName = string.Format("W : {0:F2}mm, H : {1:F2}mm", _NgRegion.Width * ResolutionX, _NgRegion.Height * ResolutionY);
                 //string _RectSizeName = string.Format("[N]");
                 kpCogDisplayMain.DrawText("ShoulderNick" + iLoopCount, _RectSizeName, _NgRegion.CenterX + _NgRegion.Width / 2,
-                                          _NgRegion.CenterY + _NgRegion.Height / 2 + 100, CogColorConstants.Red, 8, CogGraphicLabelAlignmentConstants.BaselineCenter);
+                                          _NgRegion.CenterY + _NgRegion.Height / 2 + 100, CogColorConstants.Orange, 8, CogGraphicLabelAlignmentConstants.BaselineCenter);
             }
             #endregion
 
@@ -1652,6 +1761,50 @@ namespace InspectionSystemManager
             #endregion
 
             return _LeadTrimResult.IsGood;
+        }
+
+        private bool DisplayResultLeadForm(Object _ResultParam, int _Index)
+        {
+            CogLeadFormResult _LeadFormResult = _ResultParam as CogLeadFormResult;
+
+            #region Draw Lead Count Check Display
+            if (_LeadFormResult.NgType == eNgType.LEAD_CNT || _LeadFormResult.NgType == eNgType.EMPTY)
+            {
+                CogRectangle _SearchArea = new CogRectangle();
+                _SearchArea.SetCenterWidthHeight(_LeadFormResult.SearchArea.CenterX, _LeadFormResult.SearchArea.CenterY, _LeadFormResult.SearchArea.Width, _LeadFormResult.SearchArea.Height);
+                kpCogDisplayMain.DrawStaticShape(_SearchArea, "NGArea", CogColorConstants.Red);
+            }
+            #endregion
+
+            #region Draw Lead Align Display
+            for (int iLoopCount = 0; iLoopCount < _LeadFormResult.AlignResultDataList.Count; ++iLoopCount)
+            {
+                CogRectangle _LeadRect = new CogRectangle();
+                double _CenterX = _LeadFormResult.AlignResultDataList[iLoopCount].CenterX;
+                double _CenterY = _LeadFormResult.AlignResultDataList[iLoopCount].CenterY;
+                double _Width = _LeadFormResult.AlignResultDataList[iLoopCount].Width;
+                double _Height = _LeadFormResult.AlignResultDataList[iLoopCount].Height;
+                _LeadRect.SetCenterWidthHeight(_CenterX, _CenterY, _Width, _Height);
+
+                CogPointMarker _Point = new CogPointMarker();
+                _Point.SetCenterRotationSize(_CenterX, _CenterY, 0, 2);
+
+                if (true == _LeadFormResult.AlignResultDataList[iLoopCount].IsGood)
+                {
+                    kpCogDisplayMain.DrawStaticShape(_LeadRect, "LeadRect" + (iLoopCount + 1), CogColorConstants.Green);
+                    kpCogDisplayMain.DrawStaticShape(_Point, "LeadPoint" + (iLoopCount + 1), CogColorConstants.Green);
+                }
+                    
+                else
+                {
+                    kpCogDisplayMain.DrawStaticShape(_LeadRect, "LeadRect" + (iLoopCount + 1), CogColorConstants.Red);
+                    kpCogDisplayMain.DrawStaticShape(_Point, "LeadPoint" + (iLoopCount + 1), CogColorConstants.Red);
+                }
+                    
+            }
+            #endregion
+
+            return _LeadFormResult.IsGood;
         }
         #endregion Algorithm 별 Display
 
@@ -1843,7 +1996,7 @@ namespace InspectionSystemManager
                     {
                         IsThreadImageSaveTrigger = false;
 
-                        SaveCogImage("A");
+                        if(ProjectType != eProjectType.TRIM_FORM) SaveCogImage("A");
                     }
                     Thread.Sleep(10);
                 }

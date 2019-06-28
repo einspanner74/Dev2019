@@ -24,8 +24,9 @@ namespace EthernetServerManager
         private List<Socket> SockClientList;
         private byte[] ReceiveData;
 
-        private int ConnectPort = 5000;
-        private string ConnectIP = "10.100.110.214";
+        private int ConnectPort = 5050;
+        //private string ConnectIP = "10.100.110.214";
+        private string ConnectIP = "192.168.0.2";
         private bool IsServerAlready = false;
 
         private string LastSendMessage;
@@ -111,7 +112,7 @@ namespace EthernetServerManager
             if (_SockClient.Connected && e.BytesTransferred > 0)
             {
                 byte[] _DataBuffer = e.Buffer;
-                string _DataString = Encoding.ASCII.GetString(_DataBuffer);
+                string _DataString = Encoding.UTF8.GetString(_DataBuffer);
 
                 string _TempText = _DataString.Trim();
 

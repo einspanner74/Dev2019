@@ -28,14 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
             this.labelTitle = new CustomControl.GradientLabel();
             this.tabControlLeadTrim = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -86,7 +85,7 @@
             this.textBoxChipOutWidthSizeMin = new System.Windows.Forms.TextBox();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.gradientLabel25 = new CustomControl.GradientLabel();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBoxChipOutSpec = new System.Windows.Forms.TextBox();
             this.gradientLabel26 = new CustomControl.GradientLabel();
             this.hScrollBarChipOutThreshold = new System.Windows.Forms.HScrollBar();
             this.gradientLabel13 = new CustomControl.GradientLabel();
@@ -100,11 +99,16 @@
             this.btnLeadLengthAreaSet = new System.Windows.Forms.Button();
             this.btnLeadLengthAreaShow = new System.Windows.Forms.Button();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.btnNewLeadValueSave = new System.Windows.Forms.Button();
+            this.btnNewLeadValueShow = new System.Windows.Forms.Button();
+            this.btnNowLeadValueShow = new System.Windows.Forms.Button();
+            this.gradientLabel36 = new CustomControl.GradientLabel();
+            this.gradientLabel38 = new CustomControl.GradientLabel();
+            this.textBoxLeadSkewSpec = new System.Windows.Forms.TextBox();
             this.QuickGridViewLeadSetting = new CustomControl.QuickDataGridView();
             this.gridLeadNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gridLeadLength = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gridLeadPitch = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gridLeadWidth = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gradientLabel28 = new CustomControl.GradientLabel();
             this.textBoxLeadCount = new System.Windows.Forms.TextBox();
             this.gradientLabel18 = new CustomControl.GradientLabel();
@@ -250,13 +254,14 @@
             this.chUseLeadBody.Checked = true;
             this.chUseLeadBody.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chUseLeadBody.ForeColor = System.Drawing.Color.Black;
-            this.chUseLeadBody.Location = new System.Drawing.Point(174, 10);
+            this.chUseLeadBody.Location = new System.Drawing.Point(329, 11);
             this.chUseLeadBody.Name = "chUseLeadBody";
             this.chUseLeadBody.Size = new System.Drawing.Size(133, 26);
             this.chUseLeadBody.TabIndex = 95;
             this.chUseLeadBody.Text = "Used";
             this.chUseLeadBody.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.chUseLeadBody.UseVisualStyleBackColor = true;
+            this.chUseLeadBody.Visible = false;
             // 
             // gradientLabel1
             // 
@@ -278,9 +283,9 @@
             // 
             this.btnBodyAreaCheck.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnBodyAreaCheck.ForeColor = System.Drawing.Color.Black;
-            this.btnBodyAreaCheck.Location = new System.Drawing.Point(500, 10);
+            this.btnBodyAreaCheck.Location = new System.Drawing.Point(174, 10);
             this.btnBodyAreaCheck.Name = "btnBodyAreaCheck";
-            this.btnBodyAreaCheck.Size = new System.Drawing.Size(66, 29);
+            this.btnBodyAreaCheck.Size = new System.Drawing.Size(134, 29);
             this.btnBodyAreaCheck.TabIndex = 89;
             this.btnBodyAreaCheck.Tag = "0";
             this.btnBodyAreaCheck.Text = "Check";
@@ -315,7 +320,7 @@
             this.textBox1.Location = new System.Drawing.Point(167, 25);
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(64, 21);
+            this.textBox1.Size = new System.Drawing.Size(63, 21);
             this.textBox1.TabIndex = 93;
             this.textBox1.Text = "0";
             this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -357,9 +362,10 @@
             // 
             // btnMaskingAdd
             // 
+            this.btnMaskingAdd.Enabled = false;
             this.btnMaskingAdd.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnMaskingAdd.ForeColor = System.Drawing.Color.Black;
-            this.btnMaskingAdd.Location = new System.Drawing.Point(235, 21);
+            this.btnMaskingAdd.Location = new System.Drawing.Point(234, 21);
             this.btnMaskingAdd.Name = "btnMaskingAdd";
             this.btnMaskingAdd.Size = new System.Drawing.Size(66, 29);
             this.btnMaskingAdd.TabIndex = 96;
@@ -370,6 +376,7 @@
             // 
             // btnMaskingSet
             // 
+            this.btnMaskingSet.Enabled = false;
             this.btnMaskingSet.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnMaskingSet.ForeColor = System.Drawing.Color.Black;
             this.btnMaskingSet.Location = new System.Drawing.Point(302, 21);
@@ -383,6 +390,7 @@
             // 
             // btnMaskingClear
             // 
+            this.btnMaskingClear.Enabled = false;
             this.btnMaskingClear.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnMaskingClear.ForeColor = System.Drawing.Color.Black;
             this.btnMaskingClear.Location = new System.Drawing.Point(302, 50);
@@ -428,9 +436,10 @@
             // 
             // btnMaskingRedo
             // 
+            this.btnMaskingRedo.Enabled = false;
             this.btnMaskingRedo.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnMaskingRedo.ForeColor = System.Drawing.Color.Black;
-            this.btnMaskingRedo.Location = new System.Drawing.Point(235, 50);
+            this.btnMaskingRedo.Location = new System.Drawing.Point(234, 50);
             this.btnMaskingRedo.Name = "btnMaskingRedo";
             this.btnMaskingRedo.Size = new System.Drawing.Size(66, 29);
             this.btnMaskingRedo.TabIndex = 93;
@@ -441,6 +450,7 @@
             // 
             // btnMaskingUndo
             // 
+            this.btnMaskingUndo.Enabled = false;
             this.btnMaskingUndo.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnMaskingUndo.ForeColor = System.Drawing.Color.Black;
             this.btnMaskingUndo.Location = new System.Drawing.Point(167, 50);
@@ -497,6 +507,7 @@
             // 
             // btnLeadBodyAreaSet
             // 
+            this.btnLeadBodyAreaSet.Enabled = false;
             this.btnLeadBodyAreaSet.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnLeadBodyAreaSet.ForeColor = System.Drawing.Color.Black;
             this.btnLeadBodyAreaSet.Location = new System.Drawing.Point(234, 16);
@@ -541,9 +552,9 @@
             // 
             this.btnChipOutAreaCheck.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnChipOutAreaCheck.ForeColor = System.Drawing.Color.Black;
-            this.btnChipOutAreaCheck.Location = new System.Drawing.Point(500, 10);
+            this.btnChipOutAreaCheck.Location = new System.Drawing.Point(174, 10);
             this.btnChipOutAreaCheck.Name = "btnChipOutAreaCheck";
-            this.btnChipOutAreaCheck.Size = new System.Drawing.Size(66, 29);
+            this.btnChipOutAreaCheck.Size = new System.Drawing.Size(134, 29);
             this.btnChipOutAreaCheck.TabIndex = 93;
             this.btnChipOutAreaCheck.Tag = "0";
             this.btnChipOutAreaCheck.Text = "Check";
@@ -865,7 +876,7 @@
             // groupBox9
             // 
             this.groupBox9.Controls.Add(this.gradientLabel25);
-            this.groupBox9.Controls.Add(this.textBox2);
+            this.groupBox9.Controls.Add(this.textBoxChipOutSpec);
             this.groupBox9.Controls.Add(this.gradientLabel26);
             this.groupBox9.Controls.Add(this.hScrollBarChipOutThreshold);
             this.groupBox9.Controls.Add(this.gradientLabel13);
@@ -894,14 +905,14 @@
             this.gradientLabel25.Text = "Spec (±)";
             this.gradientLabel25.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // textBox2
+            // textBoxChipOutSpec
             // 
-            this.textBox2.Location = new System.Drawing.Point(167, 47);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(70, 21);
-            this.textBox2.TabIndex = 100;
-            this.textBox2.Text = "0.075";
-            this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxChipOutSpec.Location = new System.Drawing.Point(167, 47);
+            this.textBoxChipOutSpec.Name = "textBoxChipOutSpec";
+            this.textBoxChipOutSpec.Size = new System.Drawing.Size(70, 21);
+            this.textBoxChipOutSpec.TabIndex = 100;
+            this.textBoxChipOutSpec.Text = "0.075";
+            this.textBoxChipOutSpec.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // gradientLabel26
             // 
@@ -961,13 +972,14 @@
             this.chUseMoldChipOut.Checked = true;
             this.chUseMoldChipOut.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chUseMoldChipOut.ForeColor = System.Drawing.Color.Black;
-            this.chUseMoldChipOut.Location = new System.Drawing.Point(174, 10);
+            this.chUseMoldChipOut.Location = new System.Drawing.Point(329, 11);
             this.chUseMoldChipOut.Name = "chUseMoldChipOut";
             this.chUseMoldChipOut.Size = new System.Drawing.Size(133, 26);
             this.chUseMoldChipOut.TabIndex = 97;
             this.chUseMoldChipOut.Text = "Used";
             this.chUseMoldChipOut.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.chUseMoldChipOut.UseVisualStyleBackColor = true;
+            this.chUseMoldChipOut.Visible = false;
             // 
             // gradientLabel5
             // 
@@ -1004,9 +1016,9 @@
             // 
             this.btnLeadLengthAreaCheck.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnLeadLengthAreaCheck.ForeColor = System.Drawing.Color.Black;
-            this.btnLeadLengthAreaCheck.Location = new System.Drawing.Point(500, 10);
+            this.btnLeadLengthAreaCheck.Location = new System.Drawing.Point(174, 10);
             this.btnLeadLengthAreaCheck.Name = "btnLeadLengthAreaCheck";
-            this.btnLeadLengthAreaCheck.Size = new System.Drawing.Size(66, 29);
+            this.btnLeadLengthAreaCheck.Size = new System.Drawing.Size(134, 29);
             this.btnLeadLengthAreaCheck.TabIndex = 93;
             this.btnLeadLengthAreaCheck.Tag = "0";
             this.btnLeadLengthAreaCheck.Text = "Check";
@@ -1071,6 +1083,12 @@
             // 
             // groupBox11
             // 
+            this.groupBox11.Controls.Add(this.btnNewLeadValueSave);
+            this.groupBox11.Controls.Add(this.btnNewLeadValueShow);
+            this.groupBox11.Controls.Add(this.btnNowLeadValueShow);
+            this.groupBox11.Controls.Add(this.gradientLabel36);
+            this.groupBox11.Controls.Add(this.gradientLabel38);
+            this.groupBox11.Controls.Add(this.textBoxLeadSkewSpec);
             this.groupBox11.Controls.Add(this.QuickGridViewLeadSetting);
             this.groupBox11.Controls.Add(this.gradientLabel28);
             this.groupBox11.Controls.Add(this.textBoxLeadCount);
@@ -1089,64 +1107,141 @@
             this.groupBox11.TabStop = false;
             this.groupBox11.Text = " Lead Bend / Length Setting ";
             // 
+            // btnNewLeadValueSave
+            // 
+            this.btnNewLeadValueSave.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnNewLeadValueSave.ForeColor = System.Drawing.Color.Black;
+            this.btnNewLeadValueSave.Location = new System.Drawing.Point(477, 144);
+            this.btnNewLeadValueSave.Name = "btnNewLeadValueSave";
+            this.btnNewLeadValueSave.Size = new System.Drawing.Size(76, 29);
+            this.btnNewLeadValueSave.TabIndex = 115;
+            this.btnNewLeadValueSave.Tag = "0";
+            this.btnNewLeadValueSave.Text = "Save";
+            this.btnNewLeadValueSave.UseVisualStyleBackColor = true;
+            this.btnNewLeadValueSave.Click += new System.EventHandler(this.btnNewLeadValueSave_Click);
+            // 
+            // btnNewLeadValueShow
+            // 
+            this.btnNewLeadValueShow.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnNewLeadValueShow.ForeColor = System.Drawing.Color.Black;
+            this.btnNewLeadValueShow.Location = new System.Drawing.Point(477, 109);
+            this.btnNewLeadValueShow.Name = "btnNewLeadValueShow";
+            this.btnNewLeadValueShow.Size = new System.Drawing.Size(76, 29);
+            this.btnNewLeadValueShow.TabIndex = 114;
+            this.btnNewLeadValueShow.Tag = "0";
+            this.btnNewLeadValueShow.Text = "New Value";
+            this.btnNewLeadValueShow.UseVisualStyleBackColor = true;
+            this.btnNewLeadValueShow.Click += new System.EventHandler(this.btnNewLeadValueShow_Click);
+            // 
+            // btnNowLeadValueShow
+            // 
+            this.btnNowLeadValueShow.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnNowLeadValueShow.ForeColor = System.Drawing.Color.Black;
+            this.btnNowLeadValueShow.Location = new System.Drawing.Point(477, 74);
+            this.btnNowLeadValueShow.Name = "btnNowLeadValueShow";
+            this.btnNowLeadValueShow.Size = new System.Drawing.Size(76, 29);
+            this.btnNowLeadValueShow.TabIndex = 113;
+            this.btnNowLeadValueShow.Tag = "0";
+            this.btnNowLeadValueShow.Text = "Now Value";
+            this.btnNowLeadValueShow.UseVisualStyleBackColor = true;
+            this.btnNowLeadValueShow.Click += new System.EventHandler(this.btnNowLeadValueShow_Click);
+            // 
+            // gradientLabel36
+            // 
+            this.gradientLabel36.AutoSize = true;
+            this.gradientLabel36.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel36.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel36.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel36.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel36.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel36.Location = new System.Drawing.Point(240, 49);
+            this.gradientLabel36.Name = "gradientLabel36";
+            this.gradientLabel36.Size = new System.Drawing.Size(29, 14);
+            this.gradientLabel36.TabIndex = 98;
+            this.gradientLabel36.Text = "mm";
+            // 
+            // gradientLabel38
+            // 
+            this.gradientLabel38.BackColor = System.Drawing.Color.SteelBlue;
+            this.gradientLabel38.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.gradientLabel38.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel38.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel38.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel38.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel38.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel38.Location = new System.Drawing.Point(12, 44);
+            this.gradientLabel38.Name = "gradientLabel38";
+            this.gradientLabel38.Size = new System.Drawing.Size(150, 24);
+            this.gradientLabel38.TabIndex = 97;
+            this.gradientLabel38.Text = "    Bent Enable Spec (±)";
+            this.gradientLabel38.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // textBoxLeadSkewSpec
+            // 
+            this.textBoxLeadSkewSpec.Location = new System.Drawing.Point(167, 46);
+            this.textBoxLeadSkewSpec.Name = "textBoxLeadSkewSpec";
+            this.textBoxLeadSkewSpec.Size = new System.Drawing.Size(70, 21);
+            this.textBoxLeadSkewSpec.TabIndex = 96;
+            this.textBoxLeadSkewSpec.Text = "0";
+            this.textBoxLeadSkewSpec.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // QuickGridViewLeadSetting
             // 
             this.QuickGridViewLeadSetting.AllowUserToAddRows = false;
             this.QuickGridViewLeadSetting.AllowUserToDeleteRows = false;
             this.QuickGridViewLeadSetting.AllowUserToResizeColumns = false;
             this.QuickGridViewLeadSetting.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
-            this.QuickGridViewLeadSetting.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle15.BackColor = System.Drawing.Color.White;
+            this.QuickGridViewLeadSetting.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle15;
             this.QuickGridViewLeadSetting.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Gold;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.QuickGridViewLeadSetting.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle16.BackColor = System.Drawing.Color.Gold;
+            dataGridViewCellStyle16.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle16.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle16.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle16.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.QuickGridViewLeadSetting.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle16;
             this.QuickGridViewLeadSetting.ColumnHeadersHeight = 22;
             this.QuickGridViewLeadSetting.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.QuickGridViewLeadSetting.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.gridLeadNum,
             this.gridLeadLength,
-            this.gridLeadPitch,
-            this.gridLeadWidth});
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.PowderBlue;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle7.NullValue = "0";
-            dataGridViewCellStyle7.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.QuickGridViewLeadSetting.DefaultCellStyle = dataGridViewCellStyle7;
+            this.gridLeadPitch});
+            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle20.BackColor = System.Drawing.Color.PowderBlue;
+            dataGridViewCellStyle20.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle20.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle20.NullValue = "0";
+            dataGridViewCellStyle20.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            dataGridViewCellStyle20.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle20.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle20.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.QuickGridViewLeadSetting.DefaultCellStyle = dataGridViewCellStyle20;
             this.QuickGridViewLeadSetting.EnableHeadersVisualStyles = false;
             this.QuickGridViewLeadSetting.Location = new System.Drawing.Point(12, 74);
             this.QuickGridViewLeadSetting.MultiSelect = false;
             this.QuickGridViewLeadSetting.Name = "QuickGridViewLeadSetting";
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.QuickGridViewLeadSetting.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle21.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle21.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle21.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle21.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle21.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle21.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.QuickGridViewLeadSetting.RowHeadersDefaultCellStyle = dataGridViewCellStyle21;
             this.QuickGridViewLeadSetting.RowHeadersVisible = false;
             this.QuickGridViewLeadSetting.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.QuickGridViewLeadSetting.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.QuickGridViewLeadSetting.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.QuickGridViewLeadSetting.Size = new System.Drawing.Size(538, 112);
+            this.QuickGridViewLeadSetting.Size = new System.Drawing.Size(462, 112);
             this.QuickGridViewLeadSetting.TabIndex = 95;
             this.QuickGridViewLeadSetting.Tag = "Size : 418, 511";
             // 
             // gridLeadNum
             // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.gridLeadNum.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.gridLeadNum.DefaultCellStyle = dataGridViewCellStyle17;
             this.gridLeadNum.HeaderText = "Num";
             this.gridLeadNum.Name = "gridLeadNum";
             this.gridLeadNum.ReadOnly = true;
@@ -1156,33 +1251,23 @@
             // 
             // gridLeadLength
             // 
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.gridLeadLength.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.gridLeadLength.DefaultCellStyle = dataGridViewCellStyle18;
             this.gridLeadLength.HeaderText = "Lead Length";
             this.gridLeadLength.Name = "gridLeadLength";
             this.gridLeadLength.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.gridLeadLength.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.gridLeadLength.Width = 158;
+            this.gridLeadLength.Width = 198;
             // 
             // gridLeadPitch
             // 
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.gridLeadPitch.DefaultCellStyle = dataGridViewCellStyle5;
-            this.gridLeadPitch.HeaderText = "Lead Pitch";
+            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.gridLeadPitch.DefaultCellStyle = dataGridViewCellStyle19;
+            this.gridLeadPitch.HeaderText = "Lead Bent";
             this.gridLeadPitch.Name = "gridLeadPitch";
             this.gridLeadPitch.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.gridLeadPitch.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.gridLeadPitch.Width = 158;
-            // 
-            // gridLeadWidth
-            // 
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.gridLeadWidth.DefaultCellStyle = dataGridViewCellStyle6;
-            this.gridLeadWidth.HeaderText = "Lead Width";
-            this.gridLeadWidth.Name = "gridLeadWidth";
-            this.gridLeadWidth.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.gridLeadWidth.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.gridLeadWidth.Width = 158;
+            this.gridLeadPitch.Width = 198;
             // 
             // gradientLabel28
             // 
@@ -1197,7 +1282,7 @@
             this.gradientLabel28.Name = "gradientLabel28";
             this.gradientLabel28.Size = new System.Drawing.Size(150, 24);
             this.gradientLabel28.TabIndex = 86;
-            this.gradientLabel28.Text = "      Lead Count";
+            this.gradientLabel28.Text = "    Lead Count";
             this.gradientLabel28.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // textBoxLeadCount
@@ -1217,7 +1302,7 @@
             this.gradientLabel18.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gradientLabel18.ForeColor = System.Drawing.Color.White;
             this.gradientLabel18.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel18.Location = new System.Drawing.Point(240, 50);
+            this.gradientLabel18.Location = new System.Drawing.Point(519, 22);
             this.gradientLabel18.Name = "gradientLabel18";
             this.gradientLabel18.Size = new System.Drawing.Size(29, 14);
             this.gradientLabel18.TabIndex = 78;
@@ -1232,16 +1317,16 @@
             this.gradientLabel19.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gradientLabel19.ForeColor = System.Drawing.Color.White;
             this.gradientLabel19.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel19.Location = new System.Drawing.Point(12, 44);
+            this.gradientLabel19.Location = new System.Drawing.Point(290, 17);
             this.gradientLabel19.Name = "gradientLabel19";
             this.gradientLabel19.Size = new System.Drawing.Size(150, 24);
             this.gradientLabel19.TabIndex = 77;
-            this.gradientLabel19.Text = "      Lead Length Spec (±)";
+            this.gradientLabel19.Text = "    Length Spec (±)";
             this.gradientLabel19.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // textBoxLeadLengthSpec
             // 
-            this.textBoxLeadLengthSpec.Location = new System.Drawing.Point(167, 47);
+            this.textBoxLeadLengthSpec.Location = new System.Drawing.Point(446, 19);
             this.textBoxLeadLengthSpec.Name = "textBoxLeadLengthSpec";
             this.textBoxLeadLengthSpec.Size = new System.Drawing.Size(70, 21);
             this.textBoxLeadLengthSpec.TabIndex = 76;
@@ -1271,11 +1356,11 @@
             this.gradientLabel23.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gradientLabel23.ForeColor = System.Drawing.Color.White;
             this.gradientLabel23.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel23.Location = new System.Drawing.Point(291, 44);
+            this.gradientLabel23.Location = new System.Drawing.Point(290, 44);
             this.gradientLabel23.Name = "gradientLabel23";
             this.gradientLabel23.Size = new System.Drawing.Size(150, 24);
             this.gradientLabel23.TabIndex = 72;
-            this.gradientLabel23.Text = "      Lead Pitch Spec (±)";
+            this.gradientLabel23.Text = "    Bent Disable Spec (±)";
             this.gradientLabel23.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // textBoxLeadPitchSpec
@@ -1293,13 +1378,14 @@
             this.checkBox3.Checked = true;
             this.checkBox3.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox3.ForeColor = System.Drawing.Color.Black;
-            this.checkBox3.Location = new System.Drawing.Point(174, 10);
+            this.checkBox3.Location = new System.Drawing.Point(329, 11);
             this.checkBox3.Name = "checkBox3";
             this.checkBox3.Size = new System.Drawing.Size(133, 26);
             this.checkBox3.TabIndex = 102;
             this.checkBox3.Text = "Used";
             this.checkBox3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.checkBox3.UseVisualStyleBackColor = true;
+            this.checkBox3.Visible = false;
             // 
             // gradientLabel12
             // 
@@ -1335,9 +1421,9 @@
             // 
             this.btnShoulderAreaCheck.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnShoulderAreaCheck.ForeColor = System.Drawing.Color.Black;
-            this.btnShoulderAreaCheck.Location = new System.Drawing.Point(500, 10);
+            this.btnShoulderAreaCheck.Location = new System.Drawing.Point(174, 10);
             this.btnShoulderAreaCheck.Name = "btnShoulderAreaCheck";
-            this.btnShoulderAreaCheck.Size = new System.Drawing.Size(66, 29);
+            this.btnShoulderAreaCheck.Size = new System.Drawing.Size(134, 29);
             this.btnShoulderAreaCheck.TabIndex = 108;
             this.btnShoulderAreaCheck.Tag = "0";
             this.btnShoulderAreaCheck.Text = "Check";
@@ -1406,13 +1492,14 @@
             this.checkBox1.Checked = true;
             this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox1.ForeColor = System.Drawing.Color.Black;
-            this.checkBox1.Location = new System.Drawing.Point(174, 10);
+            this.checkBox1.Location = new System.Drawing.Point(329, 11);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(133, 26);
             this.checkBox1.TabIndex = 106;
             this.checkBox1.Text = "Used";
             this.checkBox1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.Visible = false;
             // 
             // gradientLabel29
             // 
@@ -1550,7 +1637,7 @@
             this.graLabelNickThresholdValue.ColorTop = System.Drawing.Color.Empty;
             this.graLabelNickThresholdValue.ForeColor = System.Drawing.Color.White;
             this.graLabelNickThresholdValue.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.graLabelNickThresholdValue.Location = new System.Drawing.Point(508, 121);
+            this.graLabelNickThresholdValue.Location = new System.Drawing.Point(507, 121);
             this.graLabelNickThresholdValue.Name = "graLabelNickThresholdValue";
             this.graLabelNickThresholdValue.Size = new System.Drawing.Size(38, 24);
             this.graLabelNickThresholdValue.TabIndex = 101;
@@ -1564,7 +1651,7 @@
             this.graLabelBurrThresholdValue.ColorTop = System.Drawing.Color.Empty;
             this.graLabelBurrThresholdValue.ForeColor = System.Drawing.Color.White;
             this.graLabelBurrThresholdValue.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.graLabelBurrThresholdValue.Location = new System.Drawing.Point(508, 56);
+            this.graLabelBurrThresholdValue.Location = new System.Drawing.Point(507, 56);
             this.graLabelBurrThresholdValue.Name = "graLabelBurrThresholdValue";
             this.graLabelBurrThresholdValue.Size = new System.Drawing.Size(38, 24);
             this.graLabelBurrThresholdValue.TabIndex = 100;
@@ -1667,9 +1754,9 @@
             // 
             this.btnLeadTipAreaCheck.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnLeadTipAreaCheck.ForeColor = System.Drawing.Color.Black;
-            this.btnLeadTipAreaCheck.Location = new System.Drawing.Point(500, 10);
+            this.btnLeadTipAreaCheck.Location = new System.Drawing.Point(174, 10);
             this.btnLeadTipAreaCheck.Name = "btnLeadTipAreaCheck";
-            this.btnLeadTipAreaCheck.Size = new System.Drawing.Size(66, 29);
+            this.btnLeadTipAreaCheck.Size = new System.Drawing.Size(134, 29);
             this.btnLeadTipAreaCheck.TabIndex = 113;
             this.btnLeadTipAreaCheck.Tag = "0";
             this.btnLeadTipAreaCheck.Text = "Check";
@@ -1738,13 +1825,14 @@
             this.checkBox2.Checked = true;
             this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox2.ForeColor = System.Drawing.Color.Black;
-            this.checkBox2.Location = new System.Drawing.Point(174, 10);
+            this.checkBox2.Location = new System.Drawing.Point(329, 11);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(133, 26);
             this.checkBox2.TabIndex = 111;
             this.checkBox2.Text = "Used";
             this.checkBox2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox2.Visible = false;
             // 
             // gradientLabel33
             // 
@@ -1852,7 +1940,7 @@
             this.graLabelLeadTipBurrThresholdValue.ColorTop = System.Drawing.Color.Empty;
             this.graLabelLeadTipBurrThresholdValue.ForeColor = System.Drawing.Color.White;
             this.graLabelLeadTipBurrThresholdValue.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.graLabelLeadTipBurrThresholdValue.Location = new System.Drawing.Point(508, 56);
+            this.graLabelLeadTipBurrThresholdValue.Location = new System.Drawing.Point(507, 56);
             this.graLabelLeadTipBurrThresholdValue.Name = "graLabelLeadTipBurrThresholdValue";
             this.graLabelLeadTipBurrThresholdValue.Size = new System.Drawing.Size(38, 24);
             this.graLabelLeadTipBurrThresholdValue.TabIndex = 100;
@@ -1960,7 +2048,7 @@
             this.gradientLabelGateRemainingThresholdValue.ColorTop = System.Drawing.Color.Empty;
             this.gradientLabelGateRemainingThresholdValue.ForeColor = System.Drawing.Color.White;
             this.gradientLabelGateRemainingThresholdValue.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabelGateRemainingThresholdValue.Location = new System.Drawing.Point(508, 19);
+            this.gradientLabelGateRemainingThresholdValue.Location = new System.Drawing.Point(507, 19);
             this.gradientLabelGateRemainingThresholdValue.Name = "gradientLabelGateRemainingThresholdValue";
             this.gradientLabelGateRemainingThresholdValue.Size = new System.Drawing.Size(38, 24);
             this.gradientLabelGateRemainingThresholdValue.TabIndex = 100;
@@ -2010,9 +2098,9 @@
             // 
             this.btnGateRemainingAreaCheck.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnGateRemainingAreaCheck.ForeColor = System.Drawing.Color.Black;
-            this.btnGateRemainingAreaCheck.Location = new System.Drawing.Point(500, 10);
+            this.btnGateRemainingAreaCheck.Location = new System.Drawing.Point(174, 10);
             this.btnGateRemainingAreaCheck.Name = "btnGateRemainingAreaCheck";
-            this.btnGateRemainingAreaCheck.Size = new System.Drawing.Size(66, 29);
+            this.btnGateRemainingAreaCheck.Size = new System.Drawing.Size(134, 26);
             this.btnGateRemainingAreaCheck.TabIndex = 101;
             this.btnGateRemainingAreaCheck.Tag = "0";
             this.btnGateRemainingAreaCheck.Text = "Check";
@@ -2081,13 +2169,14 @@
             this.checkBox4.Checked = true;
             this.checkBox4.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox4.ForeColor = System.Drawing.Color.Black;
-            this.checkBox4.Location = new System.Drawing.Point(174, 10);
+            this.checkBox4.Location = new System.Drawing.Point(329, 11);
             this.checkBox4.Name = "checkBox4";
             this.checkBox4.Size = new System.Drawing.Size(133, 26);
             this.checkBox4.TabIndex = 103;
             this.checkBox4.Text = "Used";
             this.checkBox4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.checkBox4.UseVisualStyleBackColor = true;
+            this.checkBox4.Visible = false;
             // 
             // gradientLabel9
             // 
@@ -2163,7 +2252,6 @@
         private System.Windows.Forms.Button btnMaskingUndo;
         private System.Windows.Forms.Button btnMaskingShow;
         private System.Windows.Forms.GroupBox gbBodyAreaSetting;
-        private System.Windows.Forms.Button btnLeadBodyAreaSet;
         private System.Windows.Forms.Button btnLeadBodyAreaShow;
         private System.Windows.Forms.Button btnMaskingClear;
         private CustomControl.GradientLabel gradientLabel4;
@@ -2227,10 +2315,6 @@
         private CustomControl.GradientLabel gradientLabel29;
         private System.Windows.Forms.Button btnLeadLengthAreaCheck;
         private CustomControl.QuickDataGridView QuickGridViewLeadSetting;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gridLeadNum;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gridLeadLength;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gridLeadPitch;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gridLeadWidth;
         private System.Windows.Forms.GroupBox groupBox14;
         private CustomControl.GradientLabel gradientLabel11;
         private System.Windows.Forms.Button btnShoulderAreaSet;
@@ -2249,7 +2333,7 @@
         private System.Windows.Forms.HScrollBar hScrollShoulderBurrThreshold;
         private CustomControl.GradientLabel gradientLabel21;
         private CustomControl.GradientLabel gradientLabel25;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBoxChipOutSpec;
         private CustomControl.GradientLabel gradientLabel26;
         private CustomControl.GradientLabel gradientLabel31;
         private CustomControl.GradientLabel gradientLabel27;
@@ -2285,5 +2369,15 @@
         private CustomControl.GradientLabel gradientLabel43;
         private System.Windows.Forms.TextBox textBoxGateRemainingSpec;
         private CustomControl.GradientLabel gradientLabel44;
+        private CustomControl.GradientLabel gradientLabel36;
+        private CustomControl.GradientLabel gradientLabel38;
+        private System.Windows.Forms.TextBox textBoxLeadSkewSpec;
+        private System.Windows.Forms.Button btnLeadBodyAreaSet;
+        private System.Windows.Forms.Button btnNewLeadValueSave;
+        private System.Windows.Forms.Button btnNewLeadValueShow;
+        private System.Windows.Forms.Button btnNowLeadValueShow;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gridLeadNum;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gridLeadLength;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gridLeadPitch;
     }
 }

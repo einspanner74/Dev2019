@@ -59,7 +59,7 @@ namespace InspectionSystemManager
             ThreadInspection.Start();
         }
 
-        public void Initialize(Object _OwnerForm, int _ProjectType, InspectionSystemManagerParameter _InspSysManagerParam, InspectionParameter _InspParam, string _RecipeName)
+        public void Initialize(Object _OwnerForm, int _ProjectType, InspectionSystemManagerParameter _InspSysManagerParam, InspectionParameter _InspParam, string _RecipeName, string _FolderPath)
         {
             ProjectType = (eProjectType)_ProjectType;
             ProjectItem = (eProjectItem)_InspSysManagerParam.ProjectItem;
@@ -70,7 +70,7 @@ namespace InspectionSystemManager
             SetISMParameter(_InspSysManagerParam);
             SetInspectionParameter(_InspParam);
 
-            InspWnd.Initialize(_OwnerForm, ID, InspParam, ProjectType, ProjectItem, InspWndName, _RecipeName, IsSimulationMode);
+            InspWnd.Initialize(_OwnerForm, ID, InspParam, ProjectType, ProjectItem, InspWndName, _RecipeName, IsSimulationMode, _FolderPath);
             InspWnd.InitializeResolution(_InspSysManagerParam.ResolutionX, _InspSysManagerParam.ResolutionY);
             InspWnd.InitializeCam(_InspSysManagerParam.CameraType, _InspSysManagerParam.CameraConfigInfo, Convert.ToInt32(_InspSysManagerParam.ImageSizeWidth), Convert.ToInt32(_InspSysManagerParam.ImageSizeHeight), _InspSysManagerParam.CameraRotate);
             InspWnd.InspectionWindowEvent += new InspectionWindow.InspectionWindowHandler(InspectionWindowEventFunction);
@@ -298,7 +298,7 @@ namespace InspectionSystemManager
             var _InspSysManagerEvent = InspSysManagerEvent;
             InspSysManagerEvent?.Invoke(eISMCMD.SEND_DATA, _Value);
         }
-
+            
         private void SetResultData(object _Value)
         {
             var _InspSysManagerEvent = InspSysManagerEvent;

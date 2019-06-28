@@ -162,6 +162,7 @@ namespace ParameterManager
                         case "TotalRecipe":      SystemParam.IsTotalRecipe = Convert.ToBoolean(_Node.InnerText); break;
                         case "LastRecipeName":   GetLastRecipeName(_Node); break;
                         case "ISMModuleCount":   SystemParam.InspSystemManagerCount = Convert.ToInt32(_Node.InnerText); break;
+                        case "ISMModuleRes":     GetISMModuleResolution(_Node); break;
                         case "ResultWndLocateX": SystemParam.ResultWindowLocationX = Convert.ToInt32(_Node.InnerText); break;
                         case "ResultWndLocateY": SystemParam.ResultWindowLocationY = Convert.ToInt32(_Node.InnerText); break;
                         case "ResultWndWidth":   SystemParam.ResultWindowWidth = Convert.ToInt32(_Node.InnerText); break;
@@ -174,7 +175,12 @@ namespace ParameterManager
                         case "DataFolderPath1":  SystemParam.DataFolderPath[1] = _Node.InnerText; break;
                     }
 
-                    if (_Node.Name == "ISMModuleCount") SystemParam.LastRecipeName = new string[SystemParam.InspSystemManagerCount];
+                    if (_Node.Name == "ISMModuleCount")
+                    {
+                        SystemParam.LastRecipeName = new string[SystemParam.InspSystemManagerCount];
+                        SystemParam.InspSystemManagerResolutionX = new double[SystemParam.InspSystemManagerCount];
+                        SystemParam.InspSystemManagerResolutionY = new double[SystemParam.InspSystemManagerCount];
+                    }
                 }
             }
 
@@ -199,6 +205,36 @@ namespace ParameterManager
             }
         }
 
+        private void GetISMModuleResolution(XmlNode _Nodes)
+        {
+            int _Cnt = 1;
+            if (null == _Nodes) return;
+            if (0 == SystemParam.InspSystemManagerCount) return;
+
+            SystemParam.InspSystemManagerResolutionX = new double[SystemParam.InspSystemManagerCount];
+            SystemParam.InspSystemManagerResolutionY = new double[SystemParam.InspSystemManagerCount];
+            foreach (XmlNode _NodeChild in _Nodes.ChildNodes)
+            {
+                if (null == _NodeChild) return;
+
+                string _ModuleName = string.Format("ISMModule{0}", _Cnt);
+                if (_NodeChild.Name == _ModuleName)
+                {
+                    foreach (XmlNode _Node in _NodeChild)
+                    {
+                        if (null == _Node) return;
+                        switch (_Node.Name)
+                        {
+                            case "ResolutionX": SystemParam.InspSystemManagerResolutionX[_Cnt - 1] = Convert.ToDouble(_Node.InnerText); break;
+                            case "ResolutionY": SystemParam.InspSystemManagerResolutionY[_Cnt - 1] = Convert.ToDouble(_Node.InnerText); break;
+                        }
+                        
+                    }
+                    _Cnt++;
+                }
+            }
+        }
+
         public void WriteSystemParameter()
         {
             DirectoryInfo _DirInfo = new DirectoryInfo(InspectionDefaultPath);
@@ -210,6 +246,7 @@ namespace ParameterManager
             XElement _SimulationMode         = new XElement("SimulationMode", SystemParam.IsSimulationMode.ToString());
             XElement _TotalRecipe            = new XElement("TotalRecipe", SystemParam.IsTotalRecipe.ToString());
             XElement _InspSystemManagerCount = new XElement("ISMModuleCount", SystemParam.InspSystemManagerCount.ToString());
+            XElement _InspSystemManagerRes   = new XElement("ISMModuleRes");
             XElement _ResultWndLocateX       = new XElement("ResultWndLocateX", SystemParam.ResultWindowLocationX.ToString());
             XElement _ResultWndLocateY       = new XElement("ResultWndLocateY", SystemParam.ResultWindowLocationY.ToString());
             XElement _ResultWndWidth         = new XElement("ResultWndWidth", SystemParam.ResultWindowWidth.ToString());
@@ -223,13 +260,28 @@ namespace ParameterManager
 
             XElement _LastRecipeName         = new XElement("LastRecipeName");
             XElement[] _RecipeName           = new XElement[SystemParam.InspSystemManagerCount];
+            //XElement[] _ISMModuleRes         = new XElement[SystemParam.InspSystemManagerCount];
             #endregion XML Element Define
 
             #region XML Tree ADD
+            for (int iLoopCount = 0; iLoopCount< SystemParam.InspSystemManagerCount; ++iLoopCount)
+            {
+                XElement _ISMModuleRes = new XElement(string.Format("ISMModule{0}", iLoopCount + 1));
+                XElement _ResolutionX = new XElement("ResolutionX", SystemParam.InspSystemManagerResolutionX[iLoopCount].ToString());
+                XElement _ResolutionY = new XElement("ResolutionY", SystemParam.InspSystemManagerResolutionY[iLoopCount].ToString());
+                _ISMModuleRes.Add(_ResolutionX);
+                _ISMModuleRes.Add(_ResolutionY);
+                _InspSystemManagerRes.Add(_ISMModuleRes);
+
+                _RecipeName[iLoopCount] = new XElement("LastRecipeName" + iLoopCount, SystemParam.LastRecipeName[iLoopCount]);
+                _LastRecipeName.Add(_RecipeName[iLoopCount]);
+            }
+
             _SystemParameter.Add(_MachineID);
             _SystemParameter.Add(_SimulationMode);
             _SystemParameter.Add(_TotalRecipe);
             _SystemParameter.Add(_InspSystemManagerCount);
+            _SystemParameter.Add(_InspSystemManagerRes);
             _SystemParameter.Add(_ResultWndLocateX);
             _SystemParameter.Add(_ResultWndLocateY);
             _SystemParameter.Add(_ResultWndWidth);
@@ -240,13 +292,7 @@ namespace ParameterManager
             _SystemParameter.Add(_Language);
             _SystemParameter.Add(_DataFolderPath0);
             _SystemParameter.Add(_DataFolderPath1);
-
             _SystemParameter.Add(_LastRecipeName);
-            for (int iLoopCount = 0; iLoopCount < SystemParam.InspSystemManagerCount; iLoopCount++)
-            {
-                _RecipeName[iLoopCount] = new XElement("LastRecipeName" + iLoopCount, SystemParam.LastRecipeName[iLoopCount]);
-                _LastRecipeName.Add(_RecipeName[iLoopCount]);
-            }
 
             _SystemParameter.Save(SystemParameterFullPath);
             #endregion XML Tree ADD
@@ -596,7 +642,9 @@ namespace ParameterManager
                 else if ((int)eAlgoType.C_LINE_FIND == _InspAlgoParamTemp.AlgoType)     GetLineFindInspectionParameter(_Node, ref _InspAlgoParamTemp);
                 else if ((int)eAlgoType.C_MULTI_PATTERN == _InspAlgoParamTemp.AlgoType) GetMultiPatternInspectionparameter(_Node, ref _InspAlgoParamTemp);
                 else if ((int)eAlgoType.C_LEAD_TRIM == _InspAlgoParamTemp.AlgoType)     GetLeadTrimInspectionParameter(_Node, ref _InspAlgoParamTemp);
+                else if ((int)eAlgoType.C_LEAD_FORM == _InspAlgoParamTemp.AlgoType)     GetLeadFormInspectionParameter(_Node, ref _InspAlgoParamTemp);
                 else if ((int)eAlgoType.C_ELLIPSE == _InspAlgoParamTemp.AlgoType)       GetEllipseFindInspectionParameter(_Node, ref _InspAlgoParamTemp);
+                
 
                 _InspAreaParam.InspAlgoParam.Add(_InspAlgoParamTemp);
             }
@@ -966,6 +1014,7 @@ namespace ParameterManager
                     case "ChipOutAreaHeight":   _CogLeadTrim.ChipOutArea.Height = Convert.ToDouble(_NodeChild.InnerText); break;
                     case "ChipOutForground":    _CogLeadTrim.ChipOutForeground = Convert.ToInt32(_NodeChild.InnerText); break;
                     case "ChipOutThreshold":    _CogLeadTrim.ChipOutThreshold = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "ChipOutSpec":         _CogLeadTrim.ChipOutSpec = Convert.ToDouble(_NodeChild.InnerText); break;
                     case "ChipOutBlobAreaMin":  _CogLeadTrim.ChipOutBlobAreaMin = Convert.ToDouble(_NodeChild.InnerText); break;
                     case "ChipOutBlobAreaMax":  _CogLeadTrim.ChipOutBlobAreaMax = Convert.ToDouble(_NodeChild.InnerText); break;
                     case "ChipOutWidthMin":     _CogLeadTrim.ChipOutWidthMin = Convert.ToDouble(_NodeChild.InnerText); break;
@@ -983,6 +1032,7 @@ namespace ParameterManager
                     case "LeadCount":               _CogLeadTrim.LeadCount = Convert.ToInt32(_NodeChild.InnerText); break;
                     case "LeadForeground":          _CogLeadTrim.LeadForeground = Convert.ToInt32(_NodeChild.InnerText); break;
                     case "LeadThreshold":           _CogLeadTrim.LeadThreshold = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "LeadSkewSpec":            _CogLeadTrim.LeadSkewSpec = Convert.ToDouble(_NodeChild.InnerText); break;
                     case "LeadPitchSpec":           _CogLeadTrim.LeadPitchSpec = Convert.ToDouble(_NodeChild.InnerText); break;
                     case "LeadLengthSpec":          _CogLeadTrim.LeadLengthSpec = Convert.ToDouble(_NodeChild.InnerText); break;
                     case "LeadLength":              GetLeadLengthArray(_NodeChild, _CogLeadTrim.LeadCount, ref _CogLeadTrim.LeadLengthArray); break;
@@ -1114,6 +1164,64 @@ namespace ParameterManager
             }
         }
 
+        private void GetLeadFormInspectionParameter(XmlNode _Nodes, ref InspectionAlgorithmParameter _InspParam)
+        {
+            if (null == _Nodes) return;
+            CogLeadFormAlgo _CogLeadForm = new CogLeadFormAlgo();
+            foreach(XmlNode _NodeChild in _Nodes)
+            {
+                if (null == _NodeChild) return;
+                switch (_NodeChild.Name)
+                {
+                    case "LeadCount":           _CogLeadForm.LeadCount = Convert.ToInt32(_NodeChild.InnerText);     break;
+                    case "IsUseOrigin":         _CogLeadForm.IsUseOrigin = Convert.ToBoolean(_NodeChild.InnerText);   break;
+                    case "OriginAreaCenterX":   _CogLeadForm.OriginArea.CenterX = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "OriginAreaCenterY":   _CogLeadForm.OriginArea.CenterY = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "OriginAreaWidth":     _CogLeadForm.OriginArea.Width = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "OriginAreaHeight":    _CogLeadForm.OriginArea.Height = Convert.ToDouble(_NodeChild.InnerText); break;
+
+                    case "IsUseAlign":          _CogLeadForm.IsUseAlign = Convert.ToBoolean(_NodeChild.InnerText); break;
+                    case "AlignAreaCenterX":    _CogLeadForm.AlignArea.CenterX = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "AlignAreaCenterY":    _CogLeadForm.AlignArea.CenterY = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "AlignAreaWidth":      _CogLeadForm.AlignArea.Width = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "AlignAreaHeight":     _CogLeadForm.AlignArea.Height = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "AlignThreshold":      _CogLeadForm.AlignThreshold = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "AlignSkewSpec":       _CogLeadForm.AlignSkewSpec = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "AlignPitchSpec":      _CogLeadForm.AlignPitchSpec = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "AlignPosition":       GetLeadAlignPositionArray(_NodeChild, _CogLeadForm.LeadCount, ref _CogLeadForm.AlignPositionArray); break;
+                }
+            }
+
+            _InspParam.Algorithm = _CogLeadForm;
+        }
+
+        private void GetLeadAlignPositionArray(XmlNode _Nodes, int _LeadCount, ref PointD[] _LeadLengthArray)
+        {
+            int _Cnt = 1;
+            if (null == _Nodes) return;
+
+            _LeadLengthArray = new PointD[_LeadCount];
+            foreach (XmlNode _NodeChild in _Nodes)
+            {
+                if (null == _NodeChild) return;
+
+                string _PositionName = string.Format("Position{0}", _Cnt);
+                if (_NodeChild.Name == _PositionName)
+                {
+                    foreach (XmlNode _Node in _NodeChild)
+                    {
+                        if (null == _Node) return;
+                        switch (_Node.Name)
+                        {
+                            case "X": _LeadLengthArray[_Cnt - 1].X = Convert.ToDouble(_Node.InnerText); break;
+                            case "Y": _LeadLengthArray[_Cnt - 1].Y = Convert.ToDouble(_Node.InnerText); break;
+                        }
+                    }
+                }
+                _Cnt++;
+            }
+        }
+
         public void WriteInspectionParameter(int _ID, string _InspParamFullPath = null)
         {
             //LDH, 2019.01.15, 별도 Recipe 사용을 위해 ISMCount 따로 설정
@@ -1183,6 +1291,7 @@ namespace ParameterManager
                                 else if (eAlgoType.C_LINE_FIND == _AlgoType)     WriteLineFindInspectionParameter(_ID, ISMCount, _XmlWriter, _InspAlgoParamTemp.Algorithm);
                                 else if (eAlgoType.C_MULTI_PATTERN == _AlgoType) WriteMultiPatternInspectionParameter(_ID, ISMCount, _XmlWriter, _InspAlgoParamTemp.Algorithm);
                                 else if (eAlgoType.C_LEAD_TRIM == _AlgoType)     WriteLeadTrimInspectionParameter(_ID, ISMCount, _XmlWriter, _InspAlgoParamTemp.Algorithm);
+                                else if (eAlgoType.C_LEAD_FORM == _AlgoType)     WriteLeadFormInspectionParameter(_ID, ISMCount, _XmlWriter, _InspAlgoParamTemp.Algorithm);
                             }
                             _XmlWriter.WriteEndElement();
                         }
@@ -1456,6 +1565,7 @@ namespace ParameterManager
             _XmlWriter.WriteElementString("ChipOutAreaWidth", _CogLeadTrimAlgo.ChipOutArea.Width.ToString());
             _XmlWriter.WriteElementString("ChipOutAreaHeight", _CogLeadTrimAlgo.ChipOutArea.Height.ToString());
             _XmlWriter.WriteElementString("ChipOutForground", _CogLeadTrimAlgo.ChipOutForeground.ToString());
+            _XmlWriter.WriteElementString("ChipOutSpec", _CogLeadTrimAlgo.ChipOutSpec.ToString());
             _XmlWriter.WriteElementString("ChipOutThreshold", _CogLeadTrimAlgo.ChipOutThreshold.ToString());
             _XmlWriter.WriteElementString("ChipOutBlobAreaMin", _CogLeadTrimAlgo.ChipOutBlobAreaMin.ToString());
             _XmlWriter.WriteElementString("ChipOutBlobAreaMax", _CogLeadTrimAlgo.ChipOutBlobAreaMax.ToString());
@@ -1472,6 +1582,7 @@ namespace ParameterManager
             _XmlWriter.WriteElementString("LeadCount", _CogLeadTrimAlgo.LeadCount.ToString());
             _XmlWriter.WriteElementString("LeadForeground", _CogLeadTrimAlgo.LeadForeground.ToString());
             _XmlWriter.WriteElementString("LeadThreshold", _CogLeadTrimAlgo.LeadThreshold.ToString());
+            _XmlWriter.WriteElementString("LeadSkewSpec", _CogLeadTrimAlgo.LeadSkewSpec.ToString());
             _XmlWriter.WriteElementString("LeadPitchSpec", _CogLeadTrimAlgo.LeadPitchSpec.ToString());
             _XmlWriter.WriteElementString("LeadLengthSpec", _CogLeadTrimAlgo.LeadLengthSpec.ToString());
 
@@ -1543,6 +1654,44 @@ namespace ParameterManager
 
             _XmlWriter.WriteElementString("ResolutionX", _CogLeadTrimAlgo.ResolutionX.ToString());
             _XmlWriter.WriteElementString("ResolutionY", _CogLeadTrimAlgo.ResolutionY.ToString());
+        }
+
+        private void WriteLeadFormInspectionParameter(int _ID, int _ISMCount, XmlTextWriter _XmlWriter, Object _InspAlgoParam)
+        {
+            var _CogLeadFormAlgo = _InspAlgoParam as CogLeadFormAlgo;
+            _XmlWriter.WriteElementString("LeadCount", _CogLeadFormAlgo.LeadCount.ToString());
+
+            _XmlWriter.WriteElementString("IsUseOrigin", _CogLeadFormAlgo.IsUseOrigin.ToString());
+            _XmlWriter.WriteElementString("OriginAreaCenterX", _CogLeadFormAlgo.OriginArea.CenterX.ToString());
+            _XmlWriter.WriteElementString("OriginAreaCenterY", _CogLeadFormAlgo.OriginArea.CenterY.ToString());
+            _XmlWriter.WriteElementString("OriginAreaWidth", _CogLeadFormAlgo.OriginArea.Width.ToString());
+            _XmlWriter.WriteElementString("OriginAreaHeight", _CogLeadFormAlgo.OriginArea.Height.ToString());
+
+            _XmlWriter.WriteElementString("IsUseAlign", _CogLeadFormAlgo.IsUseAlign.ToString());
+            _XmlWriter.WriteElementString("AlignAreaCenterX", _CogLeadFormAlgo.AlignArea.CenterX.ToString());
+            _XmlWriter.WriteElementString("AlignAreaCenterY", _CogLeadFormAlgo.AlignArea.CenterY.ToString());
+            _XmlWriter.WriteElementString("AlignAreaWidth", _CogLeadFormAlgo.AlignArea.Width.ToString());
+            _XmlWriter.WriteElementString("AlignAreaHeight", _CogLeadFormAlgo.AlignArea.Height.ToString());
+
+            _XmlWriter.WriteElementString("AlignThreshold", _CogLeadFormAlgo.AlignThreshold.ToString());
+            _XmlWriter.WriteElementString("AlignSkewSpec", _CogLeadFormAlgo.AlignSkewSpec.ToString());
+            _XmlWriter.WriteElementString("AlignPitchSpec", _CogLeadFormAlgo.AlignPitchSpec.ToString());
+
+            _XmlWriter.WriteStartElement("AlignPosition");
+            {
+                for (int iLoopCount = 0; iLoopCount <_CogLeadFormAlgo.AlignPositionArray.Length; ++iLoopCount)
+                {
+                    string _AlignPos = string.Format("Position{0}", iLoopCount + 1);
+                    _XmlWriter.WriteStartElement(_AlignPos);
+                    {
+                        _XmlWriter.WriteElementString("X", _CogLeadFormAlgo.AlignPositionArray[iLoopCount].X.ToString());
+                        _XmlWriter.WriteElementString("Y", _CogLeadFormAlgo.AlignPositionArray[iLoopCount].Y.ToString());
+                    }
+                    _XmlWriter.WriteEndElement();
+                }
+            }
+            _XmlWriter.WriteEndElement();
+
         }
         #endregion Read & Write InspectionParameter
 
@@ -1995,6 +2144,7 @@ namespace ParameterManager
 
                     else if (eAlgoType.C_LEAD == _AlgoType)
                     {
+                        #region Lead Inspection Algorithm Copy
                         var _Algorithm = _InspAlgoParam.Algorithm as CogLeadAlgo;
                         var _SrcAlgorithm = _SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm as CogLeadAlgo;
 
@@ -2025,6 +2175,7 @@ namespace ParameterManager
                         _Algorithm.IsLeadPitchInspection = _SrcAlgorithm.IsLeadPitchInspection;
 
                         _InspAlgoParam.Algorithm = _Algorithm;
+                        #endregion
                     }
 
                     else if (eAlgoType.C_ID == _AlgoType)
@@ -2098,6 +2249,7 @@ namespace ParameterManager
                         _Algorithm.ChipOutArea.Width = _SrcAlgorithm.ChipOutArea.Width;
                         _Algorithm.ChipOutArea.Height = _SrcAlgorithm.ChipOutArea.Height;
                         _Algorithm.ChipOutThreshold = _SrcAlgorithm.ChipOutThreshold;
+                        _Algorithm.ChipOutSpec = _SrcAlgorithm.ChipOutSpec;
                         _Algorithm.ChipOutBlobAreaMin = _SrcAlgorithm.ChipOutBlobAreaMin;
                         _Algorithm.ChipOutBlobAreaMax = _SrcAlgorithm.ChipOutBlobAreaMax;
                         _Algorithm.ChipOutWidthMin = _SrcAlgorithm.ChipOutWidthMin;
@@ -2114,6 +2266,7 @@ namespace ParameterManager
                         _Algorithm.LeadCount = _SrcAlgorithm.LeadCount;
                         _Algorithm.LeadForeground = _SrcAlgorithm.LeadForeground;
                         _Algorithm.LeadThreshold = _SrcAlgorithm.LeadThreshold;
+                        _Algorithm.LeadSkewSpec = _SrcAlgorithm.LeadSkewSpec;
                         _Algorithm.LeadPitchSpec = _SrcAlgorithm.LeadPitchSpec;
                         _Algorithm.LeadLengthSpec = _SrcAlgorithm.LeadLengthSpec;
 
@@ -2170,6 +2323,39 @@ namespace ParameterManager
 
                         _InspAlgoParam.Algorithm = _Algorithm;
                     }
+
+                    else if (eAlgoType.C_LEAD_FORM == _AlgoType)
+                    {
+                        var _Algorithm = _InspAlgoParam.Algorithm as CogLeadFormAlgo;
+                        var _SrcAlgorithm = _SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm as CogLeadFormAlgo;
+
+                        _Algorithm = new CogLeadFormAlgo();
+                        _Algorithm.LeadCount = _SrcAlgorithm.LeadCount;
+                        _Algorithm.IsUseOrigin = _SrcAlgorithm.IsUseOrigin;
+                        _Algorithm.OriginArea.CenterX = _SrcAlgorithm.OriginArea.CenterX;
+                        _Algorithm.OriginArea.CenterY = _SrcAlgorithm.OriginArea.CenterY;
+                        _Algorithm.OriginArea.Width = _SrcAlgorithm.OriginArea.Width;
+                        _Algorithm.OriginArea.Height = _SrcAlgorithm.OriginArea.Height;
+                        _Algorithm.IsUseAlign = _SrcAlgorithm.IsUseOrigin;
+                        _Algorithm.AlignArea.CenterX = _SrcAlgorithm.AlignArea.CenterX;
+                        _Algorithm.AlignArea.CenterY = _SrcAlgorithm.AlignArea.CenterY;
+                        _Algorithm.AlignArea.Width = _SrcAlgorithm.AlignArea.Width;
+                        _Algorithm.AlignArea.Height = _SrcAlgorithm.AlignArea.Height;
+                        _Algorithm.AlignThreshold = _SrcAlgorithm.AlignThreshold;
+                        _Algorithm.AlignSkewSpec = _SrcAlgorithm.AlignSkewSpec;
+                        _Algorithm.AlignPitchSpec = _SrcAlgorithm.AlignPitchSpec;
+                        _Algorithm.ResolutionX = _SrcAlgorithm.ResolutionX;
+                        _Algorithm.ResolutionY = _SrcAlgorithm.ResolutionY;
+                        _Algorithm.AlignPositionArray = new PointD[_SrcAlgorithm.AlignPositionArray.Length];
+                        for (int zLoopCount = 0; zLoopCount < _SrcAlgorithm.AlignPositionArray.Length; ++zLoopCount)
+                        {
+                            _Algorithm.AlignPositionArray[zLoopCount].X = _SrcAlgorithm.AlignPositionArray[zLoopCount].X;
+                            _Algorithm.AlignPositionArray[zLoopCount].Y = _SrcAlgorithm.AlignPositionArray[zLoopCount].Y;
+                        }
+
+                        _InspAlgoParam.Algorithm = _Algorithm;
+                    }
+
                     _InspAreaParam.InspAlgoParam.Add(_InspAlgoParam);
                 }
                 _DestParam.InspAreaParam.Add(_InspAreaParam);

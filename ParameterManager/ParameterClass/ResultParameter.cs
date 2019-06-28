@@ -73,8 +73,9 @@ namespace ParameterManager
     #region Inspection Result Parameter
     public class Result
     {
-        public bool     IsGood;
-        public eNgType  NgType;
+        public bool         IsGood;
+        public eNgType      NgType;
+        public RectangleD   SearchArea;
     }
 
     public class CogPatternResult : Result
@@ -362,13 +363,15 @@ namespace ParameterManager
         public List<CogRectangle> ShoulderBurrDefectList;
         public List<CogRectangle> ShoulderNickDefectList;
         public List<CogRectangle> LeadTipBurrDefectList;
-
         public List<CogRectangle> GateRemainingNgList;
+
+        public EachLeadStatus[]   EachLeadStatusArray;
 
         public CogLeadTrimResult()
         {
             IsGood = true;
             NgType = eNgType.GOOD;
+            SearchArea = new RectangleD();
 
             LeadBodyOriginX = 0;
             LeadBodyOriginY = 0;
@@ -400,24 +403,6 @@ namespace ParameterManager
 
     public class CogLeadTrimShoulderResult : CogLeadBlobResult
     {
-        //public int      BlobCount;
-        //public double[] BlobArea;
-        //public double[] BlobCenterX;
-        //public double[] BlobCenterY;
-        //public double[] BlobMinX;
-        //public double[] BlobMinY;
-        //public double[] BlobMaxX;
-        //public double[] BlobMaxY;
-        //public double[] Width;
-        //public double[] Height;
-
-        //public double[] BlobMessCenterX;
-        //public double[] BlobMessCenterY;
-        //public double[] PrincipalWidth;
-        //public double[] PrincipalHeight;
-        //public double[] Angle;
-        //public double[] Degree;
-
         public double[] LeadEdgeLeft;
         public double[] LeadEdgeRight;
         public double[] LeadEdgeCenter;
@@ -460,6 +445,33 @@ namespace ParameterManager
         public string LastErrorMessge;
 
         //Lead Form Search Parameter
+        public int LeadCount;
+
+        public List<LeadFormAlignResultData> AlignResultDataList;
+        public List<PointD>                  AlignOffsetDataList;
+
+        public EachLeadStatus[]              EachLeadStatusArray;
+
+        public CogLeadFormResult()
+        {
+            IsGood = true;
+            NgType = eNgType.GOOD;
+            SearchArea = new RectangleD();
+
+            AlignResultDataList = new List<LeadFormAlignResultData>();
+            AlignOffsetDataList = new List<PointD>();
+        }
+    }
+
+    public class LeadFormAlignResultData
+    {
+        public double Area;
+        public double CenterX;
+        public double CenterY;
+        public double Width;
+        public double Height;
+        public double Angle;
+        public bool IsGood;
     }
 
     public class CogLeadBlobResult
@@ -491,6 +503,7 @@ namespace ParameterManager
         public eInspMode InspMode;
         public int ID;
         public bool IsGood;
+        public RectangleD SearchArea;
         public eNgType NgType;
 
         public object SendResult;
@@ -539,6 +552,8 @@ namespace ParameterManager
 
         public double[] LeadLengthReal;
         public double[] LeadWidthReal;
+
+        public CogImage8Grey SaveImage;
     }
 
     public class SendCardImageSaveResult
@@ -585,6 +600,46 @@ namespace ParameterManager
         public double[] LeadPitch;
         public double[] LeadPitchReal;
         public bool[]   IsLeadPitchGood;
+
+        public EachLeadStatus[] EachLeadStatusArray;
+
+        public CogImage8Grey SaveImage;
+    }
+
+    public class SendLeadFormResult
+    {
+        public int LeadCount;
+        public PointD[] LeadOffset;
+        public bool[] IsLeadOffsetGood;
+
+        public EachLeadStatus[] EachLeadStatusArray;
+
+        public CogImage8Grey SaveImage;
+    }
+
+    public class EachLeadStatus
+    {
+        public eLeadStatus NgType;
+
+        public List<eLeadStatus> NgTypeList;
+
+        public EachLeadStatus()
+        {
+            NgType = eLeadStatus.GOOD;
+            NgTypeList = new List<eLeadStatus>();
+        }
+
+        public void ResetResult()
+        {
+            NgType = eLeadStatus.GOOD;
+            NgTypeList.Clear();
+        }
+
+        public void SetSkewResult(eLeadStatus _NgType)
+        {
+            if (_NgType != eLeadStatus.GOOD) NgType = _NgType;
+            NgTypeList.Add(_NgType);
+        }
     }
     #endregion Last Send Result Parameter
 }

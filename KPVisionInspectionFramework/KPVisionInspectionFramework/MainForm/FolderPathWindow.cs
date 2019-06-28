@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+using ParameterManager;
+
 namespace KPVisionInspectionFramework
 {
     public partial class FolderPathWindow : Form
@@ -18,7 +20,9 @@ namespace KPVisionInspectionFramework
         TextBox[] tbPath;
         Button[] btnPathSearch;
 
-        public FolderPathWindow(bool _SimulationModeFlag)
+        int PathCount = 0;
+
+        public FolderPathWindow(int _ProjectType)
         {
             InitializeComponent();
 
@@ -26,13 +30,28 @@ namespace KPVisionInspectionFramework
             tbPath = new TextBox[2] { textBoxPath1, textBoxPath2 };
             btnPathSearch = new Button[2] { btnPathSearch1, btnPathSearch2 };
 
-            SetlabelPathName();
+            SetlabelPathName(_ProjectType);
         }
 
-        private void SetlabelPathName()
+        private void SetlabelPathName(int _ProjectType)
         {
-            lbPathName[0].Text = "Cam 1";
-            lbPathName[1].Text = "Cam 2";
+            if(eProjectType.TRIM_FORM == (eProjectType)_ProjectType)
+            {
+                PathCount = 1;
+
+                lbPathName[0].Text = "Image Path";
+
+                panelPath2.Visible = false;
+                btnConfirm.Location = new Point(587, 66);
+                this.Size = new Size(723, 102);
+            }
+            else
+            {
+                PathCount = 2;
+                
+                lbPathName[0].Text = "Cam 1";
+                lbPathName[1].Text = "Cam 2";
+            }            
         }
 
         public void SetCurrentDataPath(int Num, string _CurrentDataPath)
@@ -43,9 +62,9 @@ namespace KPVisionInspectionFramework
 
         private void btnConfirm_Click(object sender, EventArgs e)
         {
-            string[] DataPath = new string[2];
+            string[] DataPath = new string[PathCount];
 
-            for (int iLoopCount = 0; iLoopCount < 2; iLoopCount++)
+            for (int iLoopCount = 0; iLoopCount < PathCount; iLoopCount++)
             {
                 if (tbPath[iLoopCount].Text == null || tbPath[iLoopCount].Text == "") { MessageBox.Show("폴더 경로가 없습니다."); return; }
 

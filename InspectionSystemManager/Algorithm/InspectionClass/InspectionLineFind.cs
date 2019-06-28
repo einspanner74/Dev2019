@@ -42,6 +42,7 @@ namespace InspectionSystemManager
         {
             bool _Result = true;
 
+            SetCaliperContrastAndHalfPixel(_CogLineFindAlgo.ContrastThreshold, _CogLineFindAlgo.FilterHalfSizePixels);
             SetCaliperDirection(_CogLineFindAlgo.CaliperSearchDirection);
             SetCaliper(_CogLineFindAlgo.CaliperNumber, _CogLineFindAlgo.CaliperSearchLength, _CogLineFindAlgo.CaliperProjectionLength, _CogLineFindAlgo.IgnoreNumber);
             SetCaliperLine(_CogLineFindAlgo.CaliperLineStartX, _CogLineFindAlgo.CaliperLineStartY, _CogLineFindAlgo.CaliperLineEndX, _CogLineFindAlgo.CaliperLineEndY);
@@ -172,6 +173,12 @@ namespace InspectionSystemManager
             }
 
             return _Result;
+        }
+        
+        private void SetCaliperContrastAndHalfPixel(int _Contrast, int _HalfSizePixel)
+        {
+            FindLineProc.RunParams.CaliperRunParams.ContrastThreshold = _Contrast;
+            FindLineProc.RunParams.CaliperRunParams.FilterHalfSizeInPixels = _HalfSizePixel;
         }
 
         private void SetCaliperDirection(int _eSearchDir)

@@ -13,6 +13,8 @@ namespace ParameterManager
         public bool     IsTotalRecipe;
         public string[] LastRecipeName = new string[1];
         public int      InspSystemManagerCount;
+        public double[] InspSystemManagerResolutionX;
+        public double[] InspSystemManagerResolutionY;
         public int      ProjectType;
         public string   IPAddress;
         public int      PortNumber;

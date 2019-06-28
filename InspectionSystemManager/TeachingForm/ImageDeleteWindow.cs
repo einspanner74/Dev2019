@@ -25,17 +25,30 @@ namespace InspectionSystemManager
         public string DeleteDay;
         public string SavedDate;
 
-        private string DeleteFolderName;
+        private string DeleteFolderPath = "";
+        private string DeleteFolderName = "";
 
         private Thread ThreadImageAutoDelete;
         private bool IsThreadImageAutoDeleteExit = false;
         private bool IsThreadImageAutoDeleteTrigger = false;
 
-        public ImageDeleteWindow(string _DeleteFolderName)
+        public ImageDeleteWindow(string _DeleteFolderName, bool _FolderPathSet = false)
         {
             InitializeComponent();
 
-            DeleteFolderName = _DeleteFolderName;
+            if (_FolderPathSet)
+            {
+                DeleteFolderName = Path.GetFileNameWithoutExtension(_DeleteFolderName);
+                DeleteFolderPath = Path.GetDirectoryName(_DeleteFolderName);
+
+                string _PathTemp = DeleteFolderPath.Substring(DeleteFolderPath.Length - 1, 1);
+                if (_PathTemp != @"\") DeleteFolderPath = DeleteFolderPath + "\\";
+            }
+            else
+            {
+                DeleteFolderPath = "D:\\VisionInspectionData\\";
+                DeleteFolderName = _DeleteFolderName;
+            }
 
             ThreadImageAutoDelete = new Thread(ThreadImageAutoDeleteFunc);
             IsThreadImageAutoDeleteExit = false;
@@ -160,8 +173,11 @@ namespace InspectionSystemManager
 
         private void DeleteImage()
         {
-            string DeletePath = @"D:\VisionInspectionData\" + DeleteFolderName;
+            string DeletePath = "";
             string DeleteFolder;
+
+            //if(DeleteFolderPath == "") DeletePath = @"D:\VisionInspectionData\" + DeleteFolderName;
+            DeletePath = string.Format(@"{0}{1}", DeleteFolderPath, DeleteFolderName);
 
             //Year 폴더 삭제
             DirectoryInfo DeleteYearFolderInfo = new DirectoryInfo(DeletePath);

@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Win32;
 using System.IO;
+using Cognex.VisionPro;
+using Cognex.VisionPro.ImageFile;
 
 using CustomControl;
 using ParameterManager;
@@ -20,46 +22,85 @@ namespace KPVisionInspectionFramework
     public partial class ucMainResultTrimForm : UserControl
     {
         #region Count & Yield Variable
-        private uint TotalCount
+        private uint TrimTotalCount
         {
             set { SegmentValueInvoke(SevenSegTrimTotal, value.ToString()); }
             get { return Convert.ToUInt32(SevenSegTrimTotal.Value); }
         }
 
-        private uint GoodCount
+        private uint TrimGoodCount
         {
             set { SegmentValueInvoke(SevenSegTrimGood, value.ToString()); }
             get { return Convert.ToUInt32(SevenSegTrimGood.Value); }
         }
 
-        private uint NgCount
+        private uint TrimNgCount
         {
             set { SegmentValueInvoke(SevenSegTrimNg, value.ToString()); }
             get { return Convert.ToUInt32(SevenSegTrimNg.Value); }
         }
 
-        private double Yield
+        private double TrimYield
         {
             set { SegmentValueInvoke(SevenSegTrimYield, value.ToString()); }
             get { return Convert.ToDouble(SevenSegTrimYield.Value); }
         }
+
+        private uint FormTotalCount
+        {
+            set { SegmentValueInvoke(SevenSegFormTotal, value.ToString()); }
+            get { return Convert.ToUInt32(SevenSegFormTotal.Value); }
+        }
+
+        private uint FormGoodCount
+        {
+            set { SegmentValueInvoke(SevenSegFormGood, value.ToString()); }
+            get { return Convert.ToUInt32(SevenSegFormGood.Value); }
+        }
+
+        private uint FormNgCount
+        {
+            set { SegmentValueInvoke(SevenSegFormNg, value.ToString()); }
+            get { return Convert.ToUInt32(SevenSegFormNg.Value); }
+        }
+
+        private double FormYield
+        {
+            set { SegmentValueInvoke(SevenSegFormYield, value.ToString()); }
+            get { return Convert.ToDouble(SevenSegFormYield.Value); }
+        }
         #endregion Count & Yield Variable
 
         #region Count & Yield Registry Variable
-        private RegistryKey RegTotalCount;
-        private RegistryKey RegGoodCount;
-        private RegistryKey RegNgCount;
-        private RegistryKey RegYield;
+        private RegistryKey RegTrimTotalCount;
+        private RegistryKey RegTrimGoodCount;
+        private RegistryKey RegTrimNgCount;
+        private RegistryKey RegTrimYield;
 
-        private string RegTotalCountPath = String.Format(@"KPVision\ResultCount\TotalCount");
-        private string RegGoodCountPath = String.Format(@"KPVision\ResultCount\GoodCount");
-        private string RegNgCountPath = String.Format(@"KPVision\ResultCount\NgCount");
-        private string RegYieldPath = String.Format(@"KPVision\ResultCount\Yield");
+        private string RegTrimTotalCountPath = String.Format(@"KPVision\ResultCount\TrimTotalCount");
+        private string RegTrimGoodCountPath = String.Format(@"KPVision\ResultCount\TrimGoodCount");
+        private string RegTrimNgCountPath = String.Format(@"KPVision\ResultCount\TrimNgCount");
+        private string RegTrimYieldPath = String.Format(@"KPVision\ResultCount\TrimYield");
+
+        private RegistryKey RegFormTotalCount;
+        private RegistryKey RegFormGoodCount;
+        private RegistryKey RegFormNgCount;
+        private RegistryKey RegFormYield;
+
+        private string RegFormTotalCountPath = String.Format(@"KPVision\ResultCount\FormTotalCount");
+        private string RegFormGoodCountPath = String.Format(@"KPVision\ResultCount\FormGoodCount");
+        private string RegFormNgCountPath = String.Format(@"KPVision\ResultCount\FormNgCount");
+        private string RegFormYieldPath = String.Format(@"KPVision\ResultCount\FormYield");
         #endregion Count & Yield Registry Variable
 
         private string[] HistoryParam;
         private string[] LastRecipeName;
-        private string LastResult;
+        private string[] ImageFolderPath;
+        private string[] LastResult;
+        private string ModelName;
+        private string SerialNum;
+
+        private QuickDataGridView[] QuickGridViewResult;
 
         public delegate void ScreenshotHandler(string ScreenshotImagePath);
         public event ScreenshotHandler ScreenshotEvent;
@@ -68,16 +109,23 @@ namespace KPVisionInspectionFramework
         public ucMainResultTrimForm(string[] _LastRecipeName)
         {
             LastRecipeName = new string[_LastRecipeName.Count()];
+            ImageFolderPath = new string[1];
             SetLastRecipeName(_LastRecipeName);
 
             InitializeComponent();
             InitializeControl();
             this.Location = new Point(1, 1);
 
-            RegTotalCount = Registry.CurrentUser.CreateSubKey(RegTotalCountPath);
-            RegGoodCount = Registry.CurrentUser.CreateSubKey(RegGoodCountPath);
-            RegNgCount = Registry.CurrentUser.CreateSubKey(RegNgCountPath);
-            RegYield = Registry.CurrentUser.CreateSubKey(RegYieldPath);
+            RegTrimTotalCount = Registry.CurrentUser.CreateSubKey(RegTrimTotalCountPath);
+            RegTrimGoodCount = Registry.CurrentUser.CreateSubKey(RegTrimGoodCountPath);
+            RegTrimNgCount = Registry.CurrentUser.CreateSubKey(RegTrimNgCountPath);
+            RegTrimYield = Registry.CurrentUser.CreateSubKey(RegTrimYieldPath);
+
+            RegFormTotalCount = Registry.CurrentUser.CreateSubKey(RegFormTotalCountPath);
+            RegFormGoodCount = Registry.CurrentUser.CreateSubKey(RegFormGoodCountPath);
+            RegFormNgCount = Registry.CurrentUser.CreateSubKey(RegFormNgCountPath);
+            RegFormYield = Registry.CurrentUser.CreateSubKey(RegFormYieldPath);
+
             LoadResultCount();
         }
 
@@ -119,12 +167,23 @@ namespace KPVisionInspectionFramework
             }
             QuickGridViewLeadFormResult.ClearSelection();
 
+            QuickGridViewResult = new QuickDataGridView[2] { QuickGridViewLeadTrimResult, QuickGridViewLeadFormResult };
+
             //LDH, 2018.08.14, Hitory Parameter용 배열 초기화
             HistoryParam = new string[4];
             for (int iLoopCount = 0; iLoopCount < HistoryParam.Count(); iLoopCount++)
             {
                 HistoryParam[iLoopCount] = "-";
             }
+
+            LastResult = new string[2];
+            for (int iLoopCount = 0; iLoopCount < LastResult.Count(); iLoopCount++)
+            {
+                LastResult[iLoopCount] = "OK";
+            }
+
+            ModelName = "ModelName";
+            SerialNum = "0123456";
         }
 
         public void DeInitialize()
@@ -134,24 +193,42 @@ namespace KPVisionInspectionFramework
 
         private void LoadResultCount()
         {
-            TotalCount = Convert.ToUInt32(RegTotalCount.GetValue("Value"));
-            GoodCount = Convert.ToUInt32(RegGoodCount.GetValue("Value"));
-            NgCount = Convert.ToUInt32(RegNgCount.GetValue("Value"));
-            Yield = Convert.ToDouble(RegYield.GetValue("Value"));
+            TrimTotalCount = Convert.ToUInt32(RegTrimTotalCount.GetValue("Value"));
+            TrimGoodCount = Convert.ToUInt32(RegTrimGoodCount.GetValue("Value"));
+            TrimNgCount = Convert.ToUInt32(RegTrimNgCount.GetValue("Value"));
+            TrimYield = Convert.ToDouble(RegTrimYield.GetValue("Value"));
 
-            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "Load Result Count");
-            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("TotalCount : {0}, GoodCount : {1}, NgCount : {2}, Yield : {3:F3}", TotalCount, GoodCount, NgCount, Yield));
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "Load Trim Result Count");
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("TrimTotalCount : {0}, TrimGoodCount : {1}, TrimNgCount : {2}, TrimYield : {3:F3}", TrimTotalCount, TrimGoodCount, TrimNgCount, TrimYield));
+
+
+            FormTotalCount = Convert.ToUInt32(RegFormTotalCount.GetValue("Value"));
+            FormGoodCount = Convert.ToUInt32(RegFormGoodCount.GetValue("Value"));
+            FormNgCount = Convert.ToUInt32(RegFormNgCount.GetValue("Value"));
+            FormYield = Convert.ToDouble(RegFormYield.GetValue("Value"));
+
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "Load Form Result Count");
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("FormTotalCount : {0}, FormGoodCount : {1}, FormNgCount : {2}, FormYield : {3:F3}", FormTotalCount, FormGoodCount, FormNgCount, FormYield));
         }
 
         private void SaveResultCount()
         {
-            RegTotalCount.SetValue("Value", TotalCount, RegistryValueKind.String);
-            RegGoodCount.SetValue("Value", GoodCount, RegistryValueKind.String);
-            RegNgCount.SetValue("Value", NgCount, RegistryValueKind.String);
-            RegYield.SetValue("Value", Yield, RegistryValueKind.String);
+            RegTrimTotalCount.SetValue("Value", TrimTotalCount, RegistryValueKind.String);
+            RegTrimGoodCount.SetValue("Value", TrimGoodCount, RegistryValueKind.String);
+            RegTrimNgCount.SetValue("Value", TrimNgCount, RegistryValueKind.String);
+            RegTrimYield.SetValue("Value", TrimYield, RegistryValueKind.String);
 
-            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "Save Result Count");
-            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("TotalCount : {0}, GoodCount : {1}, NgCount : {2}, Yield : {3:F3}", TotalCount, GoodCount, NgCount, Yield));
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "Save Trim Result Count");
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("TrimTotalCount : {0}, TrimGoodCount : {1}, TrimNgCount : {2}, TrimYield : {3:F3}", TrimTotalCount, TrimGoodCount, TrimNgCount, TrimYield));
+
+
+            RegFormTotalCount.SetValue("Value", FormTotalCount, RegistryValueKind.String);
+            RegFormGoodCount.SetValue("Value", FormGoodCount, RegistryValueKind.String);
+            RegFormNgCount.SetValue("Value", FormNgCount, RegistryValueKind.String);
+            RegFormYield.SetValue("Value", FormYield, RegistryValueKind.String);
+
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "Save Form Result Count");
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("FormTotalCount : {0}, FormGoodCount : {1}, FormNgCount : {2}, FormYield : {3:F3}", FormTotalCount, FormGoodCount, FormNgCount, FormYield));
         }
         #endregion Initialize & DeInitialize
 
@@ -243,9 +320,16 @@ namespace KPVisionInspectionFramework
             }
         }
 
+        public void SetLOTNum(string[] _LOTNum)
+        {
+            SerialNum = _LOTNum[1];
+            ModelName = _LOTNum[2];
+        }
+
         public void ClearResult()
         {
-
+            LastResult[0] = "OK";
+            LastResult[1] = "OK";
         }
 
         public void SetResult(SendResultParameter _ResultParam)
@@ -267,35 +351,43 @@ namespace KPVisionInspectionFramework
             //결과창 업데이트 
             if (_ResultParam.IsGood)
             {
-                TotalCount++;
-                GoodCount++;
-                Yield = (double)GoodCount / (double)TotalCount * 100;
-                SegmentValueInvoke(SevenSegTrimTotal, TotalCount.ToString());
-                SegmentValueInvoke(SevenSegTrimGood, GoodCount.ToString());
-                SegmentValueInvoke(SevenSegTrimYield, Yield.ToString("F2"));
+                TrimTotalCount++;
+                TrimGoodCount++;
+                TrimYield = (double)TrimGoodCount / (double)TrimTotalCount * 100;
+                SegmentValueInvoke(SevenSegTrimTotal, TrimTotalCount.ToString());
+                SegmentValueInvoke(SevenSegTrimGood, TrimGoodCount.ToString());
+                SegmentValueInvoke(SevenSegTrimYield, TrimYield.ToString("F2"));
 
                 ControlInvoke.GradientLabelText(gradientLabelTrimResult, "GOOD", Color.Lime);
+
+                LastResult[0] = "OK";
             }
 
             else
             {
-                TotalCount++;
-                NgCount++;
-                Yield = (double)GoodCount / (double)TotalCount * 100;
-                SegmentValueInvoke(SevenSegTrimTotal, TotalCount.ToString());
-                SegmentValueInvoke(SevenSegTrimNg, NgCount.ToString());
-                SegmentValueInvoke(SevenSegTrimYield, Yield.ToString("F2"));
+                TrimTotalCount++;
+                TrimNgCount++;
+                TrimYield = (double)TrimGoodCount / (double)TrimTotalCount * 100;
+                SegmentValueInvoke(SevenSegTrimTotal, TrimTotalCount.ToString());
+                SegmentValueInvoke(SevenSegTrimNg, TrimNgCount.ToString());
+                SegmentValueInvoke(SevenSegTrimYield, TrimYield.ToString("F2"));
 
-                switch (_ResultParam.NgType)
-                {
-                    case eNgType.EMPTY:         ControlInvoke.GradientLabelText(gradientLabelTrimResult, "EMPTY", Color.Red); break;
-                    case eNgType.CHIP_OUT:      ControlInvoke.GradientLabelText(gradientLabelTrimResult, "CHIP OUT", Color.Red); break;
-                    case eNgType.LEAD_LENGTH:   ControlInvoke.GradientLabelText(gradientLabelTrimResult, "LENGTH ERR", Color.Red); break;
-                    case eNgType.SHD_BURR:      ControlInvoke.GradientLabelText(gradientLabelTrimResult, "SHLD BURR", Color.Red); break;
-                    case eNgType.SHD_NICK:      ControlInvoke.GradientLabelText(gradientLabelTrimResult, "SHLD NICK", Color.Red); break;
-                    case eNgType.TIP_BURR:      ControlInvoke.GradientLabelText(gradientLabelTrimResult, "TIP BURR", Color.Red); break;
-                    case eNgType.GATE_ERR:      ControlInvoke.GradientLabelText(gradientLabelTrimResult, "GATE BURR", Color.Red); break;
-                }
+                //switch (_ResultParam.NgType)
+                //{
+                //    case eNgType.EMPTY:         ControlInvoke.GradientLabelText(gradientLabelTrimResult, "EMPTY", Color.Red); break;
+                //    case eNgType.CHIP_OUT:      ControlInvoke.GradientLabelText(gradientLabelTrimResult, "CHIP OUT", Color.Red); break;
+                //    case eNgType.LEAD_CNT:      ControlInvoke.GradientLabelText(gradientLabelTrimResult, "LEAD_CNT", Color.Red); break;
+                //    case eNgType.LEAD_LENGTH:   ControlInvoke.GradientLabelText(gradientLabelTrimResult, "LENGTH ERR", Color.Red); break;
+                //    case eNgType.LEAD_BENT:     ControlInvoke.GradientLabelText(gradientLabelTrimResult, "LEAD_BENT", Color.Red); break;
+                //    case eNgType.SHD_BURR:      ControlInvoke.GradientLabelText(gradientLabelTrimResult, "SHLD BURR", Color.Red); break;
+                //    case eNgType.SHD_NICK:      ControlInvoke.GradientLabelText(gradientLabelTrimResult, "SHLD NICK", Color.Red); break;
+                //    case eNgType.TIP_BURR:      ControlInvoke.GradientLabelText(gradientLabelTrimResult, "TIP BURR", Color.Red); break;
+                //    case eNgType.GATE_ERR:      ControlInvoke.GradientLabelText(gradientLabelTrimResult, "GATE BURR", Color.Red); break;
+                //}
+
+                ControlInvoke.GradientLabelText(gradientLabelTrimResult, "NG", Color.Red);
+
+                LastResult[0] = "NG";
             }
             #endregion
 
@@ -304,15 +396,17 @@ namespace KPVisionInspectionFramework
             {
                 for (int iLoopCount = 0; iLoopCount < _Result.LeadCount; ++iLoopCount)
                 {
-                    QuickGridViewLeadTrimResult[1, iLoopCount].Value = _Result.LeadLengthReal[iLoopCount].ToString("F3") + " mm";
+                    //Lead Length 결과 업데이트
+                    QuickGridViewLeadTrimResult[1, iLoopCount].Value = _Result.LeadLengthReal[iLoopCount].ToString("F3");// + " mm";
                     
                     if (_Result.IsLeadLengthGood[iLoopCount] && iLoopCount % 2 == 0)        QuickGridViewLeadTrimResult[1, iLoopCount].Style.BackColor = Color.PowderBlue;
                     else if (_Result.IsLeadLengthGood[iLoopCount] && iLoopCount % 2 == 1)   QuickGridViewLeadTrimResult[1, iLoopCount].Style.BackColor = Color.White;
                     else                                                                    QuickGridViewLeadTrimResult[1, iLoopCount].Style.BackColor = Color.Red;
                     
+                    //Lead Pitch 결과 업데이트
                     if (iLoopCount < _Result.LeadCount - 1)
                     {
-                        QuickGridViewLeadTrimResult[2, iLoopCount].Value = _Result.LeadPitchReal[iLoopCount].ToString("F3") + " mm";
+                        QuickGridViewLeadTrimResult[2, iLoopCount].Value = _Result.LeadPitchReal[iLoopCount].ToString("F3");// + " mm";
 
                         if (_Result.IsLeadPitchGood[iLoopCount] && iLoopCount % 2 == 0)         QuickGridViewLeadTrimResult[2, iLoopCount].Style.BackColor = Color.PowderBlue;
                         else if (_Result.IsLeadPitchGood[iLoopCount] && iLoopCount % 2 == 1)    QuickGridViewLeadTrimResult[2, iLoopCount].Style.BackColor = Color.White;
@@ -323,10 +417,11 @@ namespace KPVisionInspectionFramework
                         QuickGridViewLeadTrimResult[2, iLoopCount].Value = 0;
                 }
             }
-
             #endregion
 
             SaveResultCount();
+
+            SaveResult(0, _Result.SaveImage);
         }
 
         private void ClearLeadTrimResultControl()
@@ -341,6 +436,78 @@ namespace KPVisionInspectionFramework
         private void SetFormResultData(SendResultParameter _ResultParam)
         {
             ClearLeadFormResultControl();
+
+            var _Result = _ResultParam.SendResult as SendLeadFormResult;
+
+            #region 결과창 업데이트
+            if (_ResultParam.IsGood)
+            {
+                FormTotalCount++;
+                FormGoodCount++;
+                FormYield = (double)FormGoodCount / (double)FormTotalCount * 100;
+                SegmentValueInvoke(SevenSegFormTotal, FormTotalCount.ToString());
+                SegmentValueInvoke(SevenSegFormGood, FormGoodCount.ToString());
+                SegmentValueInvoke(SevenSegFormYield, FormYield.ToString("F2"));
+
+                ControlInvoke.GradientLabelText(gradientLabelFormResult, "GOOD", Color.Lime);
+
+                LastResult[1] = "OK";
+            }
+
+            else
+            {
+                FormTotalCount++;
+                FormNgCount++;
+                FormYield = (double)FormGoodCount / (double)FormTotalCount * 100;
+                SegmentValueInvoke(SevenSegFormTotal, FormTotalCount.ToString());
+                SegmentValueInvoke(SevenSegFormNg, FormNgCount.ToString());
+                SegmentValueInvoke(SevenSegFormYield, FormYield.ToString("F2"));
+
+
+                //switch (_ResultParam.NgType)
+                //{
+                //    case eNgType.EMPTY:         ControlInvoke.GradientLabelText(gradientLabelFormResult, "EMPTY", Color.Red); break;
+                //    case eNgType.LEAD_CNT:      ControlInvoke.GradientLabelText(gradientLabelFormResult, "LEAD_CNT", Color.Red); break;
+                //    case eNgType.LEAD_BENT_H:   ControlInvoke.GradientLabelText(gradientLabelFormResult, "LEAD_BENT_H", Color.Red); break;
+                //    case eNgType.LEAD_BENT_V:   ControlInvoke.GradientLabelText(gradientLabelFormResult, "LEAD_BENT_V", Color.Red); break;
+                //}
+
+                ControlInvoke.GradientLabelText(gradientLabelFormResult, "NG", Color.Red);
+
+                LastResult[1] = "NG";
+            }
+            #endregion
+
+            if (_Result != null)
+            {
+                for (int iLoopCount = 0; iLoopCount < _Result.LeadOffset.Length; ++iLoopCount)
+                {
+                    QuickGridViewLeadFormResult[1, iLoopCount].Value = _Result.LeadOffset[iLoopCount].X.ToString("F3");// + " mm";
+                    QuickGridViewLeadFormResult[2, iLoopCount].Value = _Result.LeadOffset[iLoopCount].Y.ToString("F3");// + " mm";
+
+                    if (_Result.IsLeadOffsetGood[iLoopCount] && iLoopCount % 2 == 0)
+                    {
+                        QuickGridViewLeadFormResult[1, iLoopCount].Style.BackColor = Color.PowderBlue;
+                        QuickGridViewLeadFormResult[2, iLoopCount].Style.BackColor = Color.PowderBlue;
+                    }
+
+                    else if (_Result.IsLeadOffsetGood[iLoopCount] && iLoopCount % 2 == 1)
+                    {
+                        QuickGridViewLeadFormResult[1, iLoopCount].Style.BackColor = Color.White;
+                        QuickGridViewLeadFormResult[2, iLoopCount].Style.BackColor = Color.White;
+                    }
+
+                    else
+                    {
+                        QuickGridViewLeadFormResult[1, iLoopCount].Style.BackColor = Color.Red;
+                        QuickGridViewLeadFormResult[2, iLoopCount].Style.BackColor = Color.Red;
+                    }
+                }
+            }
+
+            SaveResultCount();
+                        
+            SaveResult(1, _Result.SaveImage);
         }
 
         private void ClearLeadFormResultControl()
@@ -349,13 +516,171 @@ namespace KPVisionInspectionFramework
             {
                 QuickGridViewLeadFormResult[1, iLoopCount].Value = "0";
                 QuickGridViewLeadFormResult[2, iLoopCount].Value = "0";
-            }
-            
+            }            
         }
 
+        public void SetDataFolderPath(string[] _DataFolderPath)
+        {
+            for (int iLoopCount = 0; iLoopCount < 1; iLoopCount++) ImageFolderPath[iLoopCount] = _DataFolderPath[iLoopCount];
+        }
+
+        public void SaveResult(int _InspectionNum, CogImage8Grey _SaveImage)
+        {
+            string SaveFileName = "";
+
+            string CameraType = "";
+            if (_InspectionNum == 0) CameraType = "TOP";
+            else                     CameraType = "SIDE";
+
+            DateTime dateTime = DateTime.Now;
+            string SaveImageFilePath = ImageFolderPath[0];
+
+            if (SaveImageFilePath != "")
+            {
+                if (false == Directory.Exists(SaveImageFilePath)) Directory.CreateDirectory(SaveImageFilePath);
+                SaveImageFilePath = String.Format("{0}\\{1:D4}\\{2:D2}\\{3:D2}", SaveImageFilePath, dateTime.Year, dateTime.Month, dateTime.Day);
+                if (false == Directory.Exists(SaveImageFilePath)) Directory.CreateDirectory(SaveImageFilePath);
+                SaveImageFilePath = String.Format("{0}\\{1}\\{2}", SaveImageFilePath, ModelName, LastResult[_InspectionNum]);
+                if (false == Directory.Exists(SaveImageFilePath)) Directory.CreateDirectory(SaveImageFilePath);
+
+                //연월일시분초밀리
+                SaveFileName = String.Format("{0:D4}{1:D2}{2:D2}{3:D2}{4:D2}{5:D2}{6:D3}", dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, dateTime.Minute, dateTime.Second, dateTime.Millisecond);
+
+                //_1차종_2시리얼번호_3카메라(TOP/SIDE)_4검사결과(OK_NG)
+                SaveFileName = String.Format("{0}_{1}_{2}_{3}_{4}", SaveFileName, ModelName, SerialNum, CameraType, LastResult[_InspectionNum]);
+
+                //LDH, 2019.06.18, Image Save
+                try
+                {
+                    ICogImage _CogSaveImage = _SaveImage;
+                    CogImageFile _CogImageFile = new CogImageFile();
+
+                    if (_CogSaveImage == null)
+                    {
+                        //MessageBox.Show(new Form{TopMost = true}, "영상이 없습니다.");
+                    }
+                    else
+                    {
+                        _CogImageFile.Open(SaveImageFilePath + "\\" + SaveFileName + ".bmp", CogImageFileModeConstants.Write);
+                        _CogImageFile.Append(_CogSaveImage);
+                        _CogImageFile.Close();
+                    }
+                }
+                catch
+                {
+                    CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.ERR, "SaveResult Image Save Exception!!", CLogManager.LOG_LEVEL.LOW);
+                }
+
+                //LDH, 2019.06.18, Data Save
+                CSVManagerSaveAll SaveCSVControl = new CSVManagerSaveAll();
+
+                string SaveCSVFilePath = String.Format("{0}\\Result", SaveImageFilePath);
+                if (false == Directory.Exists(SaveCSVFilePath)) Directory.CreateDirectory(SaveCSVFilePath);
+
+                SaveCSVFilePath = String.Format("{0}\\{1}.csv", SaveCSVFilePath, SaveFileName);
+                SaveCSVControl.SaveGridViewAll(QuickGridViewResult[_InspectionNum], SaveCSVFilePath);
+
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, string.Format("Save {0} CSV File", _InspectionNum), CLogManager.LOG_LEVEL.LOW);
+            }
+            else
+            {
+                MessageBox.Show("Data를 저장할 수 없습니다. \n저장경로를 설정하세요.");
+            }
+        }
+        
         private void InspectionHistory(int _ID, string _Result)
         {
+            //Histoty에 Screenshot 대신 현대에서 저장해달라는 화살표 표시 이미지 사용하면될 것 같음 
+        }
 
+        private void gradientLabelTrimTotalCount_DoubleClick(object sender, EventArgs e)
+        {
+            DialogResult _DlgResult = MessageBox.Show(new Form { TopMost = true }, "Clear Result Count ?", "Clear Count", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button2);
+            if (_DlgResult != DialogResult.Yes) return;
+
+            TrimTotalCount = 0;
+            TrimGoodCount = 0;
+            TrimNgCount = 0;
+            TrimYield = 0;
+
+            SaveResultCount();
+        }
+
+        private void gradientLabelTrimGoodCount_DoubleClick(object sender, EventArgs e)
+        {
+            DialogResult _DlgResult = MessageBox.Show(new Form { TopMost = true }, "Clear Result Count ?", "Clear Count", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button2);
+            if (_DlgResult != DialogResult.Yes) return;
+
+            TrimTotalCount -= TrimGoodCount;
+            TrimGoodCount = 0;
+
+            if (TrimTotalCount != 0)
+                TrimYield = (double)TrimGoodCount / (double)TrimTotalCount * 100;
+            else
+                TrimYield = 0;
+
+            SaveResultCount();
+        }
+
+        private void gradientLabelTrimNgCount_DoubleClick(object sender, EventArgs e)
+        {
+            DialogResult _DlgResult = MessageBox.Show(new Form { TopMost = true }, "Clear Result Count ?", "Clear Count", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button2);
+            if (_DlgResult != DialogResult.Yes) return;
+
+            TrimTotalCount -= TrimNgCount;
+            TrimNgCount = 0;
+
+            if (TrimTotalCount != 0)
+                TrimYield = (double)TrimGoodCount / (double)TrimTotalCount * 100;
+            else
+                TrimYield = 0;
+
+            SaveResultCount();
+        }
+
+        private void gradientLabelFormTotalCount_DoubleClick(object sender, EventArgs e)
+        {
+            DialogResult _DlgResult = MessageBox.Show(new Form { TopMost = true }, "Clear Result Count ?", "Clear Count", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button2);
+            if (_DlgResult != DialogResult.Yes) return;
+
+            FormTotalCount = 0;
+            FormGoodCount = 0;
+            FormNgCount = 0;
+            FormYield = 0;
+
+            SaveResultCount();
+        }
+
+        private void gradientLabelFormGoodCount_DoubleClick(object sender, EventArgs e)
+        {
+            DialogResult _DlgResult = MessageBox.Show(new Form { TopMost = true }, "Clear Result Count ?", "Clear Count", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button2);
+            if (_DlgResult != DialogResult.Yes) return;
+
+            FormTotalCount -= FormGoodCount;
+            FormGoodCount = 0;
+
+            if (FormTotalCount != 0)
+                FormYield = (double)FormGoodCount / (double)FormTotalCount * 100;
+            else
+                FormYield = 0;
+
+            SaveResultCount();
+        }
+
+        private void gradientLabelFormNgCount_DoubleClick(object sender, EventArgs e)
+        {
+            DialogResult _DlgResult = MessageBox.Show(new Form { TopMost = true }, "Clear Result Count ?", "Clear Count", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button2);
+            if (_DlgResult != DialogResult.Yes) return;
+
+            FormTotalCount -= FormNgCount;
+            FormNgCount = 0;
+
+            if (FormTotalCount != 0)
+                FormYield = (double)FormGoodCount / (double)FormTotalCount * 100;
+            else
+                FormYield = 0;
+
+            SaveResultCount();
         }
     }
 }

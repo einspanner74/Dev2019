@@ -656,14 +656,16 @@ namespace KPDisplay
                 _Display.Invoke(new MethodInvoker(delegate()
                 {
                     //_Display.ClearDisplay();
-                    _Display.Image = _DispImage;
+                    CogImage8Grey _OriginImage = new CogImage8Grey(_DispImage.ToBitmap());
+                    _Display.Image = _OriginImage;
                 }
                 ));
             }
             else
             {
                 //_Display.ClearDisplay();
-                _Display.Image = _DispImage;
+                CogImage8Grey _OriginImage = new CogImage8Grey(_DispImage.ToBitmap());
+                _Display.Image = _OriginImage;
             }
         }
 
@@ -704,11 +706,13 @@ namespace KPDisplay
                 {
                     if (_Rotate == 90)       _FlipRotate.OperationInPixelSpace = CogIPOneImageFlipRotateOperationConstants.Rotate90Deg;
                     else if (_Rotate == 270) _FlipRotate.OperationInPixelSpace = CogIPOneImageFlipRotateOperationConstants.Rotate270Deg;
-                    else if (_Rotate == 180) _FlipRotate.OperationInPixelSpace = CogIPOneImageFlipRotateOperationConstants.Rotate180Deg;    
+                    else if (_Rotate == 180) _FlipRotate.OperationInPixelSpace = CogIPOneImageFlipRotateOperationConstants.Rotate180Deg;
 
                     _CogOneImageTool.Operators.Add(_FlipRotate);
                     _CogOneImageTool.InputImage = _CogImage;
                     _CogOneImageTool.Run();
+
+                    //_CogOneImageTool.OutputImage.SelectedSpaceName = "#";
                     _CogImage = (CogImage8Grey)_CogOneImageTool.OutputImage;
                 }
 
