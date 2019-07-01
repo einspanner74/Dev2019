@@ -99,7 +99,7 @@ namespace InspectionSystemManager
             CogLeadTrimAlgoRcp.ChipOutArea.Height = ChipOutArea.Height;
             CogLeadTrimAlgoRcp.ChipOutForeground = 1;
             CogLeadTrimAlgoRcp.ChipOutThreshold = Convert.ToInt32(graLabelChipOutThresholdValue.Text);
-            CogLeadTrimAlgoRcp.ChipOutSpec = Convert.ToDouble(textBoxChipOutSpec.Text);
+            CogLeadTrimAlgoRcp.ChipOutSpec = Convert.ToDouble(numUpDownChipOutSpec.Value);
             CogLeadTrimAlgoRcp.ChipOutBlobAreaMin = Convert.ToDouble(textBoxChipOutBlobAreaMin.Text);
             CogLeadTrimAlgoRcp.ChipOutBlobAreaMax = Convert.ToDouble(textBoxChipOutBlobAreaMax.Text);
             CogLeadTrimAlgoRcp.ChipOutWidthMin = Convert.ToDouble(textBoxChipOutWidthSizeMin.Text);
@@ -114,10 +114,10 @@ namespace InspectionSystemManager
             CogLeadTrimAlgoRcp.LeadMeasurementArea.Height = LeadMeasureArea.Height;
 
 
-            CogLeadTrimAlgoRcp.LeadCount = Convert.ToInt32(textBoxLeadCount.Text);
-            CogLeadTrimAlgoRcp.LeadLengthSpec = Convert.ToDouble(textBoxLeadLengthSpec.Text);
-            CogLeadTrimAlgoRcp.LeadSkewSpec = Convert.ToDouble(textBoxLeadSkewSpec.Text);
-            CogLeadTrimAlgoRcp.LeadPitchSpec = Convert.ToDouble(textBoxLeadPitchSpec.Text);
+            CogLeadTrimAlgoRcp.LeadCount = Convert.ToInt32(numUpDownLeadCount.Value);
+            CogLeadTrimAlgoRcp.LeadLengthSpec = Convert.ToDouble(numUpDownLeadLengthSpec.Value);
+            CogLeadTrimAlgoRcp.LeadSkewSpec = Convert.ToDouble(numUpDownLeadSkewSpec.Value);
+            CogLeadTrimAlgoRcp.LeadPitchSpec = Convert.ToDouble(numUpDownLeadPitchSpec.Value);
 
             //CogLeadTrimAlgoRcp.LeadLengthArray = new double[CogLeadTrimAlgoRcp.LeadCount];
             //CogLeadTrimAlgoRcp.LeadPitchArray = new double[CogLeadTrimAlgoRcp.LeadCount - 1];
@@ -136,18 +136,18 @@ namespace InspectionSystemManager
             CogLeadTrimAlgoRcp.ShoulderInspArea.Height = ShoulderInspArea.Height;
             CogLeadTrimAlgoRcp.ShoulderBurrThreshold = Convert.ToInt32(graLabelBurrThresholdValue.Text);
             CogLeadTrimAlgoRcp.ShoulderNickThreshold = Convert.ToInt32(graLabelNickThresholdValue.Text);
-            CogLeadTrimAlgoRcp.ShoulderBurrSpec = Convert.ToDouble(textBoxShoulderBurrSpec.Text);
-            CogLeadTrimAlgoRcp.ShoulderNickSpec = Convert.ToDouble(textBoxShoulderNickSpec.Text);
-            CogLeadTrimAlgoRcp.LeadEdgeWidth = Convert.ToInt32(textBoxShoulderEdgeWidth.Text);
+            CogLeadTrimAlgoRcp.ShoulderBurrSpec = Convert.ToDouble(numUpDownShoulderBurrSpec.Value);
+            CogLeadTrimAlgoRcp.ShoulderNickSpec = Convert.ToDouble(numUpDownShoulderNickSpec.Value);
+            CogLeadTrimAlgoRcp.LeadEdgeWidth = Convert.ToInt32(numUpDownShoulderEdgeWidth.Value);
 
 
             CogLeadTrimAlgoRcp.LeadTipInspArea.CenterX = LeadTipInspArea.CenterX;
             CogLeadTrimAlgoRcp.LeadTipInspArea.CenterY = LeadTipInspArea.CenterY;
             CogLeadTrimAlgoRcp.LeadTipInspArea.Width = LeadTipInspArea.Width;
             CogLeadTrimAlgoRcp.LeadTipInspArea.Height = LeadTipInspArea.Height;
-            CogLeadTrimAlgoRcp.LeadTipEdgeWidth = Convert.ToInt32(textBoxLeadTipEdgeWidth.Text);
+            CogLeadTrimAlgoRcp.LeadTipEdgeWidth = Convert.ToInt32(numUpDownLeadTipEdgeWidth.Value);
             CogLeadTrimAlgoRcp.LeadTipBurrThreshold = Convert.ToInt32(graLabelLeadTipBurrThresholdValue.Text);
-            CogLeadTrimAlgoRcp.LeadTipBurrSpec = Convert.ToDouble(textBoxLeadTipBurrSpec.Text);
+            CogLeadTrimAlgoRcp.LeadTipBurrSpec = Convert.ToDouble(numUpDownLeadTipBurrSpec.Text);
 
 
             CogLeadTrimAlgoRcp.GateRemainingArea.CenterX = GateRemainingArea.CenterX;
@@ -155,7 +155,7 @@ namespace InspectionSystemManager
             CogLeadTrimAlgoRcp.GateRemainingArea.Width = GateRemainingArea.Width;
             CogLeadTrimAlgoRcp.GateRemainingArea.Height = GateRemainingArea.Height;
             CogLeadTrimAlgoRcp.GateRemainingThreshold = Convert.ToInt32(gradientLabelGateRemainingThresholdValue.Text);
-            CogLeadTrimAlgoRcp.GateRemainingSpec = Convert.ToDouble(textBoxGateRemainingSpec.Text);
+            CogLeadTrimAlgoRcp.GateRemainingSpec = Convert.ToDouble(numUpDownGateRemainingSpec.Value);
         }
 
         public void SetAlgoRecipe(Object _Algorithm, double _BenchMarkOffsetX, double _BenchMarkOffsetY, double _ResolutionX, double _ResolutionY)
@@ -193,7 +193,7 @@ namespace InspectionSystemManager
             ChipOutArea.SetCenterWidthHeight(CogLeadTrimAlgoRcp.ChipOutArea.CenterX, CogLeadTrimAlgoRcp.ChipOutArea.CenterY, CogLeadTrimAlgoRcp.ChipOutArea.Width, CogLeadTrimAlgoRcp.ChipOutArea.Height);
             graLabelChipOutThresholdValue.Text = CogLeadTrimAlgoRcp.ChipOutThreshold.ToString();
             hScrollBarChipOutThreshold.Value = CogLeadTrimAlgoRcp.ChipOutThreshold;
-            textBoxChipOutSpec.Text = CogLeadTrimAlgoRcp.ChipOutSpec.ToString();
+            numUpDownChipOutSpec.Value = Convert.ToDecimal(CogLeadTrimAlgoRcp.ChipOutSpec);
             textBoxChipOutBlobAreaMin.Text = CogLeadTrimAlgoRcp.ChipOutBlobAreaMin.ToString();
             textBoxChipOutBlobAreaMax.Text = CogLeadTrimAlgoRcp.ChipOutBlobAreaMax.ToString();
             textBoxChipOutWidthSizeMin.Text = CogLeadTrimAlgoRcp.ChipOutWidthMin.ToString();
@@ -204,10 +204,10 @@ namespace InspectionSystemManager
 
             //Lead Length / Bent Area Copy
             LeadMeasureArea.SetCenterWidthHeight(CogLeadTrimAlgoRcp.LeadMeasurementArea.CenterX, CogLeadTrimAlgoRcp.LeadMeasurementArea.CenterY, CogLeadTrimAlgoRcp.LeadMeasurementArea.Width, CogLeadTrimAlgoRcp.LeadMeasurementArea.Height);
-            textBoxLeadCount.Text = CogLeadTrimAlgoRcp.LeadCount.ToString();
-            textBoxLeadLengthSpec.Text = CogLeadTrimAlgoRcp.LeadLengthSpec.ToString();
-            textBoxLeadSkewSpec.Text = CogLeadTrimAlgoRcp.LeadSkewSpec.ToString();
-            textBoxLeadPitchSpec.Text = CogLeadTrimAlgoRcp.LeadPitchSpec.ToString();
+            numUpDownLeadCount.Value = Convert.ToDecimal(CogLeadTrimAlgoRcp.LeadCount);
+            numUpDownLeadLengthSpec.Value = Convert.ToDecimal(CogLeadTrimAlgoRcp.LeadLengthSpec);
+            numUpDownLeadSkewSpec.Value = Convert.ToDecimal(CogLeadTrimAlgoRcp.LeadSkewSpec);
+            numUpDownLeadPitchSpec.Value = Convert.ToDecimal(CogLeadTrimAlgoRcp.LeadPitchSpec);
 
             InitializeQuickGridView(CogLeadTrimAlgoRcp.LeadCount);
             for (int iLoopCount = 0; iLoopCount < CogLeadTrimAlgoRcp.LeadLengthArray.Length; ++iLoopCount)
@@ -247,23 +247,23 @@ namespace InspectionSystemManager
             graLabelNickThresholdValue.Text = CogLeadTrimAlgoRcp.ShoulderNickThreshold.ToString();
             hScrollShoulderBurrThreshold.Value = CogLeadTrimAlgoRcp.ShoulderBurrThreshold;
             hScrollShoulderNickThreshold.Value = CogLeadTrimAlgoRcp.ShoulderNickThreshold;
-            textBoxShoulderEdgeWidth.Text = CogLeadTrimAlgoRcp.LeadEdgeWidth.ToString();
-            textBoxShoulderBurrSpec.Text = CogLeadTrimAlgoRcp.ShoulderBurrSpec.ToString();
-            textBoxShoulderNickSpec.Text = CogLeadTrimAlgoRcp.ShoulderNickSpec.ToString();
+            numUpDownShoulderEdgeWidth.Value = Convert.ToDecimal(CogLeadTrimAlgoRcp.LeadEdgeWidth);
+            numUpDownShoulderEdgeWidth.Value = Convert.ToDecimal(CogLeadTrimAlgoRcp.ShoulderBurrSpec);
+            numUpDownShoulderNickSpec.Value = Convert.ToDecimal(CogLeadTrimAlgoRcp.ShoulderNickSpec);
 
 
             //Lead Tip Burr Inspection
             LeadTipInspArea.SetCenterWidthHeight(CogLeadTrimAlgoRcp.LeadTipInspArea.CenterX, CogLeadTrimAlgoRcp.LeadTipInspArea.CenterY, CogLeadTrimAlgoRcp.LeadTipInspArea.Width, CogLeadTrimAlgoRcp.LeadTipInspArea.Height);
             graLabelLeadTipBurrThresholdValue.Text = CogLeadTrimAlgoRcp.LeadTipBurrThreshold.ToString();
             hScrollLeadTipBurrThreshold.Value = CogLeadTrimAlgoRcp.LeadTipBurrThreshold;
-            textBoxLeadTipEdgeWidth.Text = CogLeadTrimAlgoRcp.LeadTipEdgeWidth.ToString();
+            numUpDownLeadTipEdgeWidth.Value = Convert.ToInt32(CogLeadTrimAlgoRcp.LeadTipEdgeWidth);
 
 
             //Gate Remaining Inspection
             GateRemainingArea.SetCenterWidthHeight(CogLeadTrimAlgoRcp.GateRemainingArea.CenterX, CogLeadTrimAlgoRcp.GateRemainingArea.CenterY, CogLeadTrimAlgoRcp.GateRemainingArea.Width, CogLeadTrimAlgoRcp.GateRemainingArea.Height);
             gradientLabelGateRemainingThresholdValue.Text = CogLeadTrimAlgoRcp.GateRemainingThreshold.ToString();
             hScrollGateRemainingThreshold.Value = CogLeadTrimAlgoRcp.GateRemainingThreshold;
-            textBoxGateRemainingSpec.Text = CogLeadTrimAlgoRcp.GateRemainingSpec.ToString();
+            numUpDownGateRemainingSpec.Value = Convert.ToDecimal(CogLeadTrimAlgoRcp.GateRemainingSpec);
         }
         #endregion
 
@@ -539,7 +539,7 @@ namespace InspectionSystemManager
             _LeadTrimAlgoDest.ChipOutWidthMax = Convert.ToDouble(textBoxChipOutWidthSizeMax.Text);
             _LeadTrimAlgoDest.ChipOutHeightMin = Convert.ToDouble(textBoxChipOutHeightSizeMin.Text);
             _LeadTrimAlgoDest.ChipOutHeightMax = Convert.ToDouble(textBoxChipOutHeightSizeMax.Text);
-            _LeadTrimAlgoDest.ChipOutSpec = Convert.ToDouble(textBoxChipOutSpec.Text);
+            _LeadTrimAlgoDest.ChipOutSpec = Convert.ToDouble(numUpDownChipOutSpec.Value);
 
             var _ApplyLeadTrimValueEvent = ApplyLeadTrimValueEvent;
             _ApplyLeadTrimValueEvent?.Invoke(CogLeadTrimAlgo.eAlgoMode.CHIPOUT_CHECK, _InspRegion, _LeadTrimAlgoDest, ref _CogLeadTrimResult);
@@ -590,7 +590,7 @@ namespace InspectionSystemManager
             _ApplyLeadTrimValueEvent?.Invoke(CogLeadTrimAlgo.eAlgoMode.LEAD_MEASURE, _InspRegion, CogLeadTrimAlgoRcp, ref _CogLeadTrimResult);
 
             //CogLeadTrimAlgoRcp.LeadCount = _CogLeadTrimResult.LeadCount;
-            textBoxLeadCount.Text = _CogLeadTrimResult.LeadCount.ToString();
+            numUpDownLeadCount.Value = Convert.ToDecimal(_CogLeadTrimResult.LeadCount);
 
 
             SetLeadMeasurementValue(_CogLeadTrimResult);
@@ -724,11 +724,11 @@ namespace InspectionSystemManager
             _ShoulderAlgoDest.ShoulderForeground = CogLeadTrimAlgoRcp.ShoulderForeground;
             //_ShoulderAlgoDest.ShoulderThreshold = CogLeadTrimAlgoRcp.ShoulderThreshold;
             _ShoulderAlgoDest.ShoulderThreshold = Convert.ToInt32(graLabelBurrThresholdValue.Text);
-            _ShoulderAlgoDest.LeadEdgeWidth = Convert.ToInt32(textBoxShoulderEdgeWidth.Text);
+            _ShoulderAlgoDest.LeadEdgeWidth = Convert.ToInt32(numUpDownShoulderEdgeWidth.Value);
             _ShoulderAlgoDest.ShoulderBurrThreshold = Convert.ToInt32(graLabelBurrThresholdValue.Text);
             _ShoulderAlgoDest.ShoulderNickThreshold = Convert.ToInt32(graLabelNickThresholdValue.Text);
-            _ShoulderAlgoDest.ShoulderBurrSpec = Convert.ToDouble(textBoxShoulderBurrSpec.Text);
-            _ShoulderAlgoDest.ShoulderNickSpec = Convert.ToDouble(textBoxShoulderNickSpec.Text);
+            _ShoulderAlgoDest.ShoulderBurrSpec = Convert.ToDouble(numUpDownShoulderBurrSpec.Value);
+            _ShoulderAlgoDest.ShoulderNickSpec = Convert.ToDouble(numUpDownShoulderNickSpec.Value);
 
             var _ApplyLeadTrimValueEvent = ApplyLeadTrimValueEvent;
             _ApplyLeadTrimValueEvent?.Invoke(CogLeadTrimAlgo.eAlgoMode.SHOULDER_CHECK, _InspRegion, _ShoulderAlgoDest, ref _CogLeadTrimResult);
@@ -785,12 +785,12 @@ namespace InspectionSystemManager
             CogLeadTrimResult _CogLeadTrimResult = new CogLeadTrimResult();
             CogLeadTrimAlgo _LeadTipAlgoDest = new CogLeadTrimAlgo(ResolutionX, ResolutionY);
             _LeadTipAlgoDest.LeadCount = CogLeadTrimAlgoRcp.LeadCount;
-            _LeadTipAlgoDest.LeadTipEdgeWidth = Convert.ToInt32(textBoxLeadTipEdgeWidth.Text);
+            _LeadTipAlgoDest.LeadTipEdgeWidth = Convert.ToInt32(numUpDownLeadTipEdgeWidth.Text);
             _LeadTipAlgoDest.LeadTipForeground = CogLeadTrimAlgoRcp.LeadTipForeground;
             //_LeadTipAlgoDest.LeadTipThreshold = CogLeadTrimAlgoRcp.LeadTipThreshold;
             _LeadTipAlgoDest.LeadTipThreshold = Convert.ToInt32(graLabelLeadTipBurrThresholdValue.Text);
             _LeadTipAlgoDest.LeadTipBurrThreshold = Convert.ToInt32(graLabelLeadTipBurrThresholdValue.Text);
-            _LeadTipAlgoDest.LeadTipBurrSpec = Convert.ToDouble(textBoxLeadTipBurrSpec.Text);
+            _LeadTipAlgoDest.LeadTipBurrSpec = Convert.ToDouble(numUpDownLeadTipBurrSpec.Value);
             
             var _ApplyLeadTrimValueEvent = ApplyLeadTrimValueEvent;
             _ApplyLeadTrimValueEvent?.Invoke(CogLeadTrimAlgo.eAlgoMode.LEADTIP_CHECK, _InspRegion, _LeadTipAlgoDest, ref _CogLeadTrimResult);
@@ -841,7 +841,7 @@ namespace InspectionSystemManager
             CogLeadTrimResult _CogLeadTrimResult = new CogLeadTrimResult();
             CogLeadTrimAlgo _LeadGateAlgoDest = new CogLeadTrimAlgo(ResolutionX, ResolutionY);
             _LeadGateAlgoDest.GateRemainingThreshold = Convert.ToInt32(gradientLabelGateRemainingThresholdValue.Text);
-            _LeadGateAlgoDest.GateRemainingSpec = Convert.ToDouble(textBoxGateRemainingSpec.Text);
+            _LeadGateAlgoDest.GateRemainingSpec = Convert.ToDouble(numUpDownGateRemainingSpec.Value);
             _LeadGateAlgoDest.GateRemainingForeground = CogLeadTrimAlgoRcp.GateRemainingForeground;
 
             var _ApplyLeadTrimValueEvent = ApplyLeadTrimValueEvent;
@@ -876,6 +876,18 @@ namespace InspectionSystemManager
                 CogLeadTrimAlgoRcp.LeadLengthArray[iLoopCount] = Convert.ToDouble(QuickGridViewLeadSetting[1, iLoopCount].Value);
                 if (iLoopCount > 0)
                     CogLeadTrimAlgoRcp.LeadPitchArray[iLoopCount - 1] = Convert.ToDouble(QuickGridViewLeadSetting[2, iLoopCount - 1].Value);
+            }
+        }
+
+        private void numUpDownLeadSkewSpec_ValueChanged(object sender, EventArgs e)
+        {
+            double _LeadSkewSpec = Convert.ToDouble(numUpDownLeadSkewSpec.Value);
+            double _LeadPitchSpec = Convert.ToDouble(numUpDownLeadPitchSpec.Value);
+
+            if (_LeadSkewSpec >= _LeadPitchSpec)
+            {
+                numUpDownLeadSkewSpec.Value = Convert.ToDecimal(_LeadPitchSpec - 0.001);
+                return;
             }
         }
     }

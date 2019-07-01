@@ -62,10 +62,10 @@ namespace InspectionSystemManager
             CogLeadFormAlgoRcp.AlignArea = new RectangleD();
             CogLeadFormAlgoRcp.AlignArea.SetCenterWidthHeight(LeadFormAlignArea.CenterX, LeadFormAlignArea.CenterY, LeadFormAlignArea.Width, LeadFormAlignArea.Height);
             CogLeadFormAlgoRcp.AlignThreshold = Convert.ToInt32(graLabelLeadFormAlignThresholdValue.Text);
-            CogLeadFormAlgoRcp.AlignSkewSpec = Convert.ToDouble(textBoxAlignSkewSpec.Text);
-            CogLeadFormAlgoRcp.AlignPitchSpec = Convert.ToDouble(textBoxLeadFormAlignPitchSpec.Text);
+            CogLeadFormAlgoRcp.AlignSkewSpec = Convert.ToDouble(numUpDownAlignSkewSpec.Value);
+            CogLeadFormAlgoRcp.AlignPitchSpec = Convert.ToDouble(numUpDownLeadFormAlignPitchSpec.Value);
 
-            CogLeadFormAlgoRcp.LeadCount = Convert.ToInt32(textBoxLeadCount.Text);
+            CogLeadFormAlgoRcp.LeadCount = Convert.ToInt32(numUpDownLeadCount.Value);
             //CogLeadFormAlgoRcp.AlignPositionArray = new PointD[CogLeadFormAlgoRcp.LeadCount];
             //for (int iLoopCount = 0; iLoopCount < QuickGridViewLeadFormAlignPitch.Rows.Count; ++iLoopCount)
             //{
@@ -92,11 +92,11 @@ namespace InspectionSystemManager
 
             hScrollBarLeadFormAlignThreshold.Value = CogLeadFormAlgoRcp.AlignThreshold;
             graLabelLeadFormAlignThresholdValue.Text = CogLeadFormAlgoRcp.AlignThreshold.ToString();
-            textBoxAlignSkewSpec.Text = CogLeadFormAlgoRcp.AlignSkewSpec.ToString();
-            textBoxLeadFormAlignPitchSpec.Text = CogLeadFormAlgoRcp.AlignPitchSpec.ToString();
+            numUpDownAlignSkewSpec.Value = Convert.ToDecimal(CogLeadFormAlgoRcp.AlignSkewSpec);
+            numUpDownLeadFormAlignPitchSpec.Value = Convert.ToDecimal(CogLeadFormAlgoRcp.AlignPitchSpec);
 
             InitializeQuickGridView(CogLeadFormAlgoRcp.LeadCount);
-            textBoxLeadCount.Text = CogLeadFormAlgoRcp.LeadCount.ToString();
+            numUpDownLeadCount.Value = Convert.ToDecimal(CogLeadFormAlgoRcp.LeadCount);
             for (int iLoopCount = 0; iLoopCount < CogLeadFormAlgoRcp.LeadCount; ++iLoopCount)
             {
                 double _RealCenterX = CogLeadFormAlgoRcp.AlignPositionArray[iLoopCount].X;
@@ -186,13 +186,13 @@ namespace InspectionSystemManager
             CogLeadFormResult _CogLeadFormResult = new CogLeadFormResult();
             CogLeadFormAlgo _CogLeadFormAlgo = new CogLeadFormAlgo(ResolutionX, ResolutionY);
             _CogLeadFormAlgo.AlignThreshold = Convert.ToInt32(graLabelLeadFormAlignThresholdValue.Text);
-            _CogLeadFormAlgo.AlignSkewSpec = Convert.ToDouble(textBoxAlignSkewSpec.Text);
-            _CogLeadFormAlgo.AlignPitchSpec = Convert.ToDouble(textBoxLeadFormAlignPitchSpec.Text);
+            _CogLeadFormAlgo.AlignSkewSpec = Convert.ToDouble(numUpDownAlignSkewSpec.Value);
+            _CogLeadFormAlgo.AlignPitchSpec = Convert.ToDouble(numUpDownLeadFormAlignPitchSpec.Value);
 
             var _ApplyLeadFormValueEvent = ApplyLeadFormValueEvent;
             _ApplyLeadFormValueEvent?.Invoke(CogLeadFormAlgo.eAlgoMode.LEAD_ALIGN, _InspRegion, _CogLeadFormAlgo, ref _CogLeadFormResult);
 
-            textBoxLeadCount.Text = _CogLeadFormResult.LeadCount.ToString();        
+            numUpDownLeadCount.Value = Convert.ToDecimal(_CogLeadFormResult.LeadCount);        
 
             SetLeadAlignmentValue(_CogLeadFormResult);
             SetGridViewLeadAlignmentValue(LeadPositionArrayXNew, LeadPositionArrayYNew);
@@ -302,6 +302,18 @@ namespace InspectionSystemManager
                 CogLeadFormAlgoRcp.AlignPositionArray[iLoopCount] = new PointD();
                 CogLeadFormAlgoRcp.AlignPositionArray[iLoopCount].X = Convert.ToDouble(QuickGridViewLeadFormAlignPitch[1, iLoopCount].Value);
                 CogLeadFormAlgoRcp.AlignPositionArray[iLoopCount].Y = Convert.ToDouble(QuickGridViewLeadFormAlignPitch[2, iLoopCount].Value);
+            }
+        }
+
+        private void numUpDownAlignSkewSpec_ValueChanged(object sender, EventArgs e)
+        {
+            double _AlignSkewSpec = Convert.ToDouble(numUpDownAlignSkewSpec.Value);
+            double _AlignPitchSpec = Convert.ToDouble(numUpDownLeadFormAlignPitchSpec.Value);
+
+            if (_AlignSkewSpec >= _AlignPitchSpec)
+            {
+                numUpDownAlignSkewSpec.Value = Convert.ToDecimal(_AlignPitchSpec - 0.001);
+                return;
             }
         }
     }
