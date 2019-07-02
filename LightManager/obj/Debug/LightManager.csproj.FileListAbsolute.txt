@@ -46,3 +46,14 @@ D:\VisionProgram\KPVisionInspectionProgram\LightManager\obj\Debug\LightManager.P
 D:\VisionProgram\KPVisionInspectionProgram\LightManager\obj\Debug\LightManager.csproj.GenerateResource.Cache
 D:\VisionProgram\KPVisionInspectionProgram\LightManager\obj\Debug\LightManager.dll
 D:\VisionProgram\KPVisionInspectionProgram\LightManager\obj\Debug\LightManager.pdb
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\LightManager\bin\Debug\LightManager.dll
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\LightManager\bin\Debug\LightManager.pdb
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\LightManager\bin\Debug\LogMessageManager.dll
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\LightManager\bin\Debug\log4net.dll
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\LightManager\bin\Debug\LogMessageManager.pdb
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\LightManager\obj\Debug\LightManager.csprojResolveAssemblyReference.cache
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\LightManager\obj\Debug\LightManager.LightWindow.resources
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\LightManager\obj\Debug\LightManager.Properties.Resources.resources
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\LightManager\obj\Debug\LightManager.csproj.GenerateResource.Cache
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\LightManager\obj\Debug\LightManager.dll
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\LightManager\obj\Debug\LightManager.pdb

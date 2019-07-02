@@ -63,13 +63,12 @@ namespace KPDisplay
         #endregion Initialize
 
         #region Clear CogDisplay()
-
         /// <summary>
         /// Display 화면을 지운다.
         /// </summary>
-        public void ClearDisplay()
+        public void ClearDisplay(bool _ImageClear = false)
         {
-            //this.Image = null;
+            if(_ImageClear) this.Image = null;
             this.StaticGraphics.Clear();
             this.InteractiveGraphics.Clear();
         }
@@ -134,5 +133,10 @@ namespace KPDisplay
             }
         }
         #endregion Clear CogDisplay()
+
+        public void SaveImageIncludeGraphics()
+        {
+            this.OnContextMenuItemFitImageClicked(null, null);
+        }
     }
 }

@@ -231,7 +231,7 @@ namespace KPVisionInspectionFramework
             #endregion Light Window Initialize
 
             #region History Window Initialize
-            HistoryManager = new CHistoryManager(ProjectName, ((eProjectType)ParamManager.SystemParam.ProjectType).ToString());
+            HistoryManager = new CHistoryManager(ProjectName, (eProjectType)ParamManager.SystemParam.ProjectType);
             #endregion History Window Initialize
 
             #region FolderPath Window Initialize

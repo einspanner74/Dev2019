@@ -359,3 +359,11 @@ D:\VisionProgram\KPVisionInspectionProgram\CustomControl\obj\Debug\CustomControl
 D:\VisionProgram\KPVisionInspectionProgram\CustomControl\obj\Debug\CustomControl.csproj.GenerateResource.Cache
 D:\VisionProgram\KPVisionInspectionProgram\CustomControl\obj\Debug\CustomControl.dll
 D:\VisionProgram\KPVisionInspectionProgram\CustomControl\obj\Debug\CustomControl.pdb
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\CustomControl\bin\Debug\CustomControl.dll
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\CustomControl\bin\Debug\CustomControl.pdb
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\CustomControl\obj\Debug\CustomControl.csprojResolveAssemblyReference.cache
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\CustomControl\obj\Debug\CustomControl.GridViewManager.resources
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\CustomControl\obj\Debug\CustomControl.ImageButton.resources
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\CustomControl\obj\Debug\CustomControl.csproj.GenerateResource.Cache
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\CustomControl\obj\Debug\CustomControl.dll
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\CustomControl\obj\Debug\CustomControl.pdb

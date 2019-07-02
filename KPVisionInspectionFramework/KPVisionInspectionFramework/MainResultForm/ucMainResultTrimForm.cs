@@ -99,6 +99,7 @@ namespace KPVisionInspectionFramework
         private string[] LastResult;
         private string ModelName;
         private string SerialNum;
+        private string InspectionTime;
 
         private QuickDataGridView[] QuickGridViewResult;
 
@@ -170,7 +171,7 @@ namespace KPVisionInspectionFramework
             QuickGridViewResult = new QuickDataGridView[2] { QuickGridViewLeadTrimResult, QuickGridViewLeadFormResult };
 
             //LDH, 2018.08.14, Hitory Parameter용 배열 초기화
-            HistoryParam = new string[4];
+            HistoryParam = new string[6];
             for (int iLoopCount = 0; iLoopCount < HistoryParam.Count(); iLoopCount++)
             {
                 HistoryParam[iLoopCount] = "-";
@@ -426,7 +427,7 @@ namespace KPVisionInspectionFramework
 
             SaveResultCount();
 
-            SaveResult(0, _Result.SaveImage);
+            SaveResult(0, _Result.ImageAutoSave, _Result.SaveImage, ref _Result.ResultImagePath);
         }
 
         private void ClearLeadTrimResultControl()
@@ -516,7 +517,7 @@ namespace KPVisionInspectionFramework
 
             SaveResultCount();
                         
-            SaveResult(1, _Result.SaveImage);
+            SaveResult(1, _Result.ImageAutoSave, _Result.SaveImage, ref _Result.ResultImagePath);
         }
 
         private void ClearLeadFormResultControl()
@@ -533,7 +534,7 @@ namespace KPVisionInspectionFramework
             for (int iLoopCount = 0; iLoopCount < 1; iLoopCount++) ImageFolderPath[iLoopCount] = _DataFolderPath[iLoopCount];
         }
 
-        public void SaveResult(int _InspectionNum, CogImage8Grey _SaveImage)
+        public void SaveResult(int _InspectionNum, eSaveMode ImageAutoSave, CogImage8Grey _SaveImage, ref string _ResultImagePath)
         {
             string SaveFileName = "";
 
@@ -546,6 +547,7 @@ namespace KPVisionInspectionFramework
 
             if (SaveImageFilePath != "")
             {
+                #region Set File Path
                 if (false == Directory.Exists(SaveImageFilePath)) Directory.CreateDirectory(SaveImageFilePath);
                 SaveImageFilePath = String.Format("{0}\\{1:D4}\\{2:D2}\\{3:D2}", SaveImageFilePath, dateTime.Year, dateTime.Month, dateTime.Day);
                 if (false == Directory.Exists(SaveImageFilePath)) Directory.CreateDirectory(SaveImageFilePath);
@@ -554,10 +556,16 @@ namespace KPVisionInspectionFramework
 
                 //연월일시분초밀리
                 SaveFileName = String.Format("{0:D4}{1:D2}{2:D2}{3:D2}{4:D2}{5:D2}{6:D3}", dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, dateTime.Minute, dateTime.Second, dateTime.Millisecond);
+                InspectionTime = SaveFileName;
 
-                //_1차종_2시리얼번호_3카메라(TOP/SIDE)_4검사결과(OK_NG)
+                //_1차종_2시리얼번호_3카메라(TOP/SIDE)_4검사결과(OK/NG)
                 SaveFileName = String.Format("{0}_{1}_{2}_{3}_{4}", SaveFileName, ModelName, SerialNum, CameraType, LastResult[_InspectionNum]);
 
+                //Display Image 저장용 Path
+                _ResultImagePath = SaveImageFilePath + "\\" + SaveFileName + "_Mark.bmp";
+                #endregion Set File Path
+
+                #region Image Save
                 //LDH, 2019.06.18, Image Save
                 try
                 {
@@ -566,12 +574,21 @@ namespace KPVisionInspectionFramework
 
                     if (_CogSaveImage == null)
                     {
-                        //MessageBox.Show(new Form{TopMost = true}, "영상이 없습니다.");
+                        CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.ERR, "SaveResult _CogSaveImage null!!", CLogManager.LOG_LEVEL.LOW);
                     }
                     else
                     {
                         _CogImageFile.Open(SaveImageFilePath + "\\" + SaveFileName + ".bmp", CogImageFileModeConstants.Write);
-                        _CogImageFile.Append(_CogSaveImage);
+
+                        if (eSaveMode.ONLY_NG == ImageAutoSave)
+                        {
+                            if (LastResult[_InspectionNum] == "NG")
+                            {                               
+                                _CogImageFile.Append(_CogSaveImage);
+                            }
+                        }
+                        else { _CogImageFile.Append(_CogSaveImage); }
+
                         _CogImageFile.Close();
                     }
                 }
@@ -579,7 +596,9 @@ namespace KPVisionInspectionFramework
                 {
                     CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.ERR, "SaveResult Image Save Exception!!", CLogManager.LOG_LEVEL.LOW);
                 }
+                #endregion
 
+                #region Data Save
                 //LDH, 2019.06.18, Data Save
                 CSVManagerSaveAll SaveCSVControl = new CSVManagerSaveAll();
 
@@ -590,16 +609,31 @@ namespace KPVisionInspectionFramework
                 SaveCSVControl.SaveGridViewAll(QuickGridViewResult[_InspectionNum], SaveCSVFilePath);
 
                 CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, string.Format("Save {0} CSV File", _InspectionNum), CLogManager.LOG_LEVEL.LOW);
+                #endregion Data Save
+
+                InspectionHistory(CameraType, LastResult[_InspectionNum], _ResultImagePath);
             }
             else
             {
                 MessageBox.Show("Data를 저장할 수 없습니다. \n저장경로를 설정하세요.");
             }
         }
-        
-        private void InspectionHistory(int _ID, string _Result)
+
+        //LDH, 2019.06.26, History 추가용 함수
+        private void InspectionHistory(string _CamType, string _LastResult, string _ImageFilePath)
         {
-            //Histoty에 Screenshot 대신 현대에서 저장해달라는 화살표 표시 이미지 사용하면될 것 같음 
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("InspectionHistory Start"), CLogManager.LOG_LEVEL.LOW);
+
+            //LDH, 2019.06.26, DB에 해당하는 history 내역을 string 배열로 전달
+            HistoryParam[0] = InspectionTime;
+            HistoryParam[1] = _CamType;
+            HistoryParam[2] = SerialNum;
+            HistoryParam[3] = ModelName;
+            HistoryParam[4] = _LastResult;
+            HistoryParam[5] = _ImageFilePath;
+
+            CHistoryManager.AddHistory(HistoryParam);
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("InspectionHistory End"), CLogManager.LOG_LEVEL.LOW);
         }
 
         private void gradientLabelTrimTotalCount_DoubleClick(object sender, EventArgs e)

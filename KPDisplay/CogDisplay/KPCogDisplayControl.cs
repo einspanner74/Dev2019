@@ -111,9 +111,9 @@ namespace KPDisplay
         /// <summary>
         /// Clear Display
         /// </summary>
-        public void ClearDisplay()
+        public void ClearDisplay(bool _ImageClear = false)
         {
-            kCogDisplay.ClearDisplay();
+            kCogDisplay.ClearDisplay(_ImageClear);
         }
 
         /// <summary>
@@ -669,6 +669,27 @@ namespace KPDisplay
             }
         }
 
+        //Color Image Display 용
+        private void SetDisplayInvoke(KPCogDisplay _Display, CogImage24PlanarColor _DispImage)
+        {
+            if (_Display.InvokeRequired)
+            {
+                _Display.Invoke(new MethodInvoker(delegate ()
+                {
+                    _Display.ClearDisplay();
+                    CogImage24PlanarColor _OriginImage = new CogImage24PlanarColor(_DispImage);
+                    _Display.Image = _OriginImage;
+                }
+                ));
+            }
+            else
+            {
+                _Display.ClearDisplay();
+                CogImage24PlanarColor _OriginImage = new CogImage24PlanarColor(_DispImage.ToBitmap());
+                _Display.Image = _OriginImage;
+            }
+        }
+
         /// <summary>
         /// Display control 이미지 추가
         /// </summary>
@@ -680,6 +701,29 @@ namespace KPDisplay
                 SetDisplayInvoke(kCogDisplay, _cogDisplayImage);
             }
             catch
+            {
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.ERR, "SetDisplayImage(CogImage8Grey) Exception!!", CLogManager.LOG_LEVEL.LOW);
+            }
+        }
+
+        /// <summary>
+        /// Display control Color 이미지 추가
+        /// </summary>
+        /// <param name="_cogDisplayImage">Display 할 이미지</param>
+        public void SetDisplayColorImage(string _ImageFilePath)
+        {
+            CogImageFileTool LoadImageFileTool = new CogImageFileTool();
+            CogImage24PlanarColor LoadImage;
+
+            try
+            {
+                LoadImageFileTool.Operator.Open(_ImageFilePath, CogImageFileModeConstants.Read);
+                LoadImageFileTool.Run();
+                LoadImage = (CogImage24PlanarColor)LoadImageFileTool.OutputImage;
+
+                SetDisplayInvoke(kCogDisplay, LoadImage);
+            }
+            catch(Exception ex)
             {
                 CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.ERR, "SetDisplayImage(CogImage8Grey) Exception!!", CLogManager.LOG_LEVEL.LOW);
             }
@@ -782,11 +826,11 @@ namespace KPDisplay
         }
 
         /// <summary>
-        /// 현재 Draw 된 Display 된 Image 가져오기 
+        /// 결과 Display가 포함된 Image 가져오기 
         /// </summary>
-        public Image GetCurrentDisplay()
+        public Image GetResultImage()
         {
-            Image _Image = kCogDisplay.CreateContentBitmap(CogDisplayContentBitmapConstants.Display, null);
+            Image _Image = kCogDisplay.CreateContentBitmap(CogDisplayContentBitmapConstants.Image, null);
             return _Image;
         }
 
@@ -803,12 +847,12 @@ namespace KPDisplay
 
             string ImageSaveFile;
             ImageSaveFile = String.Format("{0}\\{1:D2}{2:D2}{3:D2}{4:D3}.bmp", ImageSaveFolder, dateTime.Hour, dateTime.Minute, dateTime.Second, dateTime.Millisecond);
-
+            
             try
             {
                 ICogImage _CogSaveImage = kCogDisplay.Image;
                 CogImageFile _CogImageFile = new CogImageFile();
-
+                
                 if (_CogSaveImage == null)
                 {
                     //MessageBox.Show(new Form{TopMost = true}, "영상이 없습니다.");

@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Cognex.VisionPro;
 using Cognex.VisionPro.Display;
 using Cognex.VisionPro.ImageFile;
+using Cognex.VisionPro.ImageProcessing;
 
 using LogMessageManager;
 using ParameterManager;
@@ -1325,6 +1326,55 @@ namespace InspectionSystemManager
             _IsLastGood = SendResParam.IsGood;
 
             DisplayLastResultMessage(_IsLastGood);
+            
+			//LDH, 2019.07.02, TrimForm은 결과 Display 후 영상저장
+            if(eProjectType.TRIM_FORM == ProjectType)
+            {
+                if (_IsLastGood == false)
+                {
+                    //Image _GetResultImage = kpCogDisplayMain.GetResultImage();
+                    Bitmap _ResultImageBMP = (Bitmap)kpCogDisplayMain.GetResultImage();
+                    //ICogImage _TestImage = new ICogImage();
+                    var _CogImage = new CogImage24PlanarColor(_ResultImageBMP);
+
+                    CogAffineTransformTool AffineTransform = new CogAffineTransformTool();
+                    AffineTransform.InputImage = _CogImage;
+                    AffineTransform.Region = null;
+                    AffineTransform.RunParams.ScalingX = 0.5;
+                    AffineTransform.RunParams.ScalingY = 0.5;
+                    AffineTransform.Run();
+
+                    ICogImage _SaveImageTemp = AffineTransform.OutputImage;
+                    string _SaveImagePath = "";
+
+                    for (int iLoopCount = 0; iLoopCount < AlgoResultParamList.Count(); iLoopCount++)
+                    {
+                        eAlgoType _AlgoType = AlgoResultParamList[iLoopCount].ResultAlgoType;
+                        //if (eAlgoType.C_LEAD_FORM == _AlgoType)      _GetResultImage.Save(((SendLeadFormResult)SendResParam.SendResult).ResultImagePath);
+                        //else if (eAlgoType.C_LEAD_TRIM == _AlgoType) _GetResultImage.Save(((SendLeadTrimResult)SendResParam.SendResult).ResultImagePath);
+
+                        if (eAlgoType.C_LEAD_FORM == _AlgoType) _SaveImagePath = ((SendLeadFormResult)SendResParam.SendResult).ResultImagePath;
+                        else if (eAlgoType.C_LEAD_TRIM == _AlgoType) _SaveImagePath = ((SendLeadTrimResult)SendResParam.SendResult).ResultImagePath;
+                        else continue;
+
+                        CogImageFile _CogImageFile = new CogImageFile();
+
+                        if (_SaveImagePath != "")
+                        {
+                            if (_SaveImageTemp == null)
+                            {
+                                //MessageBox.Show(new Form{TopMost = true}, "영상이 없습니다.");
+                            }
+                            else
+                            {
+                                _CogImageFile.Open(_SaveImagePath, CogImageFileModeConstants.Write);
+                                _CogImageFile.Append(_SaveImageTemp);
+                                _CogImageFile.Close();
+                            }
+                        }
+                    }
+                }
+            }
 
             return true;
         }

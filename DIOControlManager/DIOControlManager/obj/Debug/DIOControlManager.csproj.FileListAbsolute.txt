@@ -127,3 +127,30 @@ C:\Zoom\Source management\Project\KPVisionInspectionProgram\DIOControlManager\DI
 C:\Zoom\Source management\Project\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.csproj.GenerateResource.Cache
 C:\Zoom\Source management\Project\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.dll
 C:\Zoom\Source management\Project\KPVisionInspectionProgram\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.pdb
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\DIOControlManager\DIOControlManager\bin\Debug\DIOControlManager.dll
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\DIOControlManager\DIOControlManager\bin\Debug\DIOControlManager.pdb
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\DIOControlManager\DIOControlManager\bin\Debug\CPressingButton.dll
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\DIOControlManager\DIOControlManager\bin\Debug\CustomControl.dll
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\DIOControlManager\DIOControlManager\bin\Debug\CustomMsgBoxManager.dll
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\DIOControlManager\DIOControlManager\bin\Debug\LogMessageManager.dll
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\DIOControlManager\DIOControlManager\bin\Debug\ParameterManager.dll
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\DIOControlManager\DIOControlManager\bin\Debug\log4net.dll
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\DIOControlManager\DIOControlManager\bin\Debug\Cognex.VisionPro.PMAlign.dll
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\DIOControlManager\DIOControlManager\bin\Debug\Cognex.VisionPro.Core.dll
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\DIOControlManager\DIOControlManager\bin\Debug\Cognex.VisionPro.dll
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\DIOControlManager\DIOControlManager\bin\Debug\Cognex.VisionPro.Interop.Core.dll
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\DIOControlManager\DIOControlManager\bin\Debug\stdole.dll
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\DIOControlManager\DIOControlManager\bin\Debug\CustomControl.pdb
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\DIOControlManager\DIOControlManager\bin\Debug\LogMessageManager.pdb
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\DIOControlManager\DIOControlManager\bin\Debug\ParameterManager.pdb
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\DIOControlManager\DIOControlManager\bin\Debug\CustomMsgBoxManager.pdb
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\DIOControlManager\DIOControlManager\bin\Debug\Cognex.VisionPro.PMAlign.xml
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\DIOControlManager\DIOControlManager\bin\Debug\Cognex.VisionPro.Core.xml
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\DIOControlManager\DIOControlManager\bin\Debug\Cognex.VisionPro.xml
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.csprojResolveAssemblyReference.cache
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.DIOControlWindow.resources
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.DIONamingWindow.resources
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.Properties.Resources.resources
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.csproj.GenerateResource.Cache
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.dll
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.pdb

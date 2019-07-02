@@ -604,6 +604,8 @@ namespace ParameterManager
         public EachLeadStatus[] EachLeadStatusArray;
 
         public CogImage8Grey SaveImage;
+        public eSaveMode ImageAutoSave;
+        public string ResultImagePath;
     }
 
     public class SendLeadFormResult
@@ -615,6 +617,8 @@ namespace ParameterManager
         public EachLeadStatus[] EachLeadStatusArray;
 
         public CogImage8Grey SaveImage;
+        public eSaveMode ImageAutoSave;
+        public string ResultImagePath;        
     }
 
     public class EachLeadStatus

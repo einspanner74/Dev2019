@@ -45,3 +45,15 @@ D:\VisionProgram\KPVisionInspectionProgram\EthernetManager\obj\Debug\EthernetMan
 D:\VisionProgram\KPVisionInspectionProgram\EthernetManager\obj\Debug\EthernetManager.csproj.GenerateResource.Cache
 D:\VisionProgram\KPVisionInspectionProgram\EthernetManager\obj\Debug\EthernetManager.dll
 D:\VisionProgram\KPVisionInspectionProgram\EthernetManager\obj\Debug\EthernetManager.pdb
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\EthernetManager\bin\Debug\EthernetManager.dll
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\EthernetManager\bin\Debug\EthernetManager.pdb
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\EthernetManager\bin\Debug\CustonMsgBoxManager.dll
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\EthernetManager\bin\Debug\LogMessageManager.dll
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\EthernetManager\bin\Debug\log4net.dll
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\EthernetManager\bin\Debug\LogMessageManager.pdb
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\EthernetManager\obj\Debug\EthernetManager.csprojResolveAssemblyReference.cache
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\EthernetManager\obj\Debug\EthernetManager.EthernetWindow.resources
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\EthernetManager\obj\Debug\EthernetManager.Properties.Resources.resources
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\EthernetManager\obj\Debug\EthernetManager.csproj.GenerateResource.Cache
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\EthernetManager\obj\Debug\EthernetManager.dll
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\EthernetManager\obj\Debug\EthernetManager.pdb

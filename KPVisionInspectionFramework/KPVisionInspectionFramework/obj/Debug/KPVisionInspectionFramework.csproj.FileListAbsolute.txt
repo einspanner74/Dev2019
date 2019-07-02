@@ -92,3 +92,26 @@ F:\[Project]\2018\GitFolder\Einspanner\KPVisionInspectionFramework\KPVisionInspe
 F:\[Project]\2018\GitFolder\Einspanner\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Debug\KP INT Vision Inspection.pdb
 F:\[Project]\2018\GitFolder\Einspanner\KPVisionInspectionFramework\KP INT Vision Inspection.exe
 F:\[Project]\2018\GitFolder\Einspanner\KPVisionInspectionFramework\KP INT Vision Inspection.pdb
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\KPVisionInspectionFramework\KP INT Vision Inspection.exe.config
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Debug\KPVisionInspectionFramework.csprojResolveAssemblyReference.cache
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Debug\KPVisionInspectionFramework.LanguageResource.resources
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Debug\KPVisionInspectionFramework.FolderPathWindow.resources
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Debug\KPVisionInspectionFramework.MainForm.resources
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Debug\KPVisionInspectionFramework.MainLogoWindow.resources
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Debug\KPVisionInspectionFramework.MainResultBase.resources
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Debug\KPVisionInspectionFramework.ucMainResultCardManager.resources
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Debug\KPVisionInspectionFramework.ucMainResultNavien.resources
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Debug\KPVisionInspectionFramework.ucMainResultNone.resources
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Debug\KPVisionInspectionFramework.ucMainResultSorter.resources
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Debug\KPVisionInspectionFramework.ucMainResultTrimForm.resources
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Debug\KPVisionInspectionFramework.Properties.Resources.resources
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Debug\KPVisionInspectionFramework.RecipeWindow.resources
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Debug\KPVisionInspectionFramework.RecipeNewNameWindow.resources
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Debug\KPVisionInspectionFramework.LanguageResource.ko-KR.resources
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Debug\KPVisionInspectionFramework.csproj.GenerateResource.Cache
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Debug\ko-KR\KP INT Vision Inspection.resources.dll
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Debug\KP INT Vision Inspection.exe
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Debug\KP INT Vision Inspection.pdb
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\KPVisionInspectionFramework\KP INT Vision Inspection.exe
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\KPVisionInspectionFramework\KP INT Vision Inspection.pdb
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\KPVisionInspectionFramework\ko-KR\KP INT Vision Inspection.resources.dll

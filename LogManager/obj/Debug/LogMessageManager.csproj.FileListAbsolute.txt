@@ -38,3 +38,13 @@ D:\VisionProgram\KPVisionInspectionProgram\LogManager\obj\Debug\LogMessageManage
 D:\VisionProgram\KPVisionInspectionProgram\LogManager\obj\Debug\LogMessageManager.csproj.GenerateResource.Cache
 D:\VisionProgram\KPVisionInspectionProgram\LogManager\obj\Debug\LogMessageManager.dll
 D:\VisionProgram\KPVisionInspectionProgram\LogManager\obj\Debug\LogMessageManager.pdb
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\LogManager\bin\Debug\LogMessageManager.dll
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\LogManager\bin\Debug\LogMessageManager.pdb
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\LogManager\bin\Debug\log4net.dll
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\LogManager\obj\Debug\LogMessageManager.csprojResolveAssemblyReference.cache
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\LogManager\obj\Debug\LogMessageManager.LogSettingWindow.resources
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\LogManager\obj\Debug\LogMessageManager.LogWindowSE.resources
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\LogManager\obj\Debug\LogMessageManager.Properties.Resources.resources
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\LogManager\obj\Debug\LogMessageManager.csproj.GenerateResource.Cache
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\LogManager\obj\Debug\LogMessageManager.dll
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\LogManager\obj\Debug\LogMessageManager.pdb

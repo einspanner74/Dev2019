@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SQLite;
 using System.IO;
+using ParameterManager;
 
 namespace HistoryManager
 {
@@ -21,23 +22,23 @@ namespace HistoryManager
         static string INSERT_string = "";
         static string CreateComm = "";
 
-        public CHistoryManager(string _ProjectName, string _ProjectType)
+        public CHistoryManager(string _ProjectName, eProjectType _ProjectType)
         {
             ProjectName = _ProjectName;
 
             HistoryWnd.Initialize(ProjectName, _ProjectType);
 
-            if (_ProjectType == "DISPENSER")
+            if (eProjectType.TRIM_FORM == _ProjectType)
             {
-                INSERT_string = "INSERT INTO HistoryFile (Date, RecipeName, ID, LastResult, InspImagePath) ";
-                CreateComm = string.Format("{0} (Date Datetime, RecipeName char, ID char, LastResult char, InspImagePath char);", SqlDefine.CREATE_TABLE);
+                INSERT_string = "INSERT INTO HistoryFile (Date, InspectionTime, CamType, SerialNum, ModelName, LastResult, InspImagePath) ";
+                CreateComm = string.Format("{0} (Date Datetime, InspectionTime char, CamType char, SerialNum char, ModelName char, LastResult char, InspImagePath char);", SqlDefine.CREATE_TABLE);
             }
 
-            else if (_ProjectType == "BLOWER")
-            {
-                INSERT_string = "INSERT INTO HistoryFile (Date, RecipeName, LastResult, IDResult, InspImagePath) ";
-                CreateComm = string.Format("{0} (Date Datetime, RecipeName char, LastResult char, IDResult char, InspImagePath char);", SqlDefine.CREATE_TABLE);
-            }
+            //else if (_ProjectType == "BLOWER")
+            //{
+            //    INSERT_string = "INSERT INTO HistoryFile (Date, RecipeName, LastResult, IDResult, InspImagePath) ";
+            //    CreateComm = string.Format("{0} (Date Datetime, RecipeName char, LastResult char, IDResult char, InspImagePath char);", SqlDefine.CREATE_TABLE);
+            //}
         }
 
         /// <summary>

@@ -41,7 +41,7 @@ namespace CustomControl
 
         }
 
-        private void SetHeader(int HeaderCount, string[] HeaderName)
+        public void SetHeader(int HeaderCount, string[] HeaderName, bool _DataAlignCenterFlag = false)
         {
             if (HeaderCount == 0 || HeaderName == null) return;
 
@@ -50,8 +50,10 @@ namespace CustomControl
             for (int iLoopCount = 0; iLoopCount < HeaderCount; iLoopCount++)
             {
                 GridViewControl.Columns[iLoopCount].Name = HeaderName[iLoopCount];
-                GridViewControl.Columns[iLoopCount].Width = 100;
+                GridViewControl.Columns[iLoopCount].Width = 80;
             }
+
+            if(_DataAlignCenterFlag) GridViewControl.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
         }
 
         public void ClearGridView()

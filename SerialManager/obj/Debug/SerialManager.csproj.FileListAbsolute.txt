@@ -46,3 +46,14 @@ D:\VisionProgram\KPVisionInspectionProgram\SerialManager\obj\Debug\SerialManager
 D:\VisionProgram\KPVisionInspectionProgram\SerialManager\obj\Debug\SerialManager.csproj.GenerateResource.Cache
 D:\VisionProgram\KPVisionInspectionProgram\SerialManager\obj\Debug\SerialManager.dll
 D:\VisionProgram\KPVisionInspectionProgram\SerialManager\obj\Debug\SerialManager.pdb
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\SerialManager\bin\Debug\SerialManager.dll
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\SerialManager\bin\Debug\SerialManager.pdb
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\SerialManager\bin\Debug\LogMessageManager.dll
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\SerialManager\bin\Debug\log4net.dll
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\SerialManager\bin\Debug\LogMessageManager.pdb
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\SerialManager\obj\Debug\SerialManager.csprojResolveAssemblyReference.cache
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\SerialManager\obj\Debug\SerialManager.Properties.Resources.resources
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\SerialManager\obj\Debug\SerialManager.SerialWindow.resources
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\SerialManager\obj\Debug\SerialManager.csproj.GenerateResource.Cache
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\SerialManager\obj\Debug\SerialManager.dll
+D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\SerialManager\obj\Debug\SerialManager.pdb

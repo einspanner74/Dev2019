@@ -56,6 +56,7 @@ namespace InspectionSystemManager
             }
 
             _SendResult.SaveImage = OriginImage;
+            _SendResult.ImageAutoSave = ImageAutoSaveMode;
 
             return _SendResParam;
         }
@@ -106,6 +107,7 @@ namespace InspectionSystemManager
                 }
             }
             _SendResult.SaveImage = OriginImage;
+            _SendResult.ImageAutoSave = ImageAutoSaveMode;
 
             return _SendResParam;
         }

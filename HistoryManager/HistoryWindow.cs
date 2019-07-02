@@ -1,15 +1,10 @@
-﻿using System;
+﻿using ParameterManager;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Data;
-using System.Data.SQLite;
 using System.IO;
+using System.Windows.Forms;
 
 namespace HistoryManager
 {
@@ -23,7 +18,7 @@ namespace HistoryManager
         static string RecipeName;
         bool SelectRecipeFlag = false;
         int Recipecount = 0;
-        string ProjectType;
+        eProjectType ProjectType;
         int ScreenshotIndex = 0;
 
         Panel RecipePanel = new Panel();
@@ -34,14 +29,13 @@ namespace HistoryManager
             InitializeComponent();
         }
 
-        public void Initialize(string _ProjectName, string _ProjectType)
+        public void Initialize(string _ProjectName, eProjectType _ProjectType)
         {
             ProjectName = _ProjectName;
             ProjectType = _ProjectType;
-        
-            if (ProjectType == "DISPENSER") ScreenshotIndex = 4;
-            else                            ScreenshotIndex = 4;
 
+            SubHistoryGridView();
+            
             DateTime TimeNow = DateTime.Now;
             SelectDateFrom = String.Format("{0:D4}-{1:D2}-{2:D2}", TimeNow.Year, TimeNow.Month, TimeNow.Day);
             SelectDateTo = String.Format("{0:D4}-{1:D2}-{2:D2}", TimeNow.Year, TimeNow.Month, TimeNow.Day);
@@ -57,16 +51,49 @@ namespace HistoryManager
             SqliteManager.SetHistoryFolderPath(ProjectName);
         }
 
+        private void SubHistoryGridView()
+        {
+            if(ProjectType == eProjectType.TRIM_FORM)
+            {
+                string[] _TrimHeader = new string[3] { "Num", "Lead Length", "Lead Pitch" };
+                int[] _ColumnsWidth = new int[3] { 50, 139, 139 };
+                dataGridViewSubHistory.Initialize(3, _TrimHeader);
+                dataGridViewSubHistory.SetColumnsWidth(_ColumnsWidth);
+
+                ScreenshotIndex = 6;
+            }
+            else
+            {
+                dataGridViewHistory.Width = 1254;
+                dataGridViewSubHistory.Visible = false;
+
+                ScreenshotIndex = 4;
+            }
+        }
+
         public void GridViewInitialize()
         {
-            dataGridViewHistory.Columns[0].Width = 160;
-            dataGridViewHistory.Columns[1].Width = 168;
-            dataGridViewHistory.Columns[2].Width = 75;
-            dataGridViewHistory.Columns[3].Width = 75;
-            dataGridViewHistory.Columns[4].Width = 80;
-            dataGridViewHistory.Columns[5].Width = 230;
-            dataGridViewHistory.Columns[6].Width = 230;
-            dataGridViewHistory.Columns[7].Width = 255;
+            if (ProjectType == eProjectType.TRIM_FORM)
+            {
+                dataGridViewHistory.Columns[0].Width = 160;
+                dataGridViewHistory.Columns[1].Width = 140;
+                dataGridViewHistory.Columns[2].Width = 80;
+                dataGridViewHistory.Columns[3].Width = 80;
+                dataGridViewHistory.Columns[4].Width = 120;
+                dataGridViewHistory.Columns[5].Width = 80;
+                dataGridViewHistory.Columns[6].Width = 183;
+            }
+            else
+            {
+                dataGridViewHistory.Columns[0].Width = 160;
+                dataGridViewHistory.Columns[1].Width = 168;
+                dataGridViewHistory.Columns[2].Width = 75;
+                dataGridViewHistory.Columns[3].Width = 75;
+                dataGridViewHistory.Columns[4].Width = 80;
+                dataGridViewHistory.Columns[5].Width = 230;
+                dataGridViewHistory.Columns[6].Width = 230;
+                dataGridViewHistory.Columns[7].Width = 255;
+            }
         }
 
         public bool CheckDBFile()
@@ -101,8 +128,11 @@ namespace HistoryManager
                 dataGridViewHistory.Refresh();
             }
 
-            pictureBoxScreenshot.Image = null;
-            pictureBoxScreenshot.Refresh();
+            //pictureBoxScreenshot.Image = null;
+            //pictureBoxScreenshot.Refresh();
+
+            kpCogDisplayHistory.ClearDisplay(true);
+            dataGridViewSubHistory.ClearGridView();
         }
 
         public void ClearSearchOption()
@@ -116,7 +146,7 @@ namespace HistoryManager
         }
 
         //LDH, 2016.12.13 Inspection ScreenShot 삭제
-        private void DeleteScreenShot()
+        private void DeleteScreenShot(bool _DeleteAll)
         {
             string ScreenShotpath;
             ScreenShotpath = SqliteManager.SqlGetScreenshotPath();
@@ -127,10 +157,23 @@ namespace HistoryManager
             string[] SplitFolderName = ScreenShotpath.Split(Character);
             int FolderLength = SplitFolderName.Length;
 
-            string RemoveFolderPath;
+            string RemoveFolderPath = "";
             string DeleteFolder;
 
-            RemoveFolderPath = String.Format(@"\{0}\{1}\{2}\{3}", SplitFolderName[FolderLength - 4], SplitFolderName[FolderLength - 3], SplitFolderName[FolderLength - 2], SplitFolderName[FolderLength - 1]);
+            int YearIndex = 0;
+            for(int iLoopCount = 0; iLoopCount < 5; iLoopCount++)
+            {
+                //폴더 경로내에 최근 5년 까지의 폴더이름이 있는지 체크
+                YearIndex = Array.IndexOf(SplitFolderName, (DateTime.Now.Year - iLoopCount).ToString());
+                if (YearIndex != -1) break;
+            }
+
+            //TrimForm 부터 아래 코드로 변경
+            //RemoveFolderPath = String.Format(@"\{0}\{1}\{2}\{3}", SplitFolderName[FolderLength - 4], SplitFolderName[FolderLength - 3], SplitFolderName[FolderLength - 2], SplitFolderName[FolderLength - 1]);
+            for(int jLoopCount = YearIndex; jLoopCount < SplitFolderName.Length; jLoopCount++)
+            {
+                RemoveFolderPath = RemoveFolderPath + "\\" + SplitFolderName[jLoopCount];
+            }
             ScreenShotpath = ScreenShotpath.Replace(RemoveFolderPath, "");
 
             //Year 폴더 삭제
@@ -140,23 +183,34 @@ namespace HistoryManager
                 DirectoryInfo[] YearFolderInfo = DeleteYearFolderInfo.GetDirectories();
                 foreach (DirectoryInfo YearFolder in YearFolderInfo)
                 {
-                    if (Convert.ToInt32(YearFolder.Name) < Convert.ToInt32(SplitFolderName[FolderLength - 4]))
+                    if (_DeleteAll)
                     {
-                        DeleteFolder = String.Format("{0}\\{1}", ScreenShotpath, YearFolder.Name);
-                        Directory.Delete(DeleteFolder, true);
+                        if (Convert.ToInt32(YearFolder.Name) <= Convert.ToInt32(DateTime.Now.Year))
+                        {
+                            DeleteFolder = String.Format("{0}\\{1}", ScreenShotpath, YearFolder.Name);
+                            Directory.Delete(DeleteFolder, true);
+                        }
+                    }
+                    else
+                    {
+                        if (Convert.ToInt32(YearFolder.Name) < Convert.ToInt32(SplitFolderName[YearIndex]))
+                        {
+                            DeleteFolder = String.Format("{0}\\{1}", ScreenShotpath, YearFolder.Name);
+                            Directory.Delete(DeleteFolder, true);
+                        }
                     }
                 }
             }
 
             //Month 폴더 삭제
-            ScreenShotpath = String.Format("{0}\\{1}", ScreenShotpath, SplitFolderName[FolderLength - 4]);
+            ScreenShotpath = String.Format("{0}\\{1}", ScreenShotpath, SplitFolderName[YearIndex]);
             DirectoryInfo DeleteMonthFolderInfo = new DirectoryInfo(ScreenShotpath);
             if (DeleteMonthFolderInfo.Exists)
             {
                 DirectoryInfo[] MonthFolderInfo = DeleteMonthFolderInfo.GetDirectories();
                 foreach (DirectoryInfo MonthFolder in MonthFolderInfo)
                 {
-                    if (Convert.ToInt32(MonthFolder.Name) < Convert.ToInt32(SplitFolderName[FolderLength - 3]))
+                    if (Convert.ToInt32(MonthFolder.Name) < Convert.ToInt32(SplitFolderName[YearIndex + 1]))
                     {
                         DeleteFolder = String.Format("{0}\\{1}", ScreenShotpath, MonthFolder.Name);
                         Directory.Delete(DeleteFolder, true);
@@ -165,14 +219,14 @@ namespace HistoryManager
             }
 
             //Day 폴더 삭제
-            ScreenShotpath = String.Format("{0}\\{1}", ScreenShotpath, SplitFolderName[FolderLength - 3]);
+            ScreenShotpath = String.Format("{0}\\{1}", ScreenShotpath, SplitFolderName[YearIndex + 1]);
             DirectoryInfo DeleteDayFolderInfo = new DirectoryInfo(ScreenShotpath);
             if (DeleteDayFolderInfo.Exists)
             {
                 DirectoryInfo[] DayFolderInfo = DeleteDayFolderInfo.GetDirectories();
                 foreach (DirectoryInfo DayFolder in DayFolderInfo)
                 {
-                    if (Convert.ToInt32(DayFolder.Name) < Convert.ToInt32(SplitFolderName[FolderLength - 2]))
+                    if (Convert.ToInt32(DayFolder.Name) < Convert.ToInt32(SplitFolderName[YearIndex + 2]))
                     {
                         DeleteFolder = String.Format("{0}\\{1}", ScreenShotpath, DayFolder.Name);
                         Directory.Delete(DeleteFolder, true);
@@ -257,12 +311,12 @@ namespace HistoryManager
         {
             if (SelectDateCheck() == false) return;
 
-            DialogResult DeleteDialog = MessageBox.Show("Are you sure you want to delete from " + SelectDateFrom + " to " + SelectDateTo + "?", "History Delete", MessageBoxButtons.YesNo);
+            DialogResult DeleteDialog = MessageBox.Show("Are you sure you want to delete records by " + SelectDateTo + "?", "History Delete", MessageBoxButtons.YesNo);
 
             if (DeleteDialog == DialogResult.Yes)
-            {
-                DeleteScreenShot();
+            {                
                 SetDataGridViewHistory(true, "Delete", SelectDateFrom, SelectDateTo);
+                DeleteScreenShot(false);
             }
         }
 
@@ -272,7 +326,7 @@ namespace HistoryManager
 
             if (DeleteDialog == DialogResult.Yes)
             {
-                DeleteScreenShot();
+                DeleteScreenShot(true);
                 SetDataGridViewHistory(false, "Delete");
             }
         }
@@ -302,31 +356,49 @@ namespace HistoryManager
 
         private void SelectHistoryData(string _ScreenshotImagePath)
         {
-            if (_ScreenshotImagePath == "") { MessageBox.Show(new Form { TopMost = true }, "Image is not found"); return; }
-            else if (File.Exists(_ScreenshotImagePath) == false) { MessageBox.Show(new Form { TopMost = true }, "Image is not found"); return; }
+            if (_ScreenshotImagePath == "") { MessageBox.Show(new Form { TopMost = true }, "Image not found"); return; }
+            else if (File.Exists(_ScreenshotImagePath) == false) { MessageBox.Show(new Form { TopMost = true }, "Image not found"); return; }
 
-            pictureBoxScreenshot.Image = Bitmap.FromFile(_ScreenshotImagePath);
+            //pictureBoxScreenshot.Image = Bitmap.FromFile(_ScreenshotImagePath);
+            //File.ReadAllBytes(_ScreenshotImagePath);
+
+            kpCogDisplayHistory.SetDisplayColorImage(_ScreenshotImagePath);
+            SetSubHistory(_ScreenshotImagePath);
+
         }
 
         private void SetcomboBoxResult()
         {
-            
+            if (ProjectType == eProjectType.TRIM_FORM)
+            {
+                ckbResult.Text = "CamType";
+                ckbRecipe.Text = "ModelName";
+                comboBoxResult.Items.Add("All");
+                comboBoxResult.Items.Add("TOP");
+                comboBoxResult.Items.Add("SIDE");
+                comboBoxResult.SelectedIndex = 0;
+            }
+            else
+            {
                 comboBoxResult.Items.Add("All");
                 comboBoxResult.Items.Add("OK");
                 comboBoxResult.Items.Add("NG");
-            comboBoxResult.SelectedIndex = 0;
+                comboBoxResult.SelectedIndex = 0;
+            }
         }
 
         private void SetckListBoxRecipe()
         {
-            LoadRecipeList();
+            if (eProjectType.TRIM_FORM == ProjectType) LoadModelList();
+            else                                       LoadRecipeList();
+
             int Height = 0;
 
             if (Recipecount < 6) { Height = 28 * Recipecount; }
             else { Height = 28 * 6; }
             //ckListBoxRecipe.Location = new System.Drawing.Point(883, 392);
-            ckListBoxRecipe.Location = new System.Drawing.Point(881, 359);
-            ckListBoxRecipe.Size = new System.Drawing.Size(369, Height);
+            ckListBoxRecipe.Location = new System.Drawing.Point(890, 359);
+            ckListBoxRecipe.Size = new System.Drawing.Size(360, Height);
         }
 
         private void SetckListBoxNGType()
@@ -357,6 +429,26 @@ namespace HistoryManager
             Recipecount = ckListBoxRecipe.Items.Count;
         }
 
+        private void LoadModelList()
+        {
+            ckListBoxRecipe.Items.Clear();
+
+            foreach(string _ModelName in SearchColumnName("ModelName"))
+            {
+                ckListBoxRecipe.Items.Add(_ModelName);
+            }
+            Recipecount = ckListBoxRecipe.Items.Count;
+        }
+
+        //LDH, 2019.06.28, DB에서 특정 Column에 있는 데이터 유형 찾기
+        private List<string> SearchColumnName(string _ColumnName)
+        {
+            List<string> _GetDataList = new List<string>();
+            SqliteManager.SqlDistinct(ref _GetDataList, _ColumnName);
+
+            return _GetDataList;
+        }
+
         private void SetSearchCondition()
         {
             if (ckbRecipe.Checked == true)
@@ -370,17 +462,17 @@ namespace HistoryManager
                         RecipeList.Add(ckListBoxRecipe.Items[iLoopCount].ToString());
                     }
                 }
-                SqliteManager.SqlSetSearchCondition("Recipe", ckbRecipe.Checked, RecipeList);
+                SqliteManager.SqlSetSearchCondition(ckbRecipe.Text, ckbRecipe.Checked, RecipeList);
             }
-            else SqliteManager.SqlSetSearchConditionClear("Recipe", false);
+            else SqliteManager.SqlSetSearchConditionClear(ckbRecipe.Text, false);
 
             if (ckbResult.Checked == true) 
             {
                 List<string> NGResultList = new List<string>();
                 NGResultList.Add(comboBoxResult.Text);
-                SqliteManager.SqlSetSearchCondition("Result", ckbResult.Checked, NGResultList);
+                SqliteManager.SqlSetSearchCondition(ckbResult.Text, ckbResult.Checked, NGResultList);
             }
-            else SqliteManager.SqlSetSearchConditionClear("Result", false);
+            else SqliteManager.SqlSetSearchConditionClear(ckbResult.Text, false);
 
             if (ckbNGType.Checked == true)
             {
@@ -472,6 +564,27 @@ namespace HistoryManager
             if (dataGridViewHistory.RowCount == 1 || dataGridViewHistory.SelectedRows.Count == 0) return;
             string ScreenshotImagePath = dataGridViewHistory.SelectedCells[ScreenshotIndex].Value.ToString();
             SelectHistoryData(ScreenshotImagePath);
+        }
+
+        //LDH, 2019.06.27, TrimForm용 Lead Data GridView set
+        private void SetSubHistory(string _CSVFolderPath)
+        {
+            string CSVFolderPath = Path.GetDirectoryName(_CSVFolderPath);
+            string CSVFileName = Path.GetFileNameWithoutExtension(_CSVFolderPath);
+            CSVFileName = CSVFileName.Substring(0, CSVFileName.Length - 5);
+
+            string[] ArrCSVFileName = CSVFileName.Split('_');
+            string CSVFullPath = string.Format("{0}\\Result\\{1}.csv", CSVFolderPath, CSVFileName);
+
+            string[] HeaderName;
+            if(ArrCSVFileName[3] =="TOP") { HeaderName = new string[3] { "Num", "Lead Length", "Lead Pitch" }; }
+            else                          { HeaderName = new string[3] { "Num", "Lead Position X", "Lead Position Y" }; }
+
+            dataGridViewSubHistory.SetHeader(3, HeaderName, true);
+
+            int[] _ColumnsWidth = new int[3] { 50, 139, 139 };
+            dataGridViewSubHistory.SetColumnsWidth(_ColumnsWidth);
+            dataGridViewSubHistory.SetCSVData(null, CSVFullPath, 3);
         }
     }
 }

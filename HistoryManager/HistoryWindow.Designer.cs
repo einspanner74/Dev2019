@@ -60,6 +60,8 @@
             this.labelTitle = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panelMain = new System.Windows.Forms.Panel();
+            this.kpCogDisplayHistory = new KPDisplay.KPCogDisplayControl();
+            this.dataGridViewSubHistory = new CustomControl.GridViewManager();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewHistory)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxScreenshot)).BeginInit();
             this.panel1.SuspendLayout();
@@ -78,7 +80,7 @@
             this.dataGridViewHistory.RowTemplate.Height = 23;
             this.dataGridViewHistory.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dataGridViewHistory.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewHistory.Size = new System.Drawing.Size(1254, 229);
+            this.dataGridViewHistory.Size = new System.Drawing.Size(903, 229);
             this.dataGridViewHistory.TabIndex = 0;
             this.dataGridViewHistory.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewHistory_CellClick);
             this.dataGridViewHistory.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewHistory_RowEnter);
@@ -227,9 +229,9 @@
             "All",
             "NG",
             "OK"});
-            this.comboBoxResult.Location = new System.Drawing.Point(108, 50);
+            this.comboBoxResult.Location = new System.Drawing.Point(119, 50);
             this.comboBoxResult.Name = "comboBoxResult";
-            this.comboBoxResult.Size = new System.Drawing.Size(369, 25);
+            this.comboBoxResult.Size = new System.Drawing.Size(358, 25);
             this.comboBoxResult.TabIndex = 33;
             this.comboBoxResult.SelectedIndexChanged += new System.EventHandler(this.comboBoxResult_SelectedIndexChanged);
             // 
@@ -239,10 +241,10 @@
             this.btnNGType.Font = new System.Drawing.Font("나눔바른고딕", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnNGType.Image = global::HistoryManager.Properties.Resources.Down_small;
             this.btnNGType.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnNGType.Location = new System.Drawing.Point(107, 91);
+            this.btnNGType.Location = new System.Drawing.Point(118, 91);
             this.btnNGType.Name = "btnNGType";
             this.btnNGType.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.btnNGType.Size = new System.Drawing.Size(371, 28);
+            this.btnNGType.Size = new System.Drawing.Size(360, 28);
             this.btnNGType.TabIndex = 41;
             this.btnNGType.Text = "All";
             this.btnNGType.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -295,10 +297,10 @@
             this.btnDropDownRecipe.Font = new System.Drawing.Font("나눔바른고딕", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnDropDownRecipe.Image = global::HistoryManager.Properties.Resources.Down_small;
             this.btnDropDownRecipe.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnDropDownRecipe.Location = new System.Drawing.Point(107, 6);
+            this.btnDropDownRecipe.Location = new System.Drawing.Point(118, 6);
             this.btnDropDownRecipe.Name = "btnDropDownRecipe";
             this.btnDropDownRecipe.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.btnDropDownRecipe.Size = new System.Drawing.Size(371, 28);
+            this.btnDropDownRecipe.Size = new System.Drawing.Size(360, 28);
             this.btnDropDownRecipe.TabIndex = 40;
             this.btnDropDownRecipe.Text = "Recipe List";
             this.btnDropDownRecipe.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -364,12 +366,13 @@
             // pictureBoxScreenshot
             // 
             this.pictureBoxScreenshot.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.pictureBoxScreenshot.Location = new System.Drawing.Point(3, 36);
+            this.pictureBoxScreenshot.Location = new System.Drawing.Point(631, 418);
             this.pictureBoxScreenshot.Name = "pictureBoxScreenshot";
-            this.pictureBoxScreenshot.Size = new System.Drawing.Size(758, 493);
+            this.pictureBoxScreenshot.Size = new System.Drawing.Size(134, 135);
             this.pictureBoxScreenshot.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBoxScreenshot.TabIndex = 19;
             this.pictureBoxScreenshot.TabStop = false;
+            this.pictureBoxScreenshot.Visible = false;
             // 
             // btnOk
             // 
@@ -442,6 +445,8 @@
             // 
             // panelMain
             // 
+            this.panelMain.Controls.Add(this.kpCogDisplayHistory);
+            this.panelMain.Controls.Add(this.dataGridViewSubHistory);
             this.panelMain.Controls.Add(this.ckListBoxRecipe);
             this.panelMain.Controls.Add(this.label6);
             this.panelMain.Controls.Add(this.btnOk);
@@ -462,6 +467,23 @@
             this.panelMain.Size = new System.Drawing.Size(1266, 838);
             this.panelMain.TabIndex = 46;
             this.panelMain.Paint += new System.Windows.Forms.PaintEventHandler(this.panelMain_Paint);
+            // 
+            // kpCogDisplayHistory
+            // 
+            this.kpCogDisplayHistory.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.kpCogDisplayHistory.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.kpCogDisplayHistory.Location = new System.Drawing.Point(3, 36);
+            this.kpCogDisplayHistory.Name = "kpCogDisplayHistory";
+            this.kpCogDisplayHistory.Size = new System.Drawing.Size(758, 493);
+            this.kpCogDisplayHistory.TabIndex = 47;
+            this.kpCogDisplayHistory.UseStatusBar = true;
+            // 
+            // dataGridViewSubHistory
+            // 
+            this.dataGridViewSubHistory.Location = new System.Drawing.Point(910, 568);
+            this.dataGridViewSubHistory.Name = "dataGridViewSubHistory";
+            this.dataGridViewSubHistory.Size = new System.Drawing.Size(346, 227);
+            this.dataGridViewSubHistory.TabIndex = 46;
             // 
             // HistoryWindow
             // 
@@ -524,5 +546,7 @@
         private System.Windows.Forms.Label labelTitle;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panelMain;
+        private CustomControl.GridViewManager dataGridViewSubHistory;
+        private KPDisplay.KPCogDisplayControl kpCogDisplayHistory;
     }
 }
