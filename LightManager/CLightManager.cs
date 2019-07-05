@@ -206,11 +206,13 @@ namespace LightManager
                 WriteLightParameter();
             }
 
-            switch ((eLightControllerType)LightParam.ControllerType[_LightNum])
+            try
             {
-                case eLightControllerType.Normal:
-                    {
-                        var ControlTemp = LightControlList[SelectLightNum] as LightController;
+                switch ((eLightControllerType)LightParam.ControllerType[_LightNum])
+                {
+                    case eLightControllerType.Normal:
+                        {
+                            var ControlTemp = LightControlList[SelectLightNum] as LightController;
 
                         ControlTemp.SetLightChannel(LightParam.LightChannel[_LightNum]);
                         if (_LightValue != 0) ControlTemp.SetLightValue(_LightValue);
@@ -222,11 +224,17 @@ namespace LightManager
                     {
                         var ControlTemp = LightControlList[SelectLightNum] as JV501Controller;
 
-                        ControlTemp.SetLightChannel(LightParam.LightChannel[_LightNum]);
-                        if (_LightValue != 0) ControlTemp.SetLightValue(_LightValue);
-                        ControlTemp.SetCommand(_Command);
-                    }
-                    break;
+                            ControlTemp.SetLightChannel(LightParam.LightChannel[_LightNum]);
+                            if (_LightValue != 0) ControlTemp.SetLightValue(_LightValue);
+                            ControlTemp.SetCommand(_Command);
+                        }
+                        break;
+                }
+            }
+            catch(Exception ex)
+            {
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("CLightManager : SetLightCommand {0}", _LightNum));
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, ex.ToString());
             }
         }
 

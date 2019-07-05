@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using LogMessageManager;
+
 enum LightCommand { LightOn, LightOff, LightAllOn, LightAllOff, SaveValue }
 namespace LightManager
 {
@@ -96,14 +98,21 @@ namespace LightManager
 
         private void SetLightCombobox(int[] _LightValue)
         {
-            for (int iLoopCount = 0; iLoopCount < _LightValue.Count(); iLoopCount++)
+            try
             {
-                LightValue.Add(_LightValue[iLoopCount]);
-                comboBoxLight.Items.Add("Light" + (iLoopCount + 1).ToString());
-            }
+                for (int iLoopCount = 0; iLoopCount < _LightValue.Count(); iLoopCount++)
+                {
+                    LightValue.Add(_LightValue[iLoopCount]);
+                    comboBoxLight.Items.Add("Light" + (iLoopCount + 1).ToString());
+                }
 
-            comboBoxLight.SelectedIndex = 0;
-            numericUpDownLightValue.Value = LightValue[0];
+                comboBoxLight.SelectedIndex = 0;
+                numericUpDownLightValue.Value = LightValue[0];
+            }
+            catch(Exception ex)
+            {
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("LightWindow : SetLightCombobox"));
+            }
         }
 
         private void comboBoxLight_SelectedIndexChanged(object sender, EventArgs e)

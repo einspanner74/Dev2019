@@ -325,7 +325,7 @@ namespace ParameterManager
 
         public CogEllipseAlgo()
         {
-            CaliperNumber = 15;
+            CaliperNumber = 8;
             CaliperSearchLength = 30;
             CaliperProjectionLength = 10;
             CaliperSearchDirection = 1;
@@ -651,6 +651,9 @@ namespace ParameterManager
         public double ResolutionY = 0.005;
         public double LastResultDisplayPosX = 50;
         public double LastResultDisplayPosY = 50;
+
+        //LDH, 2019.06.11, Navien용 Result 사용 변수
+        public string ResultUseFlag = "1";
 
         public InspectionParameter()
         {

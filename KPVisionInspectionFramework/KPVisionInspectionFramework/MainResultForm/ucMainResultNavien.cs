@@ -25,6 +25,8 @@ namespace KPVisionInspectionFramework
 
         #endregion Count & Yield Variable
 
+        double PXResolution = 0.01432;
+
         private string[] LastRecipeName;
 
         string[] LeftHeaderName;
@@ -108,13 +110,26 @@ namespace KPVisionInspectionFramework
             _GridView.Refresh();
         }
 
-        public void ClearResult(int _GridViewNum = 2)
+        public void ClearResult(string _GridViewNum)
         {
-            switch(_GridViewNum)
+            if (_GridViewNum == "") _GridViewNum = "2";
+
+            char[] _GridViewNumArr = _GridViewNum.ToCharArray();
+
+            switch(_GridViewNumArr[0].ToString())
             {
-                case 0: ClearLeftResult(); break;
-                case 1: ClearRightResult(); break;
-                case 2: ClearLeftResult(); ClearRightResult(); break;
+                case "0": ClearLeftResult(); break;
+                case "1": ClearRightResult(); break;
+                case "2": ClearLeftResult(); ClearRightResult(); break;
+            }
+
+            if(_GridViewNumArr.Count() != 1)
+            {
+                switch(_GridViewNumArr[0].ToString())
+                {
+                    case "0": SetLeftResultUseFlag(_GridViewNumArr); break;
+                    case "1": SetRightResultUseFlag(_GridViewNumArr); break;
+                }
             }
         }
 
@@ -148,6 +163,28 @@ namespace KPVisionInspectionFramework
             }
         }
 
+        public void GetUseResultFlag(int _ID, out string _UseResultFalg)
+        {
+            string UseFlagTemp = "";
+
+            if (_ID == 0)
+            {
+                for (int iLoopCount = 0; iLoopCount < LeftResultUseFlag.Count(); iLoopCount++)
+                {
+                    UseFlagTemp = UseFlagTemp + Convert.ToInt16(LeftResultUseFlag[iLoopCount]);
+                }
+            }
+            else
+            {
+                for (int iLoopCount = 0; iLoopCount < RightResultUseFlag.Count(); iLoopCount++)
+                {
+                    UseFlagTemp = UseFlagTemp + Convert.ToInt16(RightResultUseFlag[iLoopCount]);
+                }
+            }
+
+            _UseResultFalg = UseFlagTemp;
+        }
+
         private void dataGridViewLeft_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             dataGridViewLeft.ClearSelection();
@@ -169,21 +206,51 @@ namespace KPVisionInspectionFramework
             }
         }
 
+        private void SetLeftResultUseFlag(char[] _UseResultFlag)
+        {
+            int _FlagTemp = 0;
+            for(int iLoopCount = 0; iLoopCount < LeftResultUseFlag.Count(); iLoopCount++)
+            {
+                try   { _FlagTemp = Convert.ToInt32(_UseResultFlag[iLoopCount + 1].ToString()); }
+                catch { _FlagTemp = 1; }
+
+                LeftResultUseFlag[iLoopCount] = Convert.ToBoolean(_FlagTemp);
+                SetGradientLabelLeftResult(iLoopCount);
+            }
+        }
+
         private void gradientLabelLeftResult_DoubleClick(object sender, EventArgs e)
         {
             int _Tag = Convert.ToInt32(((GradientLabel)sender).Tag);
 
             LeftResultUseFlag[_Tag] = !LeftResultUseFlag[_Tag];
+            SetGradientLabelLeftResult(_Tag);
+        }
 
-            if (LeftResultUseFlag[_Tag])
+        private void SetGradientLabelLeftResult(int _ResultNum)
+        {
+            if (LeftResultUseFlag[_ResultNum])
             {
-                ControlInvoke.GradientLabelColor(GradientLabelResultLeft[_Tag], Color.White, Color.White);
-                ControlInvoke.GradientLabelText(GradientLabelResultLeft[_Tag], "-", Color.Black);
+                ControlInvoke.GradientLabelColor(GradientLabelResultLeft[_ResultNum], Color.White, Color.White);
+                ControlInvoke.GradientLabelText(GradientLabelResultLeft[_ResultNum], "-", Color.Black);
             }
             else
             {
-                ControlInvoke.GradientLabelColor(GradientLabelResultLeft[_Tag], Color.White, Color.DarkGray);
-                ControlInvoke.GradientLabelText(GradientLabelResultLeft[_Tag], "-", Color.Black);
+                ControlInvoke.GradientLabelColor(GradientLabelResultLeft[_ResultNum], Color.White, Color.DarkGray);
+                ControlInvoke.GradientLabelText(GradientLabelResultLeft[_ResultNum], "-", Color.Black);
+            }
+        }
+
+        private void SetRightResultUseFlag(char[] _UseResultFlag)
+        {
+            int _FlagTemp = 0;
+            for (int iLoopCount = 0; iLoopCount < RightResultUseFlag.Count(); iLoopCount++)
+            {
+                try   { _FlagTemp = Convert.ToInt32(_UseResultFlag[iLoopCount + 1].ToString()); }
+                catch { _FlagTemp = 1; }
+
+                RightResultUseFlag[iLoopCount] = Convert.ToBoolean(_FlagTemp);
+                SetGradientLabelRightResult(iLoopCount);
             }
         }
 
@@ -192,16 +259,20 @@ namespace KPVisionInspectionFramework
             int _Tag = Convert.ToInt32(((GradientLabel)sender).Tag);
 
             RightResultUseFlag[_Tag] = !RightResultUseFlag[_Tag];
+            SetGradientLabelRightResult(_Tag);
+        }
 
-            if (RightResultUseFlag[_Tag])
+        private void SetGradientLabelRightResult(int _ResultNum)
+        {
+            if (RightResultUseFlag[_ResultNum])
             {
-                ControlInvoke.GradientLabelColor(GradientLabelResultRight[_Tag], Color.White, Color.White);
-                ControlInvoke.GradientLabelText(GradientLabelResultRight[_Tag], "-", Color.Black);
+                ControlInvoke.GradientLabelColor(GradientLabelResultRight[_ResultNum], Color.White, Color.White);
+                ControlInvoke.GradientLabelText(GradientLabelResultRight[_ResultNum], "-", Color.Black);
             }
             else
             {
-                ControlInvoke.GradientLabelColor(GradientLabelResultRight[_Tag], Color.White, Color.DarkGray);
-                ControlInvoke.GradientLabelText(GradientLabelResultRight[_Tag], "-", Color.Black);
+                ControlInvoke.GradientLabelColor(GradientLabelResultRight[_ResultNum], Color.White, Color.DarkGray);
+                ControlInvoke.GradientLabelText(GradientLabelResultRight[_ResultNum], "-", Color.Black);
             }
         }
 
@@ -271,7 +342,7 @@ namespace KPVisionInspectionFramework
                 LastResultFlag[ResultCnt] = true;
             }
 
-            ClearLeftResult();
+            ClearResult("0");
 
             for (int iLoopCount = 0; iLoopCount < _ResultParam.SendResultList.Count(); iLoopCount++)
             {
@@ -290,8 +361,8 @@ namespace KPVisionInspectionFramework
 
                         if (_DiameterResultList.Count != 0)
                         {
-                            _DiameterMin = _DiameterResultList[1] * 0.0145;
-                            _DiameterMax = _DiameterResultList[_DiameterResultList.Count - 1] * 0.0145;
+                            _DiameterMin = _DiameterResultList[1] * PXResolution;
+                            _DiameterMax = _DiameterResultList[_DiameterResultList.Count - 1] * PXResolution;
 
                             if (_DiameterMin < _ResultData.DiameterMinAlgo) { _DiameterEvg = _DiameterMin; _ResultData.IsGoodAlgo = false; }
                             else if (_DiameterMax > _ResultData.DiameterMaxAlgo) { _DiameterEvg = _DiameterMax; _ResultData.IsGoodAlgo = false; }
@@ -304,7 +375,7 @@ namespace KPVisionInspectionFramework
                                     _SumDiameter = _SumDiameter + _DiameterResultList[ListLoopCnt];
                                 }
 
-                                _DiameterEvg = _SumDiameter / (_DiameterResultList.Count - 2) * 0.0145;
+                                _DiameterEvg = _SumDiameter / (_DiameterResultList.Count - 2) * PXResolution;
                             }
                         }
 
@@ -367,7 +438,7 @@ namespace KPVisionInspectionFramework
                 LastResultFlag[ResultCnt] = true;
             }
 
-            ClearRightResult();
+            ClearResult("1");
 
             for (int iLoopCount = 0; iLoopCount < _ResultParam.SendResultList.Count(); iLoopCount++)
             {
@@ -386,8 +457,8 @@ namespace KPVisionInspectionFramework
 
                         if (_DiameterResultList.Count != 0)
                         {
-                            _DiameterMin = _DiameterResultList[1] * 0.0145;
-                            _DiameterMax = _DiameterResultList[_DiameterResultList.Count - 1] * 0.0145;
+                            _DiameterMin = _DiameterResultList[1] * PXResolution;
+                            _DiameterMax = _DiameterResultList[_DiameterResultList.Count - 1] * PXResolution;
 
                             if (_DiameterMin < _ResultData.DiameterMinAlgo) { _DiameterEvg = _DiameterMin; _ResultData.IsGoodAlgo = false; }
                             else if (_DiameterMax > _ResultData.DiameterMaxAlgo) { _DiameterEvg = _DiameterMax; _ResultData.IsGoodAlgo = false; }
@@ -400,7 +471,7 @@ namespace KPVisionInspectionFramework
                                     _SumDiameter = _SumDiameter + _DiameterResultList[ListLoopCnt];
                                 }
 
-                                _DiameterEvg = _SumDiameter / (_DiameterResultList.Count - 2) * 0.0145;
+                                _DiameterEvg = _SumDiameter / (_DiameterResultList.Count - 2) * PXResolution;
                             }
                         }
 

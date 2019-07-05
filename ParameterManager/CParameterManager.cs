@@ -292,7 +292,13 @@ namespace ParameterManager
             _SystemParameter.Add(_Language);
             _SystemParameter.Add(_DataFolderPath0);
             _SystemParameter.Add(_DataFolderPath1);
+
             _SystemParameter.Add(_LastRecipeName);
+            for (int iLoopCount = 0; iLoopCount < SystemParam.InspSystemManagerCount; iLoopCount++)
+            {
+                _RecipeName[iLoopCount] = new XElement("LastRecipeName" + iLoopCount, SystemParam.LastRecipeName[iLoopCount]);
+                _LastRecipeName.Add(_RecipeName[iLoopCount]);
+            }
 
             _SystemParameter.Save(SystemParameterFullPath);
             #endregion XML Tree ADD
@@ -552,7 +558,7 @@ namespace ParameterManager
                 MapDataParameter _MapDataParamTemp = new MapDataParameter();
 
                 if (null == _Node) return false;
-                if (true == GetInspectionParameterResolution(_Node, ref InspParam[_ID]))    {   continue;   }
+                if (true == GetInspectionParameterConfig(_Node, ref InspParam[_ID]))    {   continue;   }
                 //GetInspectionMapDataParameter(_Node, ref _MapDataParamTemp);
                 GetInspectionParameterRegion(_Node, ref _InspAreaParamTemp);
                 GetInspectionParameterAlgorithm(_Node, ref _InspAreaParamTemp);
@@ -565,14 +571,15 @@ namespace ParameterManager
             return _Result;
         }
 
-        private bool GetInspectionParameterResolution(XmlNode _Nodes, ref InspectionParameter _InspParam)
+        private bool GetInspectionParameterConfig(XmlNode _Nodes, ref InspectionParameter _InspParam)
         {
             bool _Result = true;
             if (null == _Nodes) return false;
             switch (_Nodes.Name)
             {
-                case "ResolutionX": _InspParam.ResolutionX = Convert.ToDouble(_Nodes.InnerText); break;
-                case "ResolutionY": _InspParam.ResolutionY = Convert.ToDouble(_Nodes.InnerText); break;
+                case "ResolutionX":     _InspParam.ResolutionX = Convert.ToDouble(_Nodes.InnerText); break;
+                case "ResolutionY":     _InspParam.ResolutionY = Convert.ToDouble(_Nodes.InnerText); break;
+                case "ResultUseFlag":   _InspParam.ResultUseFlag = _Nodes.InnerText; break;
                 default:            _Result = false; break;
             }
             return _Result;
@@ -1247,6 +1254,8 @@ namespace ParameterManager
             {
                 _XmlWriter.WriteElementString("ResolutionX", InspParam[_ID].ResolutionX.ToString());
                 _XmlWriter.WriteElementString("ResolutionY", InspParam[_ID].ResolutionY.ToString());
+                _XmlWriter.WriteElementString("ResultUseFlag", InspParam[_ID].ResultUseFlag);
+
                 for (int iLoopCount = 0; iLoopCount < InspParam[_ID].InspAreaParam.Count; ++iLoopCount)
                 {
                     _XmlWriter.WriteStartElement("InspAlgoArea" + (iLoopCount + 1));

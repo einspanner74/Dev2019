@@ -218,7 +218,12 @@ namespace KPVisionInspectionFramework
             ResultBaseWnd.Initialize(this, ParamManager.SystemParam.ProjectType);
             ResultBaseWnd.SetWindowLocation(ParamManager.SystemParam.ResultWindowLocationX, ParamManager.SystemParam.ResultWindowLocationY);
             ResultBaseWnd.SetWindowSize(ParamManager.SystemParam.ResultWindowWidth, ParamManager.SystemParam.ResultWindowHeight);
-            ResultBaseWnd.ClearResultData();
+            if ((eProjectType)ParamManager.SystemParam.ProjectType == eProjectType.NAVIEN)
+            {
+                for(int iLoopCount = 0; iLoopCount < ParamManager.InspSysManagerParam.Count(); iLoopCount++)
+                    ResultBaseWnd.ClearResultData(ParamManager.InspParam[iLoopCount].ResultUseFlag);
+            }
+            else ResultBaseWnd.ClearResultData();
 
             if ((eProjectType)ParamManager.SystemParam.ProjectType == eProjectType.BC_QCC) ResultBaseWnd.SetDataFolderPath(ParamManager.SystemParam.DataFolderPath);
             if ((eProjectType)ParamManager.SystemParam.ProjectType == eProjectType.TRIM_FORM) ResultBaseWnd.SetDataFolderPath(ParamManager.SystemParam.DataFolderPath);
@@ -613,6 +618,14 @@ namespace KPVisionInspectionFramework
 
         private void TeachingParameterSave(int _ID)
         {
+            string _UseResultFlag = "";
+
+            if((eProjectType)ParamManager.SystemParam.ProjectType == eProjectType.NAVIEN)
+            {
+                ResultBaseWnd.GetUseResult(_ID, out _UseResultFlag);
+                ParamManager.InspParam[_ID].ResultUseFlag = _UseResultFlag;
+            }
+
             InspSysManager[_ID].GetInspectionParameterRef(ref ParamManager.InspParam[_ID]);
             ParamManager.WriteInspectionParameter(_ID);
         }
@@ -654,6 +667,11 @@ namespace KPVisionInspectionFramework
                 {
                     InspSysManager[iLoopCount].SetInspectionParameter(ParamManager.InspParam[iLoopCount], false);
                     InspSysManager[iLoopCount].GetInspectionParameterRef(ref ParamManager.InspParam[iLoopCount]);
+
+                    if ((eProjectType)ParamManager.SystemParam.ProjectType == eProjectType.NAVIEN)
+                    {
+                        ResultBaseWnd.ClearResultData(iLoopCount.ToString() + ParamManager.InspParam[iLoopCount].ResultUseFlag);
+                    }
                 }
 
                 UpdateRibbonRecipeName(_RecipeName);
@@ -820,6 +838,13 @@ namespace KPVisionInspectionFramework
                 if (_LastResult) MainProcess.StatusMode(NavienCmd.OUT_GOOD, true);
                 else             MainProcess.StatusMode(NavienCmd.OUT_ERROR, true);
             }
+        }
+
+        public void SaveUseResult(int _ID, string _UseResultFlag)
+        {
+            char[] _ResultArr = _UseResultFlag.ToCharArray();
+
+            //ParamManager.InspSysManagerParam[_ID].
         }
         #endregion Main Process
     }

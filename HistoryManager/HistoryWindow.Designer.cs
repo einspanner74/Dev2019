@@ -78,7 +78,6 @@
             this.dataGridViewHistory.Name = "dataGridViewHistory";
             this.dataGridViewHistory.ReadOnly = true;
             this.dataGridViewHistory.RowTemplate.Height = 23;
-            this.dataGridViewHistory.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dataGridViewHistory.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewHistory.Size = new System.Drawing.Size(903, 229);
             this.dataGridViewHistory.TabIndex = 0;

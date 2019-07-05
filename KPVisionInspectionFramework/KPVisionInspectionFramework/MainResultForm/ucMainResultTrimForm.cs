@@ -611,7 +611,7 @@ namespace KPVisionInspectionFramework
                 CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, string.Format("Save {0} CSV File", _InspectionNum), CLogManager.LOG_LEVEL.LOW);
                 #endregion Data Save
 
-                InspectionHistory(CameraType, LastResult[_InspectionNum], _ResultImagePath);
+                if(LastResult[_InspectionNum] == "NG") InspectionHistory(CameraType, LastResult[_InspectionNum], _ResultImagePath);
             }
             else
             {

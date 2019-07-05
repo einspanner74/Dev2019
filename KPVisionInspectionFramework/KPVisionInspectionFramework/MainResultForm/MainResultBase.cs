@@ -244,7 +244,7 @@ namespace KPVisionInspectionFramework
             else if (ProjectType == eProjectType.SORTER)    MainResultSorterWnd.ClearResult();
             else if (ProjectType == eProjectType.TRIM_FORM) MainResultTrimFormWnd.ClearResult();
             else if (ProjectType == eProjectType.BC_QCC)    MainResultCardManagerWnd.ClearResult();
-            else if (ProjectType == eProjectType.NAVIEN)    MainResultNavienWnd.ClearResult();
+            else if (ProjectType == eProjectType.NAVIEN)    MainResultNavienWnd.ClearResult(_LOTNum);
         }
 
         //LDH, 2019.04.02, Ethernet Receive Data 전달
@@ -344,6 +344,13 @@ namespace KPVisionInspectionFramework
         public void SetLOTNum(string[] _LOTNum)
         {
             if (ProjectType == eProjectType.TRIM_FORM) MainResultTrimFormWnd.SetLOTNum(_LOTNum);
+        }
+		
+		//LDH, 2019.06.10, Result 사용 Falg 받아오기
+        public void GetUseResult(int _ID, out string _UseResultFlag)
+        {
+            _UseResultFlag = "1";
+            if (ProjectType == eProjectType.NAVIEN) MainResultNavienWnd.GetUseResultFlag(_ID, out _UseResultFlag);
         }
     }
 }

@@ -373,7 +373,8 @@ namespace HistoryManager
             {
                 ckbResult.Text = "CamType";
                 ckbRecipe.Text = "ModelName";
-                comboBoxResult.Items.Add("All");
+                btnDropDownRecipe.Text = "Model List";
+                //comboBoxResult.Items.Add("All");
                 comboBoxResult.Items.Add("TOP");
                 comboBoxResult.Items.Add("SIDE");
                 comboBoxResult.SelectedIndex = 0;
@@ -538,7 +539,7 @@ namespace HistoryManager
 
         private void comboBoxResult_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (comboBoxResult.SelectedIndex == 0) { ckbResult.Checked = false; ckbResult_CheckedChanged(sender, e); }
+            if (comboBoxResult.SelectedItem.ToString() == "All") { ckbResult.Checked = false; ckbResult_CheckedChanged(sender, e); }
         }
 
         private void dataGridViewHistory_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)

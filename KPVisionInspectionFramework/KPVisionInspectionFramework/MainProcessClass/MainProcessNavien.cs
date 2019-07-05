@@ -159,6 +159,8 @@ namespace KPVisionInspectionFramework
         public override bool StatusMode(int _ID, bool _Flag)
         {
             DIOWnd.SetOutputSignal((short)_ID, _Flag);
+
+            if (NavienCmd.OUT_ERROR == _ID && _Flag) DIOWnd.SetOutputSignal(3, true, 250);
             return true;
         }
     }

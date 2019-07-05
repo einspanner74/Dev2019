@@ -143,7 +143,7 @@ namespace InspectionSystemManager
                 ResolutionY = _ResolutionY;
                 BenchMarkOffsetX = _BenchMarkOffsetX;
                 BenchMarkOffsetY = _BenchMarkOffsetY;
-                numUpDownCaliperNumber.Value = Convert.ToDecimal(CogEllipseAlgoRcp.CaliperNumber);
+                numUpDownCaliperNumber.Value = Convert.ToDecimal(CogEllipseAlgoRcp.CaliperNumber / 2);
                 numUpDownSearchLength.Value = Convert.ToDecimal(CogEllipseAlgoRcp.CaliperSearchLength);
                 numUpDownProjectionLength.Value = Convert.ToDecimal(CogEllipseAlgoRcp.CaliperProjectionLength);
                 numUpDownIgnoreNumber.Value = Convert.ToDecimal(CogEllipseAlgoRcp.CaliperIgnoreNumber);
@@ -182,7 +182,7 @@ namespace InspectionSystemManager
             else if (textBoxRadiusX.Text == "-") { MessageBox.Show("Check Ellipse RadiusX"); return; }
             else if (textBoxRadiusY.Text == "-") { MessageBox.Show("Check Ellipse RadiusY"); return; }
 
-            CogEllipseAlgoRcp.CaliperNumber = Convert.ToInt32(numUpDownCaliperNumber.Value);
+            CogEllipseAlgoRcp.CaliperNumber = Convert.ToInt32(numUpDownCaliperNumber.Value) * 2;
             CogEllipseAlgoRcp.CaliperSearchLength = Convert.ToDouble(numUpDownSearchLength.Value);
             CogEllipseAlgoRcp.CaliperProjectionLength = Convert.ToDouble(numUpDownProjectionLength.Value);
             CogEllipseAlgoRcp.CaliperSearchDirection = Convert.ToInt32(graLabelSearchDirection.Text);
@@ -206,7 +206,7 @@ namespace InspectionSystemManager
 
         public void SetCaliper(int _CaliperNumber, double _SearchLength, double _ProjectionLength, eSearchDirection _eSearchDir, ePolarity _ePolarity)
         {
-            numUpDownCaliperNumber.Value = Convert.ToDecimal(_CaliperNumber);
+            numUpDownCaliperNumber.Value = Convert.ToDecimal(_CaliperNumber / 2);
             numUpDownSearchLength.Value = Convert.ToDecimal(_SearchLength);
             numUpDownProjectionLength.Value = Convert.ToDecimal(_ProjectionLength);
             SetSearchDirection(Convert.ToInt32(_eSearchDir));
@@ -250,7 +250,7 @@ namespace InspectionSystemManager
         {
             CogEllipseResult _CogEllipseResult = new CogEllipseResult();
             CogEllipseAlgo _CogEllipseAlgoRcp = new CogEllipseAlgo();
-            _CogEllipseAlgoRcp.CaliperNumber = Convert.ToInt32(numUpDownCaliperNumber.Value);
+            _CogEllipseAlgoRcp.CaliperNumber = Convert.ToInt32(numUpDownCaliperNumber.Value) * 2;
             _CogEllipseAlgoRcp.CaliperSearchLength = Convert.ToDouble(numUpDownSearchLength.Value);
             _CogEllipseAlgoRcp.CaliperProjectionLength = Convert.ToDouble(numUpDownProjectionLength.Value);
             _CogEllipseAlgoRcp.CaliperSearchDirection = Convert.ToInt32(graLabelSearchDirection.Text);
@@ -294,7 +294,7 @@ namespace InspectionSystemManager
             if (!AlgoInitFlag) return;
 
             CogEllipseAlgo _CogEllipseAlgoRcp = new CogEllipseAlgo();
-            _CogEllipseAlgoRcp.CaliperNumber = Convert.ToInt32(numUpDownCaliperNumber.Value * 2);
+            _CogEllipseAlgoRcp.CaliperNumber = Convert.ToInt32(numUpDownCaliperNumber.Value) * 2;
             _CogEllipseAlgoRcp.CaliperSearchLength = Convert.ToDouble(numUpDownSearchLength.Value);
             _CogEllipseAlgoRcp.CaliperProjectionLength = Convert.ToDouble(numUpDownProjectionLength.Value);
             _CogEllipseAlgoRcp.CaliperSearchDirection = Convert.ToInt32(graLabelSearchDirection.Text);

@@ -73,18 +73,18 @@
             this.gradientLabel9 = new CustomControl.GradientLabel();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.gradientLabel18 = new CustomControl.GradientLabel();
+            this.numUpDownDiameterPlus = new System.Windows.Forms.NumericUpDown();
+            this.numUpDownDiameterMinus = new System.Windows.Forms.NumericUpDown();
+            this.numUpDownDiameterSize = new System.Windows.Forms.NumericUpDown();
+            this.gradientLabel17 = new CustomControl.GradientLabel();
+            this.gradientLabel16 = new CustomControl.GradientLabel();
             this.label6 = new CustomControl.GradientLabel();
             this.label20 = new CustomControl.GradientLabel();
-            this.textBoxTolerancePercent = new System.Windows.Forms.TextBox();
             this.label7 = new CustomControl.GradientLabel();
             this.label8 = new CustomControl.GradientLabel();
+            this.textBoxTolerancePercent = new System.Windows.Forms.TextBox();
             this.labelTitle = new CustomControl.GradientLabel();
-            this.gradientLabel16 = new CustomControl.GradientLabel();
-            this.gradientLabel17 = new CustomControl.GradientLabel();
-            this.numUpDownDiameterSize = new System.Windows.Forms.NumericUpDown();
-            this.numUpDownDiameterMinus = new System.Windows.Forms.NumericUpDown();
-            this.numUpDownDiameterPlus = new System.Windows.Forms.NumericUpDown();
-            this.gradientLabel18 = new CustomControl.GradientLabel();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownProjectionLength)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownSearchLength)).BeginInit();
@@ -103,9 +103,9 @@
             this.groupBox6.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.groupBox5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numUpDownDiameterSize)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numUpDownDiameterMinus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownDiameterPlus)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numUpDownDiameterMinus)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numUpDownDiameterSize)).BeginInit();
             this.SuspendLayout();
             // 
             // btnSetting
@@ -222,8 +222,13 @@
             // numUpDownCaliperNumber
             // 
             this.numUpDownCaliperNumber.Location = new System.Drawing.Point(143, 22);
+            this.numUpDownCaliperNumber.Maximum = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
             this.numUpDownCaliperNumber.Minimum = new decimal(new int[] {
-            6,
+            4,
             0,
             0,
             0});
@@ -884,6 +889,122 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = " Radius Range ";
             // 
+            // gradientLabel18
+            // 
+            this.gradientLabel18.AutoSize = true;
+            this.gradientLabel18.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel18.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel18.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel18.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel18.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel18.Location = new System.Drawing.Point(243, 23);
+            this.gradientLabel18.Name = "gradientLabel18";
+            this.gradientLabel18.Size = new System.Drawing.Size(29, 14);
+            this.gradientLabel18.TabIndex = 79;
+            this.gradientLabel18.Text = "mm";
+            // 
+            // numUpDownDiameterPlus
+            // 
+            this.numUpDownDiameterPlus.DecimalPlaces = 3;
+            this.numUpDownDiameterPlus.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.numUpDownDiameterPlus.Location = new System.Drawing.Point(411, 45);
+            this.numUpDownDiameterPlus.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            196608});
+            this.numUpDownDiameterPlus.Name = "numUpDownDiameterPlus";
+            this.numUpDownDiameterPlus.Size = new System.Drawing.Size(96, 21);
+            this.numUpDownDiameterPlus.TabIndex = 78;
+            this.numUpDownDiameterPlus.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numUpDownDiameterPlus.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            196608});
+            // 
+            // numUpDownDiameterMinus
+            // 
+            this.numUpDownDiameterMinus.DecimalPlaces = 3;
+            this.numUpDownDiameterMinus.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.numUpDownDiameterMinus.Location = new System.Drawing.Point(147, 46);
+            this.numUpDownDiameterMinus.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            196608});
+            this.numUpDownDiameterMinus.Name = "numUpDownDiameterMinus";
+            this.numUpDownDiameterMinus.Size = new System.Drawing.Size(96, 21);
+            this.numUpDownDiameterMinus.TabIndex = 77;
+            this.numUpDownDiameterMinus.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numUpDownDiameterMinus.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            196608});
+            // 
+            // numUpDownDiameterSize
+            // 
+            this.numUpDownDiameterSize.DecimalPlaces = 3;
+            this.numUpDownDiameterSize.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.numUpDownDiameterSize.Location = new System.Drawing.Point(146, 18);
+            this.numUpDownDiameterSize.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            196608});
+            this.numUpDownDiameterSize.Name = "numUpDownDiameterSize";
+            this.numUpDownDiameterSize.Size = new System.Drawing.Size(96, 21);
+            this.numUpDownDiameterSize.TabIndex = 76;
+            this.numUpDownDiameterSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numUpDownDiameterSize.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            // 
+            // gradientLabel17
+            // 
+            this.gradientLabel17.AutoSize = true;
+            this.gradientLabel17.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel17.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel17.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel17.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel17.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel17.Location = new System.Drawing.Point(243, 51);
+            this.gradientLabel17.Name = "gradientLabel17";
+            this.gradientLabel17.Size = new System.Drawing.Size(29, 14);
+            this.gradientLabel17.TabIndex = 75;
+            this.gradientLabel17.Text = "mm";
+            // 
+            // gradientLabel16
+            // 
+            this.gradientLabel16.BackColor = System.Drawing.Color.SteelBlue;
+            this.gradientLabel16.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.gradientLabel16.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel16.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel16.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel16.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel16.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel16.Location = new System.Drawing.Point(13, 44);
+            this.gradientLabel16.Name = "gradientLabel16";
+            this.gradientLabel16.Size = new System.Drawing.Size(126, 24);
+            this.gradientLabel16.TabIndex = 74;
+            this.gradientLabel16.Text = "Diameter Spec (-)";
+            this.gradientLabel16.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // label6
             // 
             this.label6.BackColor = System.Drawing.Color.SteelBlue;
@@ -913,16 +1034,6 @@
             this.label20.Size = new System.Drawing.Size(29, 14);
             this.label20.TabIndex = 72;
             this.label20.Text = "mm";
-            // 
-            // textBoxTolerancePercent
-            // 
-            this.textBoxTolerancePercent.Location = new System.Drawing.Point(152, 195);
-            this.textBoxTolerancePercent.Name = "textBoxTolerancePercent";
-            this.textBoxTolerancePercent.Size = new System.Drawing.Size(97, 21);
-            this.textBoxTolerancePercent.TabIndex = 64;
-            this.textBoxTolerancePercent.Text = "0";
-            this.textBoxTolerancePercent.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.textBoxTolerancePercent.Visible = false;
             // 
             // label7
             // 
@@ -957,6 +1068,16 @@
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.label8.Visible = false;
             // 
+            // textBoxTolerancePercent
+            // 
+            this.textBoxTolerancePercent.Location = new System.Drawing.Point(152, 195);
+            this.textBoxTolerancePercent.Name = "textBoxTolerancePercent";
+            this.textBoxTolerancePercent.Size = new System.Drawing.Size(97, 21);
+            this.textBoxTolerancePercent.TabIndex = 64;
+            this.textBoxTolerancePercent.Text = "0";
+            this.textBoxTolerancePercent.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxTolerancePercent.Visible = false;
+            // 
             // labelTitle
             // 
             this.labelTitle.BackColor = System.Drawing.Color.White;
@@ -971,122 +1092,6 @@
             this.labelTitle.TabIndex = 12;
             this.labelTitle.Text = " Ellipse Find Teaching Window";
             this.labelTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // gradientLabel16
-            // 
-            this.gradientLabel16.BackColor = System.Drawing.Color.SteelBlue;
-            this.gradientLabel16.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.gradientLabel16.ColorBottom = System.Drawing.Color.Empty;
-            this.gradientLabel16.ColorTop = System.Drawing.Color.Empty;
-            this.gradientLabel16.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.gradientLabel16.ForeColor = System.Drawing.Color.White;
-            this.gradientLabel16.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel16.Location = new System.Drawing.Point(13, 44);
-            this.gradientLabel16.Name = "gradientLabel16";
-            this.gradientLabel16.Size = new System.Drawing.Size(126, 24);
-            this.gradientLabel16.TabIndex = 74;
-            this.gradientLabel16.Text = "Diameter Spec (-)";
-            this.gradientLabel16.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // gradientLabel17
-            // 
-            this.gradientLabel17.AutoSize = true;
-            this.gradientLabel17.ColorBottom = System.Drawing.Color.Empty;
-            this.gradientLabel17.ColorTop = System.Drawing.Color.Empty;
-            this.gradientLabel17.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.gradientLabel17.ForeColor = System.Drawing.Color.White;
-            this.gradientLabel17.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel17.Location = new System.Drawing.Point(243, 51);
-            this.gradientLabel17.Name = "gradientLabel17";
-            this.gradientLabel17.Size = new System.Drawing.Size(29, 14);
-            this.gradientLabel17.TabIndex = 75;
-            this.gradientLabel17.Text = "mm";
-            // 
-            // numUpDownDiameterSize
-            // 
-            this.numUpDownDiameterSize.DecimalPlaces = 3;
-            this.numUpDownDiameterSize.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            131072});
-            this.numUpDownDiameterSize.Location = new System.Drawing.Point(146, 18);
-            this.numUpDownDiameterSize.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            196608});
-            this.numUpDownDiameterSize.Name = "numUpDownDiameterSize";
-            this.numUpDownDiameterSize.Size = new System.Drawing.Size(96, 21);
-            this.numUpDownDiameterSize.TabIndex = 76;
-            this.numUpDownDiameterSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.numUpDownDiameterSize.Value = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            // 
-            // numUpDownDiameterMinus
-            // 
-            this.numUpDownDiameterMinus.DecimalPlaces = 3;
-            this.numUpDownDiameterMinus.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            131072});
-            this.numUpDownDiameterMinus.Location = new System.Drawing.Point(147, 46);
-            this.numUpDownDiameterMinus.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            196608});
-            this.numUpDownDiameterMinus.Name = "numUpDownDiameterMinus";
-            this.numUpDownDiameterMinus.Size = new System.Drawing.Size(96, 21);
-            this.numUpDownDiameterMinus.TabIndex = 77;
-            this.numUpDownDiameterMinus.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.numUpDownDiameterMinus.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            196608});
-            // 
-            // numUpDownDiameterPlus
-            // 
-            this.numUpDownDiameterPlus.DecimalPlaces = 3;
-            this.numUpDownDiameterPlus.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            131072});
-            this.numUpDownDiameterPlus.Location = new System.Drawing.Point(411, 45);
-            this.numUpDownDiameterPlus.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            196608});
-            this.numUpDownDiameterPlus.Name = "numUpDownDiameterPlus";
-            this.numUpDownDiameterPlus.Size = new System.Drawing.Size(96, 21);
-            this.numUpDownDiameterPlus.TabIndex = 78;
-            this.numUpDownDiameterPlus.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.numUpDownDiameterPlus.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            196608});
-            // 
-            // gradientLabel18
-            // 
-            this.gradientLabel18.AutoSize = true;
-            this.gradientLabel18.ColorBottom = System.Drawing.Color.Empty;
-            this.gradientLabel18.ColorTop = System.Drawing.Color.Empty;
-            this.gradientLabel18.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.gradientLabel18.ForeColor = System.Drawing.Color.White;
-            this.gradientLabel18.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel18.Location = new System.Drawing.Point(243, 23);
-            this.gradientLabel18.Name = "gradientLabel18";
-            this.gradientLabel18.Size = new System.Drawing.Size(29, 14);
-            this.gradientLabel18.TabIndex = 79;
-            this.gradientLabel18.Text = "mm";
             // 
             // ucCogEllipseFind
             // 
@@ -1118,9 +1123,9 @@
             this.tabPage2.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numUpDownDiameterSize)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numUpDownDiameterMinus)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownDiameterPlus)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numUpDownDiameterMinus)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numUpDownDiameterSize)).EndInit();
             this.ResumeLayout(false);
 
         }

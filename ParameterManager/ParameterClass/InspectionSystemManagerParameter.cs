@@ -26,7 +26,7 @@ namespace ParameterManager
 
         public double   ResolutionX;
         public double   ResolutionY;
-
+        
         public InspectionSystemManagerParameter()
         {
             InspWndParam = new InspectionWindowParameter();
