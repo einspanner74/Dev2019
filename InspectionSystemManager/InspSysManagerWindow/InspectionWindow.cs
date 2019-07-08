@@ -1736,12 +1736,19 @@ namespace InspectionSystemManager
                 _LeadLine.SetStartEnd(_LeadTrimResult.LeadPitchTopX[iLoopCount], _LeadTrimResult.LeadPitchTopY[iLoopCount], _LeadTrimResult.LeadPitchBottomX[iLoopCount], _LeadTrimResult.LeadPitchBottomY[iLoopCount]);
                 if (_LeadTrimResult.IsLeadLengthGood[iLoopCount])
                 {
-                    kpCogDisplayMain.DrawStaticLine(_LeadLine, "CenterLine+_" + (iLoopCount + 1), CogColorConstants.Cyan);
+                    kpCogDisplayMain.DrawStaticLine(_LeadLine, "CenterLine+_" + (iLoopCount + 1), CogColorConstants.Green, _Tickness : 2);
+
+                    CogRectangleAffine _BlobRectAffine = new CogRectangleAffine();
+                    //_BlobRectAffine.SetCenterLengthsRotationSkew(
+                    //    _LeadTrimResult.LeadCenterX[iLoopCount], (_LeadTrimResult.LeadPitchTopY[iLoopCount] + _LeadTrimResult.LeadPitchBottomY[iLoopCount]) / 2,
+                    //    _LeadTrimResult.LeadLength[iLoopCount] / ResolutionY, _LeadTrimResult.LeadWidth[iLoopCount] / ResolutionX, _LeadTrimResult.Angle[iLoopCount], 0);
+                    //
+                    //kpCogDisplayMain.DrawStaticShape(_BlobRectAffine, "BlobRectAffine" + (iLoopCount + 1), CogColorConstants.Green);
                 }   
                     
                 else
                 {
-                    kpCogDisplayMain.DrawStaticLine(_LeadLine, "CenterLine+_" + (iLoopCount + 1), CogColorConstants.Red);
+                    kpCogDisplayMain.DrawStaticLine(_LeadLine, "CenterLine+_" + (iLoopCount + 1), CogColorConstants.Red, _Tickness : 2);
 
                     if (_LeadTrimResult.LeadLength[iLoopCount] / ResolutionY > 0 && _LeadTrimResult.LeadWidth[iLoopCount] / ResolutionX > 0)
                     {
@@ -1764,7 +1771,7 @@ namespace InspectionSystemManager
                     _LeadLine.SetStartEnd(_LeadTrimResult.LeadPitchTopX[iLoopCount], _LeadTrimResult.LeadPitchTopY[iLoopCount + 1],
                                           _LeadTrimResult.LeadPitchTopX[iLoopCount + 1], _LeadTrimResult.LeadPitchTopY[iLoopCount + 1]);
 
-                    kpCogDisplayMain.DrawStaticLine(_LeadLine, "BentLine+_" + (iLoopCount), CogColorConstants.Red);
+                    kpCogDisplayMain.DrawStaticLine(_LeadLine, "BentLine+_" + (iLoopCount), CogColorConstants.Red, _Tickness : 2);
                 }
             }
 

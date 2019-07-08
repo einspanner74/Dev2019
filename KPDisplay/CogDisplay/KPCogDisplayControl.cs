@@ -395,12 +395,13 @@ namespace KPDisplay
             kCogDisplay.StaticGraphics.Add(StaticArrow, _GroupName);
         }
 
-        public void DrawStaticLine(CogLineSegment _Line, string _GroupName, CogColorConstants _Color, CogGraphicLineStyleConstants _LineStyle = CogGraphicLineStyleConstants.Solid)
+        public void DrawStaticLine(CogLineSegment _Line, string _GroupName, CogColorConstants _Color, CogGraphicLineStyleConstants _LineStyle = CogGraphicLineStyleConstants.Solid, int _Tickness = 1)
         {
             StaticLineSegment = _Line;
             StaticLineSegment.Color = _Color;
             StaticLineSegment.Interactive = false;
             StaticLineSegment.LineStyle = _LineStyle;
+            StaticLineSegment.LineWidthInScreenPixels = _Tickness;
             kCogDisplay.StaticGraphics.Add(StaticLineSegment, _GroupName);
         }
 

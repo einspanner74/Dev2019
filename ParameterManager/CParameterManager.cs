@@ -292,14 +292,7 @@ namespace ParameterManager
             _SystemParameter.Add(_Language);
             _SystemParameter.Add(_DataFolderPath0);
             _SystemParameter.Add(_DataFolderPath1);
-
             _SystemParameter.Add(_LastRecipeName);
-            for (int iLoopCount = 0; iLoopCount < SystemParam.InspSystemManagerCount; iLoopCount++)
-            {
-                _RecipeName[iLoopCount] = new XElement("LastRecipeName" + iLoopCount, SystemParam.LastRecipeName[iLoopCount]);
-                _LastRecipeName.Add(_RecipeName[iLoopCount]);
-            }
-
             _SystemParameter.Save(SystemParameterFullPath);
             #endregion XML Tree ADD
         }

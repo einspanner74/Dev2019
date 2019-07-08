@@ -21,5 +21,15 @@ namespace KPVisionInspectionFramework
         {
             this.Owner = (Form)_Owner;
         }
+
+        public void SetWindowSize(Size _Size)
+        {
+            this.Size = _Size;
+        }
+
+        public void SetLogoImage(Image _BackgroundImage)
+        {
+            picLogoImage.BackgroundImage = _BackgroundImage;
+        }
     }
 }

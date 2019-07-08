@@ -164,6 +164,12 @@ namespace KPVisionInspectionFramework
                 rbRecipe.Visible = false;
                 rbMapData.Visible = false;
                 this.Size = new Size(1280, 1024);
+
+                //MainLogoWnd = new MainLogoWindow();
+                //MainLogoWnd.Initialize(this);
+                //MainLogoWnd.SetLogoImage(KPVisionInspectionFramework.Properties.Resources.Com_Logo_Mobis);
+                //MainLogoWnd.SetWindowSize(new Size(230, 77));
+                //MainLogoWnd.Location = new Point(1035, 60);
             }
 
             else if ((int)eProjectType.BC_QCC == ParamManager.SystemParam.ProjectType)
@@ -176,6 +182,7 @@ namespace KPVisionInspectionFramework
 
                 MainLogoWnd = new MainLogoWindow();
                 MainLogoWnd.Initialize(this);
+                MainLogoWnd.SetLogoImage(KPVisionInspectionFramework.Properties.Resources.CompanyLogo);
                 MainLogoWnd.Location = new Point(2250, 56);
             }
 
