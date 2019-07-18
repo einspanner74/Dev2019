@@ -296,7 +296,7 @@ namespace InspectionSystemManager
         private void SendResultData(object _Value)
         {
             var _InspSysManagerEvent = InspSysManagerEvent;
-            InspSysManagerEvent?.Invoke(eISMCMD.SEND_DATA, _Value);
+            _InspSysManagerEvent?.Invoke(eISMCMD.SEND_DATA, _Value);
         }
             
         private void SetResultData(object _Value)

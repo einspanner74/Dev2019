@@ -1964,7 +1964,7 @@
             this.gradientLabel33.Name = "gradientLabel33";
             this.gradientLabel33.Size = new System.Drawing.Size(150, 26);
             this.gradientLabel33.TabIndex = 110;
-            this.gradientLabel33.Text = "Use tip burr / nick";
+            this.gradientLabel33.Text = "Use tip burr";
             this.gradientLabel33.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // groupBox16

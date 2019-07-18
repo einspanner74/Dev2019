@@ -67,6 +67,7 @@
             this.btnReceive.Text = " Recv Test";
             this.btnReceive.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnReceive.UseVisualStyleBackColor = true;
+            this.btnReceive.Visible = false;
             this.btnReceive.Click += new System.EventHandler(this.btnReceive_Click);
             // 
             // btnSend

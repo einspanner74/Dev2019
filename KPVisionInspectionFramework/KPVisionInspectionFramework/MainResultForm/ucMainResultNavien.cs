@@ -359,7 +359,7 @@ namespace KPVisionInspectionFramework
 
                         CalculateDiameter(_ResultData.CaliperPointX, _ResultData.CaliperPointY, ref _DiameterResultList);
 
-                        if (_DiameterResultList.Count != 0)
+                        if (_DiameterResultList != null && _DiameterResultList.Count != 0)
                         {
                             _DiameterMin = _DiameterResultList[1] * PXResolution;
                             _DiameterMax = _DiameterResultList[_DiameterResultList.Count - 1] * PXResolution;

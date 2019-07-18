@@ -46,6 +46,8 @@ namespace InspectionSystemManager
         private double BodyCenterOffsetX = 0;
         private double BodyCenterOffsetY = 0;
 
+        private bool    IsLeadBodyCheck = false;
+
         public delegate void ResetDisplayHandler();
         public event ResetDisplayHandler ResetDisplayEvent;
 
@@ -264,6 +266,8 @@ namespace InspectionSystemManager
             gradientLabelGateRemainingThresholdValue.Text = CogLeadTrimAlgoRcp.GateRemainingThreshold.ToString();
             hScrollGateRemainingThreshold.Value = CogLeadTrimAlgoRcp.GateRemainingThreshold;
             numUpDownGateRemainingSpec.Value = Convert.ToDecimal(CogLeadTrimAlgoRcp.GateRemainingSpec);
+
+            IsLeadBodyCheck = false;
         }
         #endregion
 
@@ -453,8 +457,6 @@ namespace InspectionSystemManager
 
         private void btnBodyAreaCheck_Click(object sender, EventArgs e)
         {
-            
-
             CogRectangle _InspRegion = new CogRectangle();
             _InspRegion.SetCenterWidthHeight(BodyArea.CenterX, BodyArea.CenterY, BodyArea.Width, BodyArea.Height);
 
@@ -485,6 +487,8 @@ namespace InspectionSystemManager
             BodyCenterOriginY = _CogLeadTrimResult.LeadBodyOriginY;
             BodyCenterOffsetX = _CogLeadTrimResult.LeadBodyOffsetX;
             BodyCenterOffsetY = _CogLeadTrimResult.LeadBodyOffsetY;
+
+            IsLeadBodyCheck = true;
         }
         #endregion
 
@@ -581,6 +585,8 @@ namespace InspectionSystemManager
 
         private void btnLeadLengthAreaCheck_Click(object sender, EventArgs e)
         {
+            if (false == IsLeadBodyCheck) { MessageBox.Show("Check [Lead Body] first!!"); return; }
+
             CogRectangle _InspRegion = new CogRectangle();
             _InspRegion.SetCenterWidthHeight(LeadMeasureArea.CenterX, LeadMeasureArea.CenterY, LeadMeasureArea.Width, LeadMeasureArea.Height);
 

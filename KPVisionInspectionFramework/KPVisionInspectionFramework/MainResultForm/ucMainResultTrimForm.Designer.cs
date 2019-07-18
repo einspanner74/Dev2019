@@ -32,6 +32,9 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -39,12 +42,15 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panelMain = new System.Windows.Forms.Panel();
             this.QuickGridViewLeadFormResult = new CustomControl.QuickDataGridView();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gridLeadPositionX = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gridLeadPositionY = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.QuickGridViewLeadTrimResult = new CustomControl.QuickDataGridView();
+            this.gridLeadNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gridLeadLength = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gridLeadPitch = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gradientLabelFormYield = new CustomControl.GradientLabel();
             this.SevenSegFormYield = new DmitryBrant.CustomControls.SevenSegmentArray();
             this.label2 = new System.Windows.Forms.Label();
@@ -71,12 +77,6 @@
             this.gradientLabel7 = new CustomControl.GradientLabel();
             this.gradientLabel4 = new CustomControl.GradientLabel();
             this.gradientLabelTrimResult = new CustomControl.GradientLabel();
-            this.gridLeadNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gridLeadLength = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gridLeadPitch = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gridLeadPositionX = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gridLeadPositionY = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panelMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.QuickGridViewLeadFormResult)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.QuickGridViewLeadTrimResult)).BeginInit();
@@ -171,6 +171,38 @@
             this.QuickGridViewLeadFormResult.TabIndex = 71;
             this.QuickGridViewLeadFormResult.Tag = "Size : 418, 511";
             // 
+            // dataGridViewTextBoxColumn1
+            // 
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle3;
+            this.dataGridViewTextBoxColumn1.HeaderText = "Num";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            this.dataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.dataGridViewTextBoxColumn1.Width = 34;
+            // 
+            // gridLeadPositionX
+            // 
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.gridLeadPositionX.DefaultCellStyle = dataGridViewCellStyle4;
+            this.gridLeadPositionX.HeaderText = "Lead Position X (mm)";
+            this.gridLeadPositionX.Name = "gridLeadPositionX";
+            this.gridLeadPositionX.ReadOnly = true;
+            this.gridLeadPositionX.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.gridLeadPositionX.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.gridLeadPositionX.Width = 160;
+            // 
+            // gridLeadPositionY
+            // 
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.gridLeadPositionY.DefaultCellStyle = dataGridViewCellStyle5;
+            this.gridLeadPositionY.HeaderText = "Lead Position Y (mm)";
+            this.gridLeadPositionY.Name = "gridLeadPositionY";
+            this.gridLeadPositionY.ReadOnly = true;
+            this.gridLeadPositionY.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.gridLeadPositionY.Width = 160;
+            // 
             // QuickGridViewLeadTrimResult
             // 
             this.QuickGridViewLeadTrimResult.AllowUserToAddRows = false;
@@ -223,6 +255,39 @@
             this.QuickGridViewLeadTrimResult.Size = new System.Drawing.Size(374, 321);
             this.QuickGridViewLeadTrimResult.TabIndex = 70;
             this.QuickGridViewLeadTrimResult.Tag = "Size : 418, 511";
+            // 
+            // gridLeadNum
+            // 
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.gridLeadNum.DefaultCellStyle = dataGridViewCellStyle10;
+            this.gridLeadNum.HeaderText = "Num";
+            this.gridLeadNum.Name = "gridLeadNum";
+            this.gridLeadNum.ReadOnly = true;
+            this.gridLeadNum.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.gridLeadNum.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.gridLeadNum.Width = 34;
+            // 
+            // gridLeadLength
+            // 
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.gridLeadLength.DefaultCellStyle = dataGridViewCellStyle11;
+            this.gridLeadLength.HeaderText = "Lead Length (mm)";
+            this.gridLeadLength.Name = "gridLeadLength";
+            this.gridLeadLength.ReadOnly = true;
+            this.gridLeadLength.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.gridLeadLength.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.gridLeadLength.Width = 160;
+            // 
+            // gridLeadPitch
+            // 
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.gridLeadPitch.DefaultCellStyle = dataGridViewCellStyle12;
+            this.gridLeadPitch.HeaderText = "Lead Pitch (mm)";
+            this.gridLeadPitch.Name = "gridLeadPitch";
+            this.gridLeadPitch.ReadOnly = true;
+            this.gridLeadPitch.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.gridLeadPitch.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.gridLeadPitch.Width = 160;
             // 
             // gradientLabelFormYield
             // 
@@ -451,7 +516,7 @@
             this.gradientLabelFormResult.Name = "gradientLabelFormResult";
             this.gradientLabelFormResult.Size = new System.Drawing.Size(275, 51);
             this.gradientLabelFormResult.TabIndex = 53;
-            this.gradientLabelFormResult.Text = "-";
+            this.gradientLabelFormResult.Text = "GOOD";
             this.gradientLabelFormResult.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // gradientLabelTrimTotalCount
@@ -613,73 +678,8 @@
             this.gradientLabelTrimResult.Name = "gradientLabelTrimResult";
             this.gradientLabelTrimResult.Size = new System.Drawing.Size(275, 51);
             this.gradientLabelTrimResult.TabIndex = 27;
-            this.gradientLabelTrimResult.Text = "-";
+            this.gradientLabelTrimResult.Text = "GOOD";
             this.gradientLabelTrimResult.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // gridLeadNum
-            // 
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.gridLeadNum.DefaultCellStyle = dataGridViewCellStyle10;
-            this.gridLeadNum.HeaderText = "Num";
-            this.gridLeadNum.Name = "gridLeadNum";
-            this.gridLeadNum.ReadOnly = true;
-            this.gridLeadNum.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.gridLeadNum.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.gridLeadNum.Width = 34;
-            // 
-            // gridLeadLength
-            // 
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.gridLeadLength.DefaultCellStyle = dataGridViewCellStyle11;
-            this.gridLeadLength.HeaderText = "Lead Length (mm)";
-            this.gridLeadLength.Name = "gridLeadLength";
-            this.gridLeadLength.ReadOnly = true;
-            this.gridLeadLength.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.gridLeadLength.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.gridLeadLength.Width = 160;
-            // 
-            // gridLeadPitch
-            // 
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.gridLeadPitch.DefaultCellStyle = dataGridViewCellStyle12;
-            this.gridLeadPitch.HeaderText = "Lead Pitch (mm)";
-            this.gridLeadPitch.Name = "gridLeadPitch";
-            this.gridLeadPitch.ReadOnly = true;
-            this.gridLeadPitch.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.gridLeadPitch.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.gridLeadPitch.Width = 160;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle3;
-            this.dataGridViewTextBoxColumn1.HeaderText = "Num";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.ReadOnly = true;
-            this.dataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.dataGridViewTextBoxColumn1.Width = 34;
-            // 
-            // gridLeadPositionX
-            // 
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.gridLeadPositionX.DefaultCellStyle = dataGridViewCellStyle4;
-            this.gridLeadPositionX.HeaderText = "Lead Position X (mm)";
-            this.gridLeadPositionX.Name = "gridLeadPositionX";
-            this.gridLeadPositionX.ReadOnly = true;
-            this.gridLeadPositionX.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.gridLeadPositionX.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.gridLeadPositionX.Width = 160;
-            // 
-            // gridLeadPositionY
-            // 
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.gridLeadPositionY.DefaultCellStyle = dataGridViewCellStyle5;
-            this.gridLeadPositionY.HeaderText = "Lead Position Y (mm)";
-            this.gridLeadPositionY.Name = "gridLeadPositionY";
-            this.gridLeadPositionY.ReadOnly = true;
-            this.gridLeadPositionY.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.gridLeadPositionY.Width = 160;
             // 
             // ucMainResultTrimForm
             // 
