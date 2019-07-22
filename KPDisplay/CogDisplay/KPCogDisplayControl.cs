@@ -838,7 +838,7 @@ namespace KPDisplay
         /// <summary>
         /// 현재 Display된 Image 저장하기 
         /// </summary>
-        public void SaveDisplayImage(string _DirectoryPath)
+        public void SaveDisplayImage(string _DirectoryPath, CogImage8Grey _SaveImage = null)
         {
             DateTime dateTime = DateTime.Now;
             string ImageSaveFolder = _DirectoryPath;
@@ -851,7 +851,9 @@ namespace KPDisplay
             
             try
             {
-                ICogImage _CogSaveImage = kCogDisplay.Image;
+                ICogImage _CogSaveImage;
+                if (_SaveImage != null)_CogSaveImage = _SaveImage;
+                else                   _CogSaveImage = kCogDisplay.Image;
                 CogImageFile _CogImageFile = new CogImageFile();
                 
                 if (_CogSaveImage == null)

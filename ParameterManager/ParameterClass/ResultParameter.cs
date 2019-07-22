@@ -336,6 +336,7 @@ namespace ParameterManager
         public PointD LeadBodyLeftBottom;
         public PointD LeadBodyRightBottom;
         public CogLine LeadBodyBaseLine;
+        public CogLineSegment LeadBodyBaseLineSegment;
 
         public List<CogRectangle> ChipOutNgList;
 
@@ -603,6 +604,9 @@ namespace ParameterManager
 
         public EachLeadStatus[] EachLeadStatusArray;
 
+        public string ChipOut;
+        public string GateRemaining;
+
         public CogImage8Grey SaveImage;
         public eSaveMode ImageAutoSave;
         public string ResultImagePath;
@@ -616,6 +620,9 @@ namespace ParameterManager
 
         public EachLeadStatus[] EachLeadStatusArray;
 
+        public string ChipOut;
+        public string GateRemaining;
+
         public CogImage8Grey SaveImage;
         public eSaveMode ImageAutoSave;
         public string ResultImagePath;        
@@ -627,10 +634,26 @@ namespace ParameterManager
 
         public List<eLeadStatus> NgTypeList;
 
+        public string Bent;
+        public string Length;
+        public string ShoulderNick;
+        public string ShoulderBurr;
+        public string TipBurr;
+        public string SideX;
+        public string SideY;
+
         public EachLeadStatus()
         {
             NgType = eLeadStatus.GOOD;
             NgTypeList = new List<eLeadStatus>();
+
+            Bent = "-";
+            Length = "-";
+            ShoulderNick = "-";
+            ShoulderBurr = "-";
+            TipBurr = "-";
+            SideX = "-";
+            SideY = "-";
         }
 
         public void ResetResult()

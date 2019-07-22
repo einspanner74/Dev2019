@@ -235,6 +235,7 @@ namespace InspectionSystemManager
             else if (ProjectItem == eProjectItem.LEAD_TRIM_INSP)
             {
                 ContextMenuAlgo.MenuItems.Add("기준 패턴 검사", new EventHandler(PatternFindAlgorithm));
+                ContextMenuAlgo.MenuItems.Add("기준 멀티패턴 검사", new EventHandler(MultiPatternFindAlgorithm));
                 ContextMenuAlgo.MenuItems.Add("기준 라인 검사", new EventHandler(LineFineAlgorithm));
                 ContextMenuAlgo.MenuItems.Add("Lead Trim 검사", new EventHandler(LeadTrimInspectionAlgorithm));
                 //ContextMenuAlgo.MenuItems.Add("Body 검사", new EventHandler(BlobReferenceAlgorithm));
@@ -243,6 +244,7 @@ namespace InspectionSystemManager
             else if (ProjectItem == eProjectItem.LEAD_FORM_ALIGN)
             {
                 ContextMenuAlgo.MenuItems.Add("기준 패턴 검사", new EventHandler(PatternFindAlgorithm));
+                ContextMenuAlgo.MenuItems.Add("기준 멀티패턴 검사", new EventHandler(MultiPatternFindAlgorithm));
                 ContextMenuAlgo.MenuItems.Add("기준 라인 검사", new EventHandler(LineFineAlgorithm));
                 ContextMenuAlgo.MenuItems.Add("Lead Form 검사", new EventHandler(LeadFormInspectionAlgorithm));
             }

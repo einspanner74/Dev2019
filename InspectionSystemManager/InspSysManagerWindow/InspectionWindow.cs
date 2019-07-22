@@ -63,6 +63,7 @@ namespace InspectionSystemManager
 
         private CogImageFileTool OriginImageFileTool = new CogImageFileTool();
         private CogImage8Grey OriginImage = new CogImage8Grey();
+        private CogImage8Grey OriginConstImage = new CogImage8Grey();
 
         private double ResolutionX = 0.005;
         private double ResolutionY = 0.005;
@@ -701,6 +702,8 @@ namespace InspectionSystemManager
             }
 
             OriginImage = (CogImage8Grey)kpCogDisplayMain.GetDisplayImage();
+            OriginConstImage = new CogImage8Grey((CogImage8Grey)kpCogDisplayMain.GetDisplayImage());
+            //OriginConstImage = (CogImage8Grey)kpCogDisplayMain.GetDisplayImage();
             GC.Collect();
 
             //Auto / Manual Mode 구분
@@ -751,6 +754,8 @@ namespace InspectionSystemManager
                     OriginImageFileTool.Operator.Open(_ImageFilePath, CogImageFileModeConstants.Read);
                     OriginImageFileTool.Run();
                     OriginImage = (CogImage8Grey)OriginImageFileTool.OutputImage;
+                    //OriginConstImage = (CogImage8Grey)OriginImageFileTool.OutputImage;
+                    OriginConstImage = new CogImage8Grey((CogImage8Grey)OriginImageFileTool.OutputImage);
 
                     SetDisplayImage(OriginImage);
                 } 
@@ -775,7 +780,7 @@ namespace InspectionSystemManager
             {
                 if(SendResParam.IsGood == false) kpCogDisplayMain.SaveDisplayImage(_SaveDirectory);
             }
-            else kpCogDisplayMain.SaveDisplayImage(_SaveDirectory);
+            else kpCogDisplayMain.SaveDisplayImage(_SaveDirectory, OriginConstImage);
 
             return _Result;
         }
@@ -787,6 +792,7 @@ namespace InspectionSystemManager
                 OriginImageFileTool.Operator.Open(_ImageFileFullPath, CogImageFileModeConstants.Read);
                 OriginImageFileTool.Run();
                 OriginImage = (CogImage8Grey)OriginImageFileTool.OutputImage;
+                OriginConstImage = new CogImage8Grey((CogImage8Grey)OriginImageFileTool.OutputImage);
 
                 SetDisplayImage(OriginImage);
 
@@ -1257,7 +1263,7 @@ namespace InspectionSystemManager
             if (_CogLineFindResult.IsGood == true && _CogLineFindAlgo.UseAlignment)
             {
                 OriginImage = _DestImage;
-                kpCogDisplayMain.SetDisplayImage(OriginImage);
+                kpCogDisplayMain.SetDisplayImage(_DestImage);
             }
 
             AlgoResultParameter _AlgoResultParam = new AlgoResultParameter(eAlgoType.C_LINE_FIND, _CogLineFindResult);
@@ -1359,7 +1365,7 @@ namespace InspectionSystemManager
 
                         CogImageFile _CogImageFile = new CogImageFile();
 
-                        if (_SaveImagePath != "")
+                        if (_SaveImagePath != "" && _SaveImagePath != null)
                         {
                             if (_SaveImageTemp == null)
                             {
@@ -1682,27 +1688,29 @@ namespace InspectionSystemManager
             #endregion
 
             #region Draw Lead Body check Display
-            CogPointMarker _LT = new CogPointMarker();
-            CogPointMarker _RT = new CogPointMarker();
-            CogPointMarker _LB = new CogPointMarker();
-            CogPointMarker _RB = new CogPointMarker();
+            if (_LeadTrimResult.LeadBodyBaseLineSegment != null)
+                kpCogDisplayMain.DrawStaticLine(_LeadTrimResult.LeadBodyBaseLineSegment, "BaseLine", CogColorConstants.Green, CogGraphicLineStyleConstants.Solid, 2);
+           //CogPointMarker _LT = new CogPointMarker();
+           //CogPointMarker _RT = new CogPointMarker();
+           //CogPointMarker _LB = new CogPointMarker();
+           //CogPointMarker _RB = new CogPointMarker();
 
-            _LT.SetCenterRotationSize(_LeadTrimResult.LeadBodyLeftTop.X, _LeadTrimResult.LeadBodyLeftTop.Y, 0, 2);
-            _RT.SetCenterRotationSize(_LeadTrimResult.LeadBodyRightTop.X, _LeadTrimResult.LeadBodyRightTop.Y, 0, 2);
-            _LB.SetCenterRotationSize(_LeadTrimResult.LeadBodyLeftBottom.X, _LeadTrimResult.LeadBodyLeftBottom.Y, 0, 2);
-            _RB.SetCenterRotationSize(_LeadTrimResult.LeadBodyRightBottom.X, _LeadTrimResult.LeadBodyRightBottom.Y, 0, 2);
+            //_LT.SetCenterRotationSize(_LeadTrimResult.LeadBodyLeftTop.X, _LeadTrimResult.LeadBodyLeftTop.Y, 0, 2);
+            //_RT.SetCenterRotationSize(_LeadTrimResult.LeadBodyRightTop.X, _LeadTrimResult.LeadBodyRightTop.Y, 0, 2);
+            //_LB.SetCenterRotationSize(_LeadTrimResult.LeadBodyLeftBottom.X, _LeadTrimResult.LeadBodyLeftBottom.Y, 0, 2);
+            //_RB.SetCenterRotationSize(_LeadTrimResult.LeadBodyRightBottom.X, _LeadTrimResult.LeadBodyRightBottom.Y, 0, 2);
 
-            if (_LT.X != 0 && _LT.Y != 0) kpCogDisplayMain.DrawStaticShape(_LT, "LT", CogColorConstants.Green, 50, true);
-            if (_RT.X != 0 && _RT.Y != 0) kpCogDisplayMain.DrawStaticShape(_RT, "RT", CogColorConstants.Green, 50, true);
-            if (_LB.X != 0 && _LB.Y != 0) kpCogDisplayMain.DrawStaticShape(_LB, "LB", CogColorConstants.Green, 50, true);
-            if (_RB.X != 0 && _RB.Y != 0) kpCogDisplayMain.DrawStaticShape(_RB, "RB", CogColorConstants.Green, 50, true);
+            //if (_LT.X != 0 && _LT.Y != 0) kpCogDisplayMain.DrawStaticShape(_LT, "LT", CogColorConstants.Green, 50, true);
+            //if (_RT.X != 0 && _RT.Y != 0) kpCogDisplayMain.DrawStaticShape(_RT, "RT", CogColorConstants.Green, 50, true);
+            //if (_LB.X != 0 && _LB.Y != 0) kpCogDisplayMain.DrawStaticShape(_LB, "LB", CogColorConstants.Green, 50, true);
+            //if (_RB.X != 0 && _RB.Y != 0) kpCogDisplayMain.DrawStaticShape(_RB, "RB", CogColorConstants.Green, 50, true);
 
-            CogRectangle _BodyRect = new CogRectangle();
-            if (_RT.X - _LT.X > 0 && _RB.Y - _RT.Y > 0)
-            {
-                _BodyRect.SetXYWidthHeight(_LT.X, _LT.Y, _RT.X - _LT.X, _RB.Y - _RT.Y);
-                kpCogDisplayMain.DrawStaticShape(_BodyRect, "BodyRect", CogColorConstants.Green);
-            }
+            //CogRectangle _BodyRect = new CogRectangle();
+            //if (_RT.X - _LT.X > 0 && _RB.Y - _RT.Y > 0)
+            //{
+            //    _BodyRect.SetXYWidthHeight(_LT.X, _LT.Y, _RT.X - _LT.X, _RB.Y - _RT.Y);
+            //    kpCogDisplayMain.DrawStaticShape(_BodyRect, "BodyRect", CogColorConstants.Green);
+            //}
             #endregion
 
             #region Draw Chip Out Inspection Display

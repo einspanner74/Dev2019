@@ -124,7 +124,7 @@ namespace InspectionSystemManager
             bool _Result = true;
             
             try
-            {
+            {   
                 System.Diagnostics.Stopwatch _ProcessWatch = new System.Diagnostics.Stopwatch();
                 _ProcessWatch.Reset(); _ProcessWatch.Start();
 
@@ -133,10 +133,11 @@ namespace InspectionSystemManager
 
                 InitializeBlobProcessor();
 
-                SetHardFixedThreshold(180);
+                //SetMorphology(CogBlobMorphologyConstants.ErodeHorizontal);
+                //SetMorphology(CogBlobMorphologyConstants.DilateHorizontal);
+                SetHardFixedThreshold(50);
                 SetConnectivityMinimum(100000);
                 SetPolarity(false);
-
 
                 #region Step1. Lead 전체의 Center를 구해서 masking 위치를 따라가게 한다.
                 //Step1. Lead 전체의 Center를 구해서 masking 위치를 따라가게 한다.
@@ -251,11 +252,27 @@ namespace InspectionSystemManager
 
                 #region Step3. Lead Pure Body Find
                 //Step3. Lead Pure Body Find
+                SetHardFixedThreshold(42);
                 BlobResults = BlobProc.Execute(_CogCopyImage, _InspRegion);
                 GetResult(true);
 
                 _CogBlobReferResultTemp = new CogLeadTrimResult();
                 _CogBlobReferResultTemp = GetResults();
+
+                #region Blob 설정값 저장하여 확인하기 위해서 / 주석 처리
+                //CogBlobMeasure _BlobMeasure = new CogBlobMeasure();
+                //_BlobMeasure.Measure = CogBlobMeasureConstants.CenterMassX;
+                //_BlobMeasure.Measure = CogBlobMeasureConstants.CenterMassY;
+                //_BlobMeasure.Mode = CogBlobMeasureModeConstants.PreCompute;
+                //_BlobMeasure.FilterMode = CogBlobFilterModeConstants.IncludeBlobsInRange;
+                //
+                //CogBlobTool _Blob = new CogBlobTool();
+                //_Blob.InputImage = _CogCopyImage;
+                //_Blob.RunParams.RunTimeMeasures.Add(_BlobMeasure);
+                //_Blob.Region = _InspRegion;
+                //_Blob.Run();
+                //CogSerializer.SaveObjectToFile(_Blob, string.Format(@"D:\MaskBlob.vpp"));
+                #endregion
 
                 if (_CogBlobReferResultTemp.BlobCount <= 0)
                 {
@@ -287,8 +304,53 @@ namespace InspectionSystemManager
 
                 CogLine _CogLine = new CogLine();
                 _CogLine.SetFromStartXYEndXY(LeadTrimResult.LeadBodyLeftTop.X, LeadTrimResult.LeadBodyLeftTop.Y, LeadTrimResult.LeadBodyRightTop.X, LeadTrimResult.LeadBodyRightTop.Y);
-                LeadTrimResult.LeadBodyBaseLine = _CogLine;
-                LeadBodyBaseLine = _CogLine;
+                //LeadTrimResult.LeadBodyBaseLine = _CogLine;
+                //LeadBodyBaseLine = _CogLine;
+                #endregion
+
+                #region Step4. Body 정밀 align
+                //4-1. Masking 작업
+                CogImage8Grey _CogAlignImage = new CogImage8Grey(_SrcImage);
+                CogCopyRegionTool _CogAlignImageCopyTool = new CogCopyRegionTool();
+                _CogAlignImageCopyTool.RunParams.FillRegion = true;
+                _CogAlignImageCopyTool.RunParams.FillRegionValue = 0;
+                _CogAlignImageCopyTool.RunParams.ImageAlignmentEnabled = true;
+                _CogAlignImageCopyTool.RunParams.InputImageAlignmentX = _CogAlignImage.Width / 2;
+                _CogAlignImageCopyTool.RunParams.InputImageAlignmentY = _CogAlignImage.Height / 2;
+                _CogAlignImageCopyTool.RunParams.DestinationImageAlignmentX = _CogAlignImage.Width / 2;
+                _CogAlignImageCopyTool.RunParams.DestinationImageAlignmentY = _CogAlignImage.Height / 2;
+
+                CogRectangle _CogMaskArea = new CogRectangle();
+                //_CogMaskArea.SetXYWidthHeight(350, 1720, 2864, 80);
+                _CogMaskArea.SetXYWidthHeight(350, LeadTrimResult.LeadBodyLeftTop.Y - 40, 2864, 80);
+                _CogAlignImageCopyTool.InputImage = _CogAlignImage;
+                _CogAlignImageCopyTool.DestinationImage = _CogAlignImage;
+                _CogAlignImageCopyTool.Region = _CogMaskArea;
+                _CogAlignImageCopyTool.Run();
+                _CogAlignImage = (CogImage8Grey)_CogAlignImageCopyTool.OutputImage;
+
+                //4-2 Find line
+                CogFindLineTool _CogFindLineTool = new CogFindLineTool();
+                _CogFindLineTool.RunParams.NumCalipers = 125;
+                _CogFindLineTool.RunParams.CaliperSearchLength = 50;
+                _CogFindLineTool.RunParams.CaliperProjectionLength = 8;
+                _CogFindLineTool.RunParams.CaliperSearchDirection = 1.5708;
+                _CogFindLineTool.RunParams.NumToIgnore = 5;
+                _CogFindLineTool.RunParams.ExpectedLineSegment.StartX = 0;
+                _CogFindLineTool.RunParams.ExpectedLineSegment.StartY = LeadTrimResult.LeadBodyLeftTop.Y;
+                _CogFindLineTool.RunParams.ExpectedLineSegment.EndX = 3647;
+                _CogFindLineTool.RunParams.ExpectedLineSegment.EndY = LeadTrimResult.LeadBodyLeftTop.Y;
+                //_CogFindLineTool.RunParams.ExpectedLineSegment.EndY = 1767;
+                _CogFindLineTool.RunParams.CaliperRunParams.ContrastThreshold = 10;
+                _CogFindLineTool.RunParams.CaliperRunParams.FilterHalfSizeInPixels = 5;
+                _CogFindLineTool.InputImage = _CogAlignImage;
+                _CogFindLineTool.Run();
+
+                CogSerializer.SaveObjectToFile(_CogFindLineTool, string.Format(@"D:\FindLine.vpp"));
+
+                LeadTrimResult.LeadBodyBaseLine = _CogFindLineTool.Results.GetLine();
+                LeadBodyBaseLine = _CogFindLineTool.Results.GetLine();
+                LeadTrimResult.LeadBodyBaseLineSegment = _CogFindLineTool.Results.GetLineSegment();
                 #endregion
 
                 _ProcessWatch.Stop();
