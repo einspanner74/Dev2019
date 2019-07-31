@@ -55,12 +55,14 @@ namespace HistoryManager
         {
             if(ProjectType == eProjectType.TRIM_FORM)
             {
-                string[] _TrimHeader = new string[3] { "Num", "Lead Length", "Lead Pitch" };
-                int[] _ColumnsWidth = new int[3] { 50, 139, 139 };
-                dataGridViewSubHistory.Initialize(3, _TrimHeader);
+                //string[] _TrimHeader = new string[3] { "Num", "Lead Length", "Lead Pitch" };
+                //int[] _ColumnsWidth = new int[3] { 50, 139, 139 };
+                string[] _TrimHeader = new string[12] { "Num", "Length", "Bent", "S-Burr", "S-Nick", "T-Burr", "SideX", "SideY", "ChipOut", "Gate", "Count", "Exist"};
+                int[] _ColumnsWidth = new int[12] { 34, 63, 63, 63, 63, 63, 63, 63, 63, 63, 63, 60 };
+                dataGridViewSubHistory.Initialize(12, _TrimHeader);
                 dataGridViewSubHistory.SetColumnsWidth(_ColumnsWidth);
 
-                ScreenshotIndex = 6;
+                ScreenshotIndex = 4;
             }
             else
             {
@@ -75,13 +77,11 @@ namespace HistoryManager
         {
             if (ProjectType == eProjectType.TRIM_FORM)
             {
-                dataGridViewHistory.Columns[0].Width = 160;
-                dataGridViewHistory.Columns[1].Width = 140;
+                dataGridViewHistory.Columns[0].Width = 136;
+                dataGridViewHistory.Columns[1].Width = 40;
                 dataGridViewHistory.Columns[2].Width = 80;
                 dataGridViewHistory.Columns[3].Width = 80;
-                dataGridViewHistory.Columns[4].Width = 120;
-                dataGridViewHistory.Columns[5].Width = 80;
-                dataGridViewHistory.Columns[6].Width = 183;
+                dataGridViewHistory.Columns[4].Width = 104;
             }
             else
             {
@@ -578,14 +578,14 @@ namespace HistoryManager
             string CSVFullPath = string.Format("{0}\\Result\\{1}.csv", CSVFolderPath, CSVFileName);
 
             string[] HeaderName;
-            if(ArrCSVFileName[3] =="TOP") { HeaderName = new string[3] { "Num", "Lead Length", "Lead Pitch" }; }
-            else                          { HeaderName = new string[3] { "Num", "Lead Position X", "Lead Position Y" }; }
+            //if(ArrCSVFileName[3] =="TOP") { HeaderName = new string[3] { "Num", "Lead Length", "Lead Pitch" }; }
+            //else                          { HeaderName = new string[3] { "Num", "Lead Position X", "Lead Position Y" }; }
 
-            dataGridViewSubHistory.SetHeader(3, HeaderName, true);
+            //dataGridViewSubHistory.SetHeader(3, HeaderName, true);
 
-            int[] _ColumnsWidth = new int[3] { 50, 139, 139 };
-            dataGridViewSubHistory.SetColumnsWidth(_ColumnsWidth);
-            dataGridViewSubHistory.SetCSVData(null, CSVFullPath, 3);
+            //int[] _ColumnsWidth = new int[3] { 50, 139, 139 };
+            //dataGridViewSubHistory.SetColumnsWidth(_ColumnsWidth);
+            dataGridViewSubHistory.SetCSVData(null, CSVFullPath, 12);
         }
     }
 }

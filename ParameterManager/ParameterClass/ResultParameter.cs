@@ -367,6 +367,10 @@ namespace ParameterManager
         public List<CogRectangle> GateRemainingNgList;
 
         public EachLeadStatus[]   EachLeadStatusArray;
+        public string             ChipOutStatus;
+        public string             LeadBodyStatus;
+        public string             LeadCountStatus;
+        public string             GateRemainingStatus;
 
         public CogLeadTrimResult()
         {
@@ -384,11 +388,16 @@ namespace ParameterManager
 
             LeadBodyBaseLine = new CogLine();
 
-            ShoulderBurrDefectList = new List<CogRectangle>();
+            ShoulderBurrDefectList = new List<CogRectangle>();  
             ShoulderNickDefectList = new List<CogRectangle>();
             LeadTipBurrDefectList = new List<CogRectangle>();
 
             GateRemainingNgList = new List<CogRectangle>();
+
+            ChipOutStatus = "0";
+            GateRemainingStatus = "0";
+            LeadBodyStatus = "OK";
+            LeadCountStatus = "20";
         }
     }
 
@@ -452,6 +461,8 @@ namespace ParameterManager
         public List<PointD>                  AlignOffsetDataList;
 
         public EachLeadStatus[]              EachLeadStatusArray;
+        public string                        LeadCountStatus;
+        public string                        LeadBodyStatus;
 
         public CogLeadFormResult()
         {
@@ -461,6 +472,9 @@ namespace ParameterManager
 
             AlignResultDataList = new List<LeadFormAlignResultData>();
             AlignOffsetDataList = new List<PointD>();
+
+            LeadCountStatus = "20";
+            LeadBodyStatus = "OK";
         }
     }
 
@@ -603,13 +617,22 @@ namespace ParameterManager
         public bool[]   IsLeadPitchGood;
 
         public EachLeadStatus[] EachLeadStatusArray;
-
-        public string ChipOut;
-        public string GateRemaining;
+        public string ChipOutStatus;
+        public string LeadBodyStatus;
+        public string LeadCountStatus;
+        public string GateRemainingStatus;
 
         public CogImage8Grey SaveImage;
         public eSaveMode ImageAutoSave;
         public string ResultImagePath;
+
+        public SendLeadTrimResult()
+        {
+            ChipOutStatus = "-";
+            GateRemainingStatus = "-";
+            LeadBodyStatus = "OK";
+            LeadCountStatus = "20";
+        }
     }
 
     public class SendLeadFormResult
@@ -619,13 +642,18 @@ namespace ParameterManager
         public bool[] IsLeadOffsetGood;
 
         public EachLeadStatus[] EachLeadStatusArray;
-
-        public string ChipOut;
-        public string GateRemaining;
+        public string LeadCountStatus;
+        public string LeadBodyStatus;
 
         public CogImage8Grey SaveImage;
         public eSaveMode ImageAutoSave;
-        public string ResultImagePath;        
+        public string ResultImagePath;  
+        
+        public SendLeadFormResult()
+        {
+            LeadCountStatus = "20";
+            LeadBodyStatus = "OK";
+        }
     }
 
     public class EachLeadStatus
@@ -649,9 +677,9 @@ namespace ParameterManager
 
             Bent = "-";
             Length = "-";
-            ShoulderNick = "-";
-            ShoulderBurr = "-";
-            TipBurr = "-";
+            ShoulderNick = "0";
+            ShoulderBurr = "0";
+            TipBurr = "0";
             SideX = "-";
             SideY = "-";
         }

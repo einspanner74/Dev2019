@@ -30,8 +30,10 @@ namespace HistoryManager
 
             if (eProjectType.TRIM_FORM == _ProjectType)
             {
-                INSERT_string = "INSERT INTO HistoryFile (Date, InspectionTime, CamType, SerialNum, ModelName, LastResult, InspImagePath) ";
-                CreateComm = string.Format("{0} (Date Datetime, InspectionTime char, CamType char, SerialNum char, ModelName char, LastResult char, InspImagePath char);", SqlDefine.CREATE_TABLE);
+                //INSERT_string = "INSERT INTO HistoryFile (Date, InspectionTime, CamType, SerialNum, ModelName, LastResult, InspImagePath) ";
+                //CreateComm = string.Format("{0} (Date Datetime, InspectionTime char, CamType char, SerialNum char, ModelName char, LastResult char, InspImagePath char);", SqlDefine.CREATE_TABLE);
+                INSERT_string = "INSERT INTO HistoryFile (Date, Cam, SerialNum, ModelName, InspImagePath) ";
+                CreateComm = string.Format("{0} (Date Datetime, Cam char, SerialNum char, ModelName char, InspImagePath char);", SqlDefine.CREATE_TABLE);
             }
 
             //else if (_ProjectType == "BLOWER")
@@ -49,7 +51,7 @@ namespace HistoryManager
         {
 
             DateTime _NowDate = DateTime.Now;
-            string _NowDateFormat = _NowDate.ToString("yyyy-MM-dd HH:mm:ss.ffff");
+            string _NowDateFormat = _NowDate.ToString("yyyy-MM-dd HH:mm:ss.fff");
 
             bool CreateTable = CheckDBFile();
 

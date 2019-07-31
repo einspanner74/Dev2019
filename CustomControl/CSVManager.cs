@@ -124,7 +124,7 @@ namespace CustomControl
                 for (int jLoopCount = 0; jLoopCount < ColumnCount; jLoopCount++)
                 {
                     StringArrWriter.Write(SaveString[iLoopCount, jLoopCount]);
-                    if (iLoopCount != ColumnCount - 1) { StringArrWriter.Write(","); }
+                    if (jLoopCount != ColumnCount - 1) { StringArrWriter.Write(","); }
                 }
                 
                 StringArrWriter.Write(StringArrWriter.NewLine);

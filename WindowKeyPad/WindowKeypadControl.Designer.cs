@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WindowKeypadControl));
+            this.labelTitle = new System.Windows.Forms.Label();
+            this.panelMain = new System.Windows.Forms.Panel();
+            this.labelKeyPadCharactor = new CustomControl.GradientLabel();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCaps = new System.Windows.Forms.Button();
@@ -83,9 +86,91 @@
             this.btnF = new System.Windows.Forms.Button();
             this.btnD = new System.Windows.Forms.Button();
             this.btnS = new System.Windows.Forms.Button();
-            this.btnKeyPadCharactor = new System.Windows.Forms.Button();
             this.btnA = new System.Windows.Forms.Button();
+            this.panelMain.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // labelTitle
+            // 
+            this.labelTitle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            resources.ApplyResources(this.labelTitle, "labelTitle");
+            this.labelTitle.ForeColor = System.Drawing.Color.White;
+            this.labelTitle.Name = "labelTitle";
+            this.labelTitle.Paint += new System.Windows.Forms.PaintEventHandler(this.labelTitle_Paint);
+            this.labelTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.labelTitle_MouseDown);
+            this.labelTitle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.labelTitle_MouseMove);
+            // 
+            // panelMain
+            // 
+            this.panelMain.Controls.Add(this.labelKeyPadCharactor);
+            this.panelMain.Controls.Add(this.btnCancel);
+            this.panelMain.Controls.Add(this.btnOK);
+            this.panelMain.Controls.Add(this.btnCaps);
+            this.panelMain.Controls.Add(this.button51);
+            this.panelMain.Controls.Add(this.btnESC);
+            this.panelMain.Controls.Add(this.btnShift);
+            this.panelMain.Controls.Add(this.btnShift2);
+            this.panelMain.Controls.Add(this.btnEnter);
+            this.panelMain.Controls.Add(this.btnWon);
+            this.panelMain.Controls.Add(this.btnBack);
+            this.panelMain.Controls.Add(this.btnEqual);
+            this.panelMain.Controls.Add(this.btnMinus);
+            this.panelMain.Controls.Add(this.btn0);
+            this.panelMain.Controls.Add(this.btn9);
+            this.panelMain.Controls.Add(this.btn8);
+            this.panelMain.Controls.Add(this.btn7);
+            this.panelMain.Controls.Add(this.btn6);
+            this.panelMain.Controls.Add(this.btn5);
+            this.panelMain.Controls.Add(this.btn4);
+            this.panelMain.Controls.Add(this.btn3);
+            this.panelMain.Controls.Add(this.btn2);
+            this.panelMain.Controls.Add(this.btn1);
+            this.panelMain.Controls.Add(this.btnRightBlacket);
+            this.panelMain.Controls.Add(this.btnLeftBlacket);
+            this.panelMain.Controls.Add(this.btnP);
+            this.panelMain.Controls.Add(this.btnO);
+            this.panelMain.Controls.Add(this.btnI);
+            this.panelMain.Controls.Add(this.btnU);
+            this.panelMain.Controls.Add(this.btnY);
+            this.panelMain.Controls.Add(this.btnT);
+            this.panelMain.Controls.Add(this.btnR);
+            this.panelMain.Controls.Add(this.btnE);
+            this.panelMain.Controls.Add(this.btnW);
+            this.panelMain.Controls.Add(this.btnQ);
+            this.panelMain.Controls.Add(this.btnSlash);
+            this.panelMain.Controls.Add(this.btnPoint);
+            this.panelMain.Controls.Add(this.btnComma);
+            this.panelMain.Controls.Add(this.btnM);
+            this.panelMain.Controls.Add(this.btnN);
+            this.panelMain.Controls.Add(this.btnB);
+            this.panelMain.Controls.Add(this.btnV);
+            this.panelMain.Controls.Add(this.btnC);
+            this.panelMain.Controls.Add(this.btnX);
+            this.panelMain.Controls.Add(this.btnZ);
+            this.panelMain.Controls.Add(this.btnQuotation);
+            this.panelMain.Controls.Add(this.btnSemi);
+            this.panelMain.Controls.Add(this.btnL);
+            this.panelMain.Controls.Add(this.btnK);
+            this.panelMain.Controls.Add(this.btnJ);
+            this.panelMain.Controls.Add(this.btnH);
+            this.panelMain.Controls.Add(this.btnG);
+            this.panelMain.Controls.Add(this.btnF);
+            this.panelMain.Controls.Add(this.btnD);
+            this.panelMain.Controls.Add(this.btnS);
+            this.panelMain.Controls.Add(this.btnA);
+            resources.ApplyResources(this.panelMain, "panelMain");
+            this.panelMain.Name = "panelMain";
+            this.panelMain.Paint += new System.Windows.Forms.PaintEventHandler(this.panelMain_Paint);
+            // 
+            // labelKeyPadCharactor
+            // 
+            this.labelKeyPadCharactor.BackColor = System.Drawing.Color.White;
+            this.labelKeyPadCharactor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.labelKeyPadCharactor.ColorBottom = System.Drawing.Color.Empty;
+            this.labelKeyPadCharactor.ColorTop = System.Drawing.Color.Empty;
+            resources.ApplyResources(this.labelKeyPadCharactor, "labelKeyPadCharactor");
+            this.labelKeyPadCharactor.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.labelKeyPadCharactor.Name = "labelKeyPadCharactor";
             // 
             // btnCancel
             // 
@@ -465,13 +550,6 @@
             this.btnS.UseVisualStyleBackColor = true;
             this.btnS.Click += new System.EventHandler(this.ButtonsClickEvent);
             // 
-            // btnKeyPadCharactor
-            // 
-            resources.ApplyResources(this.btnKeyPadCharactor, "btnKeyPadCharactor");
-            this.btnKeyPadCharactor.ForeColor = System.Drawing.Color.Yellow;
-            this.btnKeyPadCharactor.Name = "btnKeyPadCharactor";
-            this.btnKeyPadCharactor.UseVisualStyleBackColor = true;
-            // 
             // btnA
             // 
             resources.ApplyResources(this.btnA, "btnA");
@@ -483,74 +561,27 @@
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
             this.ControlBox = false;
-            this.Controls.Add(this.btnCancel);
-            this.Controls.Add(this.btnOK);
-            this.Controls.Add(this.btnCaps);
-            this.Controls.Add(this.button51);
-            this.Controls.Add(this.btnESC);
-            this.Controls.Add(this.btnShift);
-            this.Controls.Add(this.btnShift2);
-            this.Controls.Add(this.btnEnter);
-            this.Controls.Add(this.btnWon);
-            this.Controls.Add(this.btnBack);
-            this.Controls.Add(this.btnEqual);
-            this.Controls.Add(this.btnMinus);
-            this.Controls.Add(this.btn0);
-            this.Controls.Add(this.btn9);
-            this.Controls.Add(this.btn8);
-            this.Controls.Add(this.btn7);
-            this.Controls.Add(this.btn6);
-            this.Controls.Add(this.btn5);
-            this.Controls.Add(this.btn4);
-            this.Controls.Add(this.btn3);
-            this.Controls.Add(this.btn2);
-            this.Controls.Add(this.btn1);
-            this.Controls.Add(this.btnRightBlacket);
-            this.Controls.Add(this.btnLeftBlacket);
-            this.Controls.Add(this.btnP);
-            this.Controls.Add(this.btnO);
-            this.Controls.Add(this.btnI);
-            this.Controls.Add(this.btnU);
-            this.Controls.Add(this.btnY);
-            this.Controls.Add(this.btnT);
-            this.Controls.Add(this.btnR);
-            this.Controls.Add(this.btnE);
-            this.Controls.Add(this.btnW);
-            this.Controls.Add(this.btnQ);
-            this.Controls.Add(this.btnSlash);
-            this.Controls.Add(this.btnPoint);
-            this.Controls.Add(this.btnComma);
-            this.Controls.Add(this.btnM);
-            this.Controls.Add(this.btnN);
-            this.Controls.Add(this.btnB);
-            this.Controls.Add(this.btnV);
-            this.Controls.Add(this.btnC);
-            this.Controls.Add(this.btnX);
-            this.Controls.Add(this.btnZ);
-            this.Controls.Add(this.btnQuotation);
-            this.Controls.Add(this.btnSemi);
-            this.Controls.Add(this.btnL);
-            this.Controls.Add(this.btnK);
-            this.Controls.Add(this.btnJ);
-            this.Controls.Add(this.btnH);
-            this.Controls.Add(this.btnG);
-            this.Controls.Add(this.btnF);
-            this.Controls.Add(this.btnD);
-            this.Controls.Add(this.btnS);
-            this.Controls.Add(this.btnKeyPadCharactor);
-            this.Controls.Add(this.btnA);
+            this.Controls.Add(this.panelMain);
+            this.Controls.Add(this.labelTitle);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.KeyPreview = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "WindowKeypadControl";
+            this.TopMost = true;
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.WindowKeypadControl_KeyDown);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.WindowKeyPad_KeyPress);
+            this.panelMain.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
+        private System.Windows.Forms.Label labelTitle;
+        private System.Windows.Forms.Panel panelMain;
+        private CustomControl.GradientLabel labelKeyPadCharactor;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Button btnCaps;
@@ -605,7 +636,6 @@
         private System.Windows.Forms.Button btnF;
         private System.Windows.Forms.Button btnD;
         private System.Windows.Forms.Button btnS;
-        private System.Windows.Forms.Button btnKeyPadCharactor;
         private System.Windows.Forms.Button btnA;
     }
 }

@@ -116,6 +116,7 @@ namespace InspectionSystemManager
                     LeadFormResult.IsGood = false;
                     LeadFormResult.NgType = eNgType.LEAD_CNT;
                     LeadFormResult.SearchArea.SetCenterWidthHeight(_InspRegion.CenterX, _InspRegion.CenterY, _InspRegion.Width, _InspRegion.Height);
+                    LeadFormResult.LeadCountStatus = LeadFormResult.LeadCount.ToString();
                     return false;
                 }
 
@@ -158,6 +159,7 @@ namespace InspectionSystemManager
                         LeadFormResult.IsGood = false;
                         LeadFormResult.NgType = eNgType.LEAD_CNT;
                         LeadFormResult.SearchArea.SetCenterWidthHeight(_InspRegion.CenterX, _InspRegion.CenterY, _InspRegion.Width, _InspRegion.Height);
+                        LeadFormResult.LeadCountStatus = "NG";
                         return false;
                     }
 
@@ -185,6 +187,7 @@ namespace InspectionSystemManager
                 {
                     LeadFormResult.IsGood = false;
                     LeadFormResult.NgType = eNgType.LEAD_CNT;
+                    LeadFormResult.LeadCountStatus = _GuidePositionX.Count.ToString();
                     LeadFormResult.SearchArea.SetCenterWidthHeight(_InspRegion.CenterX, _InspRegion.CenterY, _InspRegion.Width, _InspRegion.Height);
                     _Result = false;
                 }
@@ -278,6 +281,9 @@ namespace InspectionSystemManager
                         _AlignOffset.X = _CogLeadFormAlgo.AlignPositionArray[iLoopCount].X - _RealCenterX;
                         _AlignOffset.Y = _CogLeadFormAlgo.AlignPositionArray[iLoopCount].Y - _RealCenterY;
                         LeadFormResult.AlignOffsetDataList.Add(_AlignOffset);
+
+                        LeadFormResult.EachLeadStatusArray[iLoopCount].SideX = _AlignOffset.X.ToString();
+                        LeadFormResult.EachLeadStatusArray[iLoopCount].SideY = _AlignOffset.Y.ToString();
                     }
                 }
 
@@ -285,6 +291,7 @@ namespace InspectionSystemManager
                 {
                     LeadFormResult.IsGood = false;
                     LeadFormResult.NgType = eNgType.LEAD_CNT;
+                    LeadFormResult.LeadCountStatus = LeadFormResult.LeadCount.ToString();
                     LeadFormResult.SearchArea.SetCenterWidthHeight(_InspRegion.CenterX, _InspRegion.CenterY, _InspRegion.Width, _InspRegion.Height);
                     _Result = false;
                 }
@@ -300,6 +307,7 @@ namespace InspectionSystemManager
                 CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "LeadAlign - Inspection Exception : " + ex.ToString(), CLogManager.LOG_LEVEL.LOW);
                 LeadFormResult.NgType = eNgType.EMPTY;
                 LeadFormResult.IsGood = false;
+                LeadFormResult.LeadBodyStatus = "NG";
                 LeadFormResult.SearchArea.SetCenterWidthHeight(_InspRegion.CenterX, _InspRegion.CenterY, _InspRegion.Width, _InspRegion.Height);
                 _Result = false;
             }

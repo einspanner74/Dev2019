@@ -47,6 +47,10 @@ namespace InspectionSystemManager
 
                     //결과 분석
                     _SendResult.EachLeadStatusArray = _AlgoResultParam.EachLeadStatusArray;
+                    _SendResult.ChipOutStatus = _AlgoResultParam.ChipOutStatus;
+                    _SendResult.LeadBodyStatus = _AlgoResultParam.LeadBodyStatus;
+                    _SendResult.LeadCountStatus = _AlgoResultParam.LeadCountStatus;
+                    _SendResult.GateRemainingStatus = _AlgoResultParam.GateRemainingStatus;
 
                     _SendResParam.SendResult = _SendResult;
                     _SendResParam.NgType = _AlgoResultParam.NgType;
@@ -55,7 +59,7 @@ namespace InspectionSystemManager
                 }
             }
 
-            _SendResult.SaveImage = OriginImage;
+            _SendResult.SaveImage = OriginConstImage;
             _SendResult.ImageAutoSave = ImageAutoSaveMode;
 
             return _SendResParam;
@@ -99,6 +103,8 @@ namespace InspectionSystemManager
 
                     //결과 분석
                     _SendResult.EachLeadStatusArray = _AlignResultParam.EachLeadStatusArray;
+                    _SendResult.LeadCountStatus = _AlignResultParam.LeadCountStatus;
+                    _SendResult.LeadBodyStatus = _AlignResultParam.LeadBodyStatus;
 
                     _SendResParam.SendResult = _SendResult;
                     _SendResParam.NgType = _AlignResultParam.NgType;
@@ -106,7 +112,7 @@ namespace InspectionSystemManager
                     _SendResParam.SearchArea = _AlignResultParam.SearchArea;
                 }
             }
-            _SendResult.SaveImage = OriginImage;
+            _SendResult.SaveImage = OriginConstImage;
             _SendResult.ImageAutoSave = ImageAutoSaveMode;
 
             return _SendResParam;

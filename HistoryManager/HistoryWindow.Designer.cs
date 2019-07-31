@@ -79,7 +79,7 @@
             this.dataGridViewHistory.ReadOnly = true;
             this.dataGridViewHistory.RowTemplate.Height = 23;
             this.dataGridViewHistory.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewHistory.Size = new System.Drawing.Size(903, 229);
+            this.dataGridViewHistory.Size = new System.Drawing.Size(506, 229);
             this.dataGridViewHistory.TabIndex = 0;
             this.dataGridViewHistory.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewHistory_CellClick);
             this.dataGridViewHistory.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewHistory_RowEnter);
@@ -479,9 +479,9 @@
             // 
             // dataGridViewSubHistory
             // 
-            this.dataGridViewSubHistory.Location = new System.Drawing.Point(910, 568);
+            this.dataGridViewSubHistory.Location = new System.Drawing.Point(512, 568);
             this.dataGridViewSubHistory.Name = "dataGridViewSubHistory";
-            this.dataGridViewSubHistory.Size = new System.Drawing.Size(346, 227);
+            this.dataGridViewSubHistory.Size = new System.Drawing.Size(744, 227);
             this.dataGridViewSubHistory.TabIndex = 46;
             // 
             // HistoryWindow

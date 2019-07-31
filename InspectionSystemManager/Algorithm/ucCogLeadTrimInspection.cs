@@ -31,6 +31,8 @@ namespace InspectionSystemManager
         private RectangleD       LeadTipInspArea = new RectangleD();
         private RectangleD       GateRemainingArea = new RectangleD();
 
+        private const int        LEAD_COUNT = 20;
+
         private double[]         LeadLengthArray;
         private double[]         LeadPitchArray;
         private double[]         LeadLengthArrayNew;
@@ -77,6 +79,8 @@ namespace InspectionSystemManager
 
         public void SaveAlgoRecipe()
         {
+            if (LEAD_COUNT != Convert.ToInt32(numUpDownLeadCount.Value)) { MessageBox.Show(string.Format("Lead Count = {0} : Lead Count 수량이 맞지 않습니다.", numUpDownLeadCount.Value)); return; }
+
             CogLeadTrimAlgoRcp.IsUseLeadBody = chUseLeadBody.Checked;
             CogLeadTrimAlgoRcp.BodyArea = new RectangleD();
             CogLeadTrimAlgoRcp.BodyArea.SetCenterWidthHeight(BodyArea.CenterX, BodyArea.CenterY, BodyArea.Width, BodyArea.Height);
@@ -250,7 +254,7 @@ namespace InspectionSystemManager
             hScrollShoulderBurrThreshold.Value = CogLeadTrimAlgoRcp.ShoulderBurrThreshold;
             hScrollShoulderNickThreshold.Value = CogLeadTrimAlgoRcp.ShoulderNickThreshold;
             numUpDownShoulderEdgeWidth.Value = Convert.ToDecimal(CogLeadTrimAlgoRcp.LeadEdgeWidth);
-            numUpDownShoulderEdgeWidth.Value = Convert.ToDecimal(CogLeadTrimAlgoRcp.ShoulderBurrSpec);
+            numUpDownShoulderBurrSpec.Value = Convert.ToDecimal(CogLeadTrimAlgoRcp.ShoulderBurrSpec);
             numUpDownShoulderNickSpec.Value = Convert.ToDecimal(CogLeadTrimAlgoRcp.ShoulderNickSpec);
 
 
@@ -596,6 +600,8 @@ namespace InspectionSystemManager
             _ApplyLeadTrimValueEvent?.Invoke(CogLeadTrimAlgo.eAlgoMode.LEAD_MEASURE, _InspRegion, CogLeadTrimAlgoRcp, ref _CogLeadTrimResult);
 
             //CogLeadTrimAlgoRcp.LeadCount = _CogLeadTrimResult.LeadCount;
+            //LJH 2019.07.30 Lead Count를 잘 못 입력하지 않도록 수동으로 입력하게 수정
+            //SaveAlgo에서 확인하도록 수정
             numUpDownLeadCount.Value = Convert.ToDecimal(_CogLeadTrimResult.LeadCount);
 
 

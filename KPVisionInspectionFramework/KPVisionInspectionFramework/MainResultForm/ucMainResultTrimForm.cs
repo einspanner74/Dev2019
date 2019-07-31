@@ -101,6 +101,8 @@ namespace KPVisionInspectionFramework
         private string SerialNum;
         private string InspectionTime;
 
+        string[] _TrimHeader = new string[12] { "Num", "Length", "Bent", "S-Burr", "S-Nick", "T-Burr", "SideX", "SideY", "ChipOut", "Gate", "Count", "Exist" };
+
         private QuickDataGridView[] QuickGridViewResult;
 
         public delegate void ScreenshotHandler(string ScreenshotImagePath);
@@ -171,7 +173,7 @@ namespace KPVisionInspectionFramework
             QuickGridViewResult = new QuickDataGridView[2] { QuickGridViewLeadTrimResult, QuickGridViewLeadFormResult };
 
             //LDH, 2018.08.14, Hitory Parameter용 배열 초기화
-            HistoryParam = new string[6];
+            HistoryParam = new string[4];
             for (int iLoopCount = 0; iLoopCount < HistoryParam.Count(); iLoopCount++)
             {
                 HistoryParam[iLoopCount] = "-";
@@ -427,7 +429,7 @@ namespace KPVisionInspectionFramework
 
             SaveResultCount();
 
-            SaveResult(0, _Result.ImageAutoSave, _Result.SaveImage, ref _Result.ResultImagePath);
+            SaveResult(0, _Result.ImageAutoSave, _Result.SaveImage, ref _Result.ResultImagePath, _Result);
         }
 
         private void ClearLeadTrimResultControl()
@@ -517,7 +519,7 @@ namespace KPVisionInspectionFramework
 
             SaveResultCount();
                         
-            SaveResult(1, _Result.ImageAutoSave, _Result.SaveImage, ref _Result.ResultImagePath);
+            SaveResult(1, _Result.ImageAutoSave, _Result.SaveImage, ref _Result.ResultImagePath, _Result);
         }
 
         private void ClearLeadFormResultControl()
@@ -534,7 +536,7 @@ namespace KPVisionInspectionFramework
             for (int iLoopCount = 0; iLoopCount < 1; iLoopCount++) ImageFolderPath[iLoopCount] = _DataFolderPath[iLoopCount];
         }
 
-        public void SaveResult(int _InspectionNum, eSaveMode ImageAutoSave, CogImage8Grey _SaveImage, ref string _ResultImagePath)
+        public void SaveResult(int _InspectionNum, eSaveMode ImageAutoSave, CogImage8Grey _SaveImage, ref string _ResultImagePath, object _ResultParam)
         {
             string SaveFileName = "";
 
@@ -600,18 +602,71 @@ namespace KPVisionInspectionFramework
 
                 #region Data Save
                 //LDH, 2019.06.18, Data Save
-                CSVManagerSaveAll SaveCSVControl = new CSVManagerSaveAll();
+                CSVManagerStringArr SaveCSVControl = new CSVManagerStringArr();
+                //CSVManagerSaveAll SaveCSVControl = new CSVManagerSaveAll();
 
                 string SaveCSVFilePath = String.Format("{0}\\Result", SaveImageFilePath);
                 if (false == Directory.Exists(SaveCSVFilePath)) Directory.CreateDirectory(SaveCSVFilePath);
 
                 SaveCSVFilePath = String.Format("{0}\\{1}.csv", SaveCSVFilePath, SaveFileName);
-                SaveCSVControl.SaveGridViewAll(QuickGridViewResult[_InspectionNum], SaveCSVFilePath);
+                //SaveCSVControl.SaveGridViewAll(QuickGridViewResult[_InspectionNum], SaveCSVFilePath);
+
+                string[,] CSVDataArr = new string[21, 12];
+
+                for (int iLoopCount = 0; iLoopCount < 12; iLoopCount++)
+                {
+                    CSVDataArr[0, iLoopCount] = _TrimHeader[iLoopCount];
+                }
+
+                if (CameraType == "TOP")
+                {
+                    var _Result = _ResultParam as SendLeadTrimResult;
+
+                    for (int LeadCnt = 0; LeadCnt < 20; LeadCnt++)
+                    {
+                        CSVDataArr[LeadCnt + 1, 0] = (LeadCnt + 1).ToString();
+                        CSVDataArr[LeadCnt + 1, 1] = _Result.EachLeadStatusArray[LeadCnt].Length;
+                        CSVDataArr[LeadCnt + 1, 2] = _Result.EachLeadStatusArray[LeadCnt].Bent;
+                        CSVDataArr[LeadCnt + 1, 3] = _Result.EachLeadStatusArray[LeadCnt].ShoulderBurr;
+                        CSVDataArr[LeadCnt + 1, 4] = _Result.EachLeadStatusArray[LeadCnt].ShoulderNick;
+                        CSVDataArr[LeadCnt + 1, 5] = _Result.EachLeadStatusArray[LeadCnt].TipBurr;
+                        CSVDataArr[LeadCnt + 1, 6] = "-";
+                        CSVDataArr[LeadCnt + 1, 7] = "-";
+                        CSVDataArr[LeadCnt + 1, 8] = _Result.ChipOutStatus;
+                        CSVDataArr[LeadCnt + 1, 9] = _Result.GateRemainingStatus;
+                        CSVDataArr[LeadCnt + 1, 10] = _Result.LeadCountStatus;
+                        CSVDataArr[LeadCnt + 1, 11] = _Result.LeadBodyStatus;
+                    }
+                }
+                else
+                {
+                    var _Result = _ResultParam as SendLeadFormResult;
+
+                    for (int LeadCnt = 0; LeadCnt < 20; LeadCnt++)
+                    {
+                        CSVDataArr[LeadCnt + 1, 0] = (LeadCnt + 1).ToString();
+                        CSVDataArr[LeadCnt + 1, 1] = "-";
+                        CSVDataArr[LeadCnt + 1, 2] = "-";
+                        CSVDataArr[LeadCnt + 1, 3] = "-";
+                        CSVDataArr[LeadCnt + 1, 4] = "-";
+                        CSVDataArr[LeadCnt + 1, 5] = "-";
+                        CSVDataArr[LeadCnt + 1, 6] = _Result.EachLeadStatusArray[LeadCnt].SideX;
+                        CSVDataArr[LeadCnt + 1, 7] = _Result.EachLeadStatusArray[LeadCnt].SideY;
+                        CSVDataArr[LeadCnt + 1, 8] = "-";
+                        CSVDataArr[LeadCnt + 1, 9] = "-";
+                        CSVDataArr[LeadCnt + 1, 10] = _Result.LeadCountStatus;
+                        CSVDataArr[LeadCnt + 1, 11] = _Result.LeadBodyStatus;
+                    }
+                }
+
+                SaveCSVControl.SaveStringArrAll(CSVDataArr, 12, SaveCSVFilePath);
+
 
                 CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, string.Format("Save {0} CSV File", _InspectionNum), CLogManager.LOG_LEVEL.LOW);
                 #endregion Data Save
 
                 if(LastResult[_InspectionNum] == "NG") InspectionHistory(CameraType, LastResult[_InspectionNum], _ResultImagePath);
+                //InspectionHistory(CameraType, LastResult[_InspectionNum], _ResultImagePath);
             }
             else
             {
@@ -625,12 +680,10 @@ namespace KPVisionInspectionFramework
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("InspectionHistory Start"), CLogManager.LOG_LEVEL.LOW);
 
             //LDH, 2019.06.26, DB에 해당하는 history 내역을 string 배열로 전달
-            HistoryParam[0] = InspectionTime;
-            HistoryParam[1] = _CamType;
-            HistoryParam[2] = SerialNum;
-            HistoryParam[3] = ModelName;
-            HistoryParam[4] = _LastResult;
-            HistoryParam[5] = _ImageFilePath;
+            HistoryParam[0] = _CamType;
+            HistoryParam[1] = SerialNum;
+            HistoryParam[2] = ModelName;
+            HistoryParam[3] = _ImageFilePath;
 
             CHistoryManager.AddHistory(HistoryParam);
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("InspectionHistory End"), CLogManager.LOG_LEVEL.LOW);

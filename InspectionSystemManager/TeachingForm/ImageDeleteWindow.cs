@@ -143,11 +143,11 @@ namespace InspectionSystemManager
                 if (Result == DialogResult.No) return;
             }
 
-            if (10 > Convert.ToInt32(objWndKeyPad.strKeyPadCharactor)) { MessageBox.Show(new Form { TopMost = true }, "Minimum period is 10 days."); return; }
-            else if (365 < Convert.ToInt32(objWndKeyPad.strKeyPadCharactor)) { MessageBox.Show(new Form { TopMost = true }, "Maximun period is 365 days."); return; }
+            if (10 > Convert.ToInt32(objWndKeyPad.KeyPadCharactor)) { MessageBox.Show(new Form { TopMost = true }, "Minimum period is 10 days."); return; }
+            else if (365 < Convert.ToInt32(objWndKeyPad.KeyPadCharactor)) { MessageBox.Show(new Form { TopMost = true }, "Maximun period is 365 days."); return; }
 
-            btnDeleteDay.Text = objWndKeyPad.strKeyPadCharactor;
-            SetDeleteDayFrom(objWndKeyPad.strKeyPadCharactor);
+            btnDeleteDay.Text = objWndKeyPad.KeyPadCharactor;
+            SetDeleteDayFrom(objWndKeyPad.KeyPadCharactor);
             SavedDate = btnDeleteDay.Text;
             SaveDeleteDateToRegistry(GetDeleteDate());
         }

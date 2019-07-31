@@ -21,6 +21,8 @@ namespace InspectionSystemManager
         private RectangleD      LeadFormOriginArea = new RectangleD();
         private RectangleD      LeadFormAlignArea = new RectangleD();
 
+        private const int       LEAD_COUNT = 20;
+
         private double ResolutionX = 0.005;
         private double ResolutionY = 0.005;
 
@@ -53,6 +55,8 @@ namespace InspectionSystemManager
 
         public void SaveAlgoRecipe()
         {
+            if (LEAD_COUNT != Convert.ToInt32(numUpDownLeadCount.Value)) { MessageBox.Show(string.Format("Lead Count = {0} : Lead Count 수량이 맞지 않습니다.", numUpDownLeadCount.Value)); return; }
+
             CogLeadFormAlgoRcp.IsUseOrigin = chUseLeadFormOrigin.Checked;
             CogLeadFormAlgoRcp.OriginArea = new RectangleD();
             CogLeadFormAlgoRcp.OriginArea.SetCenterWidthHeight(LeadFormOriginArea.CenterX, LeadFormOriginArea.CenterY, LeadFormOriginArea.Width, LeadFormOriginArea.Height);
@@ -192,6 +196,8 @@ namespace InspectionSystemManager
             var _ApplyLeadFormValueEvent = ApplyLeadFormValueEvent;
             _ApplyLeadFormValueEvent?.Invoke(CogLeadFormAlgo.eAlgoMode.LEAD_ALIGN, _InspRegion, _CogLeadFormAlgo, ref _CogLeadFormResult);
 
+            //LJH 2019.07.30 Lead Count를 잘 못 입력하지 않도록 수동으로 입력하게 수정\
+            //SaveAlgo에서 확인 하도록 수정
             numUpDownLeadCount.Value = Convert.ToDecimal(_CogLeadFormResult.LeadCount);        
 
             SetLeadAlignmentValue(_CogLeadFormResult);

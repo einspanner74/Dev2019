@@ -157,6 +157,7 @@ namespace InspectionSystemManager
                     //Blob이 없는 경우 제품 자체가 없는걸로 인식
                     LeadTrimResult.NgType = eNgType.EMPTY;
                     LeadTrimResult.IsGood = false;
+                    LeadTrimResult.LeadBodyStatus = "NG";
                     LeadTrimResult.SearchArea.SetCenterWidthHeight(_InspRegion.CenterX, _InspRegion.CenterY, _InspRegion.Width, _InspRegion.Height);
                     return false;
                 }
@@ -175,6 +176,7 @@ namespace InspectionSystemManager
                     //Blob이 없는 경우 제품 자체가 없는걸로 인식
                     LeadTrimResult.NgType = eNgType.EMPTY;
                     LeadTrimResult.IsGood = false;
+                    LeadTrimResult.LeadBodyStatus = "NG";
                     LeadTrimResult.SearchArea.SetCenterWidthHeight(_InspRegion.CenterX, _InspRegion.CenterY, _InspRegion.Width, _InspRegion.Height);
                     return false;
                 }
@@ -279,6 +281,7 @@ namespace InspectionSystemManager
                     //Blob이 없는 경우 제품 자체가 없는걸로 인식
                     LeadTrimResult.NgType = eNgType.EMPTY;
                     LeadTrimResult.IsGood = false;
+                    LeadTrimResult.LeadBodyStatus = "NG";
                     LeadTrimResult.SearchArea.SetCenterWidthHeight(_InspRegion.CenterX, _InspRegion.CenterY, _InspRegion.Width, _InspRegion.Height);
                     return false;
                 }
@@ -351,6 +354,16 @@ namespace InspectionSystemManager
                 LeadTrimResult.LeadBodyBaseLine = _CogFindLineTool.Results.GetLine();
                 LeadBodyBaseLine = _CogFindLineTool.Results.GetLine();
                 LeadTrimResult.LeadBodyBaseLineSegment = _CogFindLineTool.Results.GetLineSegment();
+
+                if (LeadTrimResult.LeadBodyBaseLineSegment == null)
+                {
+                    //Blob이 없는 경우 제품 자체가 없는걸로 인식
+                    LeadTrimResult.NgType = eNgType.EMPTY;
+                    LeadTrimResult.IsGood = false;
+                    LeadTrimResult.LeadBodyStatus = "NG";
+                    LeadTrimResult.SearchArea.SetCenterWidthHeight(_InspRegion.CenterX, _InspRegion.CenterY, _InspRegion.Width, _InspRegion.Height);
+                    return false;
+                }
                 #endregion
 
                 _ProcessWatch.Stop();
@@ -452,8 +465,9 @@ namespace InspectionSystemManager
 
                 if (null == LeadTrimResult.ChipOutNgList) LeadTrimResult.ChipOutNgList = new List<CogRectangle>();
 
+                bool _IsCurrentGood = true;
+                double _MaxDefectSize = 0;
                 LeadTrimResult.ChipOutNgList.Clear();
-
                 for (int iLoopCount = 0; iLoopCount < _CogChipOutResult.BlobCount; ++iLoopCount)
                 {
                     double _Width = _CogChipOutResult.BlobMaxX[iLoopCount] - _CogChipOutResult.BlobMinX[iLoopCount];
@@ -461,8 +475,9 @@ namespace InspectionSystemManager
                     double _RealWidth = _Width * _CogLeadTrimAlgo.ResolutionX;
                     double _RealHeight = _Height * _CogLeadTrimAlgo.ResolutionY;
 
+                    _IsCurrentGood = true;
                     //if ((_CogLeadTrimAlgo.ChipOutWidthMax > _Width && _CogLeadTrimAlgo.ChipOutWidthMin < _Width) &&
-                        //(_CogLeadTrimAlgo.ChipOutHeightMax > _Height && _CogLeadTrimAlgo.ChipOutHeightMin < _Height))
+                    //(_CogLeadTrimAlgo.ChipOutHeightMax > _Height && _CogLeadTrimAlgo.ChipOutHeightMin < _Height))
                     if (_RealWidth > _CogLeadTrimAlgo.ChipOutSpec && _RealHeight > _CogLeadTrimAlgo.ChipOutSpec)
                     {
                         CogRectangle _DefectArea = new CogRectangle();
@@ -470,8 +485,45 @@ namespace InspectionSystemManager
                         LeadTrimResult.ChipOutNgList.Add(_DefectArea);
 
                         LeadTrimResult.NgType = eNgType.CHIP_OUT;
+                        LeadTrimResult.ChipOutStatus = "NG";
                         LeadTrimResult.IsGood = false;
+                        //if (_RealWidth > _RealHeight)   LeadTrimResult.ChipOutStatus = _RealWidth.ToString();
+                        //else                            LeadTrimResult.ChipOutStatus = _RealHeight.ToString();
+
+                        _IsCurrentGood = false;
+
                         _Result = false;    
+                    }
+
+                    //LJH 2019.07.26 : 전제 데이터를 다 남기기 위해 if 문 밖으로 이동
+                    if ((_RealWidth > _RealHeight) && (_RealWidth > _MaxDefectSize))
+                    {
+                        if (false == _IsCurrentGood)
+                        {
+                            _MaxDefectSize = _RealWidth;
+                            LeadTrimResult.ChipOutStatus = _MaxDefectSize.ToString();
+                        }
+
+                        else
+                        {
+                            _MaxDefectSize = _RealHeight;
+                            LeadTrimResult.ChipOutStatus = _MaxDefectSize.ToString();
+                        }
+                    }
+
+                    else if ((_RealHeight >= _RealWidth) && (_RealHeight > _MaxDefectSize))
+                    {
+                        if (false == _IsCurrentGood)
+                        {
+                            _MaxDefectSize = _RealHeight;
+                            LeadTrimResult.ChipOutStatus = _MaxDefectSize.ToString();
+                        }
+
+                        else
+                        {
+                            _MaxDefectSize = _RealWidth;
+                            LeadTrimResult.ChipOutStatus = _MaxDefectSize.ToString();
+                        }
                     }
                 }
 
@@ -515,6 +567,9 @@ namespace InspectionSystemManager
                 SetHardFixedThreshold(_CogLeadTrimAlgo.LeadThreshold);
                 SetPolarity(Convert.ToBoolean(_CogLeadTrimAlgo.LeadForeground));
 
+                CogRectangle _LeadInspRegion = new CogRectangle();
+                _LeadInspRegion.SetCenterWidthHeight(_InspRegion.CenterX + LeadTrimResult.LeadBodyOffsetX, _InspRegion.CenterY + LeadTrimResult.LeadBodyOffsetY, _InspRegion.Width, _InspRegion.Height);
+                _InspRegion = _LeadInspRegion;
                 BlobResults = BlobProc.Execute(_SrcImage, _InspRegion);
                 GetResult(true);
 
@@ -544,13 +599,14 @@ namespace InspectionSystemManager
                 {
                     LeadTrimResult.IsGood = false;
                     LeadTrimResult.NgType = eNgType.LEAD_CNT;
+                    LeadTrimResult.LeadCountStatus = LeadTrimResult.LeadCount.ToString();
                     LeadTrimResult.SearchArea.SetCenterWidthHeight(_InspRegion.CenterX, _InspRegion.CenterY, _InspRegion.Width, _InspRegion.Height);
                     return false;
                 }
 
                 for (int iLoopCount = 0; iLoopCount < _CogLeadTrimResult.BlobCount; ++iLoopCount)
                 {
-                    #region Lead Bent Check
+                    #region Lead Bent Check Not use!!!
                     //double _Angle = _CogLeadMeasureResult.Angle[iLoopCount] * 180 / Math.PI;
                     //if (_Angle > 0) _Angle = 90 - (_CogLeadMeasureResult.Angle[iLoopCount] * 180 / Math.PI);
                     //else _Angle = -(90 + (_CogLeadMeasureResult.Angle[iLoopCount] * 180 / Math.PI));
@@ -599,6 +655,7 @@ namespace InspectionSystemManager
                     if (iLoopCount > 0)
                     {
                         LeadTrimResult.LeadPitchLength[iLoopCount - 1] = (LeadTrimResult.LeadPitchTopX[iLoopCount] - LeadTrimResult.LeadPitchTopX[iLoopCount - 1]) * _CogLeadTrimAlgo.ResolutionX;
+                        LeadTrimResult.EachLeadStatusArray[iLoopCount - 1].Bent = LeadTrimResult.LeadPitchLength[iLoopCount - 1].ToString();
 
                         //Pitch Spec에서 완전히 벗어났는지 확인
                         if (LeadTrimResult.LeadPitchLength[iLoopCount - 1] > (_CogLeadTrimAlgo.LeadPitchArray[iLoopCount - 1] - _CogLeadTrimAlgo.LeadPitchSpec) &&
@@ -663,6 +720,7 @@ namespace InspectionSystemManager
                     double _Angle;
                     double _Length = CogMath.DistancePointPoint(LeadTrimResult.LeadPitchTopX[iLoopCount], LeadTrimResult.LeadPitchTopY[iLoopCount], LeadTrimResult.LeadPitchBottomX[iLoopCount], LeadTrimResult.LeadPitchBottomY[iLoopCount], out _Angle);
                     LeadTrimResult.LeadLength[iLoopCount] = _Length * _CogLeadTrimAlgo.ResolutionY;
+                    LeadTrimResult.EachLeadStatusArray[iLoopCount].Length = LeadTrimResult.LeadLength[iLoopCount].ToString();
 
                     //Length 비교
                     if (LeadTrimResult.LeadLength[iLoopCount] > (_CogLeadTrimAlgo.LeadLengthArray[iLoopCount] - _CogLeadTrimAlgo.LeadLengthSpec) && 
@@ -686,7 +744,6 @@ namespace InspectionSystemManager
                         //_Result = false;
                         _Result = true;
                     }
-
                     #endregion 
 
                     #region Lead Wdith 구하기
@@ -734,6 +791,10 @@ namespace InspectionSystemManager
                 SetConnectivityMinimum(2000);
                 SetHardFixedThreshold(_CogLeadTrimAlgo.ShoulderThreshold);
                 SetPolarity(Convert.ToBoolean(_CogLeadTrimAlgo.ShoulderForeground));
+
+                CogRectangle _LeadInspRegion = new CogRectangle();
+                _LeadInspRegion.SetCenterWidthHeight(_InspRegion.CenterX + LeadTrimResult.LeadBodyOffsetX, _InspRegion.CenterY + LeadTrimResult.LeadBodyOffsetY, _InspRegion.Width, _InspRegion.Height);
+                _InspRegion = _LeadInspRegion;
                 BlobResults = BlobProc.Execute(_SrcImage, _InspRegion);
                 CogLeadTrimShoulderResult _ShoulderResult = GetShoulderResult(BlobResults);
 
@@ -754,7 +815,8 @@ namespace InspectionSystemManager
                     _LeadArea[iLoopCount] = new CogRectangleAffine();
                     _LeadArea[iLoopCount].CenterX       = _ShoulderResult.BlobCenterX[iLoopCount];
                     _LeadArea[iLoopCount].CenterY       = _ShoulderResult.BlobCenterY[iLoopCount];
-                    _LeadArea[iLoopCount].SideXLength   = _ShoulderResult.PrincipalHeight[iLoopCount] + 20;
+                    _LeadArea[iLoopCount].SideXLength   = _ShoulderResult.PrincipalHeight[iLoopCount] + 6;
+                    //_LeadArea[iLoopCount].SideXLength = _ShoulderResult.PrincipalHeight[iLoopCount];
                     _LeadArea[iLoopCount].SideYLength   = _ShoulderResult.PrincipalWidth[iLoopCount];
 
                     _LeadAreaTransTool.InputImage = _SrcImage;
@@ -808,9 +870,9 @@ namespace InspectionSystemManager
                         GetLeadSectionArea(_LeadCaliper.Results, _LeadArea[iLoopCount], _LeadRotation[iLoopCount], 
                                            ref _ShoulderResult.LeadLeftArea[iLoopCount], ref _ShoulderResult.LeadRightArea[iLoopCount], ref _ShoulderResult.LeadCenterArea[iLoopCount]);
 
-                        LeadBurrCheck(_SrcImage, _ShoulderResult.LeadLeftArea[iLoopCount], _CogLeadTrimAlgo);
-                        LeadBurrCheck(_SrcImage, _ShoulderResult.LeadRightArea[iLoopCount], _CogLeadTrimAlgo);
-                        LeadNickCheck(_SrcImage, _ShoulderResult.LeadCenterArea[iLoopCount], _CogLeadTrimAlgo);
+                        LeadBurrCheck(_SrcImage, _ShoulderResult.LeadLeftArea[iLoopCount], _CogLeadTrimAlgo, iLoopCount);
+                        LeadBurrCheck(_SrcImage, _ShoulderResult.LeadRightArea[iLoopCount], _CogLeadTrimAlgo, iLoopCount);
+                        LeadNickCheck(_SrcImage, _ShoulderResult.LeadCenterArea[iLoopCount], _CogLeadTrimAlgo, iLoopCount);
 
                         //if (LeadTrimResult.NgType != eNgType.GOOD)
                         //{
@@ -895,7 +957,8 @@ namespace InspectionSystemManager
             _CX = _LeadCaliperResult[0].Edge0.PositionX - 10;
             _CY = _LeadArea.CenterY;
             _W = 20;
-            _H = _LeadArea.SideYLength + 10;
+            //_H = _LeadArea.SideYLength + 5;
+            _H = _LeadArea.SideYLength;
             //_Left.SetCenterLengthsRotationSkew(_CX, _CY, _W, _H, _Rotation, 0);
             _Left.SetCenterLengthsRotationSkew(_CX, _CY, _W, _H, 0, 0);
 
@@ -904,7 +967,8 @@ namespace InspectionSystemManager
             _CX = _LeadCaliperResult[0].Edge1.PositionX + 10;
             _CY = _LeadArea.CenterY;
             _W = 20;
-            _H = _LeadArea.SideYLength + 10;
+            //_H = _LeadArea.SideYLength + 5;
+            _H = _LeadArea.SideYLength;
             //_Right.SetCenterLengthsRotationSkew(_CX, _CY, _W, _H, _Rotation, 0);
             _Right.SetCenterLengthsRotationSkew(_CX, _CY, _W, _H, 0, 0);
 
@@ -913,16 +977,17 @@ namespace InspectionSystemManager
             _CX = _LeadCaliperResult[0].PositionX;
             _CY = _LeadArea.CenterY;
             _W = _LeadCaliperResult[0].Width;
-            _H = _LeadArea.SideYLength + 10;
+            //_H = _LeadArea.SideYLength + 5;
+            _H = _LeadArea.SideYLength;
             //_Center.SetCenterLengthsRotationSkew(_CX, _CY, _W, _H, _Rotation, 0);
             _Center.SetCenterLengthsRotationSkew(_CX, _CY, _W, _H, 0, 0);
             #endregion
         }
 
-        private void LeadBurrCheck(CogImage8Grey _SrcImage, CogRectangleAffine _BurrArea, CogLeadTrimAlgo _CogLeadTrimAlgo)
+        private void LeadBurrCheck(CogImage8Grey _SrcImage, CogRectangleAffine _BurrArea, CogLeadTrimAlgo _CogLeadTrimAlgo, int _LeadIndex)
         {
             SetPolarity(false);
-            SetConnectivityMinimum(50);
+            SetConnectivityMinimum(10);
             SetHardFixedThreshold(_CogLeadTrimAlgo.ShoulderBurrThreshold);
             SetMorphology(CogBlobMorphologyConstants.ErodeHorizontal);
             SetMorphology(CogBlobMorphologyConstants.DilateHorizontal);
@@ -932,12 +997,15 @@ namespace InspectionSystemManager
 
             if (0 == _LeadBurrResult.BlobCount) return;
 
+            bool _IsCurrentGood = false;
+            double _MaxDefectSize = 0;
             CogRectangle _DefectArea = new CogRectangle();
             for (int iLoopCount = 0; iLoopCount < _LeadBurrResult.BlobCount; ++iLoopCount)
             {
                 double _RealWidth = _LeadBurrResult.Width[iLoopCount] * _CogLeadTrimAlgo.ResolutionX;
                 double _RealHeight = _LeadBurrResult.Height[iLoopCount] * _CogLeadTrimAlgo.ResolutionY;
 
+                _IsCurrentGood = true;
                 if (_RealWidth > _CogLeadTrimAlgo.ShoulderBurrSpec && _RealHeight > _CogLeadTrimAlgo.ShoulderBurrSpec)
                 {
                     _DefectArea = new CogRectangle();
@@ -949,15 +1017,52 @@ namespace InspectionSystemManager
                     //LeadTrimResult.SkewResult[iLoopCount].NgType = eTrimSkewNgType.SHLD_BURR;
                     //LeadTrimResult.SkewResult[iLoopCount].SetSkewResult(eTrimSkewStatus.GOOD, eTrimSkewNgType.SHLD_BURR);
                     LeadTrimResult.IsGood = false;
-                    LeadTrimResult.EachLeadStatusArray[iLoopCount].SetSkewResult(eLeadStatus.SHLD_BURR);
+                    LeadTrimResult.EachLeadStatusArray[_LeadIndex].SetSkewResult(eLeadStatus.SHLD_BURR);
+
+                    _IsCurrentGood = false;
+
+                    //LJH 2019.07.26 : 전제 데이터를 다 남기기 위해 if 문 밖으로CC
+                    //if (_RealWidth > _RealHeight)   LeadTrimResult.EachLeadStatusArray[_LeadIndex].ShoulderBurr = _RealWidth.ToString();
+                    //else                            LeadTrimResult.EachLeadStatusArray[_LeadIndex].ShoulderBurr = _RealHeight.ToString();
+                }
+
+                //LJH 2019.07.26 : 전제 데이터를 다 남기기 위해 if 문 밖으로 이동
+                if ((_RealWidth > _RealHeight) && (_RealWidth > _MaxDefectSize))
+                {
+                    if (false == _IsCurrentGood)
+                    {
+                        _MaxDefectSize = _RealWidth;
+                        LeadTrimResult.EachLeadStatusArray[_LeadIndex].ShoulderBurr = _MaxDefectSize.ToString();
+                    }
+
+                    else
+                    {
+                        _MaxDefectSize = _RealHeight;
+                        LeadTrimResult.EachLeadStatusArray[_LeadIndex].ShoulderBurr = _MaxDefectSize.ToString();
+                    }
+                }
+
+                else if ((_RealHeight >= _RealWidth) && (_RealHeight > _MaxDefectSize))
+                {
+                    if (false == _IsCurrentGood)
+                    {
+                        _MaxDefectSize = _RealHeight;
+                        LeadTrimResult.EachLeadStatusArray[_LeadIndex].ShoulderBurr = _MaxDefectSize.ToString();
+                    }
+
+                    else
+                    {
+                        _MaxDefectSize = _RealWidth;
+                        LeadTrimResult.EachLeadStatusArray[_LeadIndex].ShoulderBurr = _MaxDefectSize.ToString();
+                    }
                 }
             }
         }
 
-        private void LeadNickCheck(CogImage8Grey _SrcImage, CogRectangleAffine _NickArea, CogLeadTrimAlgo _CogLeadTrimAlgo)
+        private void LeadNickCheck(CogImage8Grey _SrcImage, CogRectangleAffine _NickArea, CogLeadTrimAlgo _CogLeadTrimAlgo, int _LeadIndex)
         {
             SetPolarity(true);
-            SetConnectivityMinimum(50);
+            SetConnectivityMinimum(10);
             SetHardFixedThreshold(_CogLeadTrimAlgo.ShoulderNickThreshold);
             SetMorphology(CogBlobMorphologyConstants.ErodeHorizontal);
             SetMorphology(CogBlobMorphologyConstants.DilateHorizontal);
@@ -967,12 +1072,15 @@ namespace InspectionSystemManager
 
             if (0 == _LeadNickResult.BlobCount) return;
 
+            bool _IsCurrentGood = false;
+            double _MaxDefectSize = 0;
             CogRectangle _DefectArea = new CogRectangle();
             for (int iLoopCount = 0; iLoopCount < _LeadNickResult.BlobCount; ++iLoopCount)
             {
                 double _RealWidth = _LeadNickResult.Width[iLoopCount] * _CogLeadTrimAlgo.ResolutionX;
                 double _RealHeight = _LeadNickResult.Height[iLoopCount] * _CogLeadTrimAlgo.ResolutionY;
 
+                _IsCurrentGood = true;
                 if (_RealWidth > _CogLeadTrimAlgo.ShoulderNickSpec && _RealHeight > _CogLeadTrimAlgo.ShoulderNickSpec)
                 {
                     _DefectArea = new CogRectangle();
@@ -985,7 +1093,44 @@ namespace InspectionSystemManager
                     //LeadTrimResult.SkewResult[iLoopCount].NgType = eTrimSkewNgType.SHLD_NICK;
                     //LeadTrimResult.SkewResult[iLoopCount].SetSkewResult(eTrimSkewStatus.GOOD, eTrimSkewNgType.SHLD_NICK);
                     LeadTrimResult.IsGood = false;
-                    LeadTrimResult.EachLeadStatusArray[iLoopCount].SetSkewResult(eLeadStatus.SHLD_NICK);
+                    LeadTrimResult.EachLeadStatusArray[_LeadIndex].SetSkewResult(eLeadStatus.SHLD_NICK);
+
+                    _IsCurrentGood = false;
+
+                    //LJH 2019.07.26 : 전제 데이터를 다 남기기 위해 if 문 밖으로 이동
+                    //if (_RealWidth > _RealHeight)   LeadTrimResult.EachLeadStatusArray[_LeadIndex].ShoulderNick = _RealWidth.ToString();
+                    //else                            LeadTrimResult.EachLeadStatusArray[_LeadIndex].ShoulderNick = _RealHeight.ToString();
+                }
+
+                //LJH 2019.07.26 : 전제 데이터를 다 남기기 위해 if 문 밖으로 이동
+                if ((_RealWidth > _RealHeight) && (_RealWidth > _MaxDefectSize))
+                {
+                    if (false == _IsCurrentGood)
+                    {
+                        _MaxDefectSize = _RealWidth;
+                        LeadTrimResult.EachLeadStatusArray[_LeadIndex].ShoulderNick = _MaxDefectSize.ToString();
+                    }
+
+                    else
+                    {
+                        _MaxDefectSize = _RealHeight;
+                        LeadTrimResult.EachLeadStatusArray[_LeadIndex].ShoulderNick = _MaxDefectSize.ToString();
+                    }
+                }
+
+                else if ((_RealHeight >= _RealWidth) && (_RealHeight > _MaxDefectSize))
+                {
+                    if (false == _IsCurrentGood)
+                    {
+                        _MaxDefectSize = _RealHeight;
+                        LeadTrimResult.EachLeadStatusArray[_LeadIndex].ShoulderNick = _MaxDefectSize.ToString();
+                    }
+
+                    else
+                    {
+                        _MaxDefectSize = _RealWidth;
+                        LeadTrimResult.EachLeadStatusArray[_LeadIndex].ShoulderNick = _MaxDefectSize.ToString();
+                    }
                 }
             }
         }
@@ -1084,11 +1229,11 @@ namespace InspectionSystemManager
                         _LeadTipResult.LeadEdgeRight[iLoopCount]  = _LeadCaliper.Results[0].Edge1.PositionX;
 
                         //Lead 왼쪽, 오른쪽, Lead 영역 추출
-                            GetLeadSectionArea(_LeadCaliper.Results, _LeadTipArea[iLoopCount], _LeadTipRotation[iLoopCount],
+                        GetLeadSectionArea(_LeadCaliper.Results, _LeadTipArea[iLoopCount], _LeadTipRotation[iLoopCount],
                                            ref _LeadTipResult.LeadTipLeftArea[iLoopCount], ref _LeadTipResult.LeadTipRightArea[iLoopCount], ref _LeadTipResult.LeadTipCenterArea[iLoopCount]);
 
-                        LeadTipBurrCheck(_SrcImage, _LeadTipResult.LeadTipLeftArea[iLoopCount], _CogLeadTrimAlgo);
-                        LeadTipBurrCheck(_SrcImage, _LeadTipResult.LeadTipRightArea[iLoopCount], _CogLeadTrimAlgo);
+                        LeadTipBurrCheck(_SrcImage, _LeadTipResult.LeadTipLeftArea[iLoopCount], _CogLeadTrimAlgo, iLoopCount);
+                        LeadTipBurrCheck(_SrcImage, _LeadTipResult.LeadTipRightArea[iLoopCount], _CogLeadTrimAlgo, iLoopCount);
 
                         //if (LeadTrimResult.NgType != eNgType.GOOD)
                         //{
@@ -1139,10 +1284,10 @@ namespace InspectionSystemManager
             return _Result;
         }
 
-        private void LeadTipBurrCheck(CogImage8Grey _SrcImage, CogRectangleAffine _BurrArea, CogLeadTrimAlgo _CogLeadTrimAlgo)
+        private void LeadTipBurrCheck(CogImage8Grey _SrcImage, CogRectangleAffine _BurrArea, CogLeadTrimAlgo _CogLeadTrimAlgo, int _LeadIndex)
         {
             SetPolarity(false);
-            SetConnectivityMinimum(50);
+            SetConnectivityMinimum(10);
             SetHardFixedThreshold(_CogLeadTrimAlgo.LeadTipBurrThreshold);
             SetMorphology(CogBlobMorphologyConstants.ErodeHorizontal);
             SetMorphology(CogBlobMorphologyConstants.DilateHorizontal);
@@ -1152,12 +1297,15 @@ namespace InspectionSystemManager
 
             if (0 == _LeadTipBurrResult.BlobCount) return;
 
+            bool _IsCurrentGood = false;
+            double _MaxDefectSize = 0;
             CogRectangle _DefectArea = new CogRectangle();
             for (int iLoopCount = 0; iLoopCount < _LeadTipBurrResult.BlobCount; ++iLoopCount)
             {
                 double _RealWidth = _LeadTipBurrResult.Width[iLoopCount] * _CogLeadTrimAlgo.ResolutionX;
                 double _RealHeight = _LeadTipBurrResult.Height[iLoopCount] * _CogLeadTrimAlgo.ResolutionY;
 
+                _IsCurrentGood = true;
                 if (_RealWidth > _CogLeadTrimAlgo.ShoulderNickSpec && _RealHeight > _CogLeadTrimAlgo.ShoulderNickSpec)
                 {
                     _DefectArea = new CogRectangle();
@@ -1167,6 +1315,43 @@ namespace InspectionSystemManager
 
                     LeadTrimResult.IsGood = false;
                     LeadTrimResult.EachLeadStatusArray[iLoopCount].SetSkewResult(eLeadStatus.TIP_BURR);
+
+                    _IsCurrentGood = false;
+
+                    //LJH 2019.07.26 : 전제 데이터를 다 남기기 위해 if 문 밖으로 이동
+                    //if (_RealWidth > _RealHeight)   LeadTrimResult.EachLeadStatusArray[_LeadIndex].TipBurr = _RealWidth.ToString();
+                    //else                            LeadTrimResult.EachLeadStatusArray[_LeadIndex].TipBurr = _RealHeight.ToString();
+                }
+
+                //LJH 2019.07.26 : 전제 데이터를 다 남기기 위해 if 문 밖으로 이동
+                if ((_RealWidth > _RealHeight) && (_RealWidth > _MaxDefectSize))
+                {
+                    if (false == _IsCurrentGood)
+                    {
+                        _MaxDefectSize = _RealWidth;
+                        LeadTrimResult.EachLeadStatusArray[_LeadIndex].TipBurr = _MaxDefectSize.ToString();
+                    }
+
+                    else
+                    {
+                        _MaxDefectSize = _RealHeight;
+                        LeadTrimResult.EachLeadStatusArray[_LeadIndex].TipBurr = _MaxDefectSize.ToString();
+                    }
+                }
+
+                else if ((_RealHeight >= _RealWidth) && (_RealHeight > _MaxDefectSize))
+                {
+                    if (false == _IsCurrentGood)
+                    {
+                        _MaxDefectSize = _RealHeight;
+                        LeadTrimResult.EachLeadStatusArray[_LeadIndex].TipBurr = _MaxDefectSize.ToString();
+                    }
+
+                    else
+                    {
+                        _MaxDefectSize = _RealWidth;
+                        LeadTrimResult.EachLeadStatusArray[_LeadIndex].TipBurr = _MaxDefectSize.ToString();
+                    }
                 }
             }
         }
@@ -1192,20 +1377,26 @@ namespace InspectionSystemManager
                 SetHardFixedThreshold(_CogLeadTrimAlgo.GateRemainingThreshold);
                 SetPolarity(Convert.ToBoolean(_CogLeadTrimAlgo.GateRemainingForeground));
 
+                CogRectangle _LeadInspRegion = new CogRectangle();
+                _LeadInspRegion.SetCenterWidthHeight(_InspRegion.CenterX + LeadTrimResult.LeadBodyOffsetX, _InspRegion.CenterY + LeadTrimResult.LeadBodyOffsetY, _InspRegion.Width, _InspRegion.Height);
+                _InspRegion = _LeadInspRegion;
                 BlobResults = BlobProc.Execute(_SrcImage, _InspRegion);
                 GetResult(true);
 
+                bool _IsCurrentGood = true;
+                double _MaxDefectSize = 0;
                 CogLeadTrimGateRemainingResult _GateRemainingResult = GetGateRemainingResult(BlobResults);
                 LeadTrimResult.GateRemainingNgList.Clear();
                 for (int iLoopCount = 0; iLoopCount < _GateRemainingResult.BlobCount; ++iLoopCount)
                 {
-                    double _ResultRealWidth = _GateRemainingResult.Width[iLoopCount] * _CogLeadTrimAlgo.ResolutionX;
-                    double _ResultRealHeight = _GateRemainingResult.Height[iLoopCount] * _CogLeadTrimAlgo.ResolutionY;
+                    double _RealWidth = _GateRemainingResult.Width[iLoopCount] * _CogLeadTrimAlgo.ResolutionX;
+                    double _RealHeight = _GateRemainingResult.Height[iLoopCount] * _CogLeadTrimAlgo.ResolutionY;
 
-                    double _RealWidth = _CogLeadTrimAlgo.GateRemainingSpec;
-                    double _RealHeight = _CogLeadTrimAlgo.GateRemainingSpec;
+                    double _RealWidthSpec = _CogLeadTrimAlgo.GateRemainingSpec;
+                    double _RealHeightSpec = _CogLeadTrimAlgo.GateRemainingSpec;
 
-                    if (_ResultRealWidth > _RealWidth && _ResultRealHeight > _RealHeight)
+                    _IsCurrentGood = true;
+                    if (_RealWidth > _RealWidthSpec && _RealHeight > _RealHeightSpec)
                     {
                         CogRectangle _DefectArea = new CogRectangle();
                         _DefectArea.SetXYWidthHeight(_GateRemainingResult.BlobMinX[iLoopCount], _GateRemainingResult.BlobMinY[iLoopCount], _GateRemainingResult.Width[iLoopCount], _GateRemainingResult.Height[iLoopCount]);
@@ -1213,8 +1404,47 @@ namespace InspectionSystemManager
                         LeadTrimResult.NgType = eNgType.GATE_ERR;
                         LeadTrimResult.IsGood = false;
                         LeadTrimResult.GateRemainingNgList.Add(_DefectArea);
+
+                        //LJH 2019.07.26 : 전제 데이터를 다 남기기 위해 if 문 밖으로 이동
+                        //if (_ResultRealWidth > _ResultRealHeight) LeadTrimResult.GateRemainingStatus = _ResultRealWidth.ToString();
+                        //else                                      LeadTrimResult.GateRemainingStatus = _ResultRealHeight.ToString();
+                        _IsCurrentGood = false;
+
                         _Result = true;
                     }
+
+                    //LJH 2019.07.26 : 전제 데이터를 다 남기기 위해 if 문 밖으로 이동
+                    if ((_RealWidth > _RealHeight) && (_RealWidth > _MaxDefectSize))
+                    {
+                        if (false == _IsCurrentGood)
+                        {
+                            _MaxDefectSize = _RealWidth;
+                            LeadTrimResult.GateRemainingStatus = _MaxDefectSize.ToString();
+                        }
+
+                        else
+                        {
+                            _MaxDefectSize = _RealHeight;
+                            LeadTrimResult.GateRemainingStatus = _MaxDefectSize.ToString();
+                        }
+                    }
+
+                    else if ((_RealHeight >= _RealWidth) && (_RealHeight > _MaxDefectSize))
+                    {
+                        if (false == _IsCurrentGood)
+                        {
+                            _MaxDefectSize = _RealHeight;
+                            LeadTrimResult.GateRemainingStatus = _MaxDefectSize.ToString();
+                        }
+
+                        else
+                        {
+                            _MaxDefectSize = _RealWidth;
+                            LeadTrimResult.GateRemainingStatus = _MaxDefectSize.ToString();
+                        }
+                    }
+                    //if (_RealWidth > _RealHeight)   LeadTrimResult.GateRemainingStatus = _RealWidth.ToString();
+                    //else                            LeadTrimResult.GateRemainingStatus = _RealHeight.ToString();
                 }
 
                 _ProcessWatch.Stop();

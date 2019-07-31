@@ -17,6 +17,7 @@ using Cognex.VisionPro.ImageProcessing;
 using LogMessageManager;
 using ParameterManager;
 using CameraManager;
+using WindowKeyPad;
 
 namespace InspectionSystemManager
 {
@@ -40,6 +41,7 @@ namespace InspectionSystemManager
         private TeachingWindow          TeachWnd;
         private ImageDeleteWindow       ImageDeleteWnd;
         private ManualInspectionWindow  ManualInspWnd;
+        private WindowKeypadControl     KeypadWnd = new WindowKeypadControl(false);
 
         private InspectionParameter InspParam = new InspectionParameter();
         private MapDataParameter    MapDataParam = new MapDataParameter();
@@ -102,7 +104,7 @@ namespace InspectionSystemManager
         private Thread ThreadImageSave;
         private bool IsThreadImageSaveExit = false;
         public bool IsThreadImageSaveTrigger = false;
-        eSaveMode ImageAutoSaveMode = eSaveMode.ONLY_NG;
+        private eSaveMode ImageAutoSaveMode = eSaveMode.ONLY_NG;
 
         public delegate void InspectionWindowHandler(eIWCMD _Command, object _Value = null, int _ID = 0);
         public event InspectionWindowHandler InspectionWindowEvent;
@@ -527,6 +529,14 @@ namespace InspectionSystemManager
 
         private void btnRecipe_Click(object sender, EventArgs e)
         {
+#if _RELEASE
+            //Password 입력 후 입장~
+            KeypadWnd.Initialize(false, true);
+            KeypadWnd.ShowDialog();
+            if (KeypadWnd.DialogResult == DialogResult.Cancel)  return;
+            if (KeypadWnd.KeyPadCharactor != "510704")          { MessageBox.Show("비밀번호가 틀렸습니다."); return; }
+#endif
+
             ContinuesGrabStop();
             InspectionWindowEvent(eIWCMD.TEACHING, true);
             Teaching();
@@ -661,14 +671,14 @@ namespace InspectionSystemManager
         private void labelZoomPlus_Click(object sender, EventArgs e)
         {
             double _Zoom = kpCogDisplayMain.GetDisplayZoom() * 100;
-            _Zoom = Math.Truncate(_Zoom) + 1;
+            _Zoom = Math.Truncate(_Zoom) + 1.5;
             kpCogDisplayMain.SetDisplayZoom(_Zoom / 100);
         }
 
         private void labelZoomMinus_Click(object sender, EventArgs e)
         {
             double _Zoom = kpCogDisplayMain.GetDisplayZoom() * 100;
-            _Zoom = Math.Ceiling(_Zoom) - 1;
+            _Zoom = Math.Ceiling(_Zoom) - 1.5;
             kpCogDisplayMain.SetDisplayZoom(_Zoom / 100);
         }
         #endregion Control Event
