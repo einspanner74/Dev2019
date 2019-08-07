@@ -200,6 +200,7 @@ namespace HistoryManager
                         }
                     }
                 }
+                DeleteYearFolderInfo.Refresh();
             }
 
             //Month 폴더 삭제
@@ -216,6 +217,7 @@ namespace HistoryManager
                         Directory.Delete(DeleteFolder, true);
                     }
                 }
+                DeleteMonthFolderInfo.Refresh();
             }
 
             //Day 폴더 삭제
@@ -232,6 +234,7 @@ namespace HistoryManager
                         Directory.Delete(DeleteFolder, true);
                     }
                 }
+                DeleteDayFolderInfo.Refresh();
             }
         }
 
