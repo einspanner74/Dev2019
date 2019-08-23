@@ -420,3 +420,14 @@ D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\WindowKeyPad\obj\Debug\Wi
 D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\WindowKeyPad\obj\Debug\WindowKeyPad.csproj.GenerateResource.Cache
 D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\WindowKeyPad\obj\Debug\WindowKeyPad.dll
 D:\Project\2019\[GIT]Einspanner\KPVisionInspection2019\WindowKeyPad\obj\Debug\WindowKeyPad.pdb
+D:\VisionProgram\KPVisionInspectionProgram\WindowKeyPad\bin\Debug\WindowKeyPad.dll
+D:\VisionProgram\KPVisionInspectionProgram\WindowKeyPad\bin\Debug\WindowKeyPad.pdb
+D:\VisionProgram\KPVisionInspectionProgram\WindowKeyPad\bin\Debug\CustomControl.dll
+D:\VisionProgram\KPVisionInspectionProgram\WindowKeyPad\bin\Debug\CustomControl.pdb
+D:\VisionProgram\KPVisionInspectionProgram\WindowKeyPad\obj\Debug\WindowKeyPad.csprojResolveAssemblyReference.cache
+D:\VisionProgram\KPVisionInspectionProgram\WindowKeyPad\obj\Debug\WindowKeyPad.WindowKeypadControl.resources
+D:\VisionProgram\KPVisionInspectionProgram\WindowKeyPad\obj\Debug\WindowKeyPad.csproj.GenerateResource.Cache
+D:\VisionProgram\KPVisionInspectionProgram\WindowKeyPad\obj\Debug\WindowKeyPad.dll
+D:\VisionProgram\KPVisionInspectionProgram\WindowKeyPad\obj\Debug\WindowKeyPad.pdb
+D:\VisionProgram\KPVisionInspectionProgram\WindowKeyPad\obj\Debug\WindowKeyPad.Properties.Resources.resources
+D:\VisionProgram\KPVisionInspectionProgram\WindowKeyPad\obj\Debug\WindowKeyPad.PasswordChangeWindow.resources
