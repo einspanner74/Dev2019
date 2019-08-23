@@ -87,6 +87,7 @@
             this.btnD = new System.Windows.Forms.Button();
             this.btnS = new System.Windows.Forms.Button();
             this.btnA = new System.Windows.Forms.Button();
+            this.btnPasswordChange = new System.Windows.Forms.Button();
             this.panelMain.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -102,6 +103,7 @@
             // 
             // panelMain
             // 
+            this.panelMain.Controls.Add(this.btnPasswordChange);
             this.panelMain.Controls.Add(this.labelKeyPadCharactor);
             this.panelMain.Controls.Add(this.btnCancel);
             this.panelMain.Controls.Add(this.btnOK);
@@ -557,6 +559,14 @@
             this.btnA.UseVisualStyleBackColor = true;
             this.btnA.Click += new System.EventHandler(this.ButtonsClickEvent);
             // 
+            // btnPasswordChange
+            // 
+            this.btnPasswordChange.BackgroundImage = global::WindowKeyPad.Properties.Resources.PasswordChange;
+            resources.ApplyResources(this.btnPasswordChange, "btnPasswordChange");
+            this.btnPasswordChange.Name = "btnPasswordChange";
+            this.btnPasswordChange.UseVisualStyleBackColor = true;
+            this.btnPasswordChange.Click += new System.EventHandler(this.btnPasswordChange_Click);
+            // 
             // WindowKeypadControl
             // 
             resources.ApplyResources(this, "$this");
@@ -637,5 +647,6 @@
         private System.Windows.Forms.Button btnD;
         private System.Windows.Forms.Button btnS;
         private System.Windows.Forms.Button btnA;
+        private System.Windows.Forms.Button btnPasswordChange;
     }
 }

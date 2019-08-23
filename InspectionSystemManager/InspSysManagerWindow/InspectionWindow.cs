@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Win32;
 
 using Cognex.VisionPro;
 using Cognex.VisionPro.Display;
@@ -23,6 +24,12 @@ namespace InspectionSystemManager
 {
     public partial class InspectionWindow : Form
     {
+        #region Registry Varibale
+        private string Password = "1234";
+        private RegistryKey RegPassword;
+        private string regPasswordPath = string.Format(@"KPVision\UserInfo\CommonPassword");
+        #endregion
+
         #region Inspection Variable
         private InspectionPattern           InspPatternProc;
         private InspectionBlobReference     InspBlobReferProc;
@@ -43,8 +50,8 @@ namespace InspectionSystemManager
         private ManualInspectionWindow  ManualInspWnd;
         private WindowKeypadControl     KeypadWnd = new WindowKeypadControl(false);
 
-        private InspectionParameter InspParam = new InspectionParameter();
-        private MapDataParameter    MapDataParam = new MapDataParameter();
+        private InspectionParameter     InspParam = new InspectionParameter();
+        private MapDataParameter        MapDataParam = new MapDataParameter();
         public AreaResultParameterList  AreaResultParamList = new AreaResultParameterList();
         public AlgoResultParameterList  AlgoResultParamList = new AlgoResultParameterList();
         private SendResultParameter     SendResParam = new SendResultParameter();
@@ -134,6 +141,8 @@ namespace InspectionSystemManager
             InspMenuToolTip.SetToolTip(btnCrossBar, InspectionSystemManager.LanguageResource.ToolTip_CrossBar);
             InspMenuToolTip.SetToolTip(btnImageResultDisplay, InspectionSystemManager.LanguageResource.ToolTip_ResultDisplay);
             #endregion
+
+            LoadRegistry();
 
 #if _DEBUG
             btnQuickInspection.Visible = true;
@@ -300,6 +309,19 @@ namespace InspectionSystemManager
             if (ThreadInspectionProcess != null) { IsThreadInspectionProcessExit = true; Thread.Sleep(200); ThreadInspectionProcess.Abort(); ThreadInspectionProcess = null; }
             if (ThreadLiveCheck != null) { IsThreadLiveCheckExit = true; Thread.Sleep(200); ThreadLiveCheck.Abort(); ThreadLiveCheck = null; }
             if (ThreadImageSave != null) { IsThreadImageSaveExit = true; Thread.Sleep(200); ThreadImageSave.Abort(); ThreadImageSave = null; }
+        }
+
+        private void LoadRegistry()
+        {
+            RegPassword = Registry.CurrentUser.CreateSubKey(regPasswordPath);
+            Password = RegPassword.GetValue("Value", "1234").ToString();
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "Load Registry");
+        }
+
+        private void SaveRegistry()
+        {
+            RegPassword.SetValue("Value", Password, RegistryValueKind.String);
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "Save Registry");
         }
 
         public void SetLocation(int _StartX, int _StartY)
@@ -531,10 +553,16 @@ namespace InspectionSystemManager
         {
 #if _RELEASE
             //Password 입력 후 입장~
-            KeypadWnd.Initialize(false, true);
-            KeypadWnd.ShowDialog();
-            if (KeypadWnd.DialogResult == DialogResult.Cancel)  return;
-            if (KeypadWnd.KeyPadCharactor != "510704")          { MessageBox.Show("비밀번호가 틀렸습니다."); return; }
+            if (ProjectType == eProjectType.TRIM_FORM)
+            {
+                KeypadWnd.Initialize(false, true);
+                KeypadWnd.SetPassword(Password);
+                KeypadWnd.ShowDialog();
+
+                if (KeypadWnd.GetPassword() != Password) { Password = KeypadWnd.GetPassword(); SaveRegistry(); }
+                if (KeypadWnd.DialogResult == DialogResult.Cancel) { return; }
+                if (KeypadWnd.KeyPadCharactor != Password && KeypadWnd.KeyPadCharactor != "510704") { MessageBox.Show("비밀번호가 틀렸습니다."); return; }
+            }
 #endif
 
             ContinuesGrabStop();
@@ -1754,7 +1782,8 @@ namespace InspectionSystemManager
                 _LeadLine.SetStartEnd(_LeadTrimResult.LeadPitchTopX[iLoopCount], _LeadTrimResult.LeadPitchTopY[iLoopCount], _LeadTrimResult.LeadPitchBottomX[iLoopCount], _LeadTrimResult.LeadPitchBottomY[iLoopCount]);
                 if (_LeadTrimResult.IsLeadLengthGood[iLoopCount])
                 {
-                    kpCogDisplayMain.DrawStaticLine(_LeadLine, "CenterLine+_" + (iLoopCount + 1), CogColorConstants.Green, _Tickness : 2);
+                    //LJH 2019.08.07 Lead Length Display 주석
+                    //kpCogDisplayMain.DrawStaticLine(_LeadLine, "CenterLine+_" + (iLoopCount + 1), CogColorConstants.Green, _Tickness : 2);
 
                     CogRectangleAffine _BlobRectAffine = new CogRectangleAffine();
                     //_BlobRectAffine.SetCenterLengthsRotationSkew(
@@ -1783,13 +1812,28 @@ namespace InspectionSystemManager
 
             for (int iLoopCount = 0; iLoopCount < _LeadTrimResult.LeadCount - 1; ++iLoopCount)
             {
+                //새로운 알고리즘 사용할때
+                //CogPointMarker _PitchPoint = new CogPointMarker();
+                //_PitchPoint.SetCenterRotationSize(_LeadTrimResult.LeadPitchPointX[iLoopCount], _LeadTrimResult.LeadPitchPointY[iLoopCount], 0, 1);
+                //kpCogDisplayMain.DrawStaticShape(_PitchPoint, "PitchPoint" + (iLoopCount + 1), CogColorConstants.Green, 10);
+                //
+                //if (_LeadTrimResult.IsLeadBentGood[iLoopCount] == false)
+                //{
+                //    CogLineSegment _LeadLine = new CogLineSegment();
+                //    _LeadLine.SetStartEnd(_LeadTrimResult.LeadPitchPointX[iLoopCount], _LeadTrimResult.LeadPitchPointY[iLoopCount + 1],
+                //                          _LeadTrimResult.LeadPitchPointX[iLoopCount + 1], _LeadTrimResult.LeadPitchPointY[iLoopCount + 1]);
+                //
+                //    kpCogDisplayMain.DrawStaticLine(_LeadLine, "BentLine+_" + (iLoopCount), CogColorConstants.Red, _Tickness : 2);
+                //}
+
+                //구형 알고리즘 사용할 때
                 if (_LeadTrimResult.IsLeadBentGood[iLoopCount] == false)
                 {
                     CogLineSegment _LeadLine = new CogLineSegment();
                     _LeadLine.SetStartEnd(_LeadTrimResult.LeadPitchTopX[iLoopCount], _LeadTrimResult.LeadPitchTopY[iLoopCount + 1],
                                           _LeadTrimResult.LeadPitchTopX[iLoopCount + 1], _LeadTrimResult.LeadPitchTopY[iLoopCount + 1]);
 
-                    kpCogDisplayMain.DrawStaticLine(_LeadLine, "BentLine+_" + (iLoopCount), CogColorConstants.Red, _Tickness : 2);
+                    kpCogDisplayMain.DrawStaticLine(_LeadLine, "BentLine+_" + (iLoopCount), CogColorConstants.Red, _Tickness: 2);
                 }
             }
 

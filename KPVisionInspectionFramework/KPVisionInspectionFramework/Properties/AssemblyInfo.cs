@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("KPVisionInspectionFramework")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("© KP Vision")]
+[assembly: AssemblyCompany("© KP INT Vision")]
 [assembly: AssemblyProduct("KPVisionInspectionFramework")]
-[assembly: AssemblyCopyright("Copyright © KP Vision. 2018")]
+[assembly: AssemblyCopyright("Copyright © KP INT. 2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -33,4 +33,4 @@ using System.Runtime.InteropServices;
 // 지정되도록 할 수 있습니다.
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("3.1.1.1")]
-[assembly: AssemblyFileVersion("3.7.31.1")]
+[assembly: AssemblyFileVersion("3.8.21.1")]

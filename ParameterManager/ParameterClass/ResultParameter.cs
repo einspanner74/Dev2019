@@ -343,6 +343,8 @@ namespace ParameterManager
         public List<CogRectangle> LeadMeasureList;
 
         public double[] LeadAngle;
+        public double[] LeadPitchPointX;
+        public double[] LeadPitchPointY;
         public double[] LeadPitchTopX;
         public double[] LeadPitchTopY;
         public double[] LeadPitchBottomX;

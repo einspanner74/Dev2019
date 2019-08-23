@@ -898,7 +898,7 @@ namespace InspectionSystemManager
         private void LeadMeasurement(CogRectangle _InspRegion, CogLeadTrimAlgo _InspAlgo, ref CogLeadTrimResult _InspResult)
         {
             InspLeadTrimProcess.ClearLeadTrimResult(_InspAlgo.LeadCount);
-            bool _Result = InspLeadTrimProcess.LeadMeasurement(InspectionImage, _InspRegion, _InspAlgo);
+            bool _Result = InspLeadTrimProcess.LeadMeasurement(InspectionImage, _InspRegion, _InspAlgo);            
 
             if (true == _Result)
             {
@@ -932,6 +932,13 @@ namespace InspectionSystemManager
                 }
 
                 #endregion
+            }
+
+            else
+            {
+                CogLeadTrimResult _LeadTrimResult = new CogLeadTrimResult();
+                _LeadTrimResult = InspLeadTrimProcess.GetLeadTrimResult();
+                _InspResult.LeadCount = _LeadTrimResult.LeadCount;
             }
         }
 

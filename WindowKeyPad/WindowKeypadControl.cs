@@ -19,6 +19,8 @@ namespace WindowKeyPad
 
         public string KeyPadCharactor = "";
 
+        private string Password;
+
         #region Initialize
         public WindowKeypadControl(bool _IsKeyEnabled = false)
         {
@@ -41,6 +43,18 @@ namespace WindowKeyPad
 
             labelKeyPadCharactor.Text = "";
             KeyPadCharactor = "";
+
+            btnOK.Focus();
+        }
+
+        public void SetPassword(string _Password)
+        {
+            Password = _Password;
+        }
+
+        public string GetPassword()
+        {
+            return Password;
         }
         #endregion
 
@@ -171,6 +185,8 @@ namespace WindowKeyPad
                 else if ((int)Keys.Enter == e.KeyChar) PressEnter();
                 else PressKeyDown(strCharactor);
             }
+
+            btnOK.Focus();
         }
 
         private void btnOK_Click(object sender, EventArgs e)
@@ -219,6 +235,15 @@ namespace WindowKeyPad
                 case "Cancel":  PressCancel();      break;
                 default:        PressKeyButtonDown(KeyPadButton.Text); break;
             }
+        }
+
+        private void btnPasswordChange_Click(object sender, EventArgs e)
+        {
+            PasswordChangeWindow _PasswordChangeWnd = new PasswordChangeWindow(Password);
+            _PasswordChangeWnd.ShowDialog();
+            if (_PasswordChangeWnd.DialogResult == DialogResult.Cancel) return;
+
+            Password = _PasswordChangeWnd.GetPassword();
         }
     }
 }

@@ -603,7 +603,11 @@ namespace InspectionSystemManager
             //LJH 2019.07.30 Lead Count를 잘 못 입력하지 않도록 수동으로 입력하게 수정
             //SaveAlgo에서 확인하도록 수정
             numUpDownLeadCount.Value = Convert.ToDecimal(_CogLeadTrimResult.LeadCount);
-
+            if (LEAD_COUNT != _CogLeadTrimResult.LeadCount)
+            {
+                MessageBox.Show("Lead 수가 맞지 않습니다.");
+                return;
+            }
 
             SetLeadMeasurementValue(_CogLeadTrimResult);
             SetGridViewLeadMeasurementValue(LeadLengthArrayNew, LeadPitchArrayNew);
@@ -683,13 +687,19 @@ namespace InspectionSystemManager
 
         private void SetLeadMeasurementValue(CogLeadTrimResult _Result)
         {
-            LeadLengthArrayNew = new double[_Result.LeadLength.Length];
-            for (int iLoopCount = 0; iLoopCount < _Result.LeadLength.Length; ++iLoopCount)
-                LeadLengthArrayNew[iLoopCount] = _Result.LeadLength[iLoopCount];
+            if (_Result.LeadLength != null)
+            {
+                LeadLengthArrayNew = new double[_Result.LeadLength.Length];
+                for (int iLoopCount = 0; iLoopCount < _Result.LeadLength.Length; ++iLoopCount)
+                    LeadLengthArrayNew[iLoopCount] = _Result.LeadLength[iLoopCount];
+            }
 
-            LeadPitchArrayNew = new double[_Result.LeadPitchLength.Length];
-            for (int iLoopCount = 0; iLoopCount < _Result.LeadPitchLength.Length; ++iLoopCount)
-                LeadPitchArrayNew[iLoopCount] = _Result.LeadPitchLength[iLoopCount];
+            if (_Result.LeadPitchLength != null)
+            {
+                LeadPitchArrayNew = new double[_Result.LeadPitchLength.Length];
+                for (int iLoopCount = 0; iLoopCount < _Result.LeadPitchLength.Length; ++iLoopCount)
+                    LeadPitchArrayNew[iLoopCount] = _Result.LeadPitchLength[iLoopCount];
+            }
         }
         #endregion
 

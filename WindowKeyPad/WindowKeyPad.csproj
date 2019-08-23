@@ -47,6 +47,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PasswordChangeWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PasswordChangeWindow.Designer.cs">
+      <DependentUpon>PasswordChangeWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="WindowKeypadControl.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -57,6 +68,13 @@
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="PasswordChangeWindow.resx">
+      <DependentUpon>PasswordChangeWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="WindowKeypadControl.resx">
       <DependentUpon>WindowKeypadControl.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -67,6 +85,9 @@
       <Project>{FE56E73E-490F-436E-885D-8BE182B74794}</Project>
       <Name>CustomControl</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PasswordChange.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
