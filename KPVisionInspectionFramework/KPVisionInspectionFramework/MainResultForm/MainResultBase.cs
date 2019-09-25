@@ -32,6 +32,9 @@ namespace KPVisionInspectionFramework
         public delegate void SendDIOResultHandler(bool _LastResult);
         public event SendDIOResultHandler SendDIOResultEvent;
 
+        public delegate bool RecipeChangeHandler(int _ID, string _RecipeName);
+        public event RecipeChangeHandler RecipeChangeEvent;
+
         #region Initialize & DeInitialize
         public MainResultBase(string[] _LastRecipeName)
         {
@@ -81,6 +84,7 @@ namespace KPVisionInspectionFramework
                 MainResultNavienWnd = new ucMainResultNavien(LastRecipeName);
                 MainResultNavienWnd.ScreenshotEvent += new ucMainResultNavien.ScreenshotHandler(ScreenShotSetSize);
                 MainResultNavienWnd.DIOResultEvent += new ucMainResultNavien.DIOResultHandler(SendDIOResultEvent);
+                MainResultNavienWnd.RecipeChangeEvent += new ucMainResultNavien.RecipeChangeHandler(RecipeChangeEvent);
                 panelMain.Controls.Add(MainResultNavienWnd);
             }
 
@@ -297,6 +301,7 @@ namespace KPVisionInspectionFramework
             if (_ProjectType == eProjectType.NONE)              MainResultNoneWnd.SetLastRecipeName(_LastRecipeName);
             else if (_ProjectType == eProjectType.TRIM_FORM)    MainResultTrimFormWnd.SetLastRecipeName(_LastRecipeName);
             else if (_ProjectType == eProjectType.BC_QCC)       MainResultCardManagerWnd.SetLastRecipeName(_LastRecipeName);
+            else if (ProjectType == eProjectType.NAVIEN)        MainResultNavienWnd.SetLastRecipeName(_LastRecipeName);
         }
         
         private void ScreenShot(string ImageSaveFile)
@@ -333,7 +338,7 @@ namespace KPVisionInspectionFramework
             }
         }
 
-        //LDH, 2019.03.20, 저장 Data Foler 지정 함수
+        //LDH, 2019.03.20, 저장 Data Folder 지정 함수
         public void SetDataFolderPath(string[] _FolderPath)
         {
             if (ProjectType == eProjectType.TRIM_FORM) MainResultTrimFormWnd.SetDataFolderPath(_FolderPath);
@@ -344,13 +349,31 @@ namespace KPVisionInspectionFramework
         public void SetLOTNum(string[] _LOTNum)
         {
             if (ProjectType == eProjectType.TRIM_FORM) MainResultTrimFormWnd.SetLOTNum(_LOTNum);
+            else if (ProjectType == eProjectType.NAVIEN) MainResultNavienWnd.SetLOTNum(_LOTNum);
         }
 		
-		//LDH, 2019.06.10, Result 사용 Falg 받아오기
+		//LDH, 2019.06.10, Result 사용 Flag 받아오기
         public void GetUseResult(int _ID, out string _UseResultFlag)
         {
             _UseResultFlag = "1";
-            if (ProjectType == eProjectType.NAVIEN) MainResultNavienWnd.GetUseResultFlag(_ID, out _UseResultFlag);
+            if (ProjectType == eProjectType.NAVIEN) MainResultNavienWnd.GetUseResultFlag(out _UseResultFlag);
+        }
+
+        //LDH, 2019.09.17, Insepction Time 체크용 시간 설정
+        public void SetCycleTime()
+        {
+            DateTime dateTime = DateTime.Now;
+
+            if (ProjectType == eProjectType.NAVIEN) MainResultNavienWnd.InspStartTime = dateTime;
+        }
+
+        public bool GetBarcodeStatus()
+        {
+            bool _Result = false;
+
+            if (ProjectType == eProjectType.NAVIEN) _Result = MainResultNavienWnd.GetBarcodeStatus();
+
+            return _Result;
         }
     }
 }

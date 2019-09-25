@@ -52,6 +52,7 @@
             this.ribbonPanelSystem = new System.Windows.Forms.RibbonPanel();
             this.rbExit = new System.Windows.Forms.RibbonButton();
             this.panelMain = new System.Windows.Forms.Panel();
+            this.rbSave = new System.Windows.Forms.RibbonButton();
             this.SuspendLayout();
             // 
             // ribbonMain
@@ -183,6 +184,7 @@
             this.ribbonPanelData.Items.Add(this.rbLog);
             this.ribbonPanelData.Items.Add(this.rbHistory);
             this.ribbonPanelData.Items.Add(this.rbFolder);
+            this.ribbonPanelData.Items.Add(this.rbSave);
             this.ribbonPanelData.Text = "Data";
             // 
             // rbRecipe
@@ -247,6 +249,13 @@
             this.panelMain.Size = new System.Drawing.Size(1351, 846);
             this.panelMain.TabIndex = 2;
             // 
+            // rbSave
+            // 
+            this.rbSave.Image = ((System.Drawing.Image)(resources.GetObject("rbSave.Image")));
+            this.rbSave.SmallImage = ((System.Drawing.Image)(resources.GetObject("rbSave.SmallImage")));
+            this.rbSave.Text = "Save ";
+            this.rbSave.Click += new System.EventHandler(this.rbSave_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
@@ -294,6 +303,7 @@
         private System.Windows.Forms.RibbonButton rbAlign;
         private System.Windows.Forms.RibbonButton rbSerial;
         private System.Windows.Forms.RibbonButton rbMapData;
+        private System.Windows.Forms.RibbonButton rbSave;
     }
 }
 

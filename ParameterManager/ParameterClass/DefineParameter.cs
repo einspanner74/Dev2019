@@ -30,17 +30,17 @@ namespace ParameterManager
     /// <summary>
     /// 
     /// </summary>
-    public enum eMainProcCmd { TRG = 1, REQUEST, RCP_CHANGE, RECV_DATA, ACK_COMPLETE, ACK_FAIL }
+    public enum eMainProcCmd { TRG = 1, REQUEST, RCP_CHANGE, RECV_DATA, ACK_COMPLETE, ACK_FAIL, START }
 
     /// <summary>
     /// Inspection Window Command
     /// </summary>
-    public enum eIWCMD      { TEACHING = 1, TEACH_OK, TEACH_SAVE, ONESHOT_INSP, SET_RESULT, SEND_DATA, INSP_COMPLETE, LIGHT_CONTROL  }
+    public enum eIWCMD      { TEACHING = 1, TEACH_OK, TEACH_SAVE, ONESHOT_INSP, SET_RESULT, SEND_DATA, INSP_COMPLETE, LIGHT_CONTROL, NOTICE_WINDOW }
 
     /// <summary>
     /// Inspection System Manager To Main Command
     /// </summary>
-    public enum eISMCMD     { TEACHING_STATUS = 1, TEACHING_SAVE, MAPDATA_SAVE, SET_RESULT, SEND_DATA, INSP_COMPLETE, LIGHT_CONTROL }
+    public enum eISMCMD     { TEACHING_STATUS = 1, TEACHING_SAVE, MAPDATA_SAVE, SET_RESULT, SEND_DATA, INSP_COMPLETE, LIGHT_CONTROL, NOTICE_WINDOW }
 
     /// <summary>
     /// Teaching Step

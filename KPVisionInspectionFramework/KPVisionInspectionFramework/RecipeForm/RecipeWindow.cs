@@ -303,6 +303,25 @@ namespace KPVisionInspectionFramework
             }
         }
 
+        //LDH, 2019.09.08, Navien용 Recipe 생성 유무 확인
+        public bool CheckRecipeExist(string _RecipeName, out string _RecipeNameTemp)
+        {
+            bool _RecipeExist = false;
+            _RecipeNameTemp = "";
+
+            foreach (string ListItem in listBoxRecipe.Items)
+            {
+                if (ListItem.Substring(0, 5) == _RecipeName)
+                {
+                    _RecipeExist = true;
+                    _RecipeNameTemp = ListItem;
+                    break;
+                }
+            }
+
+            return _RecipeExist;
+        }
+
         //LDH, 2019.01.11, Recipe Copy할 때만 매개변수 사용
         private void RecipeChange()
         {

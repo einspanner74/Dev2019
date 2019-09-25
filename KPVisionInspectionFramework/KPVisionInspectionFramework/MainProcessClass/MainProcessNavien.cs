@@ -116,7 +116,7 @@ namespace KPVisionInspectionFramework
         {
             switch (_BitNum)
             {
-                case DIO_DEF.IN_TRG: TriggerOn(0); break;
+                case DIO_DEF.IN_TRG: OnMainProcessCommand(eMainProcCmd.START, true); break;
                 case DIO_DEF.IN_RESET: Reset(0); break;
             }
         }

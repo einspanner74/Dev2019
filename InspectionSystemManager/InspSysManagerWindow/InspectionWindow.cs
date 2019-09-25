@@ -246,6 +246,11 @@ namespace InspectionSystemManager
                 btnImageResultDisplay.Visible = false;
                 IsResultDisplay = true;
             }
+
+            else if(eProjectType.NAVIEN == _ProjectType)
+            {
+                btnAutoDelete.Visible = false;
+            }
         }
 
         public void InitializeResolution(double _ResolutionX, double _ResolutionY)
@@ -553,7 +558,7 @@ namespace InspectionSystemManager
         {
 #if _RELEASE
             //Password 입력 후 입장~
-            if (ProjectType == eProjectType.TRIM_FORM)
+            if (ProjectType == eProjectType.TRIM_FORM || ProjectType == eProjectType.NAVIEN)
             {
                 KeypadWnd.Initialize(false, true);
                 KeypadWnd.SetPassword(Password);
@@ -563,6 +568,9 @@ namespace InspectionSystemManager
                 if (KeypadWnd.DialogResult == DialogResult.Cancel) { return; }
                 if (KeypadWnd.KeyPadCharactor != Password && KeypadWnd.KeyPadCharactor != "510704") { MessageBox.Show("비밀번호가 틀렸습니다."); return; }
             }
+
+            //LDH, 2019.08.29, 관리자모드 상태 표시
+            if (ProjectType == eProjectType.NAVIEN) InspectionWindowEvent(eIWCMD.NOTICE_WINDOW);
 #endif
 
             ContinuesGrabStop();

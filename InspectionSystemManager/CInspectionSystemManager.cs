@@ -265,6 +265,7 @@ namespace InspectionSystemManager
                 case eIWCMD.SEND_DATA:      SendResultData(_Value);          break;
                 case eIWCMD.SET_RESULT:     SetResultData(_Value);           break;
                 case eIWCMD.INSP_COMPLETE:  InspectionComplete(_Value, _ID); break;
+                case eIWCMD.NOTICE_WINDOW:  NoticeWindow(_Value);            break;
             }
         }
 
@@ -309,6 +310,12 @@ namespace InspectionSystemManager
         {
             var _InspSysManagerEvent = InspSysManagerEvent;
             _InspSysManagerEvent?.Invoke(eISMCMD.INSP_COMPLETE, _Value, _ID);
+        }
+
+        private void NoticeWindow(object _Value)
+        {
+            var _InspSysManagerEvent = InspSysManagerEvent;
+            _InspSysManagerEvent?.Invoke(eISMCMD.NOTICE_WINDOW, _Value);
         }
         #endregion Event : Inspection Window Event
 

@@ -35,6 +35,7 @@ namespace KPVisionInspectionFramework
         private CHistoryManager             HistoryManager;
         private FolderPathWindow            FolderPathWnd;
         private MainLogoWindow              MainLogoWnd;
+        private NoticeWindow                NoticeWnd;
 
         private string ProjectName;
         private bool IsIOBoardUsable;
@@ -197,6 +198,8 @@ namespace KPVisionInspectionFramework
                 rbHistory.Visible = false;
                 rbFolder.Visible = false;
                 this.Size = new Size(1920, 1080);
+
+                NoticeWnd = new NoticeWindow();
             }
 
             UpdateRibbonRecipeName(ParamManager.SystemParam.LastRecipeName[0]);
@@ -221,7 +224,11 @@ namespace KPVisionInspectionFramework
             #region Result Window Initialize
             //Result Initialize
             ResultBaseWnd = new MainResultBase(ParamManager.SystemParam.LastRecipeName);
-            if ((eProjectType)ParamManager.SystemParam.ProjectType == eProjectType.NAVIEN) ResultBaseWnd.SendDIOResultEvent += new MainResultBase.SendDIOResultHandler(SendDIOResult);
+            if ((eProjectType)ParamManager.SystemParam.ProjectType == eProjectType.NAVIEN)
+            {
+                ResultBaseWnd.SendDIOResultEvent += new MainResultBase.SendDIOResultHandler(SendDIOResult);
+                ResultBaseWnd.RecipeChangeEvent += new MainResultBase.RecipeChangeHandler(RecipeChange);
+            }
             ResultBaseWnd.Initialize(this, ParamManager.SystemParam.ProjectType);
             ResultBaseWnd.SetWindowLocation(ParamManager.SystemParam.ResultWindowLocationX, ParamManager.SystemParam.ResultWindowLocationY);
             ResultBaseWnd.SetWindowSize(ParamManager.SystemParam.ResultWindowWidth, ParamManager.SystemParam.ResultWindowHeight);
@@ -297,6 +304,12 @@ namespace KPVisionInspectionFramework
 
             RecipeWnd.RecipeChangeEvent -= new RecipeWindow.RecipeChangeHandler(RecipeChange);
             RecipeWnd.RecipeCopyEvent -= new RecipeWindow.RecipeCopyHandler(RecipeCopy);
+
+            if ((int)eProjectType.NAVIEN == ParamManager.SystemParam.ProjectType)
+            {
+                for (int iLoopCount = 0; iLoopCount < ParamManager.SystemParam.LastRecipeName.Length; ++iLoopCount)
+                    ParamManager.SystemParam.LastRecipeName[iLoopCount] = "[Default]";
+            }
 
             ParamManager.DeInitialize();
 
@@ -428,20 +441,7 @@ namespace KPVisionInspectionFramework
         #region Riboon Button Event
         private void rbStart_Click(object sender, EventArgs e)
         {
-            for (int iLoopCount = 0; iLoopCount < ParamManager.SystemParam.InspSystemManagerCount; ++iLoopCount)
-                InspSysManager[iLoopCount].SetSystemMode(eSysMode.AUTO_MODE);
-
-            CParameterManager.SystemMode = eSysMode.AUTO_MODE;
-
-            if (eProjectType.NAVIEN != (eProjectType)ParamManager.SystemParam.ProjectType)
-            {
-                rbStart.Enabled = false;
-                rbLight.Enabled = false;
-            }
-
-            MainProcess.AutoMode(true);
-            ResultBaseWnd.SetAutoMode(true);
-            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "MainProcess AutoMode ON", CLogManager.LOG_LEVEL.MID);
+            MainProcessStartOn();
         }
 
         private void rbStop_Click(object sender, EventArgs e)
@@ -536,7 +536,16 @@ namespace KPVisionInspectionFramework
             }
             FolderPathWnd.ShowDialog();
         }
-		
+
+        private void rbSave_Click(object sender, EventArgs e)
+        {
+            //LDH, 2019.09.18, 전체저장
+            for(int iLoopCount = 0; iLoopCount < InspSysManager.Count(); iLoopCount++)
+            {
+                TeachingParameterSave(iLoopCount);
+            }
+        }
+
         private void rbExit_Click(object sender, EventArgs e)
         {
             try
@@ -594,6 +603,7 @@ namespace KPVisionInspectionFramework
                 case eISMCMD.SET_RESULT:        SetResultData(_Value);                          break;
                 case eISMCMD.INSP_COMPLETE:     InspectionComplete(_Value, _ID);                break;
                 case eISMCMD.LIGHT_CONTROL:     LightControl(_Value, _ID);                      break;
+                case eISMCMD.NOTICE_WINDOW:     SetNoticeWindow(_Value);                           break;
             }
         }
 
@@ -664,6 +674,26 @@ namespace KPVisionInspectionFramework
         {
             bool _Result = true;
 
+            if((int)eProjectType.NAVIEN == ParamManager.SystemParam.ProjectType)
+            {
+                NoticeWnd.HideWindow();
+
+                string ReturnRecipeName = "";
+                //LDH, 2019.09.17, Recipe가 생성되어 있는지 체크
+                if (RecipeWnd.CheckRecipeExist(_RecipeName, out ReturnRecipeName))
+                {
+                    //LDH, 2019.09.03, 사용하던 Recipe명과 같은지 확인
+                    if (ParamManager.SystemParam.LastRecipeName[_ID] == ReturnRecipeName) return true;
+
+                    _RecipeName = ReturnRecipeName;
+                }
+                else
+                {
+                    MessageBox.Show("불러올 Recipe가 없습니다.\nRecipe를 새로 생성하세요.");
+                    return false;
+                }
+            }
+
             if (true == ParamManager.RecipeReload(_ID, _RecipeName))
             {
                 //LDH, 2018.07.26, Light File 따로 관리
@@ -677,7 +707,7 @@ namespace KPVisionInspectionFramework
 
                     if ((eProjectType)ParamManager.SystemParam.ProjectType == eProjectType.NAVIEN)
                     {
-                        ResultBaseWnd.ClearResultData(iLoopCount.ToString() + ParamManager.InspParam[iLoopCount].ResultUseFlag);
+                        ResultBaseWnd.ClearResultData(ParamManager.InspParam[iLoopCount].ResultUseFlag);
                     }
                 }
 
@@ -718,6 +748,26 @@ namespace KPVisionInspectionFramework
             {
                 rbLabelCurrentRecipe.Text = _RecipeName + " ";
             }
+            else if((eProjectType)ParamManager.SystemParam.ProjectType == eProjectType.NAVIEN)
+            {
+                string[] _ProductInfo = new string[2];
+                if (_RecipeName.Length > 14)
+                {
+                    _ProductInfo[0] = _RecipeName.Substring(6, 9);
+                    _ProductInfo[1] = _RecipeName.Substring(14, _RecipeName.Length - 14);
+
+                    rbLabelCurrentRecipe.Text = "Recipe : " + _RecipeName.Substring(0, 5) + " ";
+                }
+                else
+                {
+                    _ProductInfo[0] = "";
+                    _ProductInfo[1] = "";
+
+                    rbLabelCurrentRecipe.Text = "Recipe : " + _RecipeName + " ";
+                }
+
+                if (ResultBaseWnd != null) ResultBaseWnd.SetLOTNum(_ProductInfo);                
+            }
             else rbLabelCurrentRecipe.Text = "Recipe : " + _RecipeName + " ";
         }
         #endregion Sub Window Events
@@ -731,6 +781,7 @@ namespace KPVisionInspectionFramework
                 case eMainProcCmd.REQUEST:      MainProcessDataRequest(_Value);  break;
                 case eMainProcCmd.RCP_CHANGE:   MainProcessRcpChange(_Value);    break;
                 case eMainProcCmd.RECV_DATA:    MainProcessEthernetRecv(_Value); break;
+                case eMainProcCmd.START:        MainProcessStartOn();            break;
             }
         }
 
@@ -741,6 +792,8 @@ namespace KPVisionInspectionFramework
             int _ID = Convert.ToInt32(_Value);
             CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("Main : Trigger{0} On Event", _ID + 1));
             InspSysManager[_ID].TriggerOn();
+
+            if (eProjectType.NAVIEN == (eProjectType)ParamManager.SystemParam.ProjectType) ResultBaseWnd.SetCycleTime();
         }
 
         private bool MainProcessRcpChange(object _Value)
@@ -794,6 +847,39 @@ namespace KPVisionInspectionFramework
             }
         }
 
+        private void MainProcessStartOn()
+        {
+            bool _InspFlag = true;
+
+            if (eProjectType.NAVIEN == (eProjectType)ParamManager.SystemParam.ProjectType)
+            {
+                if (!NoticeWnd.GetWindowStatus())
+                {
+                    if (!ResultBaseWnd.GetBarcodeStatus()) { MessageBox.Show("Barcode를 입력하세요."); _InspFlag = false; }
+                }
+            }
+            else
+            {
+                if (_InspFlag)
+                {
+                    rbStart.Enabled = false;
+                    rbLight.Enabled = false;
+                }
+            }
+
+            if (_InspFlag)
+            {
+                for (int iLoopCount = 0; iLoopCount < ParamManager.SystemParam.InspSystemManagerCount; ++iLoopCount)
+                    InspSysManager[iLoopCount].SetSystemMode(eSysMode.AUTO_MODE);
+
+                CParameterManager.SystemMode = eSysMode.AUTO_MODE;
+
+                MainProcess.AutoMode(true);
+                ResultBaseWnd.SetAutoMode(true);
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "MainProcess AutoMode ON", CLogManager.LOG_LEVEL.MID);
+            }
+        }
+
         private void SendResultData(object _Result)
         {
             SendResultParameter _SendResParam = _Result as SendResultParameter;
@@ -823,6 +909,11 @@ namespace KPVisionInspectionFramework
             }
         }
 
+        private void SetNoticeWindow(object _Value)
+        {
+            NoticeWnd.ShowWindow();
+        }
+
         private void SetDataFolderPath(string[] _DataPath)
         {
             for(int iLoopCount = 0; iLoopCount < _DataPath.Count(); iLoopCount++)
@@ -845,13 +936,6 @@ namespace KPVisionInspectionFramework
                 if (_LastResult) MainProcess.StatusMode(NavienCmd.OUT_GOOD, true);
                 else             MainProcess.StatusMode(NavienCmd.OUT_ERROR, true);
             }
-        }
-
-        public void SaveUseResult(int _ID, string _UseResultFlag)
-        {
-            char[] _ResultArr = _UseResultFlag.ToCharArray();
-
-            //ParamManager.InspSysManagerParam[_ID].
         }
         #endregion Main Process
     }

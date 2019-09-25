@@ -19,6 +19,12 @@ namespace KPVisionInspectionFramework
 {
     public partial class ucMainResultNavien : UserControl
     {
+        private DateTime CycleStartTime;
+        public DateTime InspStartTime
+        {
+            set { CycleStartTime = value; }
+        }
+
         #region Count & Yield Variable
 
         private bool AutoModeFlag = false;
@@ -29,27 +35,29 @@ namespace KPVisionInspectionFramework
 
         private string[] LastRecipeName;
 
-        string[] LeftHeaderName;
-        string[] RightHeaderName;
+        string[] GridViewHeaderName;
 
         string ProductCode = "";
 
-        string[] CSVData = new string[14];
+        string[] CSVData = new string[22];
         string[] CSVHeader;
 
-        bool[] LeftResultUseFlag;
-        bool[] RightResultUseFlag;
+        bool[] ResultUseFlag;
+        bool[] InspCompleteFlag;
+        bool[] LastIsGoodFlag;
 
-        bool[] LastIsGoodFlag = new bool[2];
-
-        GradientLabel[] GradientLabelResultLeft;
-        GradientLabel[] GradientLabelResultRight;
+        GradientLabel[] GradientLabelResult;
 
         public delegate void ScreenshotHandler(string ScreenshotImagePath, Size ScreenshotSize);
         public event ScreenshotHandler ScreenshotEvent;
 
         public delegate void DIOResultHandler(bool _LastResult);
         public event DIOResultHandler DIOResultEvent;
+
+        public delegate bool RecipeChangeHandler(int _ID, string _RecipeCode);
+        public event RecipeChangeHandler RecipeChangeEvent;
+
+        private object lockObject = new object();
 
         public ucMainResultNavien(string[] _LastRecipeName)
         {
@@ -58,30 +66,33 @@ namespace KPVisionInspectionFramework
             LastRecipeName = new string[_LastRecipeName.Count()];
             SetLastRecipeName(LastRecipeName);
 
-            LeftHeaderName = new string[] { "Num", "Min", "Max", "Length" };
-            RightHeaderName = new string[] { "Num", "Min", "Max", "Length" };
+            GridViewHeaderName = new string[] { "Num", "Min", "Max", "Length" };
+            CSVHeader = new string[22] { "바코드번호", "검사일자", "검사시작시작", "CT(초)", "검사여부",
+                                         "오리피스1", "오리피스1 상한 Spec", "오리피스1 하한 Spec", "오리피스1 결과",
+                                         "오리피스2", "오리피스2 상한 Spec", "오리피스2 하한 Spec", "오리피스2 결과",
+                                         "오리피스3", "오리피스3 상한 Spec", "오리피스3 하한 Spec", "오리피스3 결과",
+                                         "오리피스4", "오리피스4 상한 Spec", "오리피스4 하한 Spec", "오리피스4 결과", "종합판정"};
+            GradientLabelResult = new GradientLabel[] { gradientLabelResult1, gradientLabelResult2, gradientLabelResult3, gradientLabelResult4, gradientLabelTotalResult };
+           
+            SetGridViewHeader(dataGridViewResult, GridViewHeaderName.Count(), GridViewHeaderName);
+            SetGridViewRowInit(dataGridViewResult, 4);
+            dataGridViewResult.ClearSelection();
 
-            CSVHeader = new string[14] { "일시", "Barcode", "오링Min", "오링Max", "오리피스1-1", "오리피스1-2", "볼트1", "볼트2", "오리피스2", "패킹2", "패킹1-가Min", "패킹1-가Max", "패킹1-나Min", "패킹1-나Max" };
+            LastIsGoodFlag = new bool[2];
+            for (int iLoopCount = 0; iLoopCount < LastIsGoodFlag.Count(); iLoopCount++) { LastIsGoodFlag[iLoopCount] = true; }
 
-            GradientLabelResultRight = new GradientLabel[] { gradientLabelResultRight1, gradientLabelResultRight2, gradientLabelResultRight3 };
-            GradientLabelResultLeft = new GradientLabel[] { gradientLabelResultLeft1, gradientLabelResultLeft2 };
+            ResultUseFlag = new bool[GradientLabelResult.Count() - 1];
+            for (int iLoopCount = 0; iLoopCount < ResultUseFlag.Count(); iLoopCount++) { ResultUseFlag[iLoopCount] = true; }
 
-            SetGridViewHeader(dataGridViewLeft, LeftHeaderName.Count(), LeftHeaderName);
-            SetGridViewHeader(dataGridViewRight, RightHeaderName.Count(), RightHeaderName);
+            InspCompleteFlag = new bool[2];
+            for (int iLoopCount = 0; iLoopCount <2; iLoopCount++) { InspCompleteFlag[iLoopCount] = false; }
+        }
 
-            SetGridViewRowInit(dataGridViewLeft, 3);
-            SetGridViewRowInit(dataGridViewRight, 6);
-
-            dataGridViewLeft.ClearSelection();
-            dataGridViewRight.ClearSelection();
-
-            LastIsGoodFlag[0] = true;
-            LastIsGoodFlag[1] = true;
-
-            LeftResultUseFlag = new bool[GradientLabelResultLeft.Count()];
-            RightResultUseFlag = new bool[GradientLabelResultRight.Count()];
-            for (int iLoopCount = 0; iLoopCount < LeftResultUseFlag.Count(); iLoopCount++) { LeftResultUseFlag[iLoopCount] = true; }
-            for (int iLoopCount = 0; iLoopCount < RightResultUseFlag.Count(); iLoopCount++) { RightResultUseFlag[iLoopCount] = true; }
+        #region Initialize & Clear
+        public void SetLOTNum(string[] _ProductInfo)
+        {
+            textBoxKITCode.Text = _ProductInfo[0];
+            textBoxProduct.Text = _ProductInfo[1];
         }
 
         private void SetGridViewHeader(DataGridView _GridView, int _HeaderCount, string[] _HeaderName)
@@ -93,7 +104,7 @@ namespace KPVisionInspectionFramework
                 _GridView.Columns[iLoopCount].Name = _HeaderName[iLoopCount];
 
                 if (iLoopCount == 0) _GridView.Columns[iLoopCount].Width = 50;
-                else _GridView.Columns[iLoopCount].Width = 100;
+                else _GridView.Columns[iLoopCount].Width = 115;
             }
 
             _GridView.Refresh();
@@ -112,92 +123,100 @@ namespace KPVisionInspectionFramework
 
         public void ClearResult(string _GridViewNum)
         {
-            if (_GridViewNum == "") _GridViewNum = "2";
+            if (_GridViewNum == "") _GridViewNum = "0";
 
             char[] _GridViewNumArr = _GridViewNum.ToCharArray();
-
-            switch(_GridViewNumArr[0].ToString())
+            
+            if(_GridViewNumArr.Count() == 1)
             {
-                case "0": ClearLeftResult(); break;
-                case "1": ClearRightResult(); break;
-                case "2": ClearLeftResult(); ClearRightResult(); break;
-            }
-
-            if(_GridViewNumArr.Count() != 1)
-            {
-                switch(_GridViewNumArr[0].ToString())
-                {
-                    case "0": SetLeftResultUseFlag(_GridViewNumArr); break;
-                    case "1": SetRightResultUseFlag(_GridViewNumArr); break;
-                }
-            }
-        }
-
-        private void ClearLeftResult()
-        {
-            LastIsGoodFlag[0] = true;
-
-            for (int iLoopCount = 0; iLoopCount < dataGridViewLeft.RowCount; iLoopCount++)
-            {
-                for (int jLoopCount = 1; jLoopCount < dataGridViewLeft.ColumnCount; jLoopCount++)
-                {
-                    dataGridViewLeft.Rows[iLoopCount].Cells[jLoopCount].Value = "-";
-                }
-
-                ControlInvoke.GridViewRowsColor(dataGridViewLeft, iLoopCount, Color.FromKnownColor(KnownColor.Window), Color.Black);
-            }
-        }
-
-        private void ClearRightResult()
-        {
-            LastIsGoodFlag[1] = true;
-
-            for (int iLoopCount = 0; iLoopCount < dataGridViewRight.RowCount; iLoopCount++)
-            {
-                for (int jLoopCount = 1; jLoopCount < dataGridViewRight.ColumnCount; jLoopCount++)
-                {
-                    dataGridViewRight.Rows[iLoopCount].Cells[jLoopCount].Value = "-";
-                }
-
-                ControlInvoke.GridViewRowsColor(dataGridViewRight, iLoopCount, Color.FromKnownColor(KnownColor.Window), Color.Black);
-            }
-        }
-
-        public void GetUseResultFlag(int _ID, out string _UseResultFalg)
-        {
-            string UseFlagTemp = "";
-
-            if (_ID == 0)
-            {
-                for (int iLoopCount = 0; iLoopCount < LeftResultUseFlag.Count(); iLoopCount++)
-                {
-                    UseFlagTemp = UseFlagTemp + Convert.ToInt16(LeftResultUseFlag[iLoopCount]);
-                }
+                ClearGridView(int.Parse(_GridViewNumArr[0].ToString()) - 1);
             }
             else
             {
-                for (int iLoopCount = 0; iLoopCount < RightResultUseFlag.Count(); iLoopCount++)
+                ClearGridView(-1);
+                SetUseResultFlag(_GridViewNumArr);
+
+                for (int iLoopCount = 0; iLoopCount < CSVData.Count(); iLoopCount++)
                 {
-                    UseFlagTemp = UseFlagTemp + Convert.ToInt16(RightResultUseFlag[iLoopCount]);
+                    CSVData[iLoopCount] = null;
                 }
             }
-
-            _UseResultFalg = UseFlagTemp;
         }
 
-        private void dataGridViewLeft_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            dataGridViewLeft.ClearSelection();
+        private void ClearGridView(int _RowIndex)
+        {            
+            if (_RowIndex != -1)
+            {
+                for (int jLoopCount = 1; jLoopCount < dataGridViewResult.ColumnCount; jLoopCount++)
+                {
+                    dataGridViewResult.Rows[_RowIndex].Cells[jLoopCount].Value = "-";
+                }
+
+                ControlInvoke.GridViewRowsColor(dataGridViewResult, _RowIndex, Color.FromKnownColor(KnownColor.Window), Color.Black);
+            }
+            else
+            {
+                for(int iLoopCount = 0; iLoopCount < 2; iLoopCount++) LastIsGoodFlag[iLoopCount] = true;
+
+                for (int iLoopCount = 0; iLoopCount < dataGridViewResult.RowCount; iLoopCount++)
+                {
+                    for (int jLoopCount = 1; jLoopCount < dataGridViewResult.ColumnCount; jLoopCount++)
+                    {
+                        dataGridViewResult.Rows[iLoopCount].Cells[jLoopCount].Value = "-";
+                    }
+
+                    ControlInvoke.GridViewRowsColor(dataGridViewResult, iLoopCount, Color.FromKnownColor(KnownColor.Window), Color.Black);
+                }
+            }
         }
 
-        private void dataGridViewRight_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void ClearDataArr()
         {
-            dataGridViewRight.ClearSelection();
+            //검사완료 Flag Arr Clear
+            for (int iLoopCount = 0; iLoopCount < 2; iLoopCount++)
+            {
+                InspCompleteFlag[iLoopCount] = false;
+            }
+
+            //CSV Data Arr Clear
+            for (int iLoopCount = 0; iLoopCount < CSVData.Count(); iLoopCount++)
+            {
+                CSVData[iLoopCount] = null;
+            }
+        }
+
+        private void ClearBarcode()
+        {
+            if (textBoxBarcode.InvokeRequired)
+            {
+                textBoxBarcode.Invoke(new MethodInvoker(delegate () { textBoxBarcode.Clear(); }));
+            }
+            else
+            {
+                textBoxBarcode.Clear();
+            }
+        }
+        #endregion Initialize & Clear
+
+        #region Control Event
+        private void dataGridViewResult_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            dataGridViewResult.ClearSelection();
         }
 
         private void textBoxBarcode_KeyDown(object sender, KeyEventArgs e)
         {
             ProductCode = textBoxBarcode.Text;
+
+            if (ProductCode.Length > 17)
+            {
+                for (int iLoopCount = 0; iLoopCount < LastRecipeName.Count(); iLoopCount++)
+                {
+                    bool _Result = RecipeChangeEvent(iLoopCount, ProductCode.Substring(0, 5));
+
+                    if (!_Result) { ClearBarcode(); break; }
+                }
+            }
 
             if (e.KeyCode == Keys.Enter)
             {
@@ -206,79 +225,79 @@ namespace KPVisionInspectionFramework
             }
         }
 
-        private void SetLeftResultUseFlag(char[] _UseResultFlag)
-        {
-            int _FlagTemp = 0;
-            for(int iLoopCount = 0; iLoopCount < LeftResultUseFlag.Count(); iLoopCount++)
-            {
-                try   { _FlagTemp = Convert.ToInt32(_UseResultFlag[iLoopCount + 1].ToString()); }
-                catch { _FlagTemp = 1; }
-
-                LeftResultUseFlag[iLoopCount] = Convert.ToBoolean(_FlagTemp);
-                SetGradientLabelLeftResult(iLoopCount);
-            }
-        }
-
-        private void gradientLabelLeftResult_DoubleClick(object sender, EventArgs e)
+        private void gradientLabelResult_DoubleClick(object sender, EventArgs e)
         {
             int _Tag = Convert.ToInt32(((GradientLabel)sender).Tag);
 
-            LeftResultUseFlag[_Tag] = !LeftResultUseFlag[_Tag];
-            SetGradientLabelLeftResult(_Tag);
+            ResultUseFlag[_Tag] = !ResultUseFlag[_Tag];
+            SetGradientLabelUse(_Tag);
         }
-
-        private void SetGradientLabelLeftResult(int _ResultNum)
-        {
-            if (LeftResultUseFlag[_ResultNum])
-            {
-                ControlInvoke.GradientLabelColor(GradientLabelResultLeft[_ResultNum], Color.White, Color.White);
-                ControlInvoke.GradientLabelText(GradientLabelResultLeft[_ResultNum], "-", Color.Black);
-            }
-            else
-            {
-                ControlInvoke.GradientLabelColor(GradientLabelResultLeft[_ResultNum], Color.White, Color.DarkGray);
-                ControlInvoke.GradientLabelText(GradientLabelResultLeft[_ResultNum], "-", Color.Black);
-            }
-        }
-
-        private void SetRightResultUseFlag(char[] _UseResultFlag)
-        {
-            int _FlagTemp = 0;
-            for (int iLoopCount = 0; iLoopCount < RightResultUseFlag.Count(); iLoopCount++)
-            {
-                try   { _FlagTemp = Convert.ToInt32(_UseResultFlag[iLoopCount + 1].ToString()); }
-                catch { _FlagTemp = 1; }
-
-                RightResultUseFlag[iLoopCount] = Convert.ToBoolean(_FlagTemp);
-                SetGradientLabelRightResult(iLoopCount);
-            }
-        }
-
-        private void gradientLabelRightResult_DoubleClick(object sender, EventArgs e)
-        {
-            int _Tag = Convert.ToInt32(((GradientLabel)sender).Tag);
-
-            RightResultUseFlag[_Tag] = !RightResultUseFlag[_Tag];
-            SetGradientLabelRightResult(_Tag);
-        }
-
-        private void SetGradientLabelRightResult(int _ResultNum)
-        {
-            if (RightResultUseFlag[_ResultNum])
-            {
-                ControlInvoke.GradientLabelColor(GradientLabelResultRight[_ResultNum], Color.White, Color.White);
-                ControlInvoke.GradientLabelText(GradientLabelResultRight[_ResultNum], "-", Color.Black);
-            }
-            else
-            {
-                ControlInvoke.GradientLabelColor(GradientLabelResultRight[_ResultNum], Color.White, Color.DarkGray);
-                ControlInvoke.GradientLabelText(GradientLabelResultRight[_ResultNum], "-", Color.Black);
-            }
-        }
+        #endregion Control Event
 
         public void SetAutoMode(bool _AutoModeFlag)
         {
             AutoModeFlag = _AutoModeFlag;
+        }
+
+        public bool GetBarcodeStatus()
+        {
+            bool _Result = false;
+            if (textBoxBarcode.Text != "") _Result = true;
+
+            return _Result;
+        }
+
+        private void SetUseResultFlag(char[] _UseResultFlag)
+        {
+            int _FlagTemp = 0;
+            for(int iLoopCount = 0; iLoopCount < ResultUseFlag.Count(); iLoopCount++)
+            {
+                try   { _FlagTemp = Convert.ToInt32(_UseResultFlag[iLoopCount].ToString()); }
+                catch { _FlagTemp = 1; }
+
+                ResultUseFlag[iLoopCount] = Convert.ToBoolean(_FlagTemp);
+                SetGradientLabelUse(iLoopCount);
+            }
+        }
+
+        public void GetUseResultFlag(out string _UseResultFlag)
+        {
+            string UseFlagTemp = "";
+
+            for (int iLoopCount = 0; iLoopCount < ResultUseFlag.Count(); iLoopCount++)
+            {
+                UseFlagTemp = UseFlagTemp + Convert.ToInt16(ResultUseFlag[iLoopCount]);
+            }
+
+            _UseResultFlag = UseFlagTemp;
+        }
+
+        private void SetGradientLabelUse(int _ResultNum)
+        {
+            if (ResultUseFlag[_ResultNum])
+            {
+                ControlInvoke.GradientLabelColor(GradientLabelResult[_ResultNum], Color.White, Color.White);
+                ControlInvoke.GradientLabelText(GradientLabelResult[_ResultNum], "-", Color.Black);
+            }
+            else
+            {
+                ControlInvoke.GradientLabelColor(GradientLabelResult[_ResultNum], Color.White, Color.DarkGray);
+                ControlInvoke.GradientLabelText(GradientLabelResult[_ResultNum], "X", Color.Black);
+            }
+        }
+
+        private void SetGradientLabelResult(int _ResultIndex, bool _ResultFlag)
+        {
+            if (_ResultFlag)
+            {
+                ControlInvoke.GradientLabelText(GradientLabelResult[_ResultIndex], "OK", Color.White);
+                ControlInvoke.GradientLabelColor(GradientLabelResult[_ResultIndex], Color.DarkGreen, Color.FromArgb(0, 44, 0));
+            }
+            else
+            {
+                ControlInvoke.GradientLabelText(GradientLabelResult[_ResultIndex], "NG", Color.White);
+                ControlInvoke.GradientLabelColor(GradientLabelResult[_ResultIndex], Color.Maroon, Color.FromArgb(49, 0, 0));
+            }
         }
 
         public void SetLastRecipeName(string[] _LastRecipeName)
@@ -292,8 +311,7 @@ namespace KPVisionInspectionFramework
         public void SetResult(SendResultParameter _ResultParam)
         {
             //lock
-            if (_ResultParam.ID == 0) SetLeftResultData(_ResultParam);
-            else SetRightResultData(_ResultParam);
+            SetResultData(_ResultParam);
         }
 
         private void WriteCSVFile()
@@ -301,16 +319,36 @@ namespace KPVisionInspectionFramework
             CSVManagerStringArr SaveCSVControl = new CSVManagerStringArr();
 
             DateTime dateTime = DateTime.Now;
-            string SaveImageFilePath = @"D:\VisionInspectionData\NavienInspection\CSVData";
-            if (false == Directory.Exists(SaveImageFilePath)) Directory.CreateDirectory(SaveImageFilePath);
-            SaveImageFilePath = String.Format("{0}\\{1:D4}\\{2:D2}", SaveImageFilePath, dateTime.Year, dateTime.Month);
-            if (false == Directory.Exists(SaveImageFilePath)) Directory.CreateDirectory(SaveImageFilePath);
-            SaveImageFilePath = String.Format("{0}\\VisionData_{1:D4}{2:D2}{3:D2}.csv", SaveImageFilePath, dateTime.Year, dateTime.Month, dateTime.Day);
+            string SaveCSVFilePath = @"D:\VisionInspectionData\NavienInspection\CSVData";
+            if (false == Directory.Exists(SaveCSVFilePath)) Directory.CreateDirectory(SaveCSVFilePath);
+            SaveCSVFilePath = String.Format("{0}\\{1:D4}\\{2:D2}", SaveCSVFilePath, dateTime.Year, dateTime.Month);
+            if (false == Directory.Exists(SaveCSVFilePath)) Directory.CreateDirectory(SaveCSVFilePath);
+            SaveCSVFilePath = String.Format("{0}\\VisionData_{1:D4}{2:D2}{3:D2}.csv", SaveCSVFilePath, dateTime.Year, dateTime.Month, dateTime.Day);
 
-            CSVData[0] = String.Format("{0:D2}{1:D2}{2:D2}{3:D3}", dateTime.Hour, dateTime.Minute, dateTime.Second, dateTime.Millisecond);
-            CSVData[1] = ProductCode;
+            CSVData[0] = ProductCode;
+            CSVData[1] = String.Format("{0:D4}{1:D2}{2:D2}", dateTime.Year, dateTime.Month, dateTime.Day);
+            CSVData[2] = String.Format("{0:D2}{1:D2}{2:D2}{3:D3}", CycleStartTime.Hour, CycleStartTime.Minute, CycleStartTime.Second, CycleStartTime.Millisecond);
 
-            SaveCSVControl.SaveStringArrAll(CSVHeader, CSVData, SaveImageFilePath);
+            //LDH, 2019.09.17, CycleTime 계산
+            double CycleTime = 0.0;
+            TimeSpan _TimeSpan = dateTime - CycleStartTime;
+                        
+            if (_TimeSpan.Minutes != 0) CycleTime = Convert.ToDouble(_TimeSpan.Minutes * 60);
+            CycleTime = CycleTime + Convert.ToDouble(_TimeSpan.Seconds) + (Convert.ToDouble(_TimeSpan.Milliseconds) / 1000);
+            CSVData[3] = String.Format("{0:F3}", CycleTime);
+
+            string _UseResultFlag = "";
+            GetUseResultFlag(out _UseResultFlag);
+            CSVData[4] = _UseResultFlag;
+
+            SaveCSVControl.SaveStringArrAll(CSVHeader, CSVData, SaveCSVFilePath);
+
+
+            //LDH, 209.09.17, MES용 CSVData 따로 저장
+            string SaveMESFilePath = @"D:\VisionInspectionData\NavienInspection\MESData";
+            if (false == Directory.Exists(SaveMESFilePath)) Directory.CreateDirectory(SaveMESFilePath);
+            SaveMESFilePath = String.Format("{0}\\VisionMESData_{1:D4}{2:D2}{3:D2}{4:D2}{5:D2}{6:D2}{7:D3}.csv", SaveMESFilePath, dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, dateTime.Minute, dateTime.Second, dateTime.Millisecond);
+            SaveCSVControl.SaveStringArrAll(CSVHeader, CSVData, SaveMESFilePath);
         }
 
         private void CalculateDiameter(double[] _FoundPointX, double[] _FoundPointY, ref List<double> _DiameterResultList)
@@ -334,216 +372,147 @@ namespace KPVisionInspectionFramework
             _DiameterResultList.Sort();
         }
 
-        public void SetLeftResultData(SendResultParameter _ResultParam)
+        public void SetResultData(SendResultParameter _ResultParam)
         {
-            bool[] LastResultFlag = new bool[GradientLabelResultLeft.Count()];
-            for (int ResultCnt = 0; ResultCnt < GradientLabelResultLeft.Count(); ResultCnt++)
+            lock (lockObject)
             {
-                LastResultFlag[ResultCnt] = true;
-            }
+                bool[] LastResultFlag = new bool[GradientLabelResult.Count() - 1];
 
-            ClearResult("0");
-
-            for (int iLoopCount = 0; iLoopCount < _ResultParam.SendResultList.Count(); iLoopCount++)
-            {
-                var _ResultData = _ResultParam.SendResultList[iLoopCount] as SendMeasureResult;
-
-                if (LeftResultUseFlag[_ResultData.NGAreaNum - 1])
+                if (_ResultParam.ID == 0)
                 {
-                    if (_ResultParam.AlgoTypeList[iLoopCount] == eAlgoType.C_ELLIPSE)
+                    for (int ResultCnt = 0; ResultCnt < 3; ResultCnt++)
                     {
-                        List<double> _DiameterResultList = new List<double>();
-                        double _DiameterMin = 0.0;
-                        double _DiameterMax = 0.0;
-                        double _DiameterEvg = 0.0;
+                        LastResultFlag[ResultCnt] = true;
+                        ClearResult((ResultCnt + 1).ToString());
+                    }                    
+                }
+                else
+                {
+                    LastResultFlag[3] = true;
+                    ClearResult("4");
+                }
 
-                        CalculateDiameter(_ResultData.CaliperPointX, _ResultData.CaliperPointY, ref _DiameterResultList);
+                LastIsGoodFlag[_ResultParam.ID] = true;
 
-                        if (_DiameterResultList != null && _DiameterResultList.Count != 0)
+                if (!InspCompleteFlag.Contains(true)) ClearDataArr();
+
+                for (int iLoopCount = 0; iLoopCount < _ResultParam.SendResultList.Count(); iLoopCount++)
+                {
+                    var _ResultData = _ResultParam.SendResultList[iLoopCount] as SendMeasureResult;
+                    int _ResultIndex = _ResultData.NGAreaNum - 1;
+
+                    InspCompleteFlag[_ResultParam.ID] = true;
+
+                    if (ResultUseFlag[_ResultIndex])
+                    {
+                        if (_ResultParam.AlgoTypeList[iLoopCount] == eAlgoType.C_ELLIPSE)
                         {
-                            _DiameterMin = _DiameterResultList[1] * PXResolution;
-                            _DiameterMax = _DiameterResultList[_DiameterResultList.Count - 1] * PXResolution;
+                            List<double> _DiameterResultList = new List<double>();
+                            double _DiameterMin = 0.0;
+                            double _DiameterMax = 0.0;
+                            double _DiameterEvg = 0.0;
 
-                            if (_DiameterMin < _ResultData.DiameterMinAlgo) { _DiameterEvg = _DiameterMin; _ResultData.IsGoodAlgo = false; }
-                            else if (_DiameterMax > _ResultData.DiameterMaxAlgo) { _DiameterEvg = _DiameterMax; _ResultData.IsGoodAlgo = false; }
-                            else
+                            CalculateDiameter(_ResultData.CaliperPointX, _ResultData.CaliperPointY, ref _DiameterResultList);
+
+                            if (_DiameterResultList.Count > 2)
                             {
-                                double _SumDiameter = 0.0;
+                                _DiameterMin = _DiameterResultList[1] * PXResolution;
+                                _DiameterMax = _DiameterResultList[_DiameterResultList.Count - 1] * PXResolution;
 
-                                for (int ListLoopCnt = 1; ListLoopCnt < _DiameterResultList.Count - 1; ListLoopCnt++)
+                                if (_DiameterMin < _ResultData.DiameterMinAlgo) { _DiameterEvg = _DiameterMin; _ResultData.IsGoodAlgo = false; }
+                                else if (_DiameterMax > _ResultData.DiameterMaxAlgo) { _DiameterEvg = _DiameterMax; _ResultData.IsGoodAlgo = false; }
+                                else
                                 {
-                                    _SumDiameter = _SumDiameter + _DiameterResultList[ListLoopCnt];
+                                    double _SumDiameter = 0.0;
+
+                                    for (int ListLoopCnt = 1; ListLoopCnt < _DiameterResultList.Count - 1; ListLoopCnt++)
+                                    {
+                                        _SumDiameter = _SumDiameter + _DiameterResultList[ListLoopCnt];
+                                    }
+
+                                    _DiameterEvg = _SumDiameter / (_DiameterResultList.Count - 2) * PXResolution;
                                 }
 
-                                _DiameterEvg = _SumDiameter / (_DiameterResultList.Count - 2) * PXResolution;
+                                CSVData[(_ResultIndex * 4) + 6] = _ResultData.DiameterMinAlgo.ToString();
+                                CSVData[(_ResultIndex * 4) + 7] = _ResultData.DiameterMaxAlgo.ToString();
                             }
+
+                            ControlInvoke.GridViewCellText(dataGridViewResult, _ResultIndex, 3, string.Format("{0:F3}", _DiameterEvg));
                         }
 
-                        if (iLoopCount == 0)
+                        LastResultFlag[_ResultIndex] &= _ResultData.IsGoodAlgo;
+
+                        if (!_ResultData.IsGoodAlgo)
                         {
-                            ControlInvoke.GridViewCellText(dataGridViewLeft, iLoopCount, 1, string.Format("{0:F3}", _DiameterMin));
-                            ControlInvoke.GridViewCellText(dataGridViewLeft, iLoopCount, 2, string.Format("{0:F3}", _DiameterMax));
+                            CSVData[(_ResultIndex * 4) + 8] = "NG";
+                            ControlInvoke.GridViewRowsColor(dataGridViewResult, _ResultIndex, Color.Maroon, Color.White);
                         }
                         else
                         {
-                            ControlInvoke.GridViewCellText(dataGridViewLeft, iLoopCount, 3, string.Format("{0:F3}", _DiameterEvg));
+                            CSVData[(_ResultIndex * 4) + 8] = "OK";
+                            ControlInvoke.GridViewRowsColor(dataGridViewResult, _ResultIndex, Color.FromKnownColor(KnownColor.Window), Color.Black);
                         }
+
+                        SetGradientLabelResult(_ResultIndex, LastResultFlag[_ResultIndex]);
+
+                        LastIsGoodFlag[_ResultParam.ID] &= LastResultFlag[_ResultIndex];
                     }
-
-                    LastResultFlag[_ResultData.NGAreaNum - 1] &= _ResultData.IsGoodAlgo;
-
-                    if (!_ResultData.IsGoodAlgo) ControlInvoke.GridViewRowsColor(dataGridViewLeft, iLoopCount, Color.Maroon, Color.White);
-                    else ControlInvoke.GridViewRowsColor(dataGridViewLeft, iLoopCount, Color.FromKnownColor(KnownColor.Window), Color.Black);
                 }
-            }
 
-            for (int jLoopCount = 0; jLoopCount < LastResultFlag.Count(); jLoopCount++)
-            {
-                if (LeftResultUseFlag[jLoopCount])
+                //for (int jLoopCount = 0; jLoopCount < LastResultFlag.Count(); jLoopCount++)
+                //{
+                //    if (ResultUseFlag[jLoopCount])
+                //    {
+                //        switch (LastResultFlag[jLoopCount])
+                //        {
+                //            case true:
+                //                {
+                //                    ControlInvoke.GradientLabelText(GradientLabelResult[jLoopCount], "OK", Color.White);
+                //                    ControlInvoke.GradientLabelColor(GradientLabelResult[jLoopCount], Color.DarkGreen, Color.FromArgb(0, 44, 0));
+                //                }
+                //                break;
+                //            case false:
+                //                {
+                //                    ControlInvoke.GradientLabelText(GradientLabelResult[jLoopCount], "NG", Color.White);
+                //                    ControlInvoke.GradientLabelColor(GradientLabelResult[jLoopCount], Color.Maroon, Color.FromArgb(49, 0, 0));
+                //                }
+                //                break;
+                //        }
+
+                //        LastIsGoodFlag &= LastResultFlag[jLoopCount];
+                //    }
+                //}
+
+                //오리피스 Result Data
+                CSVData[5] = dataGridViewResult[3, 0].Value.ToString();
+                CSVData[9] = dataGridViewResult[3, 1].Value.ToString();
+                CSVData[13] = dataGridViewResult[3, 2].Value.ToString();
+                CSVData[17] = dataGridViewResult[3, 3].Value.ToString();
+                
+                if (CParameterManager.SystemMode == eSysMode.AUTO_MODE && !InspCompleteFlag.Contains(false))
                 {
-                    switch (LastResultFlag[jLoopCount])
-                    {
-                        case true:
-                            {
-                                ControlInvoke.GradientLabelText(GradientLabelResultLeft[jLoopCount], "OK", Color.White);
-                                ControlInvoke.GradientLabelColor(GradientLabelResultLeft[jLoopCount], Color.DarkGreen, Color.FromArgb(0, 44, 0));
-                            }
-                            break;
-                        case false:
-                            {
-                                ControlInvoke.GradientLabelText(GradientLabelResultLeft[jLoopCount], "NG", Color.White);
-                                ControlInvoke.GradientLabelColor(GradientLabelResultLeft[jLoopCount], Color.Maroon, Color.FromArgb(49, 0, 0));
-                            }
-                            break;
-                    }
+                    if (textBoxBarcode.Text != "") WriteCSVFile();
 
-                    LastIsGoodFlag[0] &= LastResultFlag[jLoopCount];
+                    bool LastResult = true;
+                    for (int iLoopCount = 0; iLoopCount < 2; iLoopCount++) LastResult &= LastIsGoodFlag[iLoopCount];
+
+                    if (LastResult) CSVData[21] = "OK";
+                    else            CSVData[21] = "NG";
+
+                    SetGradientLabelResult(4, LastResult);
+
+                    if (LastResult) DIOResultEvent(true);
+                    else            DIOResultEvent(false);
+                    CParameterManager.SystemMode = eSysMode.MANUAL_MODE;
+
+                    ClearDataArr();
+                    ClearBarcode();
                 }
+
+                if (CParameterManager.SystemMode != eSysMode.AUTO_MODE) InspCompleteFlag[_ResultParam.ID] = false;
+
+                dataGridViewResult.ClearSelection();
             }
-
-            //CSV 배열에 결과값 담기
-            CSVData[2] = dataGridViewLeft[1, 0].Value.ToString();
-            CSVData[3] = dataGridViewLeft[2, 0].Value.ToString();
-            CSVData[4] = dataGridViewLeft[3, 1].Value.ToString();
-            CSVData[5] = dataGridViewLeft[3, 2].Value.ToString();
-            
-            dataGridViewLeft.ClearSelection();
-        }
-
-        public void SetRightResultData(SendResultParameter _ResultParam)
-        {
-            bool[] LastResultFlag = new bool[GradientLabelResultRight.Count()];
-            for (int ResultCnt = 0; ResultCnt < GradientLabelResultRight.Count(); ResultCnt++)
-            {
-                LastResultFlag[ResultCnt] = true;
-            }
-
-            ClearResult("1");
-
-            for (int iLoopCount = 0; iLoopCount < _ResultParam.SendResultList.Count(); iLoopCount++)
-            {
-                var _ResultData = _ResultParam.SendResultList[iLoopCount] as SendMeasureResult;
-
-                if (RightResultUseFlag[_ResultData.NGAreaNum - 1])
-                {
-                    if (_ResultParam.AlgoTypeList[iLoopCount] == eAlgoType.C_ELLIPSE)
-                    {
-                        List<double> _DiameterResultList = new List<double>();
-                        double _DiameterMin = 0.0;
-                        double _DiameterMax = 0.0;
-                        double _DiameterEvg = 0.0;
-
-                        CalculateDiameter(_ResultData.CaliperPointX, _ResultData.CaliperPointY, ref _DiameterResultList);
-
-                        if (_DiameterResultList.Count != 0)
-                        {
-                            _DiameterMin = _DiameterResultList[1] * PXResolution;
-                            _DiameterMax = _DiameterResultList[_DiameterResultList.Count - 1] * PXResolution;
-
-                            if (_DiameterMin < _ResultData.DiameterMinAlgo) { _DiameterEvg = _DiameterMin; _ResultData.IsGoodAlgo = false; }
-                            else if (_DiameterMax > _ResultData.DiameterMaxAlgo) { _DiameterEvg = _DiameterMax; _ResultData.IsGoodAlgo = false; }
-                            else
-                            {
-                                double _SumDiameter = 0.0;
-
-                                for (int ListLoopCnt = 1; ListLoopCnt < _DiameterResultList.Count - 1; ListLoopCnt++)
-                                {
-                                    _SumDiameter = _SumDiameter + _DiameterResultList[ListLoopCnt];
-                                }
-
-                                _DiameterEvg = _SumDiameter / (_DiameterResultList.Count - 2) * PXResolution;
-                            }
-                        }
-
-                        if (iLoopCount < 4)
-                        {
-                            ControlInvoke.GridViewCellText(dataGridViewRight, iLoopCount, 3, string.Format("{0:F3}", _DiameterEvg));
-                        }
-                        else
-                        {
-                            ControlInvoke.GridViewCellText(dataGridViewRight, iLoopCount, 1, string.Format("{0:F3}", _DiameterMin));
-                            ControlInvoke.GridViewCellText(dataGridViewRight, iLoopCount, 2, string.Format("{0:F3}", _DiameterMax));
-                        }
-
-                    }
-
-                    else if (_ResultParam.AlgoTypeList[iLoopCount] == eAlgoType.C_BLOB_REFER)
-                    {
-                        ControlInvoke.GridViewCellText(dataGridViewRight, iLoopCount, 3, string.Format("{0:F3}", _ResultData.MeasureData));
-                    }
-
-                    LastResultFlag[_ResultData.NGAreaNum - 1] &= _ResultData.IsGoodAlgo;
-
-
-                    if (!_ResultData.IsGoodAlgo) ControlInvoke.GridViewRowsColor(dataGridViewRight, iLoopCount, Color.Maroon, Color.White);
-                    else ControlInvoke.GridViewRowsColor(dataGridViewRight, iLoopCount, Color.FromKnownColor(KnownColor.Window), Color.Black);
-                }
-            }
-
-            for (int jLoopCount = 0; jLoopCount < LastResultFlag.Count(); jLoopCount++)
-            {
-                if (RightResultUseFlag[jLoopCount])
-                {
-                    switch (LastResultFlag[jLoopCount])
-                    {
-                        case true:
-                            {
-                                ControlInvoke.GradientLabelText(GradientLabelResultRight[jLoopCount], "OK", Color.White);
-                                ControlInvoke.GradientLabelColor(GradientLabelResultRight[jLoopCount], Color.DarkGreen, Color.FromArgb(0, 44, 0));
-                            }
-                            break;
-                        case false:
-                            {
-                                ControlInvoke.GradientLabelText(GradientLabelResultRight[jLoopCount], "NG", Color.White);
-                                ControlInvoke.GradientLabelColor(GradientLabelResultRight[jLoopCount], Color.Maroon, Color.FromArgb(49, 0, 0));
-                            }
-                            break;
-                    }
-
-                    LastIsGoodFlag[1] &= LastResultFlag[jLoopCount];
-                }
-            }
-
-            //CSV 배열에 결과값 담기
-            CSVData[6] = dataGridViewRight[3, 0].Value.ToString();
-            CSVData[7] = dataGridViewRight[3, 1].Value.ToString();
-            CSVData[8] = dataGridViewRight[3, 2].Value.ToString();
-            CSVData[9] = dataGridViewRight[3, 3].Value.ToString();
-            CSVData[10] = dataGridViewRight[1, 4].Value.ToString();
-            CSVData[11] = dataGridViewRight[2, 4].Value.ToString();
-            CSVData[12] = dataGridViewRight[1, 5].Value.ToString();
-            CSVData[13] = dataGridViewRight[2, 5].Value.ToString();
-
-            if (CParameterManager.SystemMode == eSysMode.AUTO_MODE)
-            {
-                WriteCSVFile();
-
-                if (LastIsGoodFlag[0] && LastIsGoodFlag[1]) DIOResultEvent(true);
-                else                                        DIOResultEvent(false);
-                CParameterManager.SystemMode = eSysMode.MANUAL_MODE;
-            }
-
-            dataGridViewRight.ClearSelection();
         }
     }
 }

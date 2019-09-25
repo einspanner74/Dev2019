@@ -18,11 +18,23 @@ namespace KPVisionInspectionFramework
 
         private string[] RecipeList;
 
+        private eProjectType ProjectType;
         public string NewRecipeName;
 
         public RecipeNewNameWindow(eProjectType _ProjectType)
         {
             InitializeComponent();
+
+            ProjectType = _ProjectType;
+
+            if (ProjectType != eProjectType.NAVIEN)
+            {
+                this.Size = new Size(390, 151);
+                textBoxCurrentRecipe.Size = new Size(264, 26);
+                labelUnderBar.Visible = false;
+                textBoxNewRecipeThird.Visible = false;
+                panelButton.Location = new Point(113, 103);
+            }
         }
 
         public void SetCurrentRecipe(string _CurrentRecipe, string[] _RecipeList)
@@ -35,9 +47,17 @@ namespace KPVisionInspectionFramework
 
         private void btnRecipeConfirm_Click(object sender, EventArgs e)
         {
-            if (textBoxNewRecipe.Text == null || textBoxNewRecipe.Text == "") { MessageBox.Show("Enter a name for the new recipe."); return; } 
+            if (textBoxNewRecipe.Text == null || textBoxNewRecipe.Text == "") { MessageBox.Show("Enter a name for the new recipe."); return; }
 
-            string RecipeName = textBoxNewRecipe.Text + "_" + textBoxNewRecipeSub.Text;
+            string RecipeName = "";
+            if (ProjectType == eProjectType.NAVIEN)
+            {
+                RecipeName = textBoxNewRecipe.Text + "_" + textBoxNewRecipeSub.Text + "_" + textBoxNewRecipeThird.Text;
+            }
+            else
+            {
+                RecipeName = textBoxNewRecipe.Text + "_" + textBoxNewRecipeSub.Text;
+            }
 
             for (int iLoopCount = 0; iLoopCount < RecipeList.Count(); iLoopCount++)
             {
@@ -80,6 +100,17 @@ namespace KPVisionInspectionFramework
             if (!(char.IsDigit(e.KeyChar)) && e.KeyChar != Convert.ToChar(Keys.Back))
             {
                 e.Handled = true;
+            }
+        }
+
+        private void textBoxNewRecipeThird_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char[] _Separators = { '\\', '/', ':', '*', '?', '<', '>', '|' };
+
+            if (_Separators.Contains(e.KeyChar))
+            {
+                if (e.KeyChar == '/') e.KeyChar = '_';
+                else e.Handled = true;
             }
         }
     }
