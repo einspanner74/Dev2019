@@ -221,6 +221,8 @@ namespace ParameterManager
         public double[] PointPosXInfo;
         public double[] PointPosYInfo;
         public bool[] PointStatusInfo;
+
+        public int NgNumber;
     }
 
     public class CogLeadResult : Result

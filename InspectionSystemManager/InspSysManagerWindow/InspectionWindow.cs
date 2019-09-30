@@ -1258,7 +1258,7 @@ namespace InspectionSystemManager
             CogEllipseResult _CogEllipseResult = new CogEllipseResult();
 
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "Ellipse Find Algorithm Start", CLogManager.LOG_LEVEL.MID);
-            bool _Result = InspEllipseProc.Run(OriginImage, _InspRegion, _CogEllipseAlgo, ref _CogEllipseResult, BenchMarkOffsetX, BenchMarkOffsetY);
+            bool _Result = InspEllipseProc.Run(OriginImage, _InspRegion, _CogEllipseAlgo, ref _CogEllipseResult, BenchMarkOffsetX, BenchMarkOffsetY, _NgAreaNumber);
 
             _CogEllipseResult.CenterXReal = (_CogEllipseResult.CenterX - (OriginImage.Width / 2)) * ResolutionX;
             _CogEllipseResult.CenterYReal = (_CogEllipseResult.CenterY - (OriginImage.Height / 2)) * ResolutionY;
@@ -1672,7 +1672,7 @@ namespace InspectionSystemManager
                 ResultDisplay(_EllipseRect, _CirclePoint, "Ellipse", _CogEllipseResult.IsGood, false);
             }
 
-            if (ProjectType == eProjectType.NAVIEN) DisplayAlgoNumber(_CogEllipseResult.CenterX, _CogEllipseResult.CenterY - _CogEllipseResult.RadiusY - 200, _Index + 1);
+            if (ProjectType == eProjectType.NAVIEN) DisplayAlgoNumber(_CogEllipseResult.CenterX, _CogEllipseResult.CenterY - _CogEllipseResult.RadiusY - 200, _CogEllipseResult.NgNumber);
 
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "InspectionWindow - DisplayResultEllipse Complete", CLogManager.LOG_LEVEL.MID);
 

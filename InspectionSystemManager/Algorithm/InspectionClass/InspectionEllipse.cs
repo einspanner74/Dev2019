@@ -136,6 +136,7 @@ namespace InspectionSystemManager
                 _CogEllipseResult.OriginX = 0;
                 _CogEllipseResult.OriginY = 0;
                 _CogEllipseResult.Rotation = 0;
+                _CogEllipseResult.NgNumber = _NgNumber;
             }
 
             else
@@ -152,6 +153,7 @@ namespace InspectionSystemManager
                     _CogEllipseResult.OriginX = FindEllipseResults.GetEllipse().CenterX;
                     _CogEllipseResult.OriginY = FindEllipseResults.GetEllipse().CenterY;
                     _CogEllipseResult.Rotation = FindEllipseResults.GetEllipse().Rotation;
+                    _CogEllipseResult.NgNumber = _NgNumber;
 
                     _CogEllipseResult.PointPosXInfo = new double[FindEllipseResults.Count];
                     _CogEllipseResult.PointPosYInfo = new double[FindEllipseResults.Count];
@@ -183,6 +185,7 @@ namespace InspectionSystemManager
                     _CogEllipseResult.RadiusY = _CogEllipseAlgo.ArcRadiusY;
                     _CogEllipseResult.OriginX = 0;
                     _CogEllipseResult.OriginY = 0;
+                    _CogEllipseResult.NgNumber = _NgNumber;
 
                     _CogEllipseResult.IsGood = false;
                 }
