@@ -431,10 +431,28 @@ namespace KPVisionInspectionFramework
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            DialogResult dlgResult = MessageBox.Show(new Form { TopMost = true }, "Do you want exit program ? ", "Exit Program", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button2);
-            if (DialogResult.Yes != dlgResult) { e.Cancel = true; return; }
-            DeInitialize();
-            Environment.Exit(0);
+            //DialogResult dlgResult = MessageBox.Show(new Form { TopMost = true }, "Do you want exit program ? ", "Exit Program", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button2);
+            //if (DialogResult.Yes != dlgResult) { e.Cancel = true; return; }
+            //DeInitialize();
+            //Environment.Exit(0);
+
+            try
+            {
+                for (int iLoopCount = 0; iLoopCount < ISMModuleCount; ++iLoopCount) InspSysManager[iLoopCount].ImageContinuesGrabStop();
+
+                DialogResult dlgResult = MessageBox.Show(new Form { TopMost = true }, "Do you want exit program ? ", "Exit Program", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button2);
+                if (DialogResult.Yes != dlgResult) return;
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "MainProcess : CIPOS lead inspection program exit!!");
+
+                DeInitialize();
+                Environment.Exit(0);
+            }
+
+            catch (Exception ex)
+            {
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "MainForm Exit : " + ex.ToString(), CLogManager.LOG_LEVEL.LOW);
+                Environment.Exit(0);
+            }
         }
         #endregion Initialize & DeInitialize
 

@@ -95,6 +95,7 @@ namespace InspectionSystemManager
             bool _Result = true;
             List<double> _AlignPositionX = new List<double>();
             List<double> _AlignPositionY = new List<double>();
+            List<double> _AlignPositionWidth = new List<double>();
 
             try
             {
@@ -164,6 +165,7 @@ namespace InspectionSystemManager
                     }
 
                     _AlignPositionX.Add(GetCenterXResult(_BlobResults));
+                    _AlignPositionWidth.Add(GetWidthResult(_BlobResults));
                 }
                 #endregion
 
@@ -176,8 +178,8 @@ namespace InspectionSystemManager
                         LeadFormAlignResultData _AlignResult = new LeadFormAlignResultData();
                         _AlignResult.CenterX = _AlignPositionX[iLoopCount];
                         _AlignResult.CenterY = _AlignPositionY[iLoopCount];
-                        _AlignResult.Width = 40;
-                        _AlignResult.Height = 40;
+                        _AlignResult.Width = _AlignPositionWidth[iLoopCount];
+                        _AlignResult.Height = _AlignPositionWidth[iLoopCount];
                         _AlignResult.IsGood = true;
                         LeadFormResult.AlignResultDataList.Add(_AlignResult);
                     }
@@ -278,7 +280,7 @@ namespace InspectionSystemManager
                         }
                         #endregion
 
-                        _AlignOffset.X = _CogLeadFormAlgo.AlignPositionArray[iLoopCount].X - _RealCenterX;
+                        _AlignOffset.X = Math.Round(_CogLeadFormAlgo.AlignPositionArray[iLoopCount].X - _RealCenterX, 4);
                         _AlignOffset.Y = _CogLeadFormAlgo.AlignPositionArray[iLoopCount].Y - _RealCenterY;
                         LeadFormResult.AlignOffsetDataList.Add(_AlignOffset);
 
@@ -467,6 +469,25 @@ namespace InspectionSystemManager
             }
 
             return _CenterX;
+        }
+
+        public double GetWidthResult(CogBlobResults _BlobResults)
+        {
+            double _Width = 0;
+            double _MaxArea = 0;
+
+            if (null == _BlobResults || _BlobResults.GetBlobs().Count <= 0) return _Width;
+
+            for (int iLoopCount = 0; iLoopCount < _BlobResults.GetBlobs().Count; ++iLoopCount)
+            {
+                if (_MaxArea < _BlobResults.GetBlobMeasure(CogBlobMeasureConstants.Area, iLoopCount))
+                {
+                    _MaxArea = _BlobResults.GetBlobMeasure(CogBlobMeasureConstants.Area, iLoopCount);
+                    _Width = _BlobResults.GetBlobMeasure(CogBlobMeasureConstants.BoundingBoxPixelAlignedNoExcludeWidth, iLoopCount);
+                }
+            }
+
+            return _Width;
         }
 
         public List<LeadFormAlignResultData> GetAlignResult(CogBlobResults _BlobResults)//, int _LeadCount)

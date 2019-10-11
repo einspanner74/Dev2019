@@ -891,7 +891,7 @@ namespace InspectionSystemManager
                     _LeadArea[iLoopCount] = new CogRectangleAffine();
                     _LeadArea[iLoopCount].CenterX       = _ShoulderResult.BlobCenterX[iLoopCount];
                     _LeadArea[iLoopCount].CenterY       = _ShoulderResult.BlobCenterY[iLoopCount];
-                    _LeadArea[iLoopCount].SideXLength   = _ShoulderResult.PrincipalHeight[iLoopCount] + 6;
+                    _LeadArea[iLoopCount].SideXLength   = _ShoulderResult.PrincipalHeight[iLoopCount] + 10;
                     //_LeadArea[iLoopCount].SideXLength = _ShoulderResult.PrincipalHeight[iLoopCount];
                     _LeadArea[iLoopCount].SideYLength   = _ShoulderResult.PrincipalWidth[iLoopCount];
 
@@ -934,7 +934,7 @@ namespace InspectionSystemManager
                     _LeadCaliper.Run();
                     //CogSerializer.SaveObjectToFile(_LeadCaliper, string.Format(@"D:\Caliper{0}.vpp", iLoopCount + 1));
 
-                    if (_LeadCaliper.Results != null)
+                    if (_LeadCaliper.Results != null && _LeadCaliper.Results.Count > 0)
                     {
                         //Edge 추출
                         _ShoulderResult.LeadEdgeCenter[iLoopCount]  = _LeadCaliper.Results[0].PositionX;
@@ -991,6 +991,13 @@ namespace InspectionSystemManager
                         //_Blob.Run();
                         //CogSerializer.SaveObjectToFile(_Blob, string.Format(@"D:\Blob{0}_Center.vpp", iLoopCount + 1));
                         #endregion
+                    }
+
+                    else if (_LeadCaliper.Results.Count <= 0)
+                    {
+                        CogRectangle _ShoulderArea = new CogRectangle();
+                        _ShoulderArea.SetCenterWidthHeight(_LeadArea[iLoopCount].CenterX, _LeadArea[iLoopCount].CenterY, _LeadArea[iLoopCount].SideXLength, _LeadArea[iLoopCount].SideYLength);
+                        LeadTrimResult.ShoulderBurrDefectList.Add(_ShoulderArea);
                     }
                 }
 
