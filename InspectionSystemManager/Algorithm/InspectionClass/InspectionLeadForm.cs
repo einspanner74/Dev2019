@@ -280,8 +280,8 @@ namespace InspectionSystemManager
                         }
                         #endregion
 
-                        _AlignOffset.X = Math.Round(_CogLeadFormAlgo.AlignPositionArray[iLoopCount].X - _RealCenterX, 4);
-                        _AlignOffset.Y = _CogLeadFormAlgo.AlignPositionArray[iLoopCount].Y - _RealCenterY;
+                        _AlignOffset.X = Math.Round(_RealCenterX - _CogLeadFormAlgo.AlignPositionArray[iLoopCount].X, 4);
+                        _AlignOffset.Y = Math.Round(_RealCenterY - _CogLeadFormAlgo.AlignPositionArray[iLoopCount].Y, 4);
                         LeadFormResult.AlignOffsetDataList.Add(_AlignOffset);
 
                         LeadFormResult.EachLeadStatusArray[iLoopCount].SideX = _AlignOffset.X.ToString();

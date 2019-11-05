@@ -96,8 +96,8 @@ namespace InspectionSystemManager
 
             hScrollBarLeadFormAlignThreshold.Value = CogLeadFormAlgoRcp.AlignThreshold;
             graLabelLeadFormAlignThresholdValue.Text = CogLeadFormAlgoRcp.AlignThreshold.ToString();
-            numUpDownAlignSkewSpec.Value = Convert.ToDecimal(CogLeadFormAlgoRcp.AlignSkewSpec);
             numUpDownLeadFormAlignPitchSpec.Value = Convert.ToDecimal(CogLeadFormAlgoRcp.AlignPitchSpec);
+            numUpDownAlignSkewSpec.Value = Convert.ToDecimal(CogLeadFormAlgoRcp.AlignSkewSpec);
 
             InitializeQuickGridView(CogLeadFormAlgoRcp.LeadCount);
             numUpDownLeadCount.Value = Convert.ToDecimal(CogLeadFormAlgoRcp.LeadCount);
