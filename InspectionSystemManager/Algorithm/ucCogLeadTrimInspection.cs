@@ -510,7 +510,7 @@ namespace InspectionSystemManager
             #endregion
 
             CogRectangle _Region = new CogRectangle();
-            _Region.SetCenterWidthHeight(ChipOutArea.CenterX, ChipOutArea.CenterY, ChipOutArea.Width, ChipOutArea.Height);
+            _Region.SetCenterWidthHeight(ChipOutArea.CenterX + BodyCenterOffsetX, ChipOutArea.CenterY + BodyCenterOffsetY, ChipOutArea.Width, ChipOutArea.Height);
 
             var _DrawRegionEvent = DrawRegionEvent;
             _DrawRegionEvent?.Invoke(_Region, false);
@@ -530,7 +530,7 @@ namespace InspectionSystemManager
             _DrawRegionEvent?.Invoke(_Region, true);
 
             ChipOutArea = new RectangleD();
-            ChipOutArea.SetCenterWidthHeight(_Region.CenterX, _Region.CenterY, _Region.Width, _Region.Height);
+            ChipOutArea.SetCenterWidthHeight(_Region.CenterX - BodyCenterOffsetX, _Region.CenterY - BodyCenterOffsetY, _Region.Width, _Region.Height);
         }
 
         private void btnChipOutAreaCheck_Click(object sender, EventArgs e)
@@ -564,7 +564,7 @@ namespace InspectionSystemManager
             #endregion
 
             CogRectangle _Region = new CogRectangle();
-            _Region.SetCenterWidthHeight(LeadMeasureArea.CenterX, LeadMeasureArea.CenterY, LeadMeasureArea.Width, LeadMeasureArea.Height);
+            _Region.SetCenterWidthHeight(LeadMeasureArea.CenterX + BodyCenterOffsetX, LeadMeasureArea.CenterY + BodyCenterOffsetY, LeadMeasureArea.Width, LeadMeasureArea.Height);
 
             var _DrawRegionEvent = DrawRegionEvent;
             _DrawRegionEvent?.Invoke(_Region, false);
@@ -584,7 +584,7 @@ namespace InspectionSystemManager
             _DrawRegionEvent?.Invoke(_Region, true);
 
             LeadMeasureArea = new RectangleD();
-            LeadMeasureArea.SetCenterWidthHeight(_Region.CenterX, _Region.CenterY, _Region.Width, _Region.Height);
+            LeadMeasureArea.SetCenterWidthHeight(_Region.CenterX - -BodyCenterOffsetX, _Region.CenterY - BodyCenterOffsetY, _Region.Width, _Region.Height);
         }
 
         private void btnLeadLengthAreaCheck_Click(object sender, EventArgs e)
@@ -712,7 +712,7 @@ namespace InspectionSystemManager
             #endregion
 
             CogRectangle _Region = new CogRectangle();
-            _Region.SetCenterWidthHeight(ShoulderInspArea.CenterX, ShoulderInspArea.CenterY, ShoulderInspArea.Width, ShoulderInspArea.Height);
+            _Region.SetCenterWidthHeight(ShoulderInspArea.CenterX + BodyCenterOffsetX, ShoulderInspArea.CenterY + BodyCenterOffsetY, ShoulderInspArea.Width, ShoulderInspArea.Height);
 
             var _DrawRegionEvent = DrawRegionEvent;
             _DrawRegionEvent?.Invoke(_Region, false);
@@ -732,7 +732,7 @@ namespace InspectionSystemManager
             _DrawRegionEvent?.Invoke(_Region, true);
 
             ShoulderInspArea = new RectangleD();
-            ShoulderInspArea.SetCenterWidthHeight(_Region.CenterX, _Region.CenterY, _Region.Width, _Region.Height);
+            ShoulderInspArea.SetCenterWidthHeight(_Region.CenterX - BodyCenterOffsetX, _Region.CenterY - BodyCenterOffsetY, _Region.Width, _Region.Height);
         }
 
         private void btnShoulderAreaCheck_Click(object sender, EventArgs e)
@@ -776,7 +776,7 @@ namespace InspectionSystemManager
             #endregion 
 
             CogRectangle _Region = new CogRectangle();
-            _Region.SetCenterWidthHeight(LeadTipInspArea.CenterX, LeadTipInspArea.CenterY, LeadTipInspArea.Width, LeadTipInspArea.Height);
+            _Region.SetCenterWidthHeight(LeadTipInspArea.CenterX + BodyCenterOffsetX, LeadTipInspArea.CenterY + BodyCenterOffsetY, LeadTipInspArea.Width, LeadTipInspArea.Height);
 
             var _DrawRegionEvent = DrawRegionEvent;
             _DrawRegionEvent?.Invoke(_Region, false);
@@ -796,7 +796,7 @@ namespace InspectionSystemManager
             _DrawRegionEvent?.Invoke(_Region, true);
 
             LeadTipInspArea = new RectangleD();
-            LeadTipInspArea.SetCenterWidthHeight(_Region.CenterX, _Region.CenterY, _Region.Width, _Region.Height);
+            LeadTipInspArea.SetCenterWidthHeight(_Region.CenterX - BodyCenterOffsetX, _Region.CenterY - BodyCenterOffsetY, _Region.Width, _Region.Height);
         }
 
         private void btnLeadTipAreaCheck_Click(object sender, EventArgs e)

@@ -29,6 +29,9 @@ namespace InspectionSystemManager
         private CogLeadTrimResult       InspLeadTrimResults;
         private CogLine                 LeadBodyBaseLine = new CogLine();
 
+        private double                  LeadBodyOffsetX = 0;
+        private double                  LeadBodyOffsetY = 0;
+
         #region Initialize & Deinitialize
         public InspectionLeadTrim()
         {
@@ -305,6 +308,13 @@ namespace InspectionSystemManager
                 LeadTrimResult.LeadBodyRightBottom.X = _CogBlobReferResultTemp.BlobMaxX[_Index];
                 LeadTrimResult.LeadBodyRightBottom.Y = _CogBlobReferResultTemp.BlobMaxY[_Index];
 
+                //LJH 2019.11.07
+                LeadTrimResult.LeadBodyOffsetX = _CogBlobReferResultTemp.BlobCenterX[_Index] - _CogLeadTrimAlgo.BodyCenterOrigin.X;
+                LeadTrimResult.LeadBodyOffsetY = _CogBlobReferResultTemp.BlobCenterY[_Index] - _CogLeadTrimAlgo.BodyCenterOrigin.Y;
+
+                LeadBodyOffsetX = LeadTrimResult.LeadBodyOffsetX;
+                LeadBodyOffsetY = LeadTrimResult.LeadBodyOffsetY;
+
                 CogLine _CogLine = new CogLine();
                 _CogLine.SetFromStartXYEndXY(LeadTrimResult.LeadBodyLeftTop.X, LeadTrimResult.LeadBodyLeftTop.Y, LeadTrimResult.LeadBodyRightTop.X, LeadTrimResult.LeadBodyRightTop.Y);
                 //LeadTrimResult.LeadBodyBaseLine = _CogLine;
@@ -457,7 +467,10 @@ namespace InspectionSystemManager
                 SetPolarity(Convert.ToBoolean(_CogLeadTrimAlgo.ChipOutForeground));
 
                 //BlobResults = BlobProc.Execute(_SrcImage, _InspRegion);
-                BlobResults = BlobProc.Execute(_CogCopyImage, _InspRegion);
+                CogRectangle _OffsetInspRegion = new CogRectangle();
+                //_OffsetInspRegion.SetCenterWidthHeight(_InspRegion.CenterX + LeadTrimResult.LeadBodyOffsetX, _InspRegion.CenterY + LeadTrimResult.LeadBodyOffsetY, _InspRegion.Width, _InspRegion.Height);
+                _OffsetInspRegion.SetCenterWidthHeight(_InspRegion.CenterX + LeadBodyOffsetX, _InspRegion.CenterY + LeadBodyOffsetY, _InspRegion.Width, _InspRegion.Height);
+                BlobResults = BlobProc.Execute(_CogCopyImage, _OffsetInspRegion);
                 GetResult(true);
 
                 CogLeadTrimResult _CogChipOutResult = new CogLeadTrimResult();
@@ -563,12 +576,13 @@ namespace InspectionSystemManager
                 System.Diagnostics.Stopwatch _ProcessWatch = new System.Diagnostics.Stopwatch();
                 _ProcessWatch.Reset(); _ProcessWatch.Start();
 
-                SetConnectivityMinimum(10000);
+                SetConnectivityMinimum(5000);
                 SetHardFixedThreshold(_CogLeadTrimAlgo.LeadThreshold);
                 SetPolarity(Convert.ToBoolean(_CogLeadTrimAlgo.LeadForeground));
 
                 CogRectangle _LeadInspRegion = new CogRectangle();
-                _LeadInspRegion.SetCenterWidthHeight(_InspRegion.CenterX + LeadTrimResult.LeadBodyOffsetX, _InspRegion.CenterY + LeadTrimResult.LeadBodyOffsetY, _InspRegion.Width, _InspRegion.Height);
+                //_LeadInspRegion.SetCenterWidthHeight(_InspRegion.CenterX + LeadTrimResult.LeadBodyOffsetX, _InspRegion.CenterY + LeadTrimResult.LeadBodyOffsetY, _InspRegion.Width, _InspRegion.Height);
+                _LeadInspRegion.SetCenterWidthHeight(_InspRegion.CenterX + LeadBodyOffsetX, _InspRegion.CenterY + LeadBodyOffsetY, _InspRegion.Width, _InspRegion.Height);
                 _InspRegion = _LeadInspRegion;
                 BlobResults = BlobProc.Execute(_SrcImage, _InspRegion);
                 GetResult(true);
@@ -586,6 +600,7 @@ namespace InspectionSystemManager
                 LeadTrimResult.LeadWidth = new double[_CogLeadTrimResult.BlobCount];
                 LeadTrimResult.LeadLength = new double[_CogLeadTrimResult.BlobCount];
                 LeadTrimResult.LeadPitchLength = new double[_CogLeadTrimResult.BlobCount - 1];
+                LeadTrimResult.LeadTipWidth = new double[_CogLeadTrimResult.BlobCount];
                 LeadTrimResult.IsLeadBentGood = new bool[_CogLeadTrimResult.BlobCount - 1];
                 LeadTrimResult.LeadPitchPointX = new double[_CogLeadTrimResult.BlobCount];
                 LeadTrimResult.LeadPitchPointY = new double[_CogLeadTrimResult.BlobCount];
@@ -628,18 +643,18 @@ namespace InspectionSystemManager
                         _CenterLine.SetStartLengthRotation(_CogLeadTrimResult.BlobCenterX[iLoopCount], _CogLeadTrimResult.BlobCenterY[iLoopCount], _CogLeadTrimResult.PrincipalWidth[iLoopCount] / 2, (Math.PI) + _CogLeadTrimResult.Angle[iLoopCount]);
                         LeadTrimResult.LeadPitchTopX[iLoopCount] = _CenterLine.EndX;
                         LeadTrimResult.LeadPitchTopY[iLoopCount] = _CenterLine.EndY;
-
+                    
                         _CenterLine.SetStartLengthRotation(_CogLeadTrimResult.BlobCenterX[iLoopCount], _CogLeadTrimResult.BlobCenterY[iLoopCount], _CogLeadTrimResult.PrincipalWidth[iLoopCount] / 2, _CogLeadTrimResult.Angle[iLoopCount]);
                         LeadTrimResult.LeadPitchBottomX[iLoopCount] = _CenterLine.EndX;
                         LeadTrimResult.LeadPitchBottomY[iLoopCount] = _CenterLine.EndY;
                     }
-
+                    
                     else
                     {
                         _CenterLine.SetStartLengthRotation(_CogLeadTrimResult.BlobCenterX[iLoopCount], _CogLeadTrimResult.BlobCenterY[iLoopCount], _CogLeadTrimResult.PrincipalWidth[iLoopCount] / 2, _CogLeadTrimResult.Angle[iLoopCount]);
                         LeadTrimResult.LeadPitchTopX[iLoopCount] = _CenterLine.EndX;
                         LeadTrimResult.LeadPitchTopY[iLoopCount] = _CenterLine.EndY;
-
+                    
                         _CenterLine.SetStartLengthRotation(_CogLeadTrimResult.BlobCenterX[iLoopCount], _CogLeadTrimResult.BlobCenterY[iLoopCount], _CogLeadTrimResult.PrincipalWidth[iLoopCount] / 2, (Math.PI) + _CogLeadTrimResult.Angle[iLoopCount]);
                         LeadTrimResult.LeadPitchBottomX[iLoopCount] = _CenterLine.EndX;
                         LeadTrimResult.LeadPitchBottomY[iLoopCount] = _CenterLine.EndY;
@@ -654,85 +669,41 @@ namespace InspectionSystemManager
                     #endregion
 
                     #region Pitch 구하기 (New)
-                    ////Pitch Point 구하기 Lead 끝단의 Center
-                    //CogRectangleAffine _CaliperRegion = new CogRectangleAffine();
-                    //
-                    ////_CaliperRegion.SetCenterLengthsRotationSkew(LeadTrimResult.LeadPitchTopX[iLoopCount], LeadTrimResult.LeadPitchTopY[iLoopCount] + 55, 70, 50, 0, 0);
-                    ////_CaliperRegion.SetCenterLengthsRotationSkew(LeadTrimResult.LeadPitchTopX[iLoopCount], LeadTrimResult.LeadPitchTopY[iLoopCount] + 55, 70, 50, _CogLeadTrimResult.Angle[iLoopCount] - 1.5708, 0);
-                    //_CaliperRegion.SetCenterLengthsRotationSkew(LeadTrimResult.LeadPitchTopX[iLoopCount], LeadTrimResult.LeadPitchTopY[iLoopCount] + 20, 70, 50, _CogLeadTrimResult.Angle[iLoopCount] - 1.5708, 0);
-                    //
-                    //CogCaliperTool _TipCaliper = new CogCaliperTool();
-                    //_TipCaliper.RunParams.EdgeMode = CogCaliperEdgeModeConstants.Pair;
-                    //_TipCaliper.RunParams.Edge0Polarity = CogCaliperPolarityConstants.LightToDark;
-                    //_TipCaliper.RunParams.Edge0Position = -25;
-                    //_TipCaliper.RunParams.Edge1Polarity = CogCaliperPolarityConstants.DarkToLight;
-                    //_TipCaliper.RunParams.Edge1Position = 25;
-                    //_TipCaliper.RunParams.ContrastThreshold = 10;
-                    //_TipCaliper.RunParams.FilterHalfSizeInPixels = 5;
-                    //_TipCaliper.Region = _CaliperRegion;
-                    //_TipCaliper.InputImage = _SrcImage;
-                    //_TipCaliper.Run();
-                    ////CogSerializer.SaveObjectToFile(_TipCaliper, string.Format(@"D:\TipCaliper{0}.vpp", iLoopCount + 1));
-                    //
-                    //if (_TipCaliper.Results != null)
-                    //{
-                    //    LeadTrimResult.LeadPitchPointX[iLoopCount] = _TipCaliper.Results[0].PositionX;
-                    //    LeadTrimResult.LeadPitchPointY[iLoopCount] = LeadTrimResult.LeadPitchTopY[iLoopCount] + 20;
-                    //}
-                    //
-                    //if (iLoopCount > 0)
-                    //{
-                    //    LeadTrimResult.LeadPitchLength[iLoopCount - 1] = (LeadTrimResult.LeadPitchPointX[iLoopCount] - LeadTrimResult.LeadPitchPointX[iLoopCount - 1]) * _CogLeadTrimAlgo.ResolutionX;
-                    //    LeadTrimResult.EachLeadStatusArray[iLoopCount - 1].Bent = LeadTrimResult.LeadPitchLength[iLoopCount - 1].ToString();
-                    //
-                    //    //Pitch Spec에서 완전히 벗어났는지 확인
-                    //    if (LeadTrimResult.LeadPitchLength[iLoopCount - 1] > (_CogLeadTrimAlgo.LeadPitchArray[iLoopCount - 1] - _CogLeadTrimAlgo.LeadPitchSpec) &&
-                    //        LeadTrimResult.LeadPitchLength[iLoopCount - 1] < (_CogLeadTrimAlgo.LeadPitchArray[iLoopCount - 1] + _CogLeadTrimAlgo.LeadPitchSpec))
-                    //    {
-                    //        //Align Skew 가능 범위에 들어와 있는지 확인
-                    //        //Skew 범위 안쪽이면 Skew 여부에 상관없이 GOOD
-                    //        if (LeadTrimResult.LeadPitchLength[iLoopCount - 1] > (_CogLeadTrimAlgo.LeadPitchArray[iLoopCount - 1] - _CogLeadTrimAlgo.LeadSkewSpec) &&
-                    //            LeadTrimResult.LeadPitchLength[iLoopCount - 1] < (_CogLeadTrimAlgo.LeadPitchArray[iLoopCount - 1] + _CogLeadTrimAlgo.LeadSkewSpec))
-                    //        {
-                    //            //if (LeadTrimResult.NgType == eNgType.GOOD)
-                    //            LeadTrimResult.IsLeadBentGood[iLoopCount - 1] = true;
-                    //            LeadTrimResult.EachLeadStatusArray[iLoopCount - 1].SetSkewResult(eLeadStatus.GOOD);
-                    //        }
-                    //
-                    //        //Skew 범위 < Position < Pitch Err 범위
-                    //        //불량 판정 & Skew 가능 에러로 전달
-                    //        else
-                    //        {
-                    //            LeadTrimResult.IsLeadBentGood[iLoopCount - 1] = false;
-                    //            LeadTrimResult.IsGood = false;
-                    //
-                    //            LeadTrimResult.EachLeadStatusArray[iLoopCount - 1].SetSkewResult(eLeadStatus.LEAD_SKEW_ENABLE);
-                    //
-                    //            //불량이 발생해도 계속 진행 하도록 설정 _Result = false -> true;
-                    //            //_Result = false;
-                    //            _Result = true;
-                    //        }
-                    //    }
-                    //
-                    //    //완전히 벗어나면 Skew 불가능 에러
-                    //    else
-                    //    {
-                    //        LeadTrimResult.IsLeadBentGood[iLoopCount - 1] = false;
-                    //        LeadTrimResult.IsGood = false;
-                    //
-                    //        LeadTrimResult.EachLeadStatusArray[iLoopCount - 1].SetSkewResult(eLeadStatus.LEAD_SKEW_DISABLE);
-                    //
-                    //        //불량이 발생해도 계속 진행 하도록 설정 _Result = false -> true;
-                    //        //_Result = false;
-                    //        _Result = true;
-                    //    }
-                    //}
-                    #endregion
+                    //Pitch Point 구하기 Lead 끝단의 Center
+                    CogRectangleAffine _CaliperRegion = new CogRectangleAffine();
 
-                    #region Pitch 구하기 (기존)
+                    //_CaliperRegion.SetCenterLengthsRotationSkew(LeadTrimResult.LeadPitchTopX[iLoopCount], LeadTrimResult.LeadPitchTopY[iLoopCount] + 55, 70, 50, 0, 0);
+                    //_CaliperRegion.SetCenterLengthsRotationSkew(LeadTrimResult.LeadPitchTopX[iLoopCount], LeadTrimResult.LeadPitchTopY[iLoopCount] + 55, 70, 50, _CogLeadTrimResult.Angle[iLoopCount] - 1.5708, 0);
+
+                    //Lead Tip 기준
+                    //_CaliperRegion.SetCenterLengthsRotationSkew(LeadTrimResult.LeadPitchTopX[iLoopCount], LeadTrimResult.LeadPitchTopY[iLoopCount] + 70, 70, 50, _CogLeadTrimResult.Angle[iLoopCount] - 1.5708, 0);
+
+                    //Mold Base Line 기준
+                    _CaliperRegion.SetCenterLengthsRotationSkew(LeadTrimResult.LeadPitchTopX[iLoopCount], LeadBodyBaseLine.Y - 740, 70, 50, _CogLeadTrimResult.Angle[iLoopCount] - 1.5708, 0);
+
+                    CogCaliperTool _TipCaliper = new CogCaliperTool();
+                    _TipCaliper.RunParams.EdgeMode = CogCaliperEdgeModeConstants.Pair;
+                    _TipCaliper.RunParams.Edge0Polarity = CogCaliperPolarityConstants.LightToDark;
+                    _TipCaliper.RunParams.Edge0Position = -25;
+                    _TipCaliper.RunParams.Edge1Polarity = CogCaliperPolarityConstants.DarkToLight;
+                    _TipCaliper.RunParams.Edge1Position = 25;
+                    _TipCaliper.RunParams.ContrastThreshold = 10;
+                    _TipCaliper.RunParams.FilterHalfSizeInPixels = 5;
+                    _TipCaliper.Region = _CaliperRegion;
+                    _TipCaliper.InputImage = _SrcImage;
+                    _TipCaliper.Run();
+                    //CogSerializer.SaveObjectToFile(_TipCaliper, string.Format(@"D:\TipCaliper{0}.vpp", iLoopCount + 1));
+                    
+                    if (_TipCaliper.Results != null)
+                    {
+                        LeadTrimResult.LeadPitchPointX[iLoopCount] = _TipCaliper.Results[0].PositionX;
+                        LeadTrimResult.LeadPitchPointY[iLoopCount] = _TipCaliper.Results[0].PositionY;
+                        LeadTrimResult.LeadTipWidth[iLoopCount] = _TipCaliper.Results[0].Width *_CogLeadTrimAlgo.ResolutionX; 
+                    }
+                    
                     if (iLoopCount > 0)
                     {
-                        LeadTrimResult.LeadPitchLength[iLoopCount - 1] = (LeadTrimResult.LeadPitchTopX[iLoopCount] - LeadTrimResult.LeadPitchTopX[iLoopCount - 1]) * _CogLeadTrimAlgo.ResolutionX;
+                        LeadTrimResult.LeadPitchLength[iLoopCount - 1] = (LeadTrimResult.LeadPitchPointX[iLoopCount] - LeadTrimResult.LeadPitchPointX[iLoopCount - 1]) * _CogLeadTrimAlgo.ResolutionX;
                         LeadTrimResult.EachLeadStatusArray[iLoopCount - 1].Bent = LeadTrimResult.LeadPitchLength[iLoopCount - 1].ToString();
                     
                         //Pitch Spec에서 완전히 벗어났는지 확인
@@ -777,6 +748,56 @@ namespace InspectionSystemManager
                             _Result = true;
                         }
                     }
+                    #endregion
+
+                    #region Pitch 구하기 (기존)
+                    //if (iLoopCount > 0)
+                    //{
+                    //    LeadTrimResult.LeadPitchLength[iLoopCount - 1] = (LeadTrimResult.LeadPitchTopX[iLoopCount] - LeadTrimResult.LeadPitchTopX[iLoopCount - 1]) * _CogLeadTrimAlgo.ResolutionX;
+                    //    LeadTrimResult.EachLeadStatusArray[iLoopCount - 1].Bent = LeadTrimResult.LeadPitchLength[iLoopCount - 1].ToString();
+                    //
+                    //    //Pitch Spec에서 완전히 벗어났는지 확인
+                    //    if (LeadTrimResult.LeadPitchLength[iLoopCount - 1] > (_CogLeadTrimAlgo.LeadPitchArray[iLoopCount - 1] - _CogLeadTrimAlgo.LeadPitchSpec) &&
+                    //        LeadTrimResult.LeadPitchLength[iLoopCount - 1] < (_CogLeadTrimAlgo.LeadPitchArray[iLoopCount - 1] + _CogLeadTrimAlgo.LeadPitchSpec))
+                    //    {
+                    //        //Align Skew 가능 범위에 들어와 있는지 확인
+                    //        //Skew 범위 안쪽이면 Skew 여부에 상관없이 GOOD
+                    //        if (LeadTrimResult.LeadPitchLength[iLoopCount - 1] > (_CogLeadTrimAlgo.LeadPitchArray[iLoopCount - 1] - _CogLeadTrimAlgo.LeadSkewSpec) &&
+                    //            LeadTrimResult.LeadPitchLength[iLoopCount - 1] < (_CogLeadTrimAlgo.LeadPitchArray[iLoopCount - 1] + _CogLeadTrimAlgo.LeadSkewSpec))
+                    //        {
+                    //            //if (LeadTrimResult.NgType == eNgType.GOOD)
+                    //            LeadTrimResult.IsLeadBentGood[iLoopCount - 1] = true;
+                    //            LeadTrimResult.EachLeadStatusArray[iLoopCount - 1].SetSkewResult(eLeadStatus.GOOD);
+                    //        }
+                    //
+                    //        //Skew 범위 < Position < Pitch Err 범위
+                    //        //불량 판정 & Skew 가능 에러로 전달
+                    //        else
+                    //        {
+                    //            LeadTrimResult.IsLeadBentGood[iLoopCount - 1] = false;
+                    //            LeadTrimResult.IsGood = false;
+                    //
+                    //            LeadTrimResult.EachLeadStatusArray[iLoopCount - 1].SetSkewResult(eLeadStatus.LEAD_SKEW_ENABLE);
+                    //
+                    //            //불량이 발생해도 계속 진행 하도록 설정 _Result = false -> true;
+                    //            //_Result = false;
+                    //            _Result = true;
+                    //        }
+                    //    }
+                    //
+                    //    //완전히 벗어나면 Skew 불가능 에러
+                    //    else
+                    //    {
+                    //        LeadTrimResult.IsLeadBentGood[iLoopCount - 1] = false;
+                    //        LeadTrimResult.IsGood = false;
+                    //
+                    //        LeadTrimResult.EachLeadStatusArray[iLoopCount - 1].SetSkewResult(eLeadStatus.LEAD_SKEW_DISABLE);
+                    //
+                    //        //불량이 발생해도 계속 진행 하도록 설정 _Result = false -> true;
+                    //        //_Result = false;
+                    //        _Result = true;
+                    //    }
+                    //}
                     #endregion
 
                     #region Length 구하기
@@ -869,7 +890,8 @@ namespace InspectionSystemManager
                 SetPolarity(Convert.ToBoolean(_CogLeadTrimAlgo.ShoulderForeground));
 
                 CogRectangle _LeadInspRegion = new CogRectangle();
-                _LeadInspRegion.SetCenterWidthHeight(_InspRegion.CenterX + LeadTrimResult.LeadBodyOffsetX, _InspRegion.CenterY + LeadTrimResult.LeadBodyOffsetY, _InspRegion.Width, _InspRegion.Height);
+                //_LeadInspRegion.SetCenterWidthHeight(_InspRegion.CenterX + LeadTrimResult.LeadBodyOffsetX, _InspRegion.CenterY + LeadTrimResult.LeadBodyOffsetY, _InspRegion.Width, _InspRegion.Height);
+                _LeadInspRegion.SetCenterWidthHeight(_InspRegion.CenterX + LeadBodyOffsetX, _InspRegion.CenterY + LeadBodyOffsetY, _InspRegion.Width, _InspRegion.Height);
                 _InspRegion = _LeadInspRegion;
                 BlobResults = BlobProc.Execute(_SrcImage, _InspRegion);
                 CogLeadTrimShoulderResult _ShoulderResult = GetShoulderResult(BlobResults);
@@ -1239,6 +1261,10 @@ namespace InspectionSystemManager
                 SetConnectivityMinimum(2000);
                 SetHardFixedThreshold(_CogLeadTrimAlgo.LeadTipThreshold);
                 SetPolarity(Convert.ToBoolean(_CogLeadTrimAlgo.ShoulderForeground));
+
+                CogRectangle _TipInspRegion = new CogRectangle();
+                _TipInspRegion.SetCenterWidthHeight(_InspRegion.CenterX + LeadBodyOffsetX, _InspRegion.CenterY + LeadBodyOffsetY, _InspRegion.Width, _InspRegion.Height);
+                _InspRegion = _TipInspRegion;
                 BlobResults = BlobProc.Execute(_SrcImage, _InspRegion);
                 CogLeadTrimLeadTipResult _LeadTipResult = GetLeadTipResult(BlobResults);
 

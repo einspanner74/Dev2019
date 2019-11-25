@@ -355,6 +355,7 @@ namespace ParameterManager
         public double[] LeadCenterY;
         public double[] LeadWidth;
         public double[] LeadLength;
+        public double[] LeadTipWidth;
         public bool[]   IsLeadLengthGood;
         public double[] LeadPitchLength;
         public double[] LeadLengthStartX;
@@ -618,6 +619,7 @@ namespace ParameterManager
 
         public double[] LeadPitch;
         public double[] LeadPitchReal;
+        public double[] LeadTipWidthReal;
         public bool[]   IsLeadPitchGood;
 
         public EachLeadStatus[] EachLeadStatusArray;

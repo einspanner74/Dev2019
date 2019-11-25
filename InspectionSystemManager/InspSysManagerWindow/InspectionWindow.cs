@@ -1818,32 +1818,37 @@ namespace InspectionSystemManager
                 }
             }
 
-            for (int iLoopCount = 0; iLoopCount < _LeadTrimResult.LeadCount - 1; ++iLoopCount)
+            //Bent 검사 신형 알고리즘 사용할 때
+            for (int iLoopCount = 0; iLoopCount < _LeadTrimResult.LeadCount; ++iLoopCount)
             {
                 //새로운 알고리즘 사용할때
-                //CogPointMarker _PitchPoint = new CogPointMarker();
-                //_PitchPoint.SetCenterRotationSize(_LeadTrimResult.LeadPitchPointX[iLoopCount], _LeadTrimResult.LeadPitchPointY[iLoopCount], 0, 1);
-                //kpCogDisplayMain.DrawStaticShape(_PitchPoint, "PitchPoint" + (iLoopCount + 1), CogColorConstants.Green, 10);
-                //
-                //if (_LeadTrimResult.IsLeadBentGood[iLoopCount] == false)
-                //{
-                //    CogLineSegment _LeadLine = new CogLineSegment();
-                //    _LeadLine.SetStartEnd(_LeadTrimResult.LeadPitchPointX[iLoopCount], _LeadTrimResult.LeadPitchPointY[iLoopCount + 1],
-                //                          _LeadTrimResult.LeadPitchPointX[iLoopCount + 1], _LeadTrimResult.LeadPitchPointY[iLoopCount + 1]);
-                //
-                //    kpCogDisplayMain.DrawStaticLine(_LeadLine, "BentLine+_" + (iLoopCount), CogColorConstants.Red, _Tickness : 2);
-                //}
-
-                //구형 알고리즘 사용할 때
-                if (_LeadTrimResult.IsLeadBentGood[iLoopCount] == false)
+                CogPointMarker _PitchPoint = new CogPointMarker();
+                _PitchPoint.SetCenterRotationSize(_LeadTrimResult.LeadPitchPointX[iLoopCount], _LeadTrimResult.LeadPitchPointY[iLoopCount], 0, 1);
+                kpCogDisplayMain.DrawStaticShape(_PitchPoint, "PitchPoint" + (iLoopCount + 1), CogColorConstants.Green, 10);
+                
+                if (iLoopCount > 0 && _LeadTrimResult.IsLeadBentGood[iLoopCount - 1] == false)
                 {
                     CogLineSegment _LeadLine = new CogLineSegment();
-                    _LeadLine.SetStartEnd(_LeadTrimResult.LeadPitchTopX[iLoopCount], _LeadTrimResult.LeadPitchTopY[iLoopCount + 1],
-                                          _LeadTrimResult.LeadPitchTopX[iLoopCount + 1], _LeadTrimResult.LeadPitchTopY[iLoopCount + 1]);
-
-                    kpCogDisplayMain.DrawStaticLine(_LeadLine, "BentLine+_" + (iLoopCount), CogColorConstants.Red, _Tickness: 2);
+                    _LeadLine.SetStartEnd(_LeadTrimResult.LeadPitchPointX[iLoopCount - 1], _LeadTrimResult.LeadPitchPointY[iLoopCount],
+                                          _LeadTrimResult.LeadPitchPointX[iLoopCount], _LeadTrimResult.LeadPitchPointY[iLoopCount]);
+                
+                    kpCogDisplayMain.DrawStaticLine(_LeadLine, "BentLine+_" + (iLoopCount), CogColorConstants.Red, _Tickness : 2);
                 }
             }
+
+            //Bent 검사 구형 알고리즘 사용할 때
+            //for (int iLoopCount = 0; iLoopCount < _LeadTrimResult.LeadCount - 1; ++iLoopCount)
+            //{
+            //    if (_LeadTrimResult.IsLeadBentGood[iLoopCount] == false)
+            //    {
+            //        CogLineSegment _LeadLine = new CogLineSegment();
+            //        _LeadLine.SetStartEnd(_LeadTrimResult.LeadPitchTopX[iLoopCount], _LeadTrimResult.LeadPitchTopY[iLoopCount + 1],
+            //                              _LeadTrimResult.LeadPitchTopX[iLoopCount + 1], _LeadTrimResult.LeadPitchTopY[iLoopCount + 1]);
+            //    
+            //        kpCogDisplayMain.DrawStaticLine(_LeadLine, "BentLine+_" + (iLoopCount), CogColorConstants.Red, _Tickness: 2);
+            //    
+            //    }
+            //}
 
             #endregion
 

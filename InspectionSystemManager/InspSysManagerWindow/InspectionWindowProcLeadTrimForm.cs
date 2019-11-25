@@ -45,6 +45,8 @@ namespace InspectionSystemManager
                     _SendResult.LeadPitchReal = _AlgoResultParam.LeadPitchLength;
                     _SendResult.IsLeadPitchGood = _AlgoResultParam.IsLeadBentGood;
 
+                    _SendResult.LeadTipWidthReal = _AlgoResultParam.LeadTipWidth;
+
                     //결과 분석
                     _SendResult.EachLeadStatusArray = _AlgoResultParam.EachLeadStatusArray;
                     _SendResult.ChipOutStatus = _AlgoResultParam.ChipOutStatus;
