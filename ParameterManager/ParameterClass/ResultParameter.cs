@@ -670,6 +670,7 @@ namespace ParameterManager
 
         public string Bent;
         public string Length;
+        public string TipWidth;
         public string ShoulderNick;
         public string ShoulderBurr;
         public string TipBurr;
@@ -683,6 +684,7 @@ namespace ParameterManager
 
             Bent = "-";
             Length = "-";
+            TipWidth = "-";
             ShoulderNick = "0";
             ShoulderBurr = "0";
             TipBurr = "0";

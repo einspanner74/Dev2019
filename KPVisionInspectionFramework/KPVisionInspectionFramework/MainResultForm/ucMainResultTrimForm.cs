@@ -101,7 +101,7 @@ namespace KPVisionInspectionFramework
         private string SerialNum;
         private string InspectionTime;
 
-        string[] _TrimHeader = new string[12] { "Num", "Length", "Bent", "S-Burr", "S-Nick", "T-Burr", "SideX", "SideY", "ChipOut", "Gate", "Count", "Exist" };
+        string[] _TrimHeader = new string[12] { "Num", "Length", "Bent", "Width", "S-Burr", "S-Nick", "T-Burr", "SideX", "SideY", "ChipOut", "Gate", "Count" };
 
         private QuickDataGridView[] QuickGridViewResult;
 
@@ -627,15 +627,15 @@ namespace KPVisionInspectionFramework
                         CSVDataArr[LeadCnt + 1, 0] = (LeadCnt + 1).ToString();
                         CSVDataArr[LeadCnt + 1, 1] = _Result.EachLeadStatusArray[LeadCnt].Length;
                         CSVDataArr[LeadCnt + 1, 2] = _Result.EachLeadStatusArray[LeadCnt].Bent;
-                        CSVDataArr[LeadCnt + 1, 3] = _Result.EachLeadStatusArray[LeadCnt].ShoulderBurr;
-                        CSVDataArr[LeadCnt + 1, 4] = _Result.EachLeadStatusArray[LeadCnt].ShoulderNick;
-                        CSVDataArr[LeadCnt + 1, 5] = _Result.EachLeadStatusArray[LeadCnt].TipBurr;
-                        CSVDataArr[LeadCnt + 1, 6] = "-";
+                        CSVDataArr[LeadCnt + 1, 3] = _Result.EachLeadStatusArray[LeadCnt].TipWidth;
+                        CSVDataArr[LeadCnt + 1, 4] = _Result.EachLeadStatusArray[LeadCnt].ShoulderBurr;
+                        CSVDataArr[LeadCnt + 1, 5] = _Result.EachLeadStatusArray[LeadCnt].ShoulderNick;
+                        CSVDataArr[LeadCnt + 1, 6] = _Result.EachLeadStatusArray[LeadCnt].TipBurr;
                         CSVDataArr[LeadCnt + 1, 7] = "-";
-                        CSVDataArr[LeadCnt + 1, 8] = _Result.ChipOutStatus;
-                        CSVDataArr[LeadCnt + 1, 9] = _Result.GateRemainingStatus;
-                        CSVDataArr[LeadCnt + 1, 10] = _Result.LeadCountStatus;
-                        CSVDataArr[LeadCnt + 1, 11] = _Result.LeadBodyStatus;
+                        CSVDataArr[LeadCnt + 1, 8] = "-";
+                        CSVDataArr[LeadCnt + 1, 9] = _Result.ChipOutStatus;
+                        CSVDataArr[LeadCnt + 1, 10] = _Result.GateRemainingStatus;
+                        CSVDataArr[LeadCnt + 1, 11] = _Result.LeadCountStatus;
                     }
                 }
                 else
@@ -650,12 +650,12 @@ namespace KPVisionInspectionFramework
                         CSVDataArr[LeadCnt + 1, 3] = "-";
                         CSVDataArr[LeadCnt + 1, 4] = "-";
                         CSVDataArr[LeadCnt + 1, 5] = "-";
-                        CSVDataArr[LeadCnt + 1, 6] = _Result.EachLeadStatusArray[LeadCnt].SideX;
-                        CSVDataArr[LeadCnt + 1, 7] = _Result.EachLeadStatusArray[LeadCnt].SideY;
-                        CSVDataArr[LeadCnt + 1, 8] = "-";
+                        CSVDataArr[LeadCnt + 1, 6] = "-";
+                        CSVDataArr[LeadCnt + 1, 7] = _Result.EachLeadStatusArray[LeadCnt].SideX;
+                        CSVDataArr[LeadCnt + 1, 8] = _Result.EachLeadStatusArray[LeadCnt].SideY; 
                         CSVDataArr[LeadCnt + 1, 9] = "-";
-                        CSVDataArr[LeadCnt + 1, 10] = _Result.LeadCountStatus;
-                        CSVDataArr[LeadCnt + 1, 11] = _Result.LeadBodyStatus;
+                        CSVDataArr[LeadCnt + 1, 10] = "-";
+                        CSVDataArr[LeadCnt + 1, 11] = _Result.LeadCountStatus;
                     }
                 }
 

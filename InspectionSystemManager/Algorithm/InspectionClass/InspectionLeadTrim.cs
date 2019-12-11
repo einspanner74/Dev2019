@@ -333,32 +333,50 @@ namespace InspectionSystemManager
                 _CogAlignImageCopyTool.RunParams.DestinationImageAlignmentX = _CogAlignImage.Width / 2;
                 _CogAlignImageCopyTool.RunParams.DestinationImageAlignmentY = _CogAlignImage.Height / 2;
 
-                CogRectangle _CogMaskArea = new CogRectangle();
-                //_CogMaskArea.SetXYWidthHeight(350, 1720, 2864, 80);
-                _CogMaskArea.SetXYWidthHeight(350, LeadTrimResult.LeadBodyLeftTop.Y - 40, 2864, 80);
-                _CogAlignImageCopyTool.InputImage = _CogAlignImage;
-                _CogAlignImageCopyTool.DestinationImage = _CogAlignImage;
-                _CogAlignImageCopyTool.Region = _CogMaskArea;
-                _CogAlignImageCopyTool.Run();
-                _CogAlignImage = (CogImage8Grey)_CogAlignImageCopyTool.OutputImage;
+                /* 20191204 주석 처리
+                //Mask 주석
+                //CogRectangle _CogMaskArea = new CogRectangle();
+                ////_CogMaskArea.SetXYWidthHeight(350, 1720, 2864, 80);
+                //_CogMaskArea.SetXYWidthHeight(350, LeadTrimResult.LeadBodyLeftTop.Y - 40, 2864, 80);
+                //_CogAlignImageCopyTool.InputImage = _CogAlignImage;
+                //_CogAlignImageCopyTool.DestinationImage = _CogAlignImage;
+                //_CogAlignImageCopyTool.Region = _CogMaskArea;
+                //_CogAlignImageCopyTool.Run();
+                //_CogAlignImage = (CogImage8Grey)_CogAlignImageCopyTool.OutputImage;
 
                 //4-2 Find line
+                //CogFindLineTool _CogFindLineTool = new CogFindLineTool();
+                //_CogFindLineTool.RunParams.NumCalipers = 125;
+                //_CogFindLineTool.RunParams.CaliperSearchLength = 50;
+                //_CogFindLineTool.RunParams.CaliperProjectionLength = 8;
+                //_CogFindLineTool.RunParams.CaliperSearchDirection = 1.5708;
+                //_CogFindLineTool.RunParams.NumToIgnore = 5;
+                //_CogFindLineTool.RunParams.ExpectedLineSegment.StartX = 0;
+                //_CogFindLineTool.RunParams.ExpectedLineSegment.StartY = LeadTrimResult.LeadBodyLeftTop.Y;
+                //_CogFindLineTool.RunParams.ExpectedLineSegment.EndX = 3647;
+                //_CogFindLineTool.RunParams.ExpectedLineSegment.EndY = LeadTrimResult.LeadBodyLeftTop.Y;
+                //_CogFindLineTool.RunParams.CaliperRunParams.ContrastThreshold = 10;
+                //_CogFindLineTool.RunParams.CaliperRunParams.FilterHalfSizeInPixels = 5;
+                //_CogFindLineTool.InputImage = _CogAlignImage;
+                //_CogFindLineTool.Run();
+                */
+
+                //4-2 신규 Find line
                 CogFindLineTool _CogFindLineTool = new CogFindLineTool();
-                _CogFindLineTool.RunParams.NumCalipers = 125;
-                _CogFindLineTool.RunParams.CaliperSearchLength = 50;
-                _CogFindLineTool.RunParams.CaliperProjectionLength = 8;
+                _CogFindLineTool.RunParams.NumCalipers = 85;
+                _CogFindLineTool.RunParams.CaliperSearchLength = 40;
+                _CogFindLineTool.RunParams.CaliperProjectionLength = 18;
                 _CogFindLineTool.RunParams.CaliperSearchDirection = 1.5708;
-                _CogFindLineTool.RunParams.NumToIgnore = 5;
-                _CogFindLineTool.RunParams.ExpectedLineSegment.StartX = 0;
+                _CogFindLineTool.RunParams.NumToIgnore = 25;
+                _CogFindLineTool.RunParams.ExpectedLineSegment.StartX = 213;
                 _CogFindLineTool.RunParams.ExpectedLineSegment.StartY = LeadTrimResult.LeadBodyLeftTop.Y;
-                _CogFindLineTool.RunParams.ExpectedLineSegment.EndX = 3647;
+                _CogFindLineTool.RunParams.ExpectedLineSegment.EndX = 3347;
                 _CogFindLineTool.RunParams.ExpectedLineSegment.EndY = LeadTrimResult.LeadBodyLeftTop.Y;
-                //_CogFindLineTool.RunParams.ExpectedLineSegment.EndY = 1767;
-                _CogFindLineTool.RunParams.CaliperRunParams.ContrastThreshold = 10;
-                _CogFindLineTool.RunParams.CaliperRunParams.FilterHalfSizeInPixels = 5;
+                _CogFindLineTool.RunParams.CaliperRunParams.ContrastThreshold = 8;
+                _CogFindLineTool.RunParams.CaliperRunParams.FilterHalfSizeInPixels = 2;
                 _CogFindLineTool.InputImage = _CogAlignImage;
                 _CogFindLineTool.Run();
-
+                
                 //CogSerializer.SaveObjectToFile(_CogFindLineTool, string.Format(@"D:\FindLine.vpp"));
 
                 LeadTrimResult.LeadBodyBaseLine = _CogFindLineTool.Results.GetLine();
@@ -679,7 +697,8 @@ namespace InspectionSystemManager
                     //_CaliperRegion.SetCenterLengthsRotationSkew(LeadTrimResult.LeadPitchTopX[iLoopCount], LeadTrimResult.LeadPitchTopY[iLoopCount] + 70, 70, 50, _CogLeadTrimResult.Angle[iLoopCount] - 1.5708, 0);
 
                     //Mold Base Line 기준
-                    _CaliperRegion.SetCenterLengthsRotationSkew(LeadTrimResult.LeadPitchTopX[iLoopCount], LeadBodyBaseLine.Y - 740, 70, 50, _CogLeadTrimResult.Angle[iLoopCount] - 1.5708, 0);
+                    //_CaliperRegion.SetCenterLengthsRotationSkew(LeadTrimResult.LeadPitchTopX[iLoopCount], LeadBodyBaseLine.Y - 740, 70, 50, _CogLeadTrimResult.Angle[iLoopCount] - 1.5708, 0);
+                    _CaliperRegion.SetCenterLengthsRotationSkew(LeadTrimResult.LeadPitchTopX[iLoopCount], LeadBodyBaseLine.Y - 740, 140, 50, _CogLeadTrimResult.Angle[iLoopCount] - 1.5708, 0);
 
                     CogCaliperTool _TipCaliper = new CogCaliperTool();
                     _TipCaliper.RunParams.EdgeMode = CogCaliperEdgeModeConstants.Pair;
@@ -698,7 +717,8 @@ namespace InspectionSystemManager
                     {
                         LeadTrimResult.LeadPitchPointX[iLoopCount] = _TipCaliper.Results[0].PositionX;
                         LeadTrimResult.LeadPitchPointY[iLoopCount] = _TipCaliper.Results[0].PositionY;
-                        LeadTrimResult.LeadTipWidth[iLoopCount] = _TipCaliper.Results[0].Width *_CogLeadTrimAlgo.ResolutionX; 
+                        LeadTrimResult.LeadTipWidth[iLoopCount] = _TipCaliper.Results[0].Width *_CogLeadTrimAlgo.ResolutionX;
+                        LeadTrimResult.EachLeadStatusArray[iLoopCount].TipWidth = (_TipCaliper.Results[0].Width * _CogLeadTrimAlgo.ResolutionX).ToString();
                     }
                     
                     if (iLoopCount > 0)
@@ -802,14 +822,16 @@ namespace InspectionSystemManager
 
                     #region Length 구하기
                     CogLine _CogLeadLine = new CogLine();
-                    _CogLeadLine.SetFromStartXYEndXY(LeadTrimResult.LeadPitchTopX[iLoopCount], LeadTrimResult.LeadPitchTopX[iLoopCount], LeadTrimResult.LeadPitchBottomX[iLoopCount], LeadTrimResult.LeadPitchBottomY[iLoopCount]);
+                    _CogLeadLine.SetFromStartXYEndXY(LeadTrimResult.LeadPitchTopX[iLoopCount], LeadTrimResult.LeadPitchTopY[iLoopCount], LeadTrimResult.LeadPitchBottomX[iLoopCount], LeadTrimResult.LeadPitchBottomY[iLoopCount]);
 
                     CogIntersectLineLineTool _CogIntersect = new CogIntersectLineLineTool();
                     _CogIntersect.InputImage = _SrcImage;
                     //_CogIntersect.LineA = LeadTrimResult.LeadBodyBaseLine;
                     _CogIntersect.LineA = LeadBodyBaseLine;
                     _CogIntersect.LineB = _CogLeadLine;
+                    //CogSerializer.SaveObjectToFile(_CogIntersect, @"D:\_CogIntersect.vpp");
                     _CogIntersect.Run();
+                    
 
                     LeadTrimResult.LeadPitchBottomX[iLoopCount] = _CogIntersect.X;
                     LeadTrimResult.LeadPitchBottomY[iLoopCount] = _CogIntersect.Y;
